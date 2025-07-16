@@ -1,7 +1,7 @@
-# Sending a Test Buy Order
+# Sending a Market or Pending Order
 
-> **Request:** place a market buy order with test parameters
-> Sends a Buy order with default volume and comment to the trading server.
+> **Request:** send a trade order (market or pending)
+> Sends a new order using the specified parameters and receives back execution details.
 
 ---
 
@@ -9,24 +9,21 @@
 
 ```csharp
 // Using service wrapper
-await _service.ShowOrderSendExample("EURUSD");
+await _service.ShowOrderSendExample();
 
-// Or directly from MT4Account
-tick = await _mt4.QuoteAsync("EURUSD");
-
+// Or directly using MT4Account
 var request = new OrderSendRequest
 {
-    Symbol       = "EURUSD",
-    OperationType = OrderSendOperationType.OcOpBuy,
-    Volume       = 0.1,
-    Price        = 0, // Market order; price optional
-    Slippage     = 5,
-    MagicNumber  = 123456,
-    Comment      = "Test order"
+    Symbol     = Constants.DefaultSymbol,
+    Volume     = Constants.DefaultVolume,
+    OrderType  = ENUM_ORDER_TYPE_TF.OrderTypeTfBuy
 };
 
 var result = await _mt4.OrderSendAsync(request);
-Console.WriteLine($"Order sent. Ticket: {result.Ticket}, Price: {result.Price}");
+_logger.LogInformation(
+    "OrderSendAsync: Ticket={Ticket}, Volume={Volume}, Price={Price}, OpenTime={OpenTime}",
+    result.Ticket, result.Volume, result.Price, result.OpenTime.ToDateTime().ToLocalTime()
+);
 ```
 
 ---
@@ -34,60 +31,53 @@ Console.WriteLine($"Order sent. Ticket: {result.Ticket}, Price: {result.Price}")
 ### Method Signature
 
 ```csharp
-Task<OrderSendData> OrderSendAsync(
-    OrderSendRequest request,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default
-)
+Task<OrderSendData> OrderSendAsync(OrderSendRequest request)
 ```
 
 ---
 
-## 🔽 Input
+## 📃 Input
 
-* **`request`** (`OrderSendRequest`) — contains all parameters for placing the order:
+**OrderSendRequest** — object with fields:
 
-  * **`Symbol`** (`string`) — instrument (e.g., "EURUSD").
-  * **`OperationType`** (`OrderSendOperationType`) — order type. Typically `OcOpBuy` or `OcOpSell`.
-  * **`Volume`** (`double`) — trade volume in lots.
-  * **`Price`** (`double`) — optional; set to `0` for market orders.
-  * **`Slippage`** (`int`) — max price deviation allowed.
-  * **`MagicNumber`** (`int`) — identifier for programmatic orders.
-  * **`Comment`** (`string`) — custom comment attached to the order.
-
-Optional:
-
-* **`deadline`** (`DateTime?`) — optional deadline.
-* **`cancellationToken`** (`CancellationToken`) — token for cancellation.
+| Field        | Type                 | Description                        |
+| ------------ | -------------------- | ---------------------------------- |
+| `Symbol`     | `string`             | Trading symbol (e.g., "EURUSD")    |
+| `Volume`     | `double`             | Order volume in lots (e.g., `0.1`) |
+| `OrderType`  | `ENUM_ORDER_TYPE_TF` | Type of order (market/pending)     |
+| `Price`      | `double?` (optional) | Order price for pending orders     |
+| `Slippage`   | `int?` (optional)    | Max slippage allowed (in points)   |
+| `StopLoss`   | `double?` (optional) | Stop Loss price                    |
+| `TakeProfit` | `double?` (optional) | Take Profit price                  |
+| `Comment`    | `string?` (optional) | Optional order comment             |
+| `Magic`      | `int?` (optional)    | Magic number to tag the order      |
 
 ---
 
 ## ⬆️ Output
 
-Returns an **`OrderSendData`** object with:
+**OrderSendData** — object with properties:
 
-| Field    | Type     | Description                             |
-| -------- | -------- | --------------------------------------- |
-| `Ticket` | `int`    | Assigned order ticket number            |
-| `Price`  | `double` | Final price at which order was executed |
+| Field      | Type             | Description                     |
+| ---------- | ---------------- | ------------------------------- |
+| `Ticket`   | `int`            | Unique order ID assigned by MT4 |
+| `Volume`   | `double`         | Confirmed order volume          |
+| `Price`    | `double`         | Actual execution price          |
+| `OpenTime` | `DateTime` (UTC) | Time when order was executed    |
 
 ---
 
 ## 🎯 Purpose
 
-This method demonstrates how to place a simple Buy order via the API. It’s useful for:
-
-* Integration tests
-* Manual testing on demo accounts
-* Validating order parameters and connectivity
+Use this method to place a **new trade** — either market or pending — with full control over volume, price, and risk parameters. The result includes the **assigned ticket number**, price, and open time for confirmation or logging.
 
 ---
 
-### ❓ Why it's commented out in code:
+### ❓ Notes
 
-This method creates a **real trade** (on demo or live account depending on context). It’s commented out by default to:
+This method is currently **commented in main test code** because it requires an order with:
 
-* ❌ Avoid accidental order execution while testing
-* ✅ Ensure orders are sent intentionally with correct parameters
+* Valid symbol, connection, and
+* Terminal in trading state.
 
-To use it, ensure symbol is valid and trading is enabled for the account. Recommended only in controlled test environments.
+Once integration is stable, it can be safely **uncommented for production use.**
