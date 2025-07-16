@@ -1,0 +1,77 @@
+name: ci
+
+on:
+  push:
+    branches:
+      - master
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Setup .NET 8.0 SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Install xmldocmd (.NET tool)
+        run: |
+          dotnet tool install -g xmldocmd
+          echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+
+      - name: Build MetaRPC.CSharpMT4 Project
+        run: dotnet build MetaRPC.CSharpMT4.csproj -c Release
+
+      - name: Copy Output DLLs
+        run: |
+          mkdir -p deps
+          cp bin/Release/net8.0/*.dll deps/
+
+      - name: Download and Extract MetaRPC.MT4.xml
+        run: |
+          mkdir -p deps/pkg
+          dotnet add package MetaRPC.MT4
+          dotnet restore
+      
+          PACKAGE_DIR=$(find ~/.nuget/packages/metarpc.mt4 -type d -regex '.*/[0-9]+\.[0-9]+\.[0-9]+$' | sort -V | tail -n 1)
+          PACKAGE=$(find "$PACKAGE_DIR" -name "*.nupkg" | head -n 1)
+      
+          unzip -o -d deps/pkg "$PACKAGE"
+          cp deps/pkg/lib/netstandard2.1/MetaRPC.MT4.xml deps/
+
+
+      - name: Generate Markdown from MetaRPC.MT4 Docs
+        run: |
+          mkdir -p docs/api
+          xmldocmd deps/MetaRPC.MT4.dll docs/api --visibility public
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Cache MkDocs Dependencies
+        run: echo "cache_id=$(date --utc '+%V')" >> $GITHUB_ENV
+
+      - uses: actions/cache@v4
+        with:
+          key: mkdocs-material-${{ env.cache_id }}
+          path: .cache
+          restore-keys: |
+            mkdocs-material-
+
+      - run: pip install mkdocs-material pymdown-extensions
+
+      - name: Deploy Docs to GitHub Pages
+        run: mkdocs gh-deploy --force --clean
