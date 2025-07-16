@@ -47,7 +47,19 @@ Returns a stream (`IAsyncEnumerable<OnTradeData>`) where each item represents a 
 | ----------- | ----------- | ----------------------------------- |
 | `TradeInfo` | `TradeInfo` | Structure containing trade details. |
 
-> ⚠️ Structure of `TradeInfo` may vary depending on implementation — consult your protobuf/gRPC definition for exact fields.
+Structure of `TradeInfo`:
+
+| Field       | Type     | Description                              |
+| ----------- | -------- | ---------------------------------------- |
+| `Ticket`    | `int`    | Unique ID of the trade order             |
+| `Symbol`    | `string` | Trading symbol (e.g., "EURUSD")          |
+| `Lots`      | `double` | Trade volume in lots                     |
+| `OpenPrice` | `double` | Price at which the trade was opened      |
+| `Profit`    | `double` | Current profit or loss of the trade      |
+| `OpenTime`  | `string` | UTC timestamp when the trade was opened  |
+| `OrderType` | `string` | Type of trade (e.g., Buy, Sell)          |
+| `Comment`   | `string` | Custom comment associated with the trade |
+| `Magic`     | `int`    | Magic number used to tag the trade       |
 
 ---
 
