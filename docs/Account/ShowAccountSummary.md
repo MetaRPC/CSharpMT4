@@ -17,7 +17,7 @@ _logger.LogInformation("Account Summary: Balance={Balance}, Equity={Equity}, Cur
 
 ---
 
-### ✨ Method Signature
+###  Method Signature
 
 ```csharp
 Task<AccountSummaryData> AccountSummaryAsync(
