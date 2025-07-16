@@ -31,7 +31,7 @@ foreach (var order in history.OrdersInfo)
 
 ---
 
-###  Method Signature
+### Method Signature
 
 ```csharp
 Task<OrdersHistoryData> OrdersHistoryAsync(
@@ -75,17 +75,22 @@ Returns an **`OrdersHistoryData`** object containing:
 
 Each `OrderInfo` includes:
 
-| Field        | Type     | Description                          |
-| ------------ | -------- | ------------------------------------ |
-| `Ticket`     | `int`    | Unique identifier of the order.      |
-| `Symbol`     | `string` | Trading symbol.                      |
-| `Lots`       | `double` | Volume in lots.                      |
-| `OpenPrice`  | `double` | Opening price of the order.          |
-| `ClosePrice` | `double` | Closing price of the order.          |
-| `Profit`     | `double` | Final profit/loss.                   |
-| `OrderType`  | `string` | Buy, Sell, etc.                      |
-| `OpenTime`   | `string` | Timestamp when the order opened.     |
-| `CloseTime`  | `string` | Timestamp when the order was closed. |
+| Field        | Type     | Description                           |
+| ------------ | -------- | ------------------------------------- |
+| `Ticket`     | `int`    | Unique ID of the order.               |
+| `Symbol`     | `string` | Trading symbol (e.g., EURUSD).        |
+| `Lots`       | `double` | Volume of the order in lots.          |
+| `OpenPrice`  | `double` | Entry price of the order.             |
+| `ClosePrice` | `double` | Exit price of the order.              |
+| `Profit`     | `double` | Final realized profit/loss.           |
+| `OrderType`  | `string` | Type of order (Buy, Sell, etc).       |
+| `OpenTime`   | `string` | Time when the order was opened.       |
+| `CloseTime`  | `string` | Time when the order was closed.       |
+| `Sl`         | `double` | Stop Loss price (if set).             |
+| `Tp`         | `double` | Take Profit price (if set).           |
+| `Magic`      | `int`    | Magic number for programmatic orders. |
+| `Comment`    | `string` | Custom comment attached to the order. |
+| `Expiration` | `string` | Expiration time for pending orders.   |
 
 ---
 
