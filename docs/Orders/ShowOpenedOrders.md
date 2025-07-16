@@ -23,7 +23,7 @@ foreach (var order in result.OrderInfos)
 
 ---
 
-### ✨ Method Signature
+###  Method Signature
 
 ```csharp
 Task<OpenedOrdersData> OpenedOrdersAsync(
