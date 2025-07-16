@@ -31,7 +31,7 @@ foreach (var order in history.OrdersInfo)
 
 ---
 
-### ✨ Method Signature
+###  Method Signature
 
 ```csharp
 Task<OrdersHistoryData> OrdersHistoryAsync(
