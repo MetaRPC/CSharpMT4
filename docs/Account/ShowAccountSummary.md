@@ -1,23 +1,23 @@
-# Account Summary
+# Getting an Account Summary
 
-> **Request:** retrieve general account information
-
-Fetch a full snapshot of the trading account's current status, including balance, equity, margin, and account currency.
+> **Request:** full account summary (`AccountSummaryData`) from MT4
+> Fetch all core account metrics in a single call.
 
 ---
 
 ### Code Example
 
 ```csharp
-await _service.ShowAccountSummary();
-
-// Output:
-// Balance: 10000, Equity: 9980, Currency: USD
+var summary = await _mt4.AccountSummaryAsync();
+_logger.LogInformation("Account Summary: Balance={Balance}, Equity={Equity}, Currency={Currency}",
+    summary.AccountBalance,
+    summary.AccountEquity,
+    summary.AccountCurrency);
 ```
 
 ---
 
-### Method Signature
+### ✨ Method Signature
 
 ```csharp
 Task<AccountSummaryData> AccountSummaryAsync(
@@ -28,41 +28,43 @@ Task<AccountSummaryData> AccountSummaryAsync(
 
 ---
 
-## Input
+## 🔽Input
 
-This method requires no specific parameters, other than:
+No required input parameters.
 
-* **`deadline`** (`DateTime?`, optional): An optional UTC deadline for request timeout.
-* **`cancellationToken`** (`CancellationToken`, optional): Token to cancel the operation if needed.
+Optional:
 
----
-
-## Output
-
-Returns an **`AccountSummaryData`** structure containing:
-
-| Field               | Type     | Description                                      |
-| ------------------- | -------- | ------------------------------------------------ |
-| `AccountBalance`    | `double` | Account balance (excluding open positions).      |
-| `AccountEquity`     | `double` | Equity — current balance including floating P/L. |
-| `AccountMargin`     | `double` | Currently used margin.                           |
-| `AccountFreeMargin` | `double` | Margin available for opening new positions.      |
-| `AccountCurrency`   | `string` | Account currency (e.g. `"USD"`, `"EUR"`).        |
-| `AccountLeverage`   | `int`    | Account leverage (e.g. 100, 500).                |
-| `AccountName`       | `string` | Trader's name (if provided).                     |
-| `AccountNumber`     | `int`    | Trading account number.                          |
-| `Company`           | `string` | Broker's name or company managing the account.   |
-
-> *Note: Some fields may vary depending on MT4 API implementation.*
+* **`deadline`** (`DateTime?`) — optional UTC deadline for request timeout.
+* **`cancellationToken`** (`CancellationToken`) — token to cancel the operation.
 
 ---
 
-## Purpose
+## ⬆️Output
 
-This method allows retrieval of current account information to be used for:
+Returns an **`AccountSummaryData`** structure with the following fields:
 
-* Displaying key data in dashboards or UIs
-* Verifying balance and margin status before placing trades
-* Monitoring risk and exposure in real time
+| Field               | Type     | Description                                       |
+| ------------------- | -------- | ------------------------------------------------- |
+| `AccountBalance`    | `double` | Account balance excluding open positions.         |
+| `AccountEquity`     | `double` | Equity — balance including floating P/L.          |
+| `AccountMargin`     | `double` | Currently used margin.                            |
+| `AccountFreeMargin` | `double` | Free margin available for opening new trades.     |
+| `AccountCurrency`   | `string` | Account deposit currency (e.g. `"USD"`, `"EUR"`). |
+| `AccountLeverage`   | `int`    | Leverage applied to the account.                  |
+| `AccountName`       | `string` | Account holder's name.                            |
+| `AccountNumber`     | `int`    | Account number (login ID).                        |
+| `Company`           | `string` | Broker's name or company.                         |
 
-It provides a foundational step for any trade- or account-related logic. ✨
+> *Note: Fields may vary slightly depending on MT4 implementation.*
+
+---
+
+## 🎯Purpose
+
+This method is used to retrieve real-time account information and is typically used for:
+
+* Displaying account status in dashboards or UI
+* Validating available margin and balance before trading
+* Monitoring overall account exposure and risk
+
+It's a foundational API call for any MT4 integration dealing with trading or reporting.
