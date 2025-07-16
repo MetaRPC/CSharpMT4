@@ -21,7 +21,7 @@ foreach (var ticket in result.Tickets)
 
 ---
 
-### ✨ Method Signature
+###  Method Signature
 
 ```csharp
 Task<OpenedOrderTicketsData> OpenedOrdersTicketsAsync(
