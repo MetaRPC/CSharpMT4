@@ -75,22 +75,35 @@ Returns an **`OrdersHistoryData`** object containing:
 
 Each `OrderInfo` includes:
 
-| Field        | Type     | Description                           |
-| ------------ | -------- | ------------------------------------- |
-| `Ticket`     | `int`    | Unique ID of the order.               |
-| `Symbol`     | `string` | Trading symbol (e.g., EURUSD).        |
-| `Lots`       | `double` | Volume of the order in lots.          |
-| `OpenPrice`  | `double` | Entry price of the order.             |
-| `ClosePrice` | `double` | Exit price of the order.              |
-| `Profit`     | `double` | Final realized profit/loss.           |
-| `OrderType`  | `string` | Type of order (Buy, Sell, etc).       |
-| `OpenTime`   | `string` | Time when the order was opened.       |
-| `CloseTime`  | `string` | Time when the order was closed.       |
-| `Sl`         | `double` | Stop Loss price (if set).             |
-| `Tp`         | `double` | Take Profit price (if set).           |
-| `Magic`      | `int`    | Magic number for programmatic orders. |
-| `Comment`    | `string` | Custom comment attached to the order. |
-| `Expiration` | `string` | Expiration time for pending orders.   |
+| Field        | Type                 | Description                           |
+| ------------ | -------------------- | ------------------------------------- |
+| `Ticket`     | `int`                | Unique ID of the order.               |
+| `Symbol`     | `string`             | Trading symbol (e.g., EURUSD).        |
+| `Lots`       | `double`             | Volume of the order in lots.          |
+| `OpenPrice`  | `double`             | Entry price of the order.             |
+| `ClosePrice` | `double`             | Exit price of the order.              |
+| `Profit`     | `double`             | Final realized profit/loss.           |
+| `OrderType`  | `ENUM_ORDER_TYPE_TF` | Type of order (Buy, Sell, etc).       |
+| `OpenTime`   | `string`             | Time when the order was opened.       |
+| `CloseTime`  | `string`             | Time when the order was closed.       |
+| `Sl`         | `double`             | Stop Loss price (if set).             |
+| `Tp`         | `double`             | Take Profit price (if set).           |
+| `Magic`      | `int`                | Magic number for programmatic orders. |
+| `Comment`    | `string`             | Custom comment attached to the order. |
+| `Expiration` | `string`             | Expiration time for pending orders.   |
+
+---
+
+### ENUM: `ENUM_ORDER_TYPE_TF`
+
+| Value                  | Description        |
+| ---------------------- | ------------------ |
+| `OrderTypeTfBuy`       | Buy order          |
+| `OrderTypeTfSell`      | Sell order         |
+| `OrderTypeTfBuyLimit`  | Pending Buy Limit  |
+| `OrderTypeTfSellLimit` | Pending Sell Limit |
+| `OrderTypeTfBuyStop`   | Pending Buy Stop   |
+| `OrderTypeTfSellStop`  | Pending Sell Stop  |
 
 ---
 
