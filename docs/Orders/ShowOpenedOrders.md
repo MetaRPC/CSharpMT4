@@ -23,7 +23,7 @@ foreach (var order in result.OrderInfos)
 
 ---
 
-###  Method Signature
+### Method Signature
 
 ```csharp
 Task<OpenedOrdersData> OpenedOrdersAsync(
@@ -55,15 +55,28 @@ Returns an **`OpenedOrdersData`** object with a collection of order information:
 
 Each `OrderInfo` includes:
 
-| Field       | Type     | Description                                |
-| ----------- | -------- | ------------------------------------------ |
-| `Ticket`    | `int`    | Unique ticket ID for the order.            |
-| `Symbol`    | `string` | Trading symbol (e.g., "EURUSD").           |
-| `Lots`      | `double` | Volume of the order in lots.               |
-| `OpenPrice` | `double` | Price at which the order was opened.       |
-| `Profit`    | `double` | Current floating profit/loss of the order. |
-| `OpenTime`  | `string` | Timestamp when the order was opened.       |
-| `OrderType` | `string` | Type of the order (e.g., Buy, Sell, etc).  |
+| Field       | Type                 | Description                                |
+| ----------- | -------------------- | ------------------------------------------ |
+| `Ticket`    | `int`                | Unique ticket ID for the order.            |
+| `Symbol`    | `string`             | Trading symbol (e.g., "EURUSD").           |
+| `Lots`      | `double`             | Volume of the order in lots.               |
+| `OpenPrice` | `double`             | Price at which the order was opened.       |
+| `Profit`    | `double`             | Current floating profit/loss of the order. |
+| `OpenTime`  | `string`             | Timestamp when the order was opened.       |
+| `OrderType` | `ENUM_ORDER_TYPE_TF` | Type of the order (Buy, Sell, etc).        |
+
+---
+
+### ENUM: `ENUM_ORDER_TYPE_TF`
+
+| Value                  | Description        |
+| ---------------------- | ------------------ |
+| `OrderTypeTfBuy`       | Buy order          |
+| `OrderTypeTfSell`      | Sell order         |
+| `OrderTypeTfBuyLimit`  | Pending Buy Limit  |
+| `OrderTypeTfSellLimit` | Pending Sell Limit |
+| `OrderTypeTfBuyStop`   | Pending Buy Stop   |
+| `OrderTypeTfSellStop`  | Pending Sell Stop  |
 
 ---
 
