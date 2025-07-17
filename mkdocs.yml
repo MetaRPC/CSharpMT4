@@ -24,8 +24,7 @@ nav:
   - Streaming:
       - Stream Trade Updates: Streaming/StreamTradeUpdates.md
       - Stream Opened Order Profits: Streaming/StreamOpenedOrderProfits.md
-      - Stream Opened Order Tickets: Streaming/StreamOpenedOrderTickets.md
-      - Stream Quotes For Symbols: Streaming/StreamQuotesForSymbols.md
+      - Stream Opened Order Tickets: Streaming/StreamOpenedOrderTickets.md      
   - Real-Time Quotes:
       - Show RealTime Quotes: ShowRealTime/ShowRealTimeQuotes.md
 
