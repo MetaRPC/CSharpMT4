@@ -2,21 +2,36 @@ site_name: MetaRPC MT4 C# Documentation
 
 nav:
   - Home: index.md
-  - API Reference: api/mt4_term_api/MT4Account
-  - Account Information: 
-      -ShowAccountSummary: Account/ShowAccountSummary.md
-  - Order Operations: 
+  - API Reference: api/mt4_term_api/MT4Account.md
 
-  
+  - Account Information:
+      - Account Summary: Account/ShowAccountSummary.md
 
-- Streaming:
-
+  - Order Operations:
+      - Order Send: Orders/ShowOrderSendExample.md
+      - Close Order: Orders/CloseOrderExample.md
+      - Close By Order: Orders/CloseByOrderExample.md
+      - Opened Orders: Orders/ShowOpenedOrders.md
+      - Opened Order Tickets: Orders/ShowOpenedOrderTickets.md
+      - Orders History: Orders/ShowOrdersHistory.md
 
   - Market Info:
+      - Show Quote: Market Info/ShowQuote.md
+      - Show Quote History: Market Info/ShowQuoteHistory.md
+      - Show Quotes Many: Market Info/ShowQuotesMany.md
+      - Show All Symbols: Market Info/ShowAllSymbols.md
+      - Show Tick Values: Market Info/ShowTickValues.md
+      - Show Symbol Params: Market Info/ShowSymbolParams.md
+      - Show Symbol Info: Market Info/ShowSymbolInfo.md
 
-  - Stream Quotes:
+  - Streaming:
+      - Stream Trade Updates: Streaming/StreamTradeUpdates.md
+      - Stream Opened Order Profits: Streaming/StreamOpenedOrderProfits.md
+      - Stream Opened Order Tickets: Streaming/StreamOpenedOrderTickets.md
+      - Stream Quotes For Symbols: Streaming/StreamQuotesForSymbols.md
 
-
+  - Real-Time Quotes:
+      - Show RealTime Quotes: ShowRealTime/ShowRealTimeQuotes.md
 
 theme:
   name: material
