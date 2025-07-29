@@ -36,7 +36,7 @@ Task<OrderSendData> OrderSendAsync(OrderSendRequest request)
 
 ---
 
-## 📃 Input
+## 🔽 Input
 
 **OrderSendRequest** — object with fields:
 
