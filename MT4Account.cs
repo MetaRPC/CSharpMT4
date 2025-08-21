@@ -113,13 +113,12 @@ namespace MetaRPC.CSharpMT4
         public TimeSpan DefaultRpcTimeout { get; set; } = TimeSpan.FromSeconds(8);
         
      // Treat some server "errors" as normal stream finalization
-private static bool IsStreamFinalizationError(Mt4TermApi.Error? e)
+        private static bool IsStreamFinalizationError(Mt4TermApi.Error? e)
     => e != null && (
            e.ErrorCode == "ON_SUBSCRIPTION_EA_DEINITIALIZATION_START_WATCHING_MULTI_CHARTS_COUNT_ZERO"
            
        );
 
-        
         // Default per-RPC timeouts
         public TimeSpan TradeRpcTimeout { get; set; } = TimeSpan.FromSeconds(5); // trading calls
 
@@ -128,8 +127,8 @@ private static bool IsStreamFinalizationError(Mt4TermApi.Error? e)
         private DateTime? ResolveDeadline(DateTime? deadline)
     => deadline ?? DateTime.UtcNow.Add(DefaultRpcTimeout);
 
-// 2) с кастомным fallback (для торговых RPC)
-private DateTime? ResolveDeadline(DateTime? deadline, TimeSpan fallback)
+// 2) with a customfallback (for shopping RPC)
+        private DateTime? ResolveDeadline(DateTime? deadline, TimeSpan fallback)
     => deadline ?? DateTime.UtcNow.Add(fallback);
         
 
@@ -253,13 +252,13 @@ public MT4Account(ulong user, string password, string? grpcServer = null, Guid i
     // HTTP/2 keepalive to keep long streams healthy behind NAT/firewalls
     var handler = new SocketsHttpHandler
     {
-        // Периодичность keepalive-пингов когда соединение неактивно
+        // Frequency of keepalive pings when the connection is inactive
         KeepAlivePingDelay = TimeSpan.FromSeconds(30),
-        // Сколько ждём ответа на пинг
+        // How long have we been waiting for a ping response?
         KeepAlivePingTimeout = TimeSpan.FromSeconds(10),
-        // Разрешить несколько HTTP/2 соединений на хост (полезно при параллельных стримах)
+        // Allow multiple HTTP/2 connections per host (useful for parallel streams)
         EnableMultipleHttp2Connections = true,
-        // Чуть уменьшим idle timeout, чтобы рантайм не держал «мертвые» сокеты слишком долго
+        // Slightly reduce the idle timeout so that the runtime does not keep "dead" sockets for too long.
         PooledConnectionIdleTimeout = TimeSpan.FromMinutes(2),
     };
 
@@ -279,8 +278,7 @@ public MT4Account(ulong user, string password, string? grpcServer = null, Guid i
 }
         
 
-      // Reconnect using the same method (host:port or server name) and the last-known options
-// Reconnect using the last-known mode/params, but serialize attempts
+      // Reconnect using the last-known mode/params, but serialize attempts
 private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
 {
     await _reconnectGate.WaitAsync(ct).ConfigureAwait(false);
@@ -325,11 +323,6 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         _reconnectGate.Release();
     }
 }
-
-
-
-
-        // Connect methods
 
         /// <summary>
         /// Connects to the MT4 terminal using credentials provided in the constructor.
@@ -420,7 +413,6 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         $"ConnectByHostPortAsync retry limit exceeded ({DefaultMaxAttempts} attempts). " +
         (lastRpcEx != null ? $"Last gRPC status={lastRpcEx.StatusCode}." : "No transport error captured."));
 }
-
 
 
         /// <summary>
@@ -543,7 +535,6 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         {
             ConnectByServerNameAsync(serverName, baseChartSymbol, waitForTerminalIsAlive, timeoutSeconds).GetAwaiter().GetResult();
         }
-
 
 
         // Unary invoker with reconnect + bounded retries + backoff
@@ -679,7 +670,6 @@ private async Task<T> ExecuteWithReconnectAsync<T>(
 }
 
 
-
         /// <summary>
         /// Executes a gRPC server-streaming call with automatic reconnection logic on recoverable errors.
         /// </summary>
@@ -717,7 +707,7 @@ private async IAsyncEnumerable<TData> ExecuteStreamWithReconnect<TRequest, TRepl
     Func<TReply, TData?> getData,   // <— допускаем null внутри
     [EnumeratorCancellation] CancellationToken ct = default,
     int maxRestarts = DefaultMaxStreamRestarts)
-    where TData : class            // <— protobuf-ответы — ссылочные типы
+    where TData : class            
 {
     EnsureConnected();
 
@@ -740,13 +730,13 @@ private async IAsyncEnumerable<TData> ExecuteStreamWithReconnect<TRequest, TRepl
                 {
                     moved = await response.MoveNext(ct).ConfigureAwait(false);
                 }
-                // Наша отмена — тихо завершаем
+                
                 catch (RpcException ex) when (ex.StatusCode == StatusCode.Cancelled && ct.IsCancellationRequested)
                 {
                     _logger?.LogInformation("Stream completed. Reason=Cancelled(by token)");
                     yield break;
                 }
-                // Временные транспортные проблемы — попробуем реконнект
+                // Temporary transport problems — let's try to reconnect
                 catch (RpcException ex) when (
                     ex.StatusCode == StatusCode.Unavailable ||
                     ex.StatusCode == StatusCode.DeadlineExceeded ||
@@ -755,7 +745,7 @@ private async IAsyncEnumerable<TData> ExecuteStreamWithReconnect<TRequest, TRepl
                     needReconnect = true;
                     break;
                 }
-                // Сервер прислал Cancelled без нашей отмены — считаем нормальным завершением
+                // The server sent Cancelled without our cancellation — we consider it a normal termination.
                 catch (RpcException ex) when (ex.StatusCode == StatusCode.Cancelled)
                 {
                     _logger?.LogInformation("Stream cancelled (Status=Cancelled). Treating as completion.");
