@@ -8,14 +8,25 @@
 ### Code Example
 
 ```csharp
-// Using service wrapper
+// --- Quick use (service wrapper) ---
+// Demo: logs once and exits inside the method.
 await _service.StreamOpenedOrderProfits();
 
-// Or directly from MT4Account
-await foreach (var profit in _mt4.OnOpenedOrdersProfitAsync(1000))
+// --- Low-level (direct account call) ---
+// Preconditions: account is connected via ConnectByServerName/ConnectByHostPort.
+// Tip: keep the interval modest to reduce load; cancel when you’re done.
+
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+await foreach (var info in _mt4.OnOpenedOrdersProfitAsync(intervalMs: 1000, cts.Token))
 {
-    Console.WriteLine("Profit update received.");
-    break; // for demo purposes
+    Console.WriteLine(
+        $"[P/L] Ticket={info.Ticket} {info.Symbol} Lots={info.Lots} Profit={info.Profit} " +
+        $"Open={info.OpenPrice} Now={info.CurrentPrice} Type={info.OrderType}"
+    );
+
+    // For demo purposes we exit on first update;
+    // in production remove this break to keep streaming.
+    break;
 }
 ```
 
@@ -81,4 +92,30 @@ This method allows **live monitoring of floating P/L per open order**, enabling 
 * Risk monitoring systems
 * Alerting systems for high drawdown or profit conditions
 
-It's optimized for minimal payloads and continuous updates, with polling interval controlled by `intervalMs`.
+It's optimized for continuous updates, with polling controlled by `intervalMs`.
+
+---
+
+## 🧩 Notes & Tips
+
+* **Continuous stream:** The method yields until you cancel via `CancellationToken` or exit your loop.
+* **Reconnects on hiccups:** Client logic restarts the stream on transient gRPC errors; brief gaps are normal during recovery.
+* **Interval trade-off:** Smaller `intervalMs` means more frequent updates and higher load; common values are 500–2000 ms.
+* **Empty portfolio:** With no open orders you may see few/no updates; this is expected—keep the stream or cancel.
+* **Currency:** `Profit` values are reported in the **account currency**.
+
+---
+
+## ⚠️ Pitfalls
+
+* **Forgetting cancellation:** Without a token or break condition, the loop runs indefinitely.
+* **Too-aggressive intervals:** Very small `intervalMs` can stress the terminal and your app.
+* **Assuming tick timing:** Updates follow your interval, not every market tick.
+
+---
+
+## 🧪 Testing Suggestions
+
+* **Happy path:** Open a small market order; verify that `Profit` fluctuates and ticket/symbol match.
+* **Zero orders:** Ensure your code handles the quiet stream without errors.
+* **Cancellation:** Cancel after a few seconds and confirm a clean shutdown (no unhandled exceptions).
