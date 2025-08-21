@@ -61,19 +61,37 @@ This documentation will help you:
 3. Run demos from **`Program.cs`** (the `Show*` helpers) or call the low‑level methods directly.
 
 ```csharp
-using var loggerFactory = LoggerFactory.Create(b => b.AddConsole());
-var logger = loggerFactory.CreateLogger<Program>();
+// appsettings.json
+{
+  "MT4Options": {
+    "User": 1234567,
+    "Password": "<<<use env var>>>",
+    "ServerName": "RoboForex-Demo",
+    "Host": null,
+    "Port": 443,
+    "DefaultSymbol": "EURUSD"
+  }
+}
+```
+```csharp
+// Program.cs
+var cfg = new ConfigurationBuilder()
+    .SetBasePath(AppContext.BaseDirectory)
+    .AddJsonFile("appsettings.json", optional: true)
+    .AddEnvironmentVariables()
+    .Build();
 
-var mt4 = new MT4Account(user: 1234567, password: "***", logger: loggerFactory.CreateLogger<MT4Account>());
+var options = cfg.GetSection("MT4Options").Get<MT4Options>()!;
+
+using var loggerFactory = LoggerFactory.Create(b => b.AddConsole());
+var mt4 = new MT4Account(options.User, options.Password, logger: loggerFactory.CreateLogger<MT4Account>());
 var svc = new MT4Service(mt4, loggerFactory.CreateLogger<MT4Service>());
 
-await mt4.ConnectByServerNameAsync(serverName: "RoboForex-Demo", baseChartSymbol: "EURUSD");
+await mt4.ConnectByServerNameAsync(options.ServerName!, baseChartSymbol: options.DefaultSymbol);
 
 await svc.ShowAccountSummary();
-await svc.ShowQuote("EURUSD");
+await svc.ShowQuote(options.DefaultSymbol);
 ```
-
----
 
 ## 🛠 Requirements
 
