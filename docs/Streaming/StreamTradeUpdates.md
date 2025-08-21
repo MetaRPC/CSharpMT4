@@ -8,14 +8,19 @@
 ### Code Example
 
 ```csharp
-// Using service wrapper
+// --- Quick use (service wrapper) ---
+// Prints a marker when a trade event arrives (demo stops after 1st event).
 await _service.StreamTradeUpdates();
 
-// Or directly from MT4Account
-await foreach (var trade in _mt4.OnTradeAsync())
+// --- Low-level (direct account call) ---
+// Preconditions: account is connected via ConnectByServerName/ConnectByHostPort.
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30)); // cancel window for demo
+
+await foreach (var trade in _mt4.OnTradeAsync(cts.Token))
 {
+    // TODO: map fields you need from trade.TradeInfo (see Output section)
     Console.WriteLine("Trade update received.");
-    break; // for test/demo purposes
+    break; // demo: exit after first event
 }
 ```
 
@@ -33,7 +38,7 @@ IAsyncEnumerable<OnTradeData> OnTradeAsync(
 
 ## 🔽 Input
 
-No parameters required, except:
+No required parameters, except:
 
 * **`cancellationToken`** (`CancellationToken`, optional) — used to cancel the stream manually.
 
@@ -78,14 +83,15 @@ Structure of **`TradeInfo`**:
 
 ## 🎯 Purpose
 
-Use this method to subscribe to **real-time trade activity** — executed orders, closed positions, and trade events sent by the server. Suitable for:
+Subscribe to **real-time trade activity** — executed orders, closes, and other trade events sent by the server. Suitable for:
 
-* Updating dashboards or client UIs in real-time
-* Triggering post-trade logic (e.g. logging, risk checks)
+* Live dashboards / client UIs
+* Post-trade hooks (logging, risk checks)
 * Auditing trade flow in automated systems
 
 ---
 
-### ❓ Notes
+## 🧩 Notes & Tips
 
-This stream is **endless by nature** — unless filtered or cancelled manually. The wrapper method in `_service` uses a `break;` for demo purposes, but production code should handle stream lifecycle properly with cancellation tokens or filtering logic.
+* The stream is **continuous** — manage lifecycle with cancellation tokens.
+* Client performs **auto-reconnect** on transient gRPC errors; if you reprocess events after reconnect, deduplicate by `Ticket` + timestamps.
