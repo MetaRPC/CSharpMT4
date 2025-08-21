@@ -8,14 +8,18 @@
 ### Code Example
 
 ```csharp
-// Using service wrapper
+// --- Quick use (service wrapper) ---
 await _service.StreamOpenedOrderTickets();
 
-// Or directly from MT4Account
-await foreach (var update in _mt4.StreamOpenedOrderTicketsAsync(1000))
+// --- Low-level (direct account call) ---
+// Periodic snapshots of the current ticket set; cancel when done.
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+await foreach (var update in _mt4.OnOpenedOrdersTicketsAsync(
+    intervalMs: 1000,
+    cancellationToken: cts.Token))
 {
     Console.WriteLine($"Open tickets: {string.Join(", ", update.Tickets)}");
-    break; // for demo purposes
+    break; // demo: take first update only
 }
 ```
 
@@ -24,7 +28,7 @@ await foreach (var update in _mt4.StreamOpenedOrderTicketsAsync(1000))
 ### Method Signature
 
 ```csharp
-IAsyncEnumerable<OpenedOrderTicketsData> StreamOpenedOrderTicketsAsync(
+IAsyncEnumerable<OpenedOrderTicketsData> OnOpenedOrdersTicketsAsync(
     int intervalMs,
     [EnumeratorCancellation] CancellationToken cancellationToken = default
 )
@@ -62,3 +66,27 @@ Use this method to **track open order IDs in real time**, useful for:
 * Triggering updates to related order details based on ticket change events
 
 This is a **lightweight alternative** to streaming full order data, optimized for performance and minimal network load.
+
+---
+
+## 🧩 Notes & Tips
+
+* **Snapshot-style updates.** The stream returns the *current* ticket set at the chosen interval; compute diffs on the client if you need add/remove events.
+* **Cancellation = clean finish.** When you cancel the token, the stream completes gracefully (no exception needed in user code).
+* **Reconnects on transport hiccups.** Transient gRPC errors are retried internally with backoff up to a limit; short gaps are expected during restarts.
+* **Pick a sensible interval.** 500–2000 ms usually balances freshness and load for most UIs.
+
+---
+
+## ⚠️ Pitfalls
+
+* **Races are normal.** Orders can open/close between intervals; don’t assume you’ll see every intermediate state.
+* **Large ticket sets.** Many open orders can cause heavy UI updates each tick; debounce or diff before rendering.
+
+---
+
+## 🧪 Testing Suggestions
+
+* **Happy path:** With at least one open order, first snapshot contains that ticket.
+* **Change detection:** Open/close an order while streaming and verify your diffing logic spots adds/removes.
+* **Timeout path:** Use a short cancellation timeout to ensure your loop exits cleanly without unhandled exceptions.
