@@ -1,18 +1,24 @@
 # Getting Opened Orders
 
 > **Request:** retrieve currently opened orders from MT4
-> Fetch all active (non-closed) trade positions on the account.
+> Fetch all active (non‑closed) trade positions on the account.
 
 ---
 
 ### Code Example
 
 ```csharp
-// Using service wrapper
+// --- Quick use (service wrapper) ---
 await _service.ShowOpenedOrders();
 
-// Or directly from MT4Account
-var result = await _mt4.OpenedOrdersAsync();
+// --- Low-level (direct account call) ---
+// Preconditions: account is connected via ConnectByServerName/ConnectByHostPort.
+
+var result = await _mt4.OpenedOrdersAsync(
+    sortType: EnumOpenedOrderSortType.SortByOpenTimeAsc, // default
+    deadline: null,
+    cancellationToken: default);
+
 foreach (var order in result.OrderInfos)
 {
     Console.WriteLine($"[{order.OrderType}] Ticket: {order.Ticket}, Symbol: {order.Symbol}, " +
@@ -23,23 +29,32 @@ foreach (var order in result.OrderInfos)
 
 ---
 
-### Method Signature
+### Method Signatures
 
 ```csharp
+// Service wrapper (example implementation)
+Task ShowOpenedOrders();
+```
+
+```csharp
+// Low-level account call
 Task<OpenedOrdersData> OpenedOrdersAsync(
+    EnumOpenedOrderSortType sortType = EnumOpenedOrderSortType.SortByOpenTimeAsc,
     DateTime? deadline = null,
     CancellationToken cancellationToken = default
-)
+);
 ```
 
 ---
 
 ## 🔽 Input
 
-No required input parameters.
+No required parameters.
 
 Optional:
 
+* **`sortType`** (`EnumOpenedOrderSortType`) — sorting mode for returned orders.
+  *Default:* `SortByOpenTimeAsc`. (Refer to your proto for the full enum list.)
 * **`deadline`** (`DateTime?`) — optional UTC deadline.
 * **`cancellationToken`** (`CancellationToken`) — optional cancellation token.
 
@@ -47,23 +62,23 @@ Optional:
 
 ## ⬆️ Output
 
-Returns an **`OpenedOrdersData`** object with a collection of order information:
+Returns **`OpenedOrdersData`** with a collection of order information:
 
-| Field        | Type              | Description                           |
-| ------------ | ----------------- | ------------------------------------- |
-| `OrderInfos` | `List<OrderInfo>` | List of opened orders on the account. |
+| Field        | Type              | Description                          |
+| ------------ | ----------------- | ------------------------------------ |
+| `OrderInfos` | `List<OrderInfo>` | List of all currently opened orders. |
 
-Each `OrderInfo` includes:
+Each **`OrderInfo`** includes:
 
 | Field       | Type                 | Description                                |
 | ----------- | -------------------- | ------------------------------------------ |
 | `Ticket`    | `int`                | Unique ticket ID for the order.            |
-| `Symbol`    | `string`             | Trading symbol (e.g., "EURUSD").           |
-| `Lots`      | `double`             | Volume of the order in lots.               |
+| `Symbol`    | `string`             | Trading symbol (e.g., `"EURUSD"`).         |
+| `Lots`      | `double`             | Order volume in lots.                      |
 | `OpenPrice` | `double`             | Price at which the order was opened.       |
-| `Profit`    | `double`             | Current floating profit/loss of the order. |
-| `OpenTime`  | `string`             | Timestamp when the order was opened.       |
-| `OrderType` | `ENUM_ORDER_TYPE_TF` | Type of the order (Buy, Sell, etc).        |
+| `Profit`    | `double`             | Current floating profit/loss.              |
+| `OpenTime`  | `string`             | Timestamp when the order was opened (UTC). |
+| `OrderType` | `ENUM_ORDER_TYPE_TF` | Type of the order (Buy, Sell, etc.).       |
 
 ---
 
@@ -82,10 +97,31 @@ Each `OrderInfo` includes:
 
 ## 🎯 Purpose
 
-Use this method to retrieve and display a list of all currently open orders. Useful for:
+Use this method to retrieve and display the list of all **currently open** orders. Helpful for:
 
 * Monitoring active positions
-* Building UI dashboards with real-time order info
-* Analyzing exposure, profit/loss, and position distribution
+* Building dashboards with live order info
+* Analyzing exposure, floating P/L, and symbol distribution
 
-It provides core data for managing open trade state within any MT4 integration.
+---
+
+## 🧩 Notes & Tips
+
+* **IDs are `int`.** If you hold tickets as `long`, validate the value fits into `Int32` before calling close/modify APIs.
+* **UTC times.** `OpenTime` is UTC; convert only for UI.
+* **Freshness before actions.** Re-query right before sending `Close/Modify/CloseBy` to reduce race-condition errors.
+
+---
+
+## ⚠️ Pitfalls
+
+* **Race conditions.** Orders can be closed by other processes between list and action; handle `ApiExceptionMT4` on follow-up calls.
+* **Empty list ≠ error.** No open orders returns an empty `OrderInfos` list.
+
+---
+
+## 🧪 Testing Suggestions
+
+* **Happy path:** Open a small order and verify it appears with expected `Symbol`, `Lots`, and non-zero `Ticket`.
+* **Sorting check:** Call with a different `sortType` (if available in your proto) and confirm order is reordered.
+* **Failure path:** Immediately close an order after listing and try to act on its ticket — expect a handled error on the next call.
