@@ -21,7 +21,7 @@ This documentation will help you:
 
 ### Market Info
 
-* **Section overview:** [Market Info — Overview](Market_Info_Overview/index.md)
+* **Section overview:** [Market Info — Overview](Market%20Info/Market_Info_Overview.md)
 * [Show Quote](Market%20Info/ShowQuote.md)
 * [Show Quotes Many](Market%20Info/ShowQuotesMany.md)
 * [Show Quote History](Market%20Info/ShowQuoteHistory.md)
@@ -34,7 +34,7 @@ This documentation will help you:
 
 ### Order Operations ⚠️
 
-* **Section overview:** [Order Operations — Overview](Orders/index.md)
+* **Section overview:** [Orders — Overview](Orders/Orders_Overview.md)
 * [Show Opened Orders](Orders/ShowOpenedOrders.md)
 * [Show Opened Order Tickets](Orders/ShowOpenedOrderTickets.md)
 * [Show Orders History](Orders/ShowOrdersHistory.md)
@@ -46,7 +46,7 @@ This documentation will help you:
 
 ### Streaming
 
-* **Section overview:** [Streaming — Overview](Streaming/index.md)
+* **Section overview:** [Streaming — Overview](Streaming/Streaming_Overview.md)
 * [Show Real‑Time Quotes](Streaming/ShowRealTimeQuotes.md)
 * [Stream Opened Order Profits](Streaming/StreamOpenedOrderProfits.md)
 * [Stream Opened Order Tickets](Streaming/StreamOpenedOrderTickets.md)
