@@ -3,30 +3,40 @@ site_name: MetaRPC MT4 C# Documentation
 nav:
   - Home: index.md
   - API Reference: api/mt4_term_api/MT4Account.md
-  - Account Information:
-      - Account Summary: Account/ShowAccountSummary.md
-  - Order Operations:
-      - Order Send: Orders/ShowOrderSendExample.md
-      - Close Order: Orders/CloseOrderExample.md
-      - Close By Order: Orders/CloseByOrderExample.md
-      - Opened Orders: Orders/ShowOpenedOrders.md
-      - Opened Order Tickets: Orders/ShowOpenedOrderTickets.md
-      - Orders History: Orders/ShowOrdersHistory.md
+
+  - Account:
+      - Show Account Summary: Account/ShowAccountSummary.md
+
   - Market Info:
+      - Overview: Market Info/Market_Info_Overview.md
       - Show Quote: Market Info/ShowQuote.md
-      - Show Quote History: Market Info/ShowQuoteHistory.md
       - Show Quotes Many: Market Info/ShowQuotesMany.md
-      - Show All Symbols: Market Info/ShowAllSymbols.md
-      - Show Tick Values: Market Info/ShowTickValues.md
+      - Show Quote History: Market Info/ShowQuoteHistory.md
       - Show Symbol Params: Market Info/ShowSymbolParams.md
       - Show Symbol Info: Market Info/ShowSymbolInfo.md
+      - Show All Symbols: Market Info/ShowAllSymbols.md
+      - Show Tick Values: Market Info/ShowTickValues.md
+
+  - Order Operations:
+      - Overview: Orders/Orders_Overview.md
+      - Show Opened Orders: Orders/ShowOpenedOrders.md
+      - Show Opened Order Tickets: Orders/ShowOpenedOrderTickets.md
+      - Show Orders History: Orders/ShowOrdersHistory.md
+      - Close Order: Orders/CloseOrderExample.md
+      - Close By Order: Orders/CloseByOrderExample.md
+      - Order Send: Orders/ShowOrderSendExample.md
 
   - Streaming:
-      - Stream Trade Updates: Streaming/StreamTradeUpdates.md
+      - Overview: Streaming/Streaming_Overview.md
+      - Show Real-Time Quotes: Streaming/ShowRealTimeQuotes.md
       - Stream Opened Order Profits: Streaming/StreamOpenedOrderProfits.md
-      - Stream Opened Order Tickets: Streaming/StreamOpenedOrderTickets.md      
-  - Real-Time Quotes:
-      - Show RealTime Quotes: ShowRealTime/ShowRealTimeQuotes.md
+      - Stream Opened Order Tickets: Streaming/StreamOpenedOrderTickets.md
+      - Stream Trade Updates: Streaming/StreamTradeUpdates.md
+
+  - Guides:
+      - CLI Using: CLI_Using.md
+      - Beginner Run Guide: Beginner_Run_Guide.md
+      - Your Easy Start: Your_Easy_Start.md
 
 theme:
   name: material
