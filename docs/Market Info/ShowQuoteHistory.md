@@ -8,15 +8,24 @@
 ### Code Example
 
 ```csharp
-// Using service wrapper
+// --- Quick use (service wrapper) ---
 await _service.ShowQuoteHistory("EURUSD");
 
-// Or directly from MT4Account
+// --- Low-level (direct account call) ---
+// Preconditions: account is connected via ConnectByServerName/ConnectByHostPort.
+
 var from = DateTime.UtcNow.AddDays(-5);
 var to = DateTime.UtcNow;
 var timeframe = ENUM_QUOTE_HISTORY_TIMEFRAME.QhPeriodH1;
 
-var history = await _mt4.QuoteHistoryAsync("EURUSD", timeframe, from, to);
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)); // widen if terminal is slow
+var history = await _mt4.QuoteHistoryAsync(
+    symbol: "EURUSD",
+    timeframe: timeframe,
+    from: from,
+    to: to,
+    deadline: null,
+    cancellationToken: cts.Token);
 
 foreach (var candle in history.HistoricalQuotes)
 {
@@ -29,6 +38,12 @@ foreach (var candle in history.HistoricalQuotes)
 ### Method Signature
 
 ```csharp
+// Service wrapper
+Task ShowQuoteHistory(string symbol);
+```
+
+```csharp
+// Low-level account call
 Task<QuoteHistoryData> QuoteHistoryAsync(
     string symbol,
     ENUM_QUOTE_HISTORY_TIMEFRAME timeframe,
@@ -36,7 +51,7 @@ Task<QuoteHistoryData> QuoteHistoryAsync(
     DateTime to,
     DateTime? deadline = null,
     CancellationToken cancellationToken = default
-)
+);
 ```
 
 ---
@@ -62,8 +77,8 @@ Task<QuoteHistoryData> QuoteHistoryAsync(
 
 * **`from`** (`DateTime`) — required. Start of the historical range (UTC).
 * **`to`** (`DateTime`) — required. End of the historical range (UTC).
-* **`deadline`** (`DateTime?`, optional) — optional timeout.
-* **`cancellationToken`** (`CancellationToken`, optional) — cancel the request.
+* **`deadline`** (`DateTime?`, optional) — optional UTC deadline for timeout.
+* **`cancellationToken`** (`CancellationToken`, optional) — token to cancel the request.
 
 ---
 
@@ -71,9 +86,9 @@ Task<QuoteHistoryData> QuoteHistoryAsync(
 
 Returns a `QuoteHistoryData` object containing:
 
-| Field              | Type                       | Description                    |
-| ------------------ | -------------------------- | ------------------------------ |
-| `HistoricalQuotes` | `List<HistoricalQuoteBar>` | List of historical quote bars. |
+| Field              | Type                        | Description                      |
+| ------------------ | --------------------------- | -------------------------------- |
+| `HistoricalQuotes` | `IList<HistoricalQuoteBar>` | Sequence of historical OHLC bars |
 
 Each **HistoricalQuoteBar** includes:
 
@@ -85,16 +100,39 @@ Each **HistoricalQuoteBar** includes:
 | `Low`   | `double` | Lowest price          |
 | `Close` | `double` | Closing price         |
 
+> *Note:* In some proto versions `Time` may be a `Timestamp`; convert to local `DateTime` via `.ToDateTime()` for display.
+
 ---
 
 ## 🎯 Purpose
 
-Use this method to load candlestick-style **historical price data** for a symbol.
+Load candlestick-style historical price data for charting, backtesting, and technical analysis.
 
-Typical use cases:
+Typical uses:
 
 * Charting historical candles
 * Backtesting strategies
 * Detecting technical patterns
 
-Supports minute, hourly, daily, and higher timeframes using the `ENUM_QUOTE_HISTORY_TIMEFRAME` enum.
+---
+
+## 🧩 Notes & Tips
+
+* **UTC range.** Both `from` and `to` are interpreted as UTC on the wire. Ensure you convert local times appropriately.
+* **Validation.** The client validates `from <= to`; invalid ranges throw immediately.
+* **Broker calendars.** Expect gaps (weekends/holidays) and variable session times; this is normal for FX/CFD data.
+* **Bar alignment.** Choose `from` aligned to timeframe boundaries for cleaner charts (e.g., top of the hour for `H1`).
+
+---
+
+## ⚠️ Pitfalls
+
+* **Too-wide windows.** Some servers limit the number of bars per request; split very long ranges into chunks.
+* **Symbol suffixes.** Request history for the exact symbol name returned by `SymbolsAsync()` (e.g., `EURUSD.r`).
+
+---
+
+## 🧪 Testing Suggestions
+
+* **Happy path.** Non-empty bar list for liquid majors; OHLC values are consistent (`Low <= Open/Close <= High`).
+* **Edge cases.** Empty result for exotic symbols or out-of-hours windows; verify graceful handling.
