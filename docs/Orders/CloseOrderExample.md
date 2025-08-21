@@ -8,74 +8,100 @@
 ### Code Example
 
 ```csharp
-// Using service wrapper
+// --- Quick use (service wrapper) ---
 await _service.CloseOrderExample(123456);
 
-// Or directly from MT4Account
+// --- Low-level (direct account call) ---
+// Preconditions: account is connected via ConnectByServerName/ConnectByHostPort.
+
 var request = new OrderCloseDeleteRequest
 {
     OrderTicket = 123456 // must be a valid ticket ID
 };
 
-var result = await _mt4.OrderCloseDeleteAsync(request);
+var result = await _mt4.OrderCloseDeleteAsync(
+    request: request,
+    deadline: null,
+    cancellationToken: default);
+
 Console.WriteLine($"Closed/Deleted: {result.Mode}, Comment: {result.HistoryOrderComment}");
 ```
 
 ---
 
-###  Method Signature
+### Method Signatures
 
 ```csharp
+// Service wrapper (example implementation)
+Task CloseOrderExample(long ticket);
+```
+
+```csharp
+// Low-level account call
 Task<OrderCloseDeleteData> OrderCloseDeleteAsync(
     OrderCloseDeleteRequest request,
     DateTime? deadline = null,
     CancellationToken cancellationToken = default
-)
+);
 ```
 
 ---
 
 ## 🔽 Input
 
-* **`request`** (`OrderCloseDeleteRequest`) — request structure with fields:
+* **`request`** (`OrderCloseDeleteRequest`) — fields:
 
-  * **`OrderTicket`** (`int`) — required. The ticket number of the order to be closed or deleted.
+  | Field         | Type  | Description                                               |
+  | ------------- | ----- | --------------------------------------------------------- |
+  | `OrderTicket` | `int` | **Required.** Ticket number of the order to close/delete. |
 
 Optional:
 
-* **`deadline`** (`DateTime?`) — optional deadline.
-* **`cancellationToken`** (`CancellationToken`) — for cancellation control.
+* **`deadline`** (`DateTime?`) — optional per-call deadline.
+* **`cancellationToken`** (`CancellationToken`) — to cancel the request.
 
-Ticket must be a valid open order ID — otherwise the server will return an error like `Invalid ticket`, `Ticket not found`, etc.
+> The ticket must correspond to a **currently open** order; otherwise the server returns errors like *Invalid ticket* or *Ticket not found*.
 
 ---
 
 ## ⬆️ Output
 
-Returns an **`OrderCloseDeleteData`** object with:
+Returns **`OrderCloseDeleteData`** with:
 
-| Field                 | Type     | Description                                       |
-| --------------------- | -------- | ------------------------------------------------- |
-| `Mode`                | `string` | Operation mode result (e.g. "Closed", "Deleted"). |
-| `HistoryOrderComment` | `string` | Server comment describing the result.             |
+| Field                 | Type     | Description                                            |
+| --------------------- | -------- | ------------------------------------------------------ |
+| `Mode`                | `string` | Operation result mode (e.g., `"Closed"`, `"Deleted"`). |
+| `HistoryOrderComment` | `string` | Server comment explaining the result.                  |
+
+> The actual action (close **vs** delete) is determined by the server based on the order state/type.
 
 ---
 
 ## 🎯 Purpose
 
-This method allows closing or deleting an order manually by ticket — useful for:
+Close or delete an order by its ticket — convenient for:
 
-* Manual trade intervention from UI/debug tool
+* Manual trade intervention from UI/debug tools
 * Post-trade cleanup
 * Simulating close workflows in sandbox/testing
 
 ---
 
-### ❓ Why it's commented out in code:
+## 🧩 Notes & Tips
 
-This method requires a **valid, active ticket number**. Since demo or test environments may not have such a ticket readily available, it’s commented out by default to:
+* **Ticket range.** The wire type is `int`. If you store tickets as `long`, ensure the value fits into `Int32` before sending (the wrapper does this check).
+* **State matters.** Market positions are typically **closed**; pending orders are typically **deleted** — the server sets `Mode` accordingly.
 
-* ❌ Avoid runtime exceptions from invalid ticket errors
-* ✅ Encourage intentional use only when real ticket IDs are known
+---
 
-To test it, provide a known valid open order ticket — or use one received from `OpenedOrdersAsync()`.
+## ⚠️ Pitfalls
+
+* **Invalid/closed ticket.** Calling the method for a non-open ticket yields an API error — handle `ApiExceptionMT4`.
+* **Race conditions.** Another process might close the ticket between fetching and sending your request; retry logic should be at the caller level if needed.
+
+---
+
+## 🧪 Testing Suggestions
+
+* **Happy path.** Use a fresh open ticket from `OpenedOrdersAsync()`; verify `Mode` and that the ticket disappears from the open-orders list.
+* **Failure path.** Try an obviously invalid ticket and assert that an `ApiExceptionMT4` is thrown and logged without crashing.
