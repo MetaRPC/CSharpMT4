@@ -8,54 +8,84 @@
 ### Code Example
 
 ```csharp
-// Using service wrapper
-await _service.ShowQuotesMany(new[] { "EURUSD", "GBPUSD" });
+// --- Quick use (service wrapper) ---
+// First live tick per symbol with a small timeout per symbol.
+await _service.ShowQuotesMany(new[] { "EURUSD", "GBPUSD", "USDJPY" }, timeoutSecondsPerSymbol: 5);
 
-// Or directly from MT4Account
+// --- Low-level (direct account call) ---
+// Preconditions: account is connected via ConnectByServerName/ConnectByHostPort.
+
 var symbols = new[] { "EURUSD", "GBPUSD" };
-var quotes = await _mt4.QuoteManyAsync(symbols);
 
+// 1) Optional: initial snapshot for all symbols
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)); // tighten/loosen as you need
+var snapshot = await _mt4.QuoteManyAsync(
+    symbols: symbols,
+    deadline: null,
+    cancellationToken: cts.Token);
+
+// 2) Live first tick per symbol (soft timeout per symbol)
 foreach (var symbol in symbols)
 {
-    await foreach (var tick in _mt4.OnSymbolTickAsync(new[] { symbol }))
+    using var perSymbolCts = CancellationTokenSource.CreateLinkedTokenSource(cts.Token);
+    perSymbolCts.CancelAfter(TimeSpan.FromSeconds(5));
+
+    try
     {
-        var q = tick.SymbolTick;
-        var time = q.Time?.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss") ?? "n/a";
-        Console.WriteLine($"Quote for {q.Symbol}: Bid={q.Bid}, Ask={q.Ask}, Time={time}");
-        break; // for test/demo
+        await foreach (var tick in _mt4.OnSymbolTickAsync(new[] { symbol }, perSymbolCts.Token))
+        {
+            var q = tick.SymbolTick;
+            if (q == null) continue;
+
+            var time = q.Time?.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss") ?? "n/a";
+            Console.WriteLine($"Tick: {q.Symbol} {q.Bid}/{q.Ask} @ {time}");
+            perSymbolCts.Cancel(); // stop after the first tick
+            break;
+        }
+    }
+    catch (OperationCanceledException)
+    {
+        // expected if no tick within timeout
+        Console.WriteLine($"⏹️ No ticks for {symbol} within 5s — skipping.");
     }
 }
 ```
 
 ---
 
-## 🔽 Input
-
-### For `QuoteManyAsync`:
-
-* **`symbols`** (`string[]`) — required. Array of trading symbols (e.g., `["EURUSD", "USDJPY"]`).
-
-### For `OnSymbolTickAsync`:
-
-* **`symbols`** (`string[]`) — required. List of symbols to subscribe for real-time tick updates.
-* **`cancellationToken`** (`CancellationToken`, optional) — used to stop the stream.
-
----
-
 ### Method Signatures
 
 ```csharp
-Task<List<QuoteData>> QuoteManyAsync(
-    string[] symbols,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default
-)
-
-IAsyncEnumerable<SymbolTickData> OnSymbolTickAsync(
-    string[] symbols,
-    [EnumeratorCancellation] CancellationToken cancellationToken = default
-)
+// Service wrapper
+Task ShowQuotesMany(string[] symbols, int timeoutSecondsPerSymbol = 5, CancellationToken ct = default);
 ```
+
+```csharp
+// Low-level account calls
+Task<QuoteManyData> QuoteManyAsync(
+    IEnumerable<string> symbols,
+    DateTime? deadline = null,
+    CancellationToken cancellationToken = default);
+
+IAsyncEnumerable<OnSymbolTickData> OnSymbolTickAsync(
+    IEnumerable<string> symbols,
+    [System.Runtime.CompilerServices.EnumeratorCancellation] CancellationToken cancellationToken = default);
+```
+
+---
+
+## 🔽 Input
+
+### For `QuoteManyAsync`
+
+* **`symbols`** (`IEnumerable<string>`) — required. Array/list of trading symbols (e.g., `{"EURUSD","USDJPY"}`).
+* **`deadline`** (`DateTime?`, optional) — optional UTC deadline for timeout.
+* **`cancellationToken`** (`CancellationToken`, optional) — token to cancel the request.
+
+### For `OnSymbolTickAsync`
+
+* **`symbols`** (`IEnumerable<string>`) — required. Symbols to subscribe for real-time ticks.
+* **`cancellationToken`** (`CancellationToken`, optional) — used to stop the stream.
 
 ---
 
@@ -63,39 +93,39 @@ IAsyncEnumerable<SymbolTickData> OnSymbolTickAsync(
 
 ### From `QuoteManyAsync`
 
-Returns `List<QuoteData>` — see single `QuoteData` structure:
+Returns **`QuoteManyData`** (container of snapshot quotes for requested symbols). Individual quote entries are of type `QuoteData` and expose:
 
-| Field    | Type     | Description       |
-| -------- | -------- | ----------------- |
-| `Bid`    | `double` | Bid price         |
-| `Ask`    | `double` | Ask price         |
-| `Spread` | `double` | Spread in points  |
-| `Time`   | `string` | UTC time of quote |
-
----
+| Field      | Type                                       | Description                             |
+| ---------- | ------------------------------------------ | --------------------------------------- |
+| `Bid`      | `double`                                   | Current bid price                       |
+| `Ask`      | `double`                                   | Current ask price                       |
+| `DateTime` | `Google.Protobuf.WellKnownTypes.Timestamp` | Server timestamp for the snapshot (UTC) |
 
 ### From `OnSymbolTickAsync`
 
-Returns a stream (`IAsyncEnumerable<SymbolTickData>`) with:
+Streams **`OnSymbolTickData`** where `SymbolTick` contains:
 
-| Field        | Type        | Description                    |
-| ------------ | ----------- | ------------------------------ |
-| `SymbolTick` | `QuoteData` | Real-time tick data for symbol |
+| Field    | Type                                       | Description                        |
+| -------- | ------------------------------------------ | ---------------------------------- |
+| `Symbol` | `string`                                   | Symbol name                        |
+| `Bid`    | `double`                                   | Current bid price                  |
+| `Ask`    | `double`                                   | Current ask price                  |
+| `Time`   | `Google.Protobuf.WellKnownTypes.Timestamp` | Server timestamp of the tick (UTC) |
 
 ---
 
 ## 🎯 Purpose
 
-This method gives you both:
+Get both a quick **snapshot** (initial prices for multiple symbols) and **live** updates via ticks. Typical uses:
 
-1. **Snapshot quote info** via `QuoteManyAsync` — useful for instant display or order validation
-2. **Live tick stream** via `OnSymbolTickAsync` — for real-time pricing, UI updates, or alerts
-
-Useful in trading dashboards, price monitors, and any interface where users watch multiple symbols simultaneously.
+* Trading dashboards and watchlists
+* Real-time price monitors and alerts
+* Preloading prices before starting live streams
 
 ---
 
-### ❓ Notes
+## 🧩 Notes & Tips
 
-* `OnSymbolTickAsync` returns an endless stream — make sure to manage cancellation.
-* You can use `.Take(1)` or manual `break;` logic for testing/demo.
+* **Endless stream.** `OnSymbolTickAsync` is an open stream. Always manage cancellation (as in the example) to stop cleanly.
+* **Per-symbol timeout.** In the wrapper we use a small per-symbol timeout to avoid hanging when a symbol is inactive.
+* **Exact names.** Use the exact symbol strings from `SymbolsAsync()` — some brokers add suffixes (e.g., `EURUSD.r`).
