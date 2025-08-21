@@ -4,6 +4,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Google.Protobuf.WellKnownTypes;
+using MetaRPC.CSharpMT4;
 
 
 namespace MetaRPC.CSharpMT4
@@ -19,6 +20,18 @@ namespace MetaRPC.CSharpMT4
             _logger = logger;
         }
 
+
+        // Streams real-time tick quotes for given symbols during a specified duration.
+        // 
+        // Parameters:
+        //   symbols         - array of symbols (e.g. "EURUSD", "GBPUSD") to subscribe to
+        //   durationSeconds - how long to keep streaming ticks (default = 10 sec)
+        //
+        // Behavior:
+        //   - Subscribes to MT4 tick stream via OnSymbolTickAsync.
+        //   - Prints each incoming tick with Bid, Ask, and Time to console.
+        //   - Automatically stops after the specified duration.
+        //   - Catches OperationCanceledException when the cancellation token expires.
         public async Task StreamQuotesForSymbolsAsync(string[] symbols, int durationSeconds = 10)
         {
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(durationSeconds));
@@ -45,7 +58,13 @@ namespace MetaRPC.CSharpMT4
 
 
 
-        // === Account Info ===
+        // -----=== 📂 Account Info ===-----
+
+
+        // Uses the MT4 API (CSharpMT4) to receive and output the balance, equity, and currency of the account.
+        //
+        // Receives data via AccountSummaryAsync (see MetaRPC/CSharpMT4 repository),
+        // logs the start of the operation and outputs the result to the console.
         public async Task ShowAccountSummary()
         {
             _logger.LogInformation("=== Account Summary ===");
@@ -53,7 +72,15 @@ namespace MetaRPC.CSharpMT4
             Console.WriteLine($"Balance: {summary.AccountBalance}, Equity: {summary.AccountEquity}, Currency: {summary.AccountCurrency}");
         }
 
-        // === Order Operations ===
+        // -----=== 📂 Order Operations ===-----
+
+        // Displays all currently opened orders in the account.
+        //
+        // Behavior:
+        //   - Requests opened orders from MT4 via OpenedOrdersAsync (see MetaRPC/CSharpMT4).
+        //   - Logs header "Opened Orders".
+        //   - Iterates through returned OrderInfos and prints:
+        //       OrderType, Ticket, Symbol, Lots, OpenPrice, Profit, OpenTime.
         public async Task ShowOpenedOrders()
         {
             _logger.LogInformation("=== Opened Orders ===");
@@ -67,6 +94,12 @@ namespace MetaRPC.CSharpMT4
             }
         }
 
+        // Displays tickets of all currently opened orders.
+        //
+        // Behavior:
+        //   - Requests opened order tickets from MT4 via OpenedOrdersTicketsAsync (see MetaRPC/CSharpMT4).
+        //   - Logs header "Opened Order Tickets".
+        //   - Iterates through returned ticket list and prints each ticket ID.
         public async Task ShowOpenedOrderTickets()
         {
             _logger.LogInformation("=== Opened Order Tickets ===");
@@ -80,6 +113,15 @@ namespace MetaRPC.CSharpMT4
 
         }
 
+        // Displays account order history for the last 7 days.
+        //
+        // Behavior:
+        //   - Defines time range: from (UTC now - 7 days) to (UTC now).
+        //   - Requests historical orders via OrdersHistoryAsync 
+        //       with sorting by CloseTime descending (see MetaRPC/CSharpMT4).
+        //   - Iterates through OrdersInfo and prints ticket & symbol (short form).
+        //   - Then prints detailed info per order: 
+        //       OrderType, Ticket, Symbol, Lots, OpenPrice, ClosePrice, Profit, CloseTime.
         public async Task ShowOrdersHistory()
         {
             _logger.LogInformation("=== Order History ===");
@@ -105,6 +147,16 @@ namespace MetaRPC.CSharpMT4
             }
         }
 
+
+        // Closes or deletes an order by its ticket.
+        //
+        // Behavior:
+        //   - Accepts order ticket (long) as input.
+        //   - Validates that ticket value fits into int range 
+        //       (since MT4 API expects int, otherwise throws OverflowException).
+        //   - Builds OrderCloseDeleteRequest and sends it via OrderCloseDeleteAsync 
+        //       (see MetaRPC/CSharpMT4).
+        //   - Prints result mode (Closed/Deleted) and server comment to console.
         public async Task CloseOrderExample(long ticket)
         {
             _logger.LogInformation("=== Close/Delete Order ===");
@@ -121,6 +173,15 @@ namespace MetaRPC.CSharpMT4
 
             Console.WriteLine($"Closed/Deleted: {result.Mode}, Comment: {result.HistoryOrderComment}");
         }
+
+        // Closes an order using another opposite order (Close By).
+        //
+        // Behavior:
+        //   - Accepts two tickets (order to close and opposite order).
+        //   - Validates that both fit into int range (MT4 API limitation).
+        //   - Sends OrderCloseByRequest via OrderCloseByAsync (see MetaRPC/CSharpMT4).
+        //   - Prints resulting profit, close price, and time.
+        //   - Close By allows offsetting opposite positions without opening extra trades.
 
         public async Task CloseByOrderExample(long ticket, long oppositeTicket)
         {
@@ -144,6 +205,15 @@ namespace MetaRPC.CSharpMT4
 
         }
 
+
+        // Sends a new market Buy order (example).
+        //
+        // Behavior:
+        //   - Builds OrderSendRequest with given symbol, fixed parameters (volume, slippage, magic, comment).
+        //   - Calls OrderSendAsync to open order via MT4 API (see MetaRPC/CSharpMT4).
+        //   - On success prints order ticket and open price.
+        //   - Catches ApiExceptionMT4 to display error code if order fails.
+        //   - Serves as a simple template for creating custom order requests.
         public async Task ShowOrderSendExample(string symbol)
         {
             _logger.LogInformation("=== Order Send Example ===");
@@ -170,7 +240,16 @@ namespace MetaRPC.CSharpMT4
             }
         }
 
-        // === Streaming ===
+        // -----=== 📂 Streaming ===-----
+
+
+        // Streams trade updates from MT4 in real time.
+        //
+        // Behavior:
+        //   - Subscribes to OnTradeAsync stream (see MetaRPC/CSharpMT4).
+        //   - Logs header "Streaming: Trades".
+        //   - Prints message when a trade update is received, then exits loop.
+        //   - Useful as a minimal example; in practice loop can process multiple updates.
         public async Task StreamTradeUpdates()
         {
             _logger.LogInformation("=== Streaming: Trades ===");
@@ -181,6 +260,14 @@ namespace MetaRPC.CSharpMT4
             }
         }
 
+
+        // Streams profit updates for opened orders.
+        //
+        // Behavior:
+        //   - Subscribes to OnOpenedOrdersProfitAsync with update interval (ms).
+        //   - Logs header "Streaming: Opened Order Profits".
+        //   - Prints message when a profit update is received, then exits loop.
+        //   - Useful as a demo; normally you would keep streaming to track live PnL changes.
         public async Task StreamOpenedOrderProfits()
         {
             _logger.LogInformation("=== Streaming: Opened Order Profits ===");
@@ -191,6 +278,14 @@ namespace MetaRPC.CSharpMT4
             }
         }
 
+
+        // Streams updates of currently opened order tickets.
+        //
+        // Behavior:
+        //   - Subscribes to OnOpenedOrdersTicketsAsync with update interval in ms (1000 = 1 sec).
+        //   - Logs header "Streaming: Opened Order Tickets".
+        //   - Prints message when a ticket update is received, then exits loop.
+        //   - Intended as a minimal example; usually loop runs continuously to track changes in opened tickets.
         public async Task StreamOpenedOrderTickets()
         {
             _logger.LogInformation("=== Streaming: Opened Order Tickets ===");
@@ -201,7 +296,16 @@ namespace MetaRPC.CSharpMT4
             }
         }
 
-        // === Market Info ===
+        // -----=== 📂 Market Info ===-----
+
+
+        // Displays the latest quote for a given symbol.
+        //
+        // Behavior:
+        //   - Calls QuoteAsync(symbol) to request current market quote (Bid/Ask/Time).
+        //   - Logs header with the symbol name.
+        //   - Prints Bid, Ask, and server time to console.
+        //   - Equivalent to requesting a single tick snapshot, not a stream.
         public async Task ShowQuote(string symbol)
         {
             _logger.LogInformation($"=== Current Quote for {symbol} ===");
@@ -210,25 +314,55 @@ namespace MetaRPC.CSharpMT4
             Console.WriteLine($"Quote for {symbol}: Bid={quote.Bid}, Ask={quote.Ask}, Time={quote.DateTime.ToDateTime():yyyy-MM-dd HH:mm:ss}");
         }
 
-        public async Task ShowQuotesMany(string[] symbols)
+
+
+        // Displays quotes for multiple symbols.
+        //
+        // Behavior:
+        //   - Requests initial quotes for all provided symbols via QuoteManyAsync.
+        //   - For each symbol, subscribes to OnSymbolTickAsync and takes the first tick.
+        //   - Prints Bid, Ask, and server time for each symbol, then breaks the loop.
+        //   - Acts as a snapshot for several instruments; in practice the loop can be left open for continuous streaming.
+        // Streams the first live tick for each symbol (per-symbol soft timeout).
+public async Task ShowQuotesMany(string[] symbols, int timeoutSecondsPerSymbol = 5, CancellationToken ct = default)
+{
+    _logger.LogInformation("=== Live first tick for: {Symbols} ===", string.Join(", ", symbols));
+
+    foreach (var symbol in symbols)
+    {
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+        cts.CancelAfter(TimeSpan.FromSeconds(timeoutSecondsPerSymbol));
+
+        try
         {
-            _logger.LogInformation("=== Quotes for Multiple Symbols ===");
-            var quotes = await _mt4.QuoteManyAsync(symbols);
-
-            foreach (var symbol in symbols)
+            await foreach (var tick in _mt4.OnSymbolTickAsync(new[] { symbol }, cts.Token))
             {
-                await foreach (var tick in _mt4.OnSymbolTickAsync(new[] { symbol }))
-                {
-                    var q = tick.SymbolTick;
-                    var time = q.Time?.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss") ?? "n/a";
-                    Console.WriteLine($"Quote for {q.Symbol}: Bid={q.Bid}, Ask={q.Ask}, Time={time}");
-                    break;
-                }
+                var q = tick.SymbolTick;
+                if (q == null) continue;
+
+                var time = q.Time?.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss") ?? "n/a";
+                Console.WriteLine($"Tick: {q.Symbol} {q.Bid}/{q.Ask} @ {time}");
+                cts.Cancel();
+                break; // first tick only
             }
-
-
         }
+        catch (OperationCanceledException)
+        {
+            _logger.LogInformation("⏹️ No ticks for {Symbol} within {Sec}s — skipping.", symbol, timeoutSecondsPerSymbol);
+        }
+    }
+}
 
+
+
+
+        // Displays historical quotes (candles) for a given symbol.
+        //
+        // Behavior:
+        //   - Defines time range: last 5 days (UTC) and timeframe = H1 (1 hour).
+        //   - Calls QuoteHistoryAsync to request historical data (see MetaRPC/CSharpMT4).
+        //   - Iterates through HistoricalQuotes and prints OHLC values with time.
+        //   - Equivalent to fetching bar history (like iBars/iCandles in MQL).
         public async Task ShowQuoteHistory(string symbol)
         {
             _logger.LogInformation("=== Historical Quotes ===");
@@ -244,6 +378,15 @@ namespace MetaRPC.CSharpMT4
             }
         }
 
+
+
+        // Displays all available trading symbols from the MT4 server.
+        //
+        // Behavior:
+        //   - Calls SymbolsAsync to request the full list of instruments (see MetaRPC/CSharpMT4).
+        //   - Logs header "All Available Symbols".
+        //   - Iterates through SymbolNameInfos and prints symbol name with its index.
+        //   - Useful for discovering instruments before requesting quotes or sending orders.
         public async Task ShowAllSymbols()
         {
             _logger.LogInformation("=== All Available Symbols ===");
@@ -256,6 +399,16 @@ namespace MetaRPC.CSharpMT4
             }
 
         }
+
+
+
+        // Displays tick value, tick size, and contract size for given symbols.
+        //
+        // Behavior:
+        //   - Calls TickValueWithSizeAsync to request trading parameters (see MetaRPC/CSharpMT4).
+        //   - Logs header "Tick Value, Size and Contract Size".
+        //   - Iterates through Infos and prints SymbolName, TickValue, TickSize, and ContractSize.
+        //   - Useful for risk management and position sizing calculations.
         public async Task ShowTickValues(string[] symbols)
         {
             _logger.LogInformation("=== Tick Value, Size and Contract Size ===");
@@ -271,6 +424,17 @@ namespace MetaRPC.CSharpMT4
         }
 
 
+
+
+        // Displays detailed trading parameters for a given symbol.
+        //
+        // Behavior:
+        //   - Calls SymbolParamsManyAsync to request symbol information (see MetaRPC/CSharpMT4).
+        //   - Logs header "Symbol Parameters".
+        //   - Iterates through SymbolInfos and prints key properties:
+        //       Digits, SpreadFloat, Bid, VolumeMin/Max/Step, base/profit/margin currencies,
+        //       TradeMode, and TradeExeMode.
+        //   - Useful for validating instrument settings before sending orders or quotes.
         public async Task ShowSymbolParams(string symbol)
         {
             _logger.LogInformation("=== Symbol Parameters ===");
@@ -294,6 +458,14 @@ namespace MetaRPC.CSharpMT4
             }
         }
 
+
+        // Displays basic information for a given symbol.
+        //
+        // Behavior:
+        //   - Calls SymbolParamsManyAsync to fetch symbol parameters (see MetaRPC/CSharpMT4).
+        //   - Logs header with the symbol name.
+        //   - Iterates through SymbolInfos and prints: SymbolName, Digits, Spread, and Bid.
+        //   - Useful for a quick overview without showing all advanced parameters.
         public async Task ShowSymbolInfo(string symbol)
         {
             _logger.LogInformation($"=== Symbol Info: {symbol} ===");
@@ -305,15 +477,41 @@ namespace MetaRPC.CSharpMT4
             }
         }
 
-        public async Task ShowRealTimeQuotes(string symbol)
+
+
+        // Streams real-time quotes for a given symbol.
+        //
+        // Behavior:
+        //   - Subscribes to OnSymbolTickAsync for the specified symbol (see MetaRPC/CSharpMT4).
+        //   - Logs header "Streaming Quotes" with the symbol name.
+        //   - Prints the first received tick (Symbol, Bid/Ask, Time) to console, then exits loop.
+        //   - Works as a minimal demo; in real use the loop is kept open to stream continuous ticks.
+        // Streams the first real-time tick for a symbol, but exits gracefully on timeout.
+        public async Task ShowRealTimeQuotes(string symbol, int timeoutSeconds = 5, CancellationToken ct = default)
         {
-            _logger.LogInformation($"=== Streaming Quotes: {symbol} ===");
-            await foreach (var tick in _mt4.OnSymbolTickAsync(new[] { symbol }))
+            using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            cts.CancelAfter(TimeSpan.FromSeconds(timeoutSeconds));
+
+            _logger.LogInformation("=== Streaming Quotes: {Symbol} (first tick or {Sec}s) ===", symbol, timeoutSeconds);
+
+            try
             {
-                Console.WriteLine($"Tick: {tick.SymbolTick.Symbol} {tick.SymbolTick.Bid}/{tick.SymbolTick.Ask} @ {tick.SymbolTick.Time}");
-                break;
+                await foreach (var tick in _mt4.OnSymbolTickAsync(new[] { symbol }, cts.Token))
+                {
+                    var q = tick.SymbolTick;
+                    if (q == null) continue;
+
+                    var time = q.Time?.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss") ?? "n/a";
+                    Console.WriteLine($"Tick: {q.Symbol} {q.Bid}/{q.Ask} @ {time}");
+                    cts.Cancel();
+                    break; // first tick only
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                _logger.LogInformation("⏹️ No ticks for {Sec}s — stopping.", timeoutSeconds);
             }
         }
-    }
 
+    }
 }
