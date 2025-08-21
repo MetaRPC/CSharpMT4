@@ -8,11 +8,17 @@
 ### Code Example
 
 ```csharp
-// Using service wrapper
+// --- Quick use (service wrapper) ---
 await _service.ShowTickValues(new[] { "EURUSD", "XAUUSD" });
 
-// Or directly from MT4Account
-var result = await _mt4.TickValueWithSizeAsync(new[] { "EURUSD", "XAUUSD" });
+// --- Low-level (direct account call) ---
+// Preconditions: account is connected via ConnectByServerName/ConnectByHostPort.
+
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5));
+var result = await _mt4.TickValueWithSizeAsync(
+    symbolNames: new[] { "EURUSD", "XAUUSD" },
+    deadline: null,
+    cancellationToken: cts.Token);
 
 foreach (var info in result.Infos)
 {
@@ -25,51 +31,83 @@ foreach (var info in result.Infos)
 
 ---
 
-### Method Signature
+### Method Signatures
 
 ```csharp
+// Service wrapper
+Task ShowTickValues(string[] symbols);
+```
+
+```csharp
+// Low-level account call
 Task<TickValueWithSizeData> TickValueWithSizeAsync(
-    string[] symbols,
+    IEnumerable<string> symbolNames,
     DateTime? deadline = null,
     CancellationToken cancellationToken = default
-)
+);
 ```
 
 ---
 
 ## 🔽 Input
 
-* **`symbols`** (`string[]`) — required. Array of trading symbols to query (e.g., `"EURUSD"`, `"XAUUSD"`).
-* **`deadline`** (`DateTime?`, optional) — timeout control.
-* **`cancellationToken`** (`CancellationToken`, optional) — to cancel the request.
+| Parameter                 | Type                             | Description                                                 |
+| ------------------------- | -------------------------------- | ----------------------------------------------------------- |
+| `symbols` / `symbolNames` | `IEnumerable<string>` (required) | One or more trading symbols (e.g., `"EURUSD"`, `"XAUUSD"`). |
+| `deadline`                | `DateTime?` (optional)           | Optional UTC deadline for request timeout.                  |
+| `cancellationToken`       | `CancellationToken` (optional)   | Token to cancel the operation.                              |
 
 ---
 
 ## ⬆️ Output
 
-Returns a `TickValueWithSizeData` object containing:
+Returns **`TickValueWithSizeData`** containing:
 
-| Field   | Type                                | Description                               |
-| ------- | ----------------------------------- | ----------------------------------------- |
-| `Infos` | `List<TickValueWithSizeSymbolInfo>` | Tick-related information for each symbol. |
+| Field   | Type                                 | Description                   |
+| ------- | ------------------------------------ | ----------------------------- |
+| `Infos` | `IList<TickValueWithSizeSymbolInfo>` | Tick-related info per symbol. |
 
-Each `TickValueWithSizeSymbolInfo` includes:
+**TickValueWithSizeSymbolInfo** fields:
 
-| Field               | Type     | Description                                      |
-| ------------------- | -------- | ------------------------------------------------ |
-| `SymbolName`        | `string` | Symbol name (e.g., "EURUSD")                     |
-| `TradeTickValue`    | `double` | Value of one tick movement in account currency   |
-| `TradeTickSize`     | `double` | Minimum price change for the symbol              |
-| `TradeContractSize` | `double` | Number of units per lot (usually 100,000 for FX) |
+| Field               | Type     | Description                                                         |
+| ------------------- | -------- | ------------------------------------------------------------------- |
+| `SymbolName`        | `string` | Trading symbol name.                                                |
+| `TradeTickValue`    | `double` | Monetary value of **one tick** in the account currency.             |
+| `TradeTickSize`     | `double` | Minimal price increment (tick size).                                |
+| `TradeContractSize` | `double` | Units per 1.0 lot (broker-defined; e.g., 100000 for many FX pairs). |
 
 ---
 
 ## 🎯 Purpose
 
-This method provides core trading parameters used in calculations such as:
+Provide core parameters for:
 
 * Profit/loss estimation
 * Pip value conversions
 * Position sizing formulas
 
-It is essential for both **manual trade interfaces** and **automated strategy logic**.
+---
+
+## 🧩 Notes & Tips
+
+* **Pip vs tick.** A pip is not always equal to one tick. Derive pip value as:
+  `pipValue = TradeTickValue * (pipSize / TradeTickSize)`
+  where `pipSize` depends on the instrument (e.g., `0.0001` for 5-digit FX pairs, `0.01` for JPY pairs).
+* **Account currency.** `TradeTickValue` is already in the **account currency**; no extra conversion needed unless you aggregate across accounts.
+* **Contract size.** Metals/indices/CFDs may use different contract sizes than FX. Always read `TradeContractSize` from the API instead of hardcoding.
+* **Caching.** These parameters are fairly stable; cache per session and refresh when switching accounts or symbol groups.
+
+---
+
+## ⚠️ Pitfalls
+
+* **Wrong pip math.** Using `Ask-Bid` directly as “pips” without normalizing by `TradeTickSize` leads to wrong P/L.
+* **Assuming FX-only sizes.** Not all instruments use 100000 units/lot; indices/commodities vary by broker.
+
+---
+
+## 🧪 Testing Suggestions
+
+* **Happy path.** For majors, `TradeTickSize`≈`1e-5` and `TradeContractSize`≈`100000`.
+* **Edge cases.** JPY pairs have `TradeTickSize`≈`0.001`; metals/indices return broker-specific contract sizes.
+* **Failure path.** Invalid/disabled symbol should not crash; handle empty or missing entries gracefully.
