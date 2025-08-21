@@ -64,9 +64,6 @@ namespace MetaRPC.CSharpMT4
 
             var symbol = string.IsNullOrWhiteSpace(options.DefaultSymbol) ? "EURUSD" : options.DefaultSymbol;
 
-
-
-            // 2) Create account/service and connect
             // 2) Create account/service and connect
 using var loggerFactory = LoggerFactory.Create(builder =>
 {
@@ -77,12 +74,12 @@ _logger = loggerFactory.CreateLogger<Program>();
 _mt4 = new MT4Account(
     user: options.User,
     password: options.Password,
-    logger: loggerFactory.CreateLogger<MT4Account>() // <- логгер внутрь MT4Account
+    logger: loggerFactory.CreateLogger<MT4Account>() // <- logger inside MT4Account
 );
 
 _service = new MT4Service(
     _mt4,
-    loggerFactory.CreateLogger<MT4Service>()        // <- логгер для сервиса
+    loggerFactory.CreateLogger<MT4Service>()        // <- logger for the service
 );
 
 try
