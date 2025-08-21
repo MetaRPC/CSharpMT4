@@ -21,7 +21,7 @@ This documentation will help you:
 
 ### Market Info
 
-* **Section overview:** [Market Info — Overview](Market%20Info/index.md)
+* **Section overview:** [Market Info — Overview](Market Info/index.md)
 * [Show Quote](Market%20Info/ShowQuote.md)
 * [Show Quotes Many](Market%20Info/ShowQuotesMany.md)
 * [Show Quote History](Market%20Info/ShowQuoteHistory.md)
