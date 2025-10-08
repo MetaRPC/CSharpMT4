@@ -1,0 +1,32 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "build",
+        "${workspaceFolder}/MetaRPC.CSharpMT4.csproj",
+        "/property:GenerateFullPaths=true",
+        "/p:Configuration=Debug"
+      ],
+      "group": "build",
+      "problemMatcher": "$msCompile",
+      "presentation": { "reveal": "silent", "clear": true }
+    },
+    {
+      "label": "run",
+      "type": "shell",
+      "command": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "${workspaceFolder}/MetaRPC.CSharpMT4.csproj"
+      ],
+      "problemMatcher": "$msCompile",
+      "dependsOn": "build",
+      "presentation": { "reveal": "always", "panel": "dedicated", "clear": true }
+    }
+  ]
+}

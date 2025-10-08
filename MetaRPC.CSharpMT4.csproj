@@ -1,21 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>csharp_nuget</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <!-- Do not compile files from the examples folder in the main project -->
   <ItemGroup>
-    <Compile Remove="ApiExceptionMT4.cs" />
+    <Compile Remove="examples\**\*.cs" />
+    <None Remove="examples\**\*" />
+    <EmbeddedResource Remove="examples\**\*" />
   </ItemGroup>
 
+  <!-- appsettings.json is located in the root of the main project and is copied to the bin -->
   <ItemGroup>
     <None Remove="appsettings.json" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -23,14 +24,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MetaRPC.MT4" Version="1.0.709" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="10.0.0-preview.5.25277.114" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="10.0.0-preview.5.25277.114" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0-preview.5.25277.114" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="10.0.0-preview.5.25277.114" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0-preview.5.25277.114" />
-    <PackageReference Include="Microsoft.Extensions.WebEncoders" Version="10.0.0-preview.5.25277.114" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="MetaRPC.MT4" Version="1.0.709" />
   </ItemGroup>
-
 </Project>

@@ -1,0 +1,28 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Launch (dotnet run)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "dotnet",
+      "args": [
+        "run",
+        "--project",
+        "${workspaceFolder}/MetaRPC.CSharpMT4.csproj"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+        "env": {
+        "MT4_LOGIN": "168418518",
+        "MT4_PASSWORD": "f5etwyo",
+        "MT4_SERVER": "MetaQuotes-Demo",
+        "GRPC_SERVER": "https://mt4.mrpc.pro:443",
+        "SYMBOL": "EURUSD"
+      },
+      "stopAtEntry": false
+    }
+  ]
+}

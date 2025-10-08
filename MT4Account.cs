@@ -704,7 +704,7 @@ private async IAsyncEnumerable<TData> ExecuteStreamWithReconnect<TRequest, TRepl
     TRequest request,
     Func<TRequest, Metadata, CancellationToken, AsyncServerStreamingCall<TReply>> streamInvoker,
     Func<TReply, Mt4TermApi.Error?> getError,
-    Func<TReply, TData?> getData,   // <— допускаем null внутри
+    Func<TReply, TData?> getData,  
     [EnumeratorCancellation] CancellationToken ct = default,
     int maxRestarts = DefaultMaxStreamRestarts)
     where TData : class            
@@ -778,8 +778,8 @@ private async IAsyncEnumerable<TData> ExecuteStreamWithReconnect<TRequest, TRepl
                     throw new ApiExceptionMT4(err);
                 }
 
-                var data = getData(reply); // TData? внутри
-                if (data != null)          // наружу — только не-null
+                var data = getData(reply); 
+                if (data != null)          
                     yield return data;
             }
         }

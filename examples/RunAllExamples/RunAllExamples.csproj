@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <!-- Link to the main project -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\MetaRPC.CSharpMT4.csproj" />
+  </ItemGroup>
+
+  <!-- Connecting the walkthrough from the examples folder -->
+  <ItemGroup>
+    <Compile Include="..\LowLevel_Walkthrough.cs" />
+    <!-- Program.cs in the current folder is connected automatically -->
+  </ItemGroup>
+</Project>
+

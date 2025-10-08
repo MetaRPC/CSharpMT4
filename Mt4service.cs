@@ -5,7 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Google.Protobuf.WellKnownTypes;
 using MetaRPC.CSharpMT4;
-
+using static MetaRPC.CSharpMT4.ConsoleUi;
 
 namespace MetaRPC.CSharpMT4
 {
@@ -20,20 +20,164 @@ namespace MetaRPC.CSharpMT4
             _logger = logger;
         }
 
+        #region Account
+        /// <summary>
+        /// Prints account summary: Balance, Equity, Currency.
+        /// Wraps <see cref="MT4Account.AccountSummaryAsync"/> and writes to console.
+        /// </summary>
+        /// <returns>Task that completes after printing.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
 
-        // Streams real-time tick quotes for given symbols during a specified duration.
-        // 
-        // Parameters:
-        //   symbols         - array of symbols (e.g. "EURUSD", "GBPUSD") to subscribe to
-        //   durationSeconds - how long to keep streaming ticks (default = 10 sec)
-        //
-        // Behavior:
-        //   - Subscribes to MT4 tick stream via OnSymbolTickAsync.
-        //   - Prints each incoming tick with Bid, Ask, and Time to console.
-        //   - Automatically stops after the specified duration.
-        //   - Catches OperationCanceledException when the cancellation token expires.
+        public async Task AccountSummary()
+        {
+            Box("AccountSummary()");
+            _logger.LogInformation("=== Account Summary ===");
+            var summary = await _mt4.AccountSummaryAsync();
+            Console.WriteLine($"Balance: {summary.AccountBalance}, Equity: {summary.AccountEquity}, Currency: {summary.AccountCurrency}");
+        }
+
+        #endregion
+
+    //----------------------------------------------------------------------------------------------------------------
+
+        #region Quotes
+        /// <summary>
+        /// Prints the current quote for the given symbol (Bid/Ask + timestamp).
+        /// Wraps <see cref="MT4Account.QuoteAsync(string)"/> with retry and logs via ILogger.
+        /// </summary>
+        /// <param name="symbol">Trading symbol, e.g. "EURUSD".</param>
+        /// <returns>Task that completes after printing.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
+
+        public async Task Quote(string symbol)
+        {
+            Box($"Quote(\"{symbol}\")");
+            _logger.LogInformation("=== Current Quote for {Symbol} ===", symbol);
+            var quote = await Retry.RunAsync(() => _mt4.QuoteAsync(symbol), logger: _logger);
+            Console.WriteLine($"Quote for {symbol}: Bid={quote.Bid}, Ask={quote.Ask}, Time={quote.DateTime.ToDateTime():yyyy-MM-dd HH:mm:ss}");
+        }
+
+
+        /// <summary>
+        /// For each symbol, subscribes to ticks and prints the first live tick (Bid/Ask @ time).
+        /// Wraps <see cref="MT4Account.OnSymbolTickAsync(string[], System.Threading.CancellationToken)"/>; per-symbol timeout applies.
+        /// </summary>
+        /// <param name="symbols">Symbols to probe (e.g., "EURUSD").</param>
+        /// <param name="timeoutSecondsPerSymbol">Max seconds to wait per symbol before skipping.</param>
+        /// <param name="ct">Optional cancellation for the whole routine.</param>
+        /// <returns>Task that completes after first tick (or timeout) for each symbol.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If the stream can’t be opened or terminal is not ready.</exception>
+
+        public async Task QuotesMany(string[] symbols, int timeoutSecondsPerSymbol = 5, CancellationToken ct = default)
+        {
+            Box($"QuotesMany([{string.Join(", ", symbols)}]) — first live tick per symbol");
+            _logger.LogInformation("=== Live first tick for: {Symbols} ===", string.Join(", ", symbols));
+
+            foreach (var symbol in symbols)
+            {
+                using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+                cts.CancelAfter(TimeSpan.FromSeconds(timeoutSecondsPerSymbol));
+
+                try
+                {
+                    await foreach (var tick in _mt4.OnSymbolTickAsync(new[] { symbol }, cts.Token))
+                    {
+                        var q = tick.SymbolTick;
+                        if (q == null) continue;
+
+                        var time = q.Time?.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss") ?? "n/a";
+                        Console.WriteLine($"Tick: {q.Symbol} {q.Bid}/{q.Ask} @ {time}");
+                        cts.Cancel(); // stop after first tick
+                        break;
+                    }
+                }
+                catch (OperationCanceledException)
+                {
+                    _logger.LogInformation("⏹️ No ticks for {Symbol} within {Sec}s — skipping.", symbol, timeoutSecondsPerSymbol);
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Prints last 5 days of H1 candles (UTC) for the symbol: time + OHLC.
+        /// Wraps <see cref="MT4Account.QuoteHistoryAsync(string, ENUM_QUOTE_HISTORY_TIMEFRAME, DateTime, DateTime)"/>
+        /// with QhPeriodH1 and [now-5d .. now], then writes to console.
+        /// </summary>
+        /// <param name="symbol">Trading symbol, e.g., "EURUSD".</param>
+        /// <returns>Task that completes after printing.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
+
+        public async Task QuoteHistory(string symbol)
+        {
+            Box($"QuoteHistory(\"{symbol}\") — last 5 days, H1");
+            _logger.LogInformation("=== Historical Quotes ===");
+            var from = DateTime.UtcNow.AddDays(-5);
+            var to = DateTime.UtcNow;
+            var timeframe = ENUM_QUOTE_HISTORY_TIMEFRAME.QhPeriodH1;
+
+            var history = await Retry.RunAsync(() => _mt4.QuoteHistoryAsync(symbol, timeframe, from, to), logger: _logger);
+
+            foreach (var candle in history.HistoricalQuotes)
+            {
+                Console.WriteLine($"[{candle.Time}] O: {candle.Open} H: {candle.High} L: {candle.Low} C: {candle.Close}");
+            }
+        }
+
+
+        /// <summary>
+        /// Streams ticks for the symbol and prints the first tick (Bid/Ask @ time),
+        /// or stops after <paramref name="timeoutSeconds"/>.
+        /// Wraps <see cref="MT4Account.OnSymbolTickAsync(string[], System.Threading.CancellationToken)"/>.
+        /// </summary>
+        /// <param name="symbol">Trading symbol (e.g., "EURUSD").</param>
+        /// <param name="timeoutSeconds">Max seconds to wait for the first tick.</param>
+        /// <param name="ct">Optional cancellation for the routine.</param>
+        /// <returns>Task that completes after first tick or timeout.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If the stream cannot be opened.</exception>
+
+        public async Task RealTimeQuotes(string symbol, int timeoutSeconds = 5, CancellationToken ct = default)
+        {
+            Box($"RealTimeQuotes(\"{symbol}\") — first tick or {timeoutSeconds}s");
+            using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            cts.CancelAfter(TimeSpan.FromSeconds(timeoutSeconds));
+
+            _logger.LogInformation("=== Streaming Quotes: {Symbol} (first tick or {Sec}s) ===", symbol, timeoutSeconds);
+
+            try
+            {
+                await foreach (var tick in _mt4.OnSymbolTickAsync(new[] { symbol }, cts.Token))
+                {
+                    var q = tick.SymbolTick;
+                    if (q == null) continue;
+
+                    var time = q.Time?.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss") ?? "n/a";
+                    Console.WriteLine($"Tick: {q.Symbol} {q.Bid}/{q.Ask} @ {time}");
+                    cts.Cancel();
+                    break;
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                _logger.LogInformation("⏹️ No ticks for {Sec}s — stopping.", timeoutSeconds);
+            }
+        }
+
+
+        /// <summary>
+        /// Subscribes to ticks for the given symbols and prints each tick (Bid/Ask @ time)
+        /// for the specified duration.
+        /// Wraps <see cref="MT4Account.OnSymbolTickAsync(string[], System.Threading.CancellationToken)"/>
+        /// and cancels internally after <paramref name="durationSeconds"/>.
+        /// </summary>
+        /// <param name="symbols">Symbols to stream (e.g., "EURUSD", "GBPUSD").</param>
+        /// <param name="durationSeconds">Streaming duration in seconds.</param>
+        /// <returns>Task that completes when streaming ends.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If the stream cannot be opened.</exception>
+
         public async Task StreamQuotesForSymbolsAsync(string[] symbols, int durationSeconds = 10)
         {
+            Box($"StreamQuotesForSymbolsAsync([{string.Join(", ", symbols)}], {durationSeconds}s)");
             using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(durationSeconds));
             var token = cts.Token;
 
@@ -56,363 +200,45 @@ namespace MetaRPC.CSharpMT4
             }
         }
 
+        #endregion
 
+    //----------------------------------------------------------------------------------------------------------------
 
-        // -----=== 📂 Account Info ===-----
+        #region Market Info
 
+        /// <summary>
+        /// Lists all available symbols with their index and prints to console.
+        /// Wraps <see cref="MT4Account.SymbolsAsync"/> with retry and logs via ILogger.
+        /// </summary>
+        /// <returns>Task that completes after printing.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
 
-        // Uses the MT4 API (CSharpMT4) to receive and output the balance, equity, and currency of the account.
-        //
-        // Receives data via AccountSummaryAsync (see MetaRPC/CSharpMT4 repository),
-        // logs the start of the operation and outputs the result to the console.
-        public async Task ShowAccountSummary()
+        public async Task AllSymbols()
         {
-            _logger.LogInformation("=== Account Summary ===");
-            var summary = await _mt4.AccountSummaryAsync();
-            Console.WriteLine($"Balance: {summary.AccountBalance}, Equity: {summary.AccountEquity}, Currency: {summary.AccountCurrency}");
-        }
-
-        // -----=== 📂 Order Operations ===-----
-
-        // Displays all currently opened orders in the account.
-        //
-        // Behavior:
-        //   - Requests opened orders from MT4 via OpenedOrdersAsync (see MetaRPC/CSharpMT4).
-        //   - Logs header "Opened Orders".
-        //   - Iterates through returned OrderInfos and prints:
-        //       OrderType, Ticket, Symbol, Lots, OpenPrice, Profit, OpenTime.
-        public async Task ShowOpenedOrders()
-        {
-            _logger.LogInformation("=== Opened Orders ===");
-            var ordersData = await _mt4.OpenedOrdersAsync();
-
-            foreach (var order in ordersData.OrderInfos)
-            {
-                Console.WriteLine($"[{order.OrderType}] Ticket: {order.Ticket}, Symbol: {order.Symbol}, " +
-                                  $"Lots: {order.Lots}, OpenPrice: {order.OpenPrice}, Profit: {order.Profit}, " +
-                                  $"OpenTime: {order.OpenTime}");
-            }
-        }
-
-        // Displays tickets of all currently opened orders.
-        //
-        // Behavior:
-        //   - Requests opened order tickets from MT4 via OpenedOrdersTicketsAsync (see MetaRPC/CSharpMT4).
-        //   - Logs header "Opened Order Tickets".
-        //   - Iterates through returned ticket list and prints each ticket ID.
-        public async Task ShowOpenedOrderTickets()
-        {
-            _logger.LogInformation("=== Opened Order Tickets ===");
-            var ticketsData = await _mt4.OpenedOrdersTicketsAsync();
-
-            Console.WriteLine("Open Order Tickets:");
-            foreach (var ticket in ticketsData.Tickets)
-            {
-                Console.WriteLine($" - Ticket: {ticket}");
-            }
-
-        }
-
-        // Displays account order history for the last 7 days.
-        //
-        // Behavior:
-        //   - Defines time range: from (UTC now - 7 days) to (UTC now).
-        //   - Requests historical orders via OrdersHistoryAsync 
-        //       with sorting by CloseTime descending (see MetaRPC/CSharpMT4).
-        //   - Iterates through OrdersInfo and prints ticket & symbol (short form).
-        //   - Then prints detailed info per order: 
-        //       OrderType, Ticket, Symbol, Lots, OpenPrice, ClosePrice, Profit, CloseTime.
-        public async Task ShowOrdersHistory()
-        {
-            _logger.LogInformation("=== Order History ===");
-            var from = DateTime.UtcNow.AddDays(-7);
-            var to = DateTime.UtcNow;
-
-            var history = await _mt4.OrdersHistoryAsync(
-                sortType: EnumOrderHistorySortType.HistorySortByCloseTimeDesc,
-                from: from,
-                to: to
-            );
-
-            foreach (var order in history.OrdersInfo)
-            {
-                Console.WriteLine($"Ticket: {order.Ticket}, Symbol: {order.Symbol}");
-            }
-
-            foreach (var order in history.OrdersInfo)
-            {
-                Console.WriteLine($"[{order.OrderType}] Ticket: {order.Ticket}, Symbol: {order.Symbol}, " +
-                                  $"Lots: {order.Lots}, Open: {order.OpenPrice}, Close: {order.ClosePrice}, " +
-                                  $"Profit: {order.Profit}, CloseTime: {order.CloseTime}");
-            }
-        }
-
-
-        // Closes or deletes an order by its ticket.
-        //
-        // Behavior:
-        //   - Accepts order ticket (long) as input.
-        //   - Validates that ticket value fits into int range 
-        //       (since MT4 API expects int, otherwise throws OverflowException).
-        //   - Builds OrderCloseDeleteRequest and sends it via OrderCloseDeleteAsync 
-        //       (see MetaRPC/CSharpMT4).
-        //   - Prints result mode (Closed/Deleted) and server comment to console.
-        public async Task CloseOrderExample(long ticket)
-        {
-            _logger.LogInformation("=== Close/Delete Order ===");
-
-            var request = new OrderCloseDeleteRequest();
-            if (ticket > int.MaxValue || ticket < int.MinValue)
-            {
-                throw new OverflowException("Ticket value is out of int range!");
-            }
-
-            request.OrderTicket = (int)ticket;
-
-            var result = await _mt4.OrderCloseDeleteAsync(request);
-
-            Console.WriteLine($"Closed/Deleted: {result.Mode}, Comment: {result.HistoryOrderComment}");
-        }
-
-        // Closes an order using another opposite order (Close By).
-        //
-        // Behavior:
-        //   - Accepts two tickets (order to close and opposite order).
-        //   - Validates that both fit into int range (MT4 API limitation).
-        //   - Sends OrderCloseByRequest via OrderCloseByAsync (see MetaRPC/CSharpMT4).
-        //   - Prints resulting profit, close price, and time.
-        //   - Close By allows offsetting opposite positions without opening extra trades.
-
-        public async Task CloseByOrderExample(long ticket, long oppositeTicket)
-        {
-            _logger.LogInformation("=== Close By Order ===");
-
-            if (ticket > int.MaxValue || ticket < int.MinValue ||
-    oppositeTicket > int.MaxValue || oppositeTicket < int.MinValue)
-            {
-                throw new OverflowException("One of the tickets is out of int range!");
-            }
-
-            var request = new OrderCloseByRequest
-            {
-                TicketToClose = (int)ticket,
-                OppositeTicketClosingBy = (int)oppositeTicket
-            };
-
-            var result = await _mt4.OrderCloseByAsync(request);
-
-            Console.WriteLine($"Closed by opposite: Profit={result.Profit}, Price={result.ClosePrice}, Time={result.CloseTime}");
-
-        }
-
-
-        // Sends a new market Buy order (example).
-        //
-        // Behavior:
-        //   - Builds OrderSendRequest with given symbol, fixed parameters (volume, slippage, magic, comment).
-        //   - Calls OrderSendAsync to open order via MT4 API (see MetaRPC/CSharpMT4).
-        //   - On success prints order ticket and open price.
-        //   - Catches ApiExceptionMT4 to display error code if order fails.
-        //   - Serves as a simple template for creating custom order requests.
-        public async Task ShowOrderSendExample(string symbol)
-        {
-            _logger.LogInformation("=== Order Send Example ===");
-
-            var request = new OrderSendRequest
-            {
-                Symbol = symbol,
-                OperationType = OrderSendOperationType.OcOpBuy,
-                Volume = 0.1,
-                Price = 0,
-                Slippage = 5,
-                MagicNumber = 123456,
-                Comment = "Test order"
-            };
-
-            try
-            {
-                var result = await _mt4.OrderSendAsync(request);
-                Console.WriteLine($"The order was successfully opened. Ticket: {result.Ticket}, Price: {result.Price}");
-            }
-            catch (ApiExceptionMT4 ex)
-            {
-                Console.WriteLine($"Error when opening an order: {ex.ErrorCode}");
-            }
-        }
-
-        // -----=== 📂 Streaming ===-----
-
-
-        // Streams trade updates from MT4 in real time.
-        //
-        // Behavior:
-        //   - Subscribes to OnTradeAsync stream (see MetaRPC/CSharpMT4).
-        //   - Logs header "Streaming: Trades".
-        //   - Prints message when a trade update is received, then exits loop.
-        //   - Useful as a minimal example; in practice loop can process multiple updates.
-        public async Task StreamTradeUpdates()
-        {
-            _logger.LogInformation("=== Streaming: Trades ===");
-            await foreach (var trade in _mt4.OnTradeAsync())
-            {
-                Console.WriteLine("Trade update received.");
-                break;
-            }
-        }
-
-
-        // Streams profit updates for opened orders.
-        //
-        // Behavior:
-        //   - Subscribes to OnOpenedOrdersProfitAsync with update interval (ms).
-        //   - Logs header "Streaming: Opened Order Profits".
-        //   - Prints message when a profit update is received, then exits loop.
-        //   - Useful as a demo; normally you would keep streaming to track live PnL changes.
-        public async Task StreamOpenedOrderProfits()
-        {
-            _logger.LogInformation("=== Streaming: Opened Order Profits ===");
-            await foreach (var profit in _mt4.OnOpenedOrdersProfitAsync(1000))
-            {
-                Console.WriteLine("Profit update received.");
-                break;
-            }
-        }
-
-
-        // Streams updates of currently opened order tickets.
-        //
-        // Behavior:
-        //   - Subscribes to OnOpenedOrdersTicketsAsync with update interval in ms (1000 = 1 sec).
-        //   - Logs header "Streaming: Opened Order Tickets".
-        //   - Prints message when a ticket update is received, then exits loop.
-        //   - Intended as a minimal example; usually loop runs continuously to track changes in opened tickets.
-        public async Task StreamOpenedOrderTickets()
-        {
-            _logger.LogInformation("=== Streaming: Opened Order Tickets ===");
-            await foreach (var ticket in _mt4.OnOpenedOrdersTicketsAsync(1000))
-            {
-                Console.WriteLine("Ticket update received.");
-                break;
-            }
-        }
-
-        // -----=== 📂 Market Info ===-----
-
-
-        // Displays the latest quote for a given symbol.
-        //
-        // Behavior:
-        //   - Calls QuoteAsync(symbol) to request current market quote (Bid/Ask/Time).
-        //   - Logs header with the symbol name.
-        //   - Prints Bid, Ask, and server time to console.
-        //   - Equivalent to requesting a single tick snapshot, not a stream.
-        public async Task ShowQuote(string symbol)
-        {
-            _logger.LogInformation($"=== Current Quote for {symbol} ===");
-            var quote = await _mt4.QuoteAsync(symbol);
-
-            Console.WriteLine($"Quote for {symbol}: Bid={quote.Bid}, Ask={quote.Ask}, Time={quote.DateTime.ToDateTime():yyyy-MM-dd HH:mm:ss}");
-        }
-
-
-
-        // Displays quotes for multiple symbols.
-        //
-        // Behavior:
-        //   - Requests initial quotes for all provided symbols via QuoteManyAsync.
-        //   - For each symbol, subscribes to OnSymbolTickAsync and takes the first tick.
-        //   - Prints Bid, Ask, and server time for each symbol, then breaks the loop.
-        //   - Acts as a snapshot for several instruments; in practice the loop can be left open for continuous streaming.
-        // Streams the first live tick for each symbol (per-symbol soft timeout).
-public async Task ShowQuotesMany(string[] symbols, int timeoutSecondsPerSymbol = 5, CancellationToken ct = default)
-{
-    _logger.LogInformation("=== Live first tick for: {Symbols} ===", string.Join(", ", symbols));
-
-    foreach (var symbol in symbols)
-    {
-        using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
-        cts.CancelAfter(TimeSpan.FromSeconds(timeoutSecondsPerSymbol));
-
-        try
-        {
-            await foreach (var tick in _mt4.OnSymbolTickAsync(new[] { symbol }, cts.Token))
-            {
-                var q = tick.SymbolTick;
-                if (q == null) continue;
-
-                var time = q.Time?.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss") ?? "n/a";
-                Console.WriteLine($"Tick: {q.Symbol} {q.Bid}/{q.Ask} @ {time}");
-                cts.Cancel();
-                break; // first tick only
-            }
-        }
-        catch (OperationCanceledException)
-        {
-            _logger.LogInformation("⏹️ No ticks for {Symbol} within {Sec}s — skipping.", symbol, timeoutSecondsPerSymbol);
-        }
-    }
-}
-
-
-
-
-        // Displays historical quotes (candles) for a given symbol.
-        //
-        // Behavior:
-        //   - Defines time range: last 5 days (UTC) and timeframe = H1 (1 hour).
-        //   - Calls QuoteHistoryAsync to request historical data (see MetaRPC/CSharpMT4).
-        //   - Iterates through HistoricalQuotes and prints OHLC values with time.
-        //   - Equivalent to fetching bar history (like iBars/iCandles in MQL).
-        public async Task ShowQuoteHistory(string symbol)
-        {
-            _logger.LogInformation("=== Historical Quotes ===");
-            var from = DateTime.UtcNow.AddDays(-5);
-            var to = DateTime.UtcNow;
-            var timeframe = ENUM_QUOTE_HISTORY_TIMEFRAME.QhPeriodH1;
-
-            var history = await _mt4.QuoteHistoryAsync(symbol, timeframe, from, to);
-
-            foreach (var candle in history.HistoricalQuotes)
-            {
-                Console.WriteLine($"[{candle.Time}] O: {candle.Open} H: {candle.High} L: {candle.Low} C: {candle.Close}");
-            }
-        }
-
-
-
-        // Displays all available trading symbols from the MT4 server.
-        //
-        // Behavior:
-        //   - Calls SymbolsAsync to request the full list of instruments (see MetaRPC/CSharpMT4).
-        //   - Logs header "All Available Symbols".
-        //   - Iterates through SymbolNameInfos and prints symbol name with its index.
-        //   - Useful for discovering instruments before requesting quotes or sending orders.
-        public async Task ShowAllSymbols()
-        {
+            Box("AllSymbols()");
             _logger.LogInformation("=== All Available Symbols ===");
 
-            var symbols = await _mt4.SymbolsAsync();
-
+            var symbols = await Retry.RunAsync(() => _mt4.SymbolsAsync(), logger: _logger);
             foreach (var entry in symbols.SymbolNameInfos)
             {
                 Console.WriteLine($"Symbol: {entry.SymbolName}, Index: {entry.SymbolIndex}");
             }
-
         }
 
 
+        /// <summary>
+        /// Fetches tick value, tick size, and contract size for each symbol and prints them.
+        /// Wraps <see cref="MT4Account.TickValueWithSizeAsync(string[])"/> with retry and logging.
+        /// </summary>
+        /// <param name="symbols">Symbols to query (e.g., "EURUSD").</param>
+        /// <returns>Task that completes after printing.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
 
-        // Displays tick value, tick size, and contract size for given symbols.
-        //
-        // Behavior:
-        //   - Calls TickValueWithSizeAsync to request trading parameters (see MetaRPC/CSharpMT4).
-        //   - Logs header "Tick Value, Size and Contract Size".
-        //   - Iterates through Infos and prints SymbolName, TickValue, TickSize, and ContractSize.
-        //   - Useful for risk management and position sizing calculations.
-        public async Task ShowTickValues(string[] symbols)
+        public async Task TickValues(string[] symbols)
         {
+            Box($"TickValues([{string.Join(", ", symbols)}])");
             _logger.LogInformation("=== Tick Value, Size and Contract Size ===");
-            var result = await _mt4.TickValueWithSizeAsync(symbols);
+            var result = await Retry.RunAsync(() => _mt4.TickValueWithSizeAsync(symbols), logger: _logger);
 
             foreach (var info in result.Infos)
             {
@@ -424,21 +250,19 @@ public async Task ShowQuotesMany(string[] symbols, int timeoutSecondsPerSymbol =
         }
 
 
+        /// <summary>
+        /// Prints detailed parameters for the symbol (digits, spread, volumes, currencies, trade modes).
+        /// Wraps <see cref="MT4Account.SymbolParamsManyAsync(string)"/> and writes each field to console.
+        /// </summary>
+        /// <param name="symbol">Trading symbol (e.g., "EURUSD").</param>
+        /// <returns>Task that completes after printing.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
 
-
-        // Displays detailed trading parameters for a given symbol.
-        //
-        // Behavior:
-        //   - Calls SymbolParamsManyAsync to request symbol information (see MetaRPC/CSharpMT4).
-        //   - Logs header "Symbol Parameters".
-        //   - Iterates through SymbolInfos and prints key properties:
-        //       Digits, SpreadFloat, Bid, VolumeMin/Max/Step, base/profit/margin currencies,
-        //       TradeMode, and TradeExeMode.
-        //   - Useful for validating instrument settings before sending orders or quotes.
-        public async Task ShowSymbolParams(string symbol)
+        public async Task SymbolParams(string symbol)
         {
+            Box($"SymbolParams(\"{symbol}\")");
             _logger.LogInformation("=== Symbol Parameters ===");
-            var result = await _mt4.SymbolParamsManyAsync(symbol);
+            var result = await Retry.RunAsync(() => _mt4.SymbolParamsManyAsync(symbol), logger: _logger);
 
             foreach (var param in result.SymbolInfos)
             {
@@ -459,17 +283,19 @@ public async Task ShowQuotesMany(string[] symbols, int timeoutSecondsPerSymbol =
         }
 
 
-        // Displays basic information for a given symbol.
-        //
-        // Behavior:
-        //   - Calls SymbolParamsManyAsync to fetch symbol parameters (see MetaRPC/CSharpMT4).
-        //   - Logs header with the symbol name.
-        //   - Iterates through SymbolInfos and prints: SymbolName, Digits, Spread, and Bid.
-        //   - Useful for a quick overview without showing all advanced parameters.
-        public async Task ShowSymbolInfo(string symbol)
+        /// <summary>
+        /// Prints a compact symbol overview: name, digits, spread flag, and current Bid.
+        /// Wraps <see cref="MT4Account.SymbolParamsManyAsync(string)"/> with retry and logging.
+        /// </summary>
+        /// <param name="symbol">Trading symbol (e.g., "EURUSD").</param>
+        /// <returns>Task that completes after printing.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
+
+        public async Task SymbolInfo(string symbol)
         {
-            _logger.LogInformation($"=== Symbol Info: {symbol} ===");
-            var info = await _mt4.SymbolParamsManyAsync(symbol);
+            Box($"SymbolInfo(\"{symbol}\")");
+            _logger.LogInformation("=== Symbol Info ===");
+            var info = await Retry.RunAsync(() => _mt4.SymbolParamsManyAsync(symbol), logger: _logger);
 
             foreach (var param in info.SymbolInfos)
             {
@@ -477,41 +303,281 @@ public async Task ShowQuotesMany(string[] symbols, int timeoutSecondsPerSymbol =
             }
         }
 
+        #endregion
+
+        //----------------------------------------------------------------------------------------------------------------
+
+        #region Orders & History
 
 
-        // Streams real-time quotes for a given symbol.
-        //
-        // Behavior:
-        //   - Subscribes to OnSymbolTickAsync for the specified symbol (see MetaRPC/CSharpMT4).
-        //   - Logs header "Streaming Quotes" with the symbol name.
-        //   - Prints the first received tick (Symbol, Bid/Ask, Time) to console, then exits loop.
-        //   - Works as a minimal demo; in real use the loop is kept open to stream continuous ticks.
-        // Streams the first real-time tick for a symbol, but exits gracefully on timeout.
-        public async Task ShowRealTimeQuotes(string symbol, int timeoutSeconds = 5, CancellationToken ct = default)
+        /// <summary>
+        /// Prints all currently opened orders: Type, Ticket, Symbol, Lots, OpenPrice, Profit, OpenTime.
+        /// Wraps <see cref="MT4Account.OpenedOrdersAsync"/> with retry and logs via ILogger.
+        /// </summary>
+        /// <returns>Task that completes after printing.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
+
+        public async Task OpenedOrders()
         {
-            using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
-            cts.CancelAfter(TimeSpan.FromSeconds(timeoutSeconds));
+            Box("OpenedOrders()");
+            _logger.LogInformation("=== Opened Orders ===");
+            var ordersData = await Retry.RunAsync(() => _mt4.OpenedOrdersAsync(), logger: _logger);
 
-            _logger.LogInformation("=== Streaming Quotes: {Symbol} (first tick or {Sec}s) ===", symbol, timeoutSeconds);
-
-            try
+            foreach (var order in ordersData.OrderInfos)
             {
-                await foreach (var tick in _mt4.OnSymbolTickAsync(new[] { symbol }, cts.Token))
-                {
-                    var q = tick.SymbolTick;
-                    if (q == null) continue;
-
-                    var time = q.Time?.ToDateTime().ToString("yyyy-MM-dd HH:mm:ss") ?? "n/a";
-                    Console.WriteLine($"Tick: {q.Symbol} {q.Bid}/{q.Ask} @ {time}");
-                    cts.Cancel();
-                    break; // first tick only
-                }
-            }
-            catch (OperationCanceledException)
-            {
-                _logger.LogInformation("⏹️ No ticks for {Sec}s — stopping.", timeoutSeconds);
+                Console.WriteLine($"[{order.OrderType}] Ticket: {order.Ticket}, Symbol: {order.Symbol}, " +
+                                  $"Lots: {order.Lots}, OpenPrice: {order.OpenPrice}, Profit: {order.Profit}, " +
+                                  $"OpenTime: {order.OpenTime}");
             }
         }
 
+
+        /// <summary>
+        /// Prints IDs of currently opened orders (tickets only).
+        /// Wraps <see cref="MT4Account.OpenedOrdersTicketsAsync"/> and writes to console.
+        /// </summary>
+        /// <returns>Task that completes after printing.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
+
+        public async Task OpenedOrderTickets()
+        {
+            Box("OpenedOrderTickets()");
+            _logger.LogInformation("=== Opened Order Tickets ===");
+            var ticketsData = await Retry.RunAsync(() => _mt4.OpenedOrdersTicketsAsync(), logger: _logger);
+
+            Console.WriteLine("Open Order Tickets:");
+            foreach (var ticket in ticketsData.Tickets)
+            {
+                Console.WriteLine($" - Ticket: {ticket}");
+            }
+        }
+
+
+        /// <summary>
+        /// Prints order history for the last 7 days (sorted by CloseTime DESC):
+        /// Type, Ticket, Symbol, Lots, Open/Close price, Profit, CloseTime.
+        /// Wraps <see cref="MT4Account.OrdersHistoryAsync(EnumOrderHistorySortType, DateTime, DateTime)"/>
+        /// with <see cref="EnumOrderHistorySortType.HistorySortByCloseTimeDesc"/> and [now-7d .. now].
+        /// </summary>
+        /// <returns>Task that completes after printing.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
+
+        public async Task OrdersHistory()
+        {
+            Box("OrdersHistory() — last 7 days");
+            _logger.LogInformation("=== Order History ===");
+            var from = DateTime.UtcNow.AddDays(-7);
+            var to = DateTime.UtcNow;
+
+            var history = await Retry.RunAsync(
+                () => _mt4.OrdersHistoryAsync(
+                    sortType: EnumOrderHistorySortType.HistorySortByCloseTimeDesc,
+                    from: from,
+                    to: to
+                ),
+                logger: _logger);
+
+            foreach (var order in history.OrdersInfo)
+            {
+                Console.WriteLine($"[{order.OrderType}] Ticket: {order.Ticket}, Symbol: {order.Symbol}, " +
+                                  $"Lots: {order.Lots}, Open: {order.OpenPrice}, Close: {order.ClosePrice}, " +
+                                  $"Profit: {order.Profit}, CloseTime: {order.CloseTime}");
+            }
+        }
+
+        #endregion
+
+    //----------------------------------------------------------------------------------------------------------------
+
+        #region Streams (Trades & Order Updates)
+
+        /// <summary>
+        /// Subscribes to trade updates and prints the first received update, then stops.
+        /// Wraps <see cref="MT4Account.OnTradeAsync()"/>; honors <paramref name="ct"/> for cancellation.
+        /// </summary>
+        /// <param name="ct">Optional cancellation token for stopping the stream.</param>
+        /// <returns>Task that completes after the first update or cancellation.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If the stream cannot be opened.</exception>
+
+        public async Task StreamTradeUpdates(CancellationToken ct = default)
+        {
+            Box("StreamTradeUpdates()");
+            _logger.LogInformation("=== Streaming: Trades ===");
+            await foreach (var trade in _mt4.OnTradeAsync())
+            {
+                if (ct.IsCancellationRequested) break;
+                Console.WriteLine("Trade update received.");
+                break;
+            }
+        }
+
+
+        /// <summary>
+        /// Subscribes to profit updates for currently opened orders and prints the first update, then stops.
+        /// Wraps <see cref="MT4Account.OnOpenedOrdersProfitAsync(int)"/> with argument 1000 (library-specific).
+        /// Honors <paramref name="ct"/> for cancellation.
+        /// </summary>
+        /// <param name="ct">Optional cancellation token.</param>
+        /// <returns>Task that completes after the first update or cancellation.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If the stream cannot be opened.</exception>
+
+        public async Task StreamOpenedOrderProfits(CancellationToken ct = default)
+        {
+            Box("StreamOpenedOrderProfits()");
+            _logger.LogInformation("=== Streaming: Opened Order Profits ===");
+            await foreach (var profit in _mt4.OnOpenedOrdersProfitAsync(1000))
+            {
+                if (ct.IsCancellationRequested) break;
+                Console.WriteLine("Profit update received.");
+                break;
+            }
+        }
+
+
+        /// <summary>
+        /// Subscribes to opened-order ticket updates and prints the first update, then stops.
+        /// Wraps <see cref="MT4Account.OnOpenedOrdersTicketsAsync(int)"/> (buffer: 1000); honors cancellation.
+        /// </summary>
+        /// <param name="ct">Optional cancellation token.</param>
+        /// <returns>Task that completes after the first update or cancellation.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If the stream cannot be opened.</exception>
+
+        public async Task StreamOpenedOrderTickets(CancellationToken ct = default)
+        {
+            Box("StreamOpenedOrderTickets()");
+            _logger.LogInformation("=== Streaming: Opened Order Tickets ===");
+            await foreach (var ticket in _mt4.OnOpenedOrdersTicketsAsync(1000))
+            {
+                if (ct.IsCancellationRequested) break;
+                Console.WriteLine("Ticket update received.");
+                break;
+            }
+        }
+
+        #endregion
+
+        //----------------------------------------------------------------------------------------------------------------
+
+        #region Trading (Send / Modify / Close)
+
+
+        /// <summary>
+        /// Opens a market BUY order for the given symbol.
+        /// Builds a valid OrderSendRequest (proper digits, int slippage) and sends it with retry.
+        /// </summary>
+        /// <param name="symbol">Trading symbol, e.g. "EURUSD".</param>
+        /// <returns>Task that completes after printing ticket/price.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
+
+        public async Task OrderSendExample(string symbol)
+        {
+            Box($"OrderSendExample(\"{symbol}\")");
+            _logger.LogInformation("=== Order Send Example ===");
+
+            try
+            {
+                var request = await OrderUtils.BuildSendAsync(
+                    _mt4,
+                    symbol,
+                    OrderSendOperationType.OcOpBuy,
+                    volume: 0.1,
+                    slippage: 5,
+                    magicNumber: 123456,
+                    comment: "Test order");
+
+                var result = await Retry.RunAsync(() => _mt4.OrderSendAsync(request), logger: _logger);
+                Console.WriteLine($"Opened. Ticket: {result.Ticket}, Price: {result.Price}");
+
+                // (optional) set SL/TP immediately after opening
+                /*
+                var mod = await OrderUtils.BuildStopsModifyAsync(
+                    _mt4, result.Ticket, symbol,
+                    stopLoss: 0.0, takeProfit: 0.0);
+
+                var modRes = await Retry.RunAsync(() => _mt4.OrderModifyAsync(mod), logger: _logger);
+                Console.WriteLine(modRes.OrderWasModified ? "SL/TP set" : "No changes to SL/TP");
+                */
+            }
+            catch (ApiExceptionMT4 ex)
+            {
+                Console.WriteLine($"Error when opening an order: {ex.ErrorCode}");
+            }
+        }
+
+
+        /// <summary>
+        /// Modifies an existing order: price, SL/TP, and/or expiration (all optional).
+        /// Builds <see cref="OrderModifyRequest"/> via <c>OrderUtils.BuildModify</c> and sends with retry.
+        /// </summary>
+        /// <param name="ticket">Order ticket to modify.</param>
+        /// <returns>Task that completes after printing the result.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
+
+        public async Task OrderModifyExample(
+            int ticket,
+            double? newPrice = null,
+            double? newStopLoss = null,
+            double? newTakeProfit = null,
+            DateTime? newExpiration = null)
+        {
+            Box($"OrderModifyExample(ticket={ticket})");
+            _logger.LogInformation("=== Order Modify Example ===");
+
+            if (ticket > int.MaxValue || ticket < int.MinValue)
+                throw new OverflowException("Ticket value is out of int range!");
+
+            var request = OrderUtils.BuildModify(ticket, newPrice, newStopLoss, newTakeProfit, newExpiration);
+
+            try
+            {
+                var result = await Retry.RunAsync(() => _mt4.OrderModifyAsync(request), logger: _logger);
+                Console.WriteLine(result.OrderWasModified ? "Modified: OK" : "Modified: NO CHANGES");
+            }
+            catch (ApiExceptionMT4 ex)
+            {
+                Console.WriteLine($"Modify failed for ticket {ticket}: {ex.ErrorCode}");
+            }
+        }
+
+
+        /// <summary>
+        /// Closes (market) or deletes (pending) an order by ticket and prints the result.
+        /// Wraps <see cref="MT4Account.OrderCloseDeleteAsync(OrderCloseDeleteRequest)"/> with retry.
+        /// </summary>
+        /// <param name="ticket">Order ticket to close/delete.</param>
+        /// <returns>Task that completes after printing mode and comment.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
+
+        public async Task CloseOrderExample(long ticket)
+        {
+            Box($"CloseOrderExample(ticket={ticket})");
+            _logger.LogInformation("=== Close/Delete Order ===");
+
+            var request = OrderUtils.BuildCloseDelete(ticket);
+            var result = await Retry.RunAsync(() => _mt4.OrderCloseDeleteAsync(request), logger: _logger);
+            Console.WriteLine($"Closed/Deleted: {result.Mode}, Comment: {result.HistoryOrderComment}");
+        }
+
+
+        /// <summary>
+        /// Closes a position “by opposite” using two tickets and prints profit/price/time.
+        /// Wraps <see cref="MT4Account.OrderCloseByAsync(OrderCloseByRequest)"/> via retry and logging.
+        /// </summary>
+        /// <param name="ticket">Ticket of the order to be closed.</param>
+        /// <param name="oppositeTicket">Ticket of the opposite order used to close.</param>
+        /// <returns>Task that completes after printing the result.</returns>
+        /// <exception cref="mt4_term_api.ApiExceptionMT4">If terminal/API is not ready.</exception>
+
+        public async Task CloseByOrderExample(long ticket, long oppositeTicket)
+        {
+            Box($"CloseByOrderExample(ticket={ticket}, opposite={oppositeTicket})");
+            _logger.LogInformation("=== Close By Order ===");
+
+            var request = OrderUtils.BuildCloseBy(ticket, oppositeTicket);
+            var result = await Retry.RunAsync(() => _mt4.OrderCloseByAsync(request), logger: _logger);
+            Console.WriteLine($"Closed by opposite: Profit={result.Profit}, Price={result.ClosePrice}, Time={result.CloseTime}");
+        }
+
+        #endregion
     }
 }
