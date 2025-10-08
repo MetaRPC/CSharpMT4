@@ -1,0 +1,1738 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.21">
+    
+    
+      
+        <title>MqlErrorCode enumeration - MetaRPC MT4 C# Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.2a3383ac.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mqlerrorcode-enumeration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="MetaRPC MT4 C# Documentation" class="md-header__button md-logo" aria-label="MetaRPC MT4 C# Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            MetaRPC MT4 C# Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MqlErrorCode enumeration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="MetaRPC MT4 C# Documentation" class="md-nav__button md-logo" aria-label="MetaRPC MT4 C# Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    MetaRPC MT4 C# Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../mt4_term_api/MT4Account/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    API Reference
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Account
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Account
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Account/ShowAccountSummary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Show Account Summary
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Market Info
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Market Info
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Market%20Info/Market_Info_Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Market%20Info/ShowQuote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Show Quote
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Market%20Info/ShowQuotesMany/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Show Quotes Many
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Market%20Info/ShowQuoteHistory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Show Quote History
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Market%20Info/ShowSymbolParams/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Show Symbol Params
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Market%20Info/ShowSymbolInfo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Show Symbol Info
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Market%20Info/ShowAllSymbols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Show All Symbols
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Market%20Info/ShowTickValues/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Show Tick Values
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Order Operations
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            Order Operations
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Orders/Orders_Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Orders/ShowOpenedOrders/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Show Opened Orders
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Orders/ShowOpenedOrderTickets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Show Opened Order Tickets
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Orders/ShowOrdersHistory/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Show Orders History
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Orders/CloseOrderExample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Close Order
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Orders/CloseByOrderExample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Close By Order
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Orders/ShowOrderSendExample/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Order Send
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Streaming
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            Streaming
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Streaming/Streaming_Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Streaming/ShowRealTimeQuotes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Show Real-Time Quotes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Streaming/StreamOpenedOrderProfits/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Stream Opened Order Profits
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Streaming/StreamOpenedOrderTickets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Stream Opened Order Tickets
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Streaming/StreamTradeUpdates/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Stream Trade Updates
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Guides
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            Guides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../CLI_Using/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CLI Using
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Beginner_Run_Guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Beginner Run Guide
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Your_Easy_Start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Your Easy Start
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#values" class="md-nav__link">
+    <span class="md-ellipsis">
+      Values
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      See Also
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="mqlerrorcode-enumeration">MqlErrorCode enumeration</h1>
+<div class="highlight"><pre><span></span><code><span class="k">public</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">MqlErrorCode</span>
+</code></pre></div>
+<h2 id="values">Values</h2>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ErrNoError</td>
+<td><code>0</code></td>
+<td>No error</td>
+</tr>
+<tr>
+<td>ErrNoResult</td>
+<td><code>1</code></td>
+<td>No result</td>
+</tr>
+<tr>
+<td>ErrCommonError</td>
+<td><code>2</code></td>
+<td>Common error</td>
+</tr>
+<tr>
+<td>ErrInvalidTradeParameters</td>
+<td><code>3</code></td>
+<td>Invalid trade parameters</td>
+</tr>
+<tr>
+<td>ErrServerBusy</td>
+<td><code>4</code></td>
+<td>Server busy</td>
+</tr>
+<tr>
+<td>ErrOldVersion</td>
+<td><code>5</code></td>
+<td>Old version</td>
+</tr>
+<tr>
+<td>ErrNoConnection</td>
+<td><code>6</code></td>
+<td>No connection</td>
+</tr>
+<tr>
+<td>ErrNotEnoughRights</td>
+<td><code>7</code></td>
+<td>Not enough rights</td>
+</tr>
+<tr>
+<td>ErrTooFrequentRequests</td>
+<td><code>8</code></td>
+<td>Too frequent requests</td>
+</tr>
+<tr>
+<td>ErrMalfunctionalTrade</td>
+<td><code>9</code></td>
+<td>Malfunctional trade</td>
+</tr>
+<tr>
+<td>ErrAccountDisabled</td>
+<td><code>64</code></td>
+<td>Account disabled</td>
+</tr>
+<tr>
+<td>ErrInvalidAccount</td>
+<td><code>65</code></td>
+<td>Invalid account</td>
+</tr>
+<tr>
+<td>ErrTradeTimeout</td>
+<td><code>128</code></td>
+<td>Trade timeout</td>
+</tr>
+<tr>
+<td>ErrInvalidPrice</td>
+<td><code>129</code></td>
+<td>Invalid price</td>
+</tr>
+<tr>
+<td>ErrInvalidStops</td>
+<td><code>130</code></td>
+<td>Invalid stops</td>
+</tr>
+<tr>
+<td>ErrInvalidTradeVolume</td>
+<td><code>131</code></td>
+<td>Invalid trade volume</td>
+</tr>
+<tr>
+<td>ErrMarketClosed</td>
+<td><code>132</code></td>
+<td>Market closed</td>
+</tr>
+<tr>
+<td>ErrTradeDisabled</td>
+<td><code>133</code></td>
+<td>Trade disabled</td>
+</tr>
+<tr>
+<td>ErrNotEnoughMoney</td>
+<td><code>134</code></td>
+<td>Not enough money</td>
+</tr>
+<tr>
+<td>ErrPriceChanged</td>
+<td><code>135</code></td>
+<td>Price changed</td>
+</tr>
+<tr>
+<td>ErrOffQuotes</td>
+<td><code>136</code></td>
+<td>Off quotes</td>
+</tr>
+<tr>
+<td>ErrBrokerBusy</td>
+<td><code>137</code></td>
+<td>Broker busy</td>
+</tr>
+<tr>
+<td>ErrRequote</td>
+<td><code>138</code></td>
+<td>Requote</td>
+</tr>
+<tr>
+<td>ErrOrderLocked</td>
+<td><code>139</code></td>
+<td>Order locked</td>
+</tr>
+<tr>
+<td>ErrLongPositionsOnlyAllowed</td>
+<td><code>140</code></td>
+<td>Long positions only allowed</td>
+</tr>
+<tr>
+<td>ErrTooManyRequests</td>
+<td><code>141</code></td>
+<td>Too many requests</td>
+</tr>
+<tr>
+<td>ErrTradeModifyDenied</td>
+<td><code>145</code></td>
+<td>Trade modify denied</td>
+</tr>
+<tr>
+<td>ErrTradeContextBusy</td>
+<td><code>146</code></td>
+<td>Trade context busy</td>
+</tr>
+<tr>
+<td>ErrTradeExpirationDenied</td>
+<td><code>147</code></td>
+<td>Trade expiration denied</td>
+</tr>
+<tr>
+<td>ErrTradeTooManyOrders</td>
+<td><code>148</code></td>
+<td>Too many trade orders</td>
+</tr>
+<tr>
+<td>ErrTradeHedgeProhibited</td>
+<td><code>149</code></td>
+<td>Trade hedge prohibited</td>
+</tr>
+<tr>
+<td>ErrTradeProhibitedByFifo</td>
+<td><code>150</code></td>
+<td>Trade prohibited by FIFO</td>
+</tr>
+<tr>
+<td>ErrNoMqlerror</td>
+<td><code>4000</code></td>
+<td>No MQL error</td>
+</tr>
+<tr>
+<td>ErrWrongFunctionPointer</td>
+<td><code>4001</code></td>
+<td>Wrong function pointer</td>
+</tr>
+<tr>
+<td>ErrArrayIndexOutOfRange</td>
+<td><code>4002</code></td>
+<td>Array index out of range</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForCallStack</td>
+<td><code>4003</code></td>
+<td>No memory for call stack</td>
+</tr>
+<tr>
+<td>ErrRecursiveStackOverflow</td>
+<td><code>4004</code></td>
+<td>Recursive stack overflow</td>
+</tr>
+<tr>
+<td>ErrNotEnoughStackForParam</td>
+<td><code>4005</code></td>
+<td>Not enough stack for parameter</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForParamString</td>
+<td><code>4006</code></td>
+<td>No memory for parameter string</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForTempString</td>
+<td><code>4007</code></td>
+<td>No memory for temp string</td>
+</tr>
+<tr>
+<td>ErrNotInitializedString</td>
+<td><code>4008</code></td>
+<td>Not initialized string</td>
+</tr>
+<tr>
+<td>ErrNotInitializedArraystring</td>
+<td><code>4009</code></td>
+<td>Not initialized array string</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForArraystring</td>
+<td><code>4010</code></td>
+<td>No memory for array string</td>
+</tr>
+<tr>
+<td>ErrTooLongString</td>
+<td><code>4011</code></td>
+<td>Too long string</td>
+</tr>
+<tr>
+<td>ErrRemainderFromZeroDivide</td>
+<td><code>4012</code></td>
+<td>Remainder from zero divide</td>
+</tr>
+<tr>
+<td>ErrZeroDivide</td>
+<td><code>4013</code></td>
+<td>Zero divide</td>
+</tr>
+<tr>
+<td>ErrUnknownCommand</td>
+<td><code>4014</code></td>
+<td>Unknown command</td>
+</tr>
+<tr>
+<td>ErrWrongJump</td>
+<td><code>4015</code></td>
+<td>Wrong jump</td>
+</tr>
+<tr>
+<td>ErrNotInitializedArray</td>
+<td><code>4016</code></td>
+<td>Not initialized array</td>
+</tr>
+<tr>
+<td>ErrDllCallsNotAllowed</td>
+<td><code>4017</code></td>
+<td>DLL calls not allowed</td>
+</tr>
+<tr>
+<td>ErrCannotLoadLibrary</td>
+<td><code>4018</code></td>
+<td>Cannot load library</td>
+</tr>
+<tr>
+<td>ErrCannotCallFunction</td>
+<td><code>4019</code></td>
+<td>Cannot call function</td>
+</tr>
+<tr>
+<td>ErrExternalCallsNotAllowed</td>
+<td><code>4020</code></td>
+<td>External calls not allowed</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForReturnedStr</td>
+<td><code>4021</code></td>
+<td>No memory for returned string</td>
+</tr>
+<tr>
+<td>ErrSystemBusy</td>
+<td><code>4022</code></td>
+<td>System busy</td>
+</tr>
+<tr>
+<td>ErrDllfuncCriticalerror</td>
+<td><code>4023</code></td>
+<td>DLL function critical error</td>
+</tr>
+<tr>
+<td>ErrInternalError</td>
+<td><code>4024</code></td>
+<td>Internal error</td>
+</tr>
+<tr>
+<td>ErrOutOfMemory</td>
+<td><code>4025</code></td>
+<td>Out of memory</td>
+</tr>
+<tr>
+<td>ErrInvalidPointer</td>
+<td><code>4026</code></td>
+<td>Invalid pointer</td>
+</tr>
+<tr>
+<td>ErrFormatTooManyFormatters</td>
+<td><code>4027</code></td>
+<td>Too many formatters</td>
+</tr>
+<tr>
+<td>ErrFormatTooManyParameters</td>
+<td><code>4028</code></td>
+<td>Too many parameters</td>
+</tr>
+<tr>
+<td>ErrArrayInvalid</td>
+<td><code>4029</code></td>
+<td>Invalid array</td>
+</tr>
+<tr>
+<td>ErrChartNoreply</td>
+<td><code>4030</code></td>
+<td>Chart no reply</td>
+</tr>
+<tr>
+<td>ErrInvalidFunctionParamscnt</td>
+<td><code>4050</code></td>
+<td>Invalid function parameters count</td>
+</tr>
+<tr>
+<td>ErrInvalidFunctionParamvalue</td>
+<td><code>4051</code></td>
+<td>Invalid function parameter value</td>
+</tr>
+<tr>
+<td>ErrStringFunctionInternal</td>
+<td><code>4052</code></td>
+<td>String function internal error</td>
+</tr>
+<tr>
+<td>ErrSomeArrayError</td>
+<td><code>4053</code></td>
+<td>Some array error</td>
+</tr>
+<tr>
+<td>ErrIncorrectSeriesarrayUsing</td>
+<td><code>4054</code></td>
+<td>Incorrect series array usage</td>
+</tr>
+<tr>
+<td>ErrCustomIndicatorError</td>
+<td><code>4055</code></td>
+<td>Custom indicator error</td>
+</tr>
+<tr>
+<td>ErrIncompatibleArrays</td>
+<td><code>4056</code></td>
+<td>Incompatible arrays</td>
+</tr>
+<tr>
+<td>ErrGlobalVariablesProcessing</td>
+<td><code>4057</code></td>
+<td>Global variables processing error</td>
+</tr>
+<tr>
+<td>ErrGlobalVariableNotFound</td>
+<td><code>4058</code></td>
+<td>Global variable not found</td>
+</tr>
+<tr>
+<td>ErrFuncNotAllowedInTesting</td>
+<td><code>4059</code></td>
+<td>Function not allowed in testing</td>
+</tr>
+<tr>
+<td>ErrFunctionNotConfirmed</td>
+<td><code>4060</code></td>
+<td>Function not confirmed</td>
+</tr>
+<tr>
+<td>ErrSendMailError</td>
+<td><code>4061</code></td>
+<td>Send mail error</td>
+</tr>
+<tr>
+<td>ErrStringParameterExpected</td>
+<td><code>4062</code></td>
+<td>String parameter expected</td>
+</tr>
+<tr>
+<td>ErrIntegerParameterExpected</td>
+<td><code>4063</code></td>
+<td>Integer parameter expected</td>
+</tr>
+<tr>
+<td>ErrDoubleParameterExpected</td>
+<td><code>4064</code></td>
+<td>Double parameter expected</td>
+</tr>
+<tr>
+<td>ErrArrayAsParameterExpected</td>
+<td><code>4065</code></td>
+<td>Array as parameter expected</td>
+</tr>
+<tr>
+<td>ErrHistoryWillUpdated</td>
+<td><code>4066</code></td>
+<td>History will be updated</td>
+</tr>
+<tr>
+<td>ErrTradeError</td>
+<td><code>4067</code></td>
+<td>Trade error</td>
+</tr>
+<tr>
+<td>ErrResourceNotFound</td>
+<td><code>4068</code></td>
+<td>Resource not found</td>
+</tr>
+<tr>
+<td>ErrResourceNotSupported</td>
+<td><code>4069</code></td>
+<td>Resource not supported</td>
+</tr>
+<tr>
+<td>ErrResourceDuplicated</td>
+<td><code>4070</code></td>
+<td>Resource duplicated</td>
+</tr>
+<tr>
+<td>ErrIndicatorCannotInit</td>
+<td><code>4071</code></td>
+<td>Indicator cannot initialize</td>
+</tr>
+<tr>
+<td>ErrIndicatorCannotLoad</td>
+<td><code>4072</code></td>
+<td>Indicator cannot load</td>
+</tr>
+<tr>
+<td>ErrNoHistoryData</td>
+<td><code>4073</code></td>
+<td>No history data</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForHistory</td>
+<td><code>4074</code></td>
+<td>No memory for history</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForIndicator</td>
+<td><code>4075</code></td>
+<td>No memory for indicator</td>
+</tr>
+<tr>
+<td>ErrEndOfFile</td>
+<td><code>4099</code></td>
+<td>End of file</td>
+</tr>
+<tr>
+<td>ErrSomeFileError</td>
+<td><code>4100</code></td>
+<td>Some file error</td>
+</tr>
+<tr>
+<td>ErrWrongFileName</td>
+<td><code>4101</code></td>
+<td>Wrong file name</td>
+</tr>
+<tr>
+<td>ErrTooManyOpenedFiles</td>
+<td><code>4102</code></td>
+<td>Too many opened files</td>
+</tr>
+<tr>
+<td>ErrCannotOpenFile</td>
+<td><code>4103</code></td>
+<td>Cannot open file</td>
+</tr>
+<tr>
+<td>ErrIncompatibleFileaccess</td>
+<td><code>4104</code></td>
+<td>Incompatible file access</td>
+</tr>
+<tr>
+<td>ErrNoOrderSelected</td>
+<td><code>4105</code></td>
+<td>No order selected</td>
+</tr>
+<tr>
+<td>ErrUnknownSymbol</td>
+<td><code>4106</code></td>
+<td>Unknown symbol</td>
+</tr>
+<tr>
+<td>ErrInvalidPriceParam</td>
+<td><code>4107</code></td>
+<td>Invalid price parameter</td>
+</tr>
+<tr>
+<td>ErrInvalidTicket</td>
+<td><code>4108</code></td>
+<td>Invalid ticket</td>
+</tr>
+<tr>
+<td>ErrTradeNotAllowed</td>
+<td><code>4109</code></td>
+<td>Trade not allowed</td>
+</tr>
+<tr>
+<td>ErrLongsNotAllowed</td>
+<td><code>4110</code></td>
+<td>Longs not allowed</td>
+</tr>
+<tr>
+<td>ErrShortsNotAllowed</td>
+<td><code>4111</code></td>
+<td>Shorts not allowed</td>
+</tr>
+<tr>
+<td>ErrTradeExpertDisabledByServer</td>
+<td><code>4112</code></td>
+<td>Trade expert disabled by server</td>
+</tr>
+<tr>
+<td>ErrObjectAlreadyExists</td>
+<td><code>4200</code></td>
+<td>Object already exists</td>
+</tr>
+<tr>
+<td>ErrUnknownObjectProperty</td>
+<td><code>4201</code></td>
+<td>Unknown object property</td>
+</tr>
+<tr>
+<td>ErrObjectDoesNotExist</td>
+<td><code>4202</code></td>
+<td>Object does not exist</td>
+</tr>
+<tr>
+<td>ErrUnknownObjectType</td>
+<td><code>4203</code></td>
+<td>Unknown object type</td>
+</tr>
+<tr>
+<td>ErrNoObjectName</td>
+<td><code>4204</code></td>
+<td>No object name</td>
+</tr>
+<tr>
+<td>ErrObjectCoordinatesError</td>
+<td><code>4205</code></td>
+<td>Object coordinates error</td>
+</tr>
+<tr>
+<td>ErrNoSpecifiedSubwindow</td>
+<td><code>4206</code></td>
+<td>No specified subwindow</td>
+</tr>
+<tr>
+<td>ErrSomeObjectError</td>
+<td><code>4207</code></td>
+<td>Some object error</td>
+</tr>
+<tr>
+<td>ErrFileCannotOpen</td>
+<td><code>5004</code></td>
+<td>Cannot open file</td>
+</tr>
+</tbody>
+</table>
+<h2 id="see-also">See Also</h2>
+<ul>
+<li>namespace <a href="../../MetaRPC.MT4/">Mt4TermApi</a></li>
+</ul>
+<!-- DO NOT EDIT: generated by xmldocmd for MetaRPC.MT4.dll -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["palette.toggle", "palette.auto"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+    
+  </body>
+</html>
