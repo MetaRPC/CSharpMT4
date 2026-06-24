@@ -1305,6 +1305,168 @@
             <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
             <param name="serviceImpl">An object implementing the server-side handling logic.</param>
         </member>
+        <member name="T:mt4_term_api.Logs">
+            <summary>
+            Provides access to terminal log content (Journal and Experts tabs).
+            Reads log entries directly from the MT4 terminal GUI.
+            Requires 'id' header with the terminal connection GUID returned by Connect.
+            </summary>
+        </member>
+        <member name="P:mt4_term_api.Logs.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:mt4_term_api.Logs.LogsBase">
+            <summary>Base class for server-side implementations of Logs</summary>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsBase.Journal(mt4_term_api.JournalRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Returns log entries from the terminal Journal tab.
+            The Journal tab contains system messages about terminal connection status,
+            network activity, server synchronization and other internal events.
+            Works regardless of which tab is currently active in the terminal UI.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsBase.Experts(mt4_term_api.JournalRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Returns log entries from the terminal Experts tab.
+            The Experts tab contains messages from Expert Advisors (EAs), scripts and indicators
+            including Print() output, initialization/deinitialization events and runtime errors.
+            Works regardless of which tab is currently active in the terminal UI.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="T:mt4_term_api.Logs.LogsClient">
+            <summary>Client for Logs</summary>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for Logs</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for Logs that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.Journal(mt4_term_api.JournalRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Returns log entries from the terminal Journal tab.
+            The Journal tab contains system messages about terminal connection status,
+            network activity, server synchronization and other internal events.
+            Works regardless of which tab is currently active in the terminal UI.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.Journal(mt4_term_api.JournalRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Returns log entries from the terminal Journal tab.
+            The Journal tab contains system messages about terminal connection status,
+            network activity, server synchronization and other internal events.
+            Works regardless of which tab is currently active in the terminal UI.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.JournalAsync(mt4_term_api.JournalRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Returns log entries from the terminal Journal tab.
+            The Journal tab contains system messages about terminal connection status,
+            network activity, server synchronization and other internal events.
+            Works regardless of which tab is currently active in the terminal UI.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.JournalAsync(mt4_term_api.JournalRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Returns log entries from the terminal Journal tab.
+            The Journal tab contains system messages about terminal connection status,
+            network activity, server synchronization and other internal events.
+            Works regardless of which tab is currently active in the terminal UI.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.Experts(mt4_term_api.JournalRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Returns log entries from the terminal Experts tab.
+            The Experts tab contains messages from Expert Advisors (EAs), scripts and indicators
+            including Print() output, initialization/deinitialization events and runtime errors.
+            Works regardless of which tab is currently active in the terminal UI.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.Experts(mt4_term_api.JournalRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Returns log entries from the terminal Experts tab.
+            The Experts tab contains messages from Expert Advisors (EAs), scripts and indicators
+            including Print() output, initialization/deinitialization events and runtime errors.
+            Works regardless of which tab is currently active in the terminal UI.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.ExpertsAsync(mt4_term_api.JournalRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Returns log entries from the terminal Experts tab.
+            The Experts tab contains messages from Expert Advisors (EAs), scripts and indicators
+            including Print() output, initialization/deinitialization events and runtime errors.
+            Works regardless of which tab is currently active in the terminal UI.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.ExpertsAsync(mt4_term_api.JournalRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Returns log entries from the terminal Experts tab.
+            The Experts tab contains messages from Expert Advisors (EAs), scripts and indicators
+            including Print() output, initialization/deinitialization events and runtime errors.
+            Works regardless of which tab is currently active in the terminal UI.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+        <member name="M:mt4_term_api.Logs.BindService(mt4_term_api.Logs.LogsBase)">
+            <summary>Creates service definition that can be registered with a server</summary>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+        </member>
+        <member name="M:mt4_term_api.Logs.BindService(Grpc.Core.ServiceBinderBase,mt4_term_api.Logs.LogsBase)">
+            <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
+            Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
+            <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+        </member>
         <member name="P:mt4_term_api.HealthService.Descriptor">
             <summary>Service descriptor</summary>
         </member>
@@ -2491,6 +2653,47 @@
         <member name="F:mt4_term_api.ProxyTypes.Socks5">
             <summary>
             A SOCKS5 proxy server.
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.JournalReply.DataFieldNumber">
+            <summary>Field number for the "data" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.JournalReply.ErrorFieldNumber">
+            <summary>Field number for the "error" field.</summary>
+        </member>
+        <member name="T:mt4_term_api.JournalReply.ResponseOneofCase">
+            <summary>Enum of possible cases for the "response" oneof.</summary>
+        </member>
+        <member name="F:mt4_term_api.GetTerminalJournalData.RowsFieldNumber">
+            <summary>Field number for the "rows" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.GetTerminalJournalData.Rows">
+            <summary>
+            List of log rows from the terminal tab
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.TerminalJournalRow.TimeFieldNumber">
+            <summary>Field number for the "time" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.TerminalJournalRow.Time">
+            <summary>
+            Timestamp of the log entry
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.TerminalJournalRow.SourceFieldNumber">
+            <summary>Field number for the "source" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.TerminalJournalRow.Source">
+            <summary>
+            Source of the log entry (e.g. "Network", "MQL4", "Tester", EA name)
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.TerminalJournalRow.MessageFieldNumber">
+            <summary>Field number for the "message" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.TerminalJournalRow.Message">
+            <summary>
+            Log message text
             </summary>
         </member>
         <member name="F:mt4_term_api.GetBrokerServersByBrokerNameRequest.BrokerNameFieldNumber">
