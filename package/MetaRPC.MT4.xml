@@ -1775,6 +1775,50 @@
         <member name="T:mt4_term_api.SubscriptionService.SubscriptionServiceBase">
             <summary>Base class for server-side implementations of SubscriptionService</summary>
         </member>
+        <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceBase.OnTrade(mt4_term_api.OnTradeRequest,Grpc.Core.IServerStreamWriter{mt4_term_api.OnTradeReply},Grpc.Core.ServerCallContext)">
+            <summary>
+            Streams real-time order/trade events.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /subscription-stream interactive viewer.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="responseStream">Used for sending responses back to the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>A task indicating completion of the handler.</returns>
+        </member>
+        <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceBase.OnOpenedOrdersTickets(mt4_term_api.OnOpenedOrdersTicketsRequest,Grpc.Core.IServerStreamWriter{mt4_term_api.OnOpenedOrdersTicketsReply},Grpc.Core.ServerCallContext)">
+            <summary>
+            Streams the tickets of currently opened orders as they change.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /subscription-stream interactive viewer.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="responseStream">Used for sending responses back to the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>A task indicating completion of the handler.</returns>
+        </member>
+        <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceBase.OnOpenedOrdersProfit(mt4_term_api.OnOpenedOrdersProfitRequest,Grpc.Core.IServerStreamWriter{mt4_term_api.OnOpenedOrdersProfitReply},Grpc.Core.ServerCallContext)">
+            <summary>
+            Streams the live profit of currently opened orders.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /subscription-stream interactive viewer.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="responseStream">Used for sending responses back to the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>A task indicating completion of the handler.</returns>
+        </member>
+        <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceBase.OnSymbolTick(mt4_term_api.OnSymbolTickRequest,Grpc.Core.IServerStreamWriter{mt4_term_api.OnSymbolTickReply},Grpc.Core.ServerCallContext)">
+            <summary>
+            Streams real-time ticks for the given symbols.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /subscription-stream interactive viewer.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="responseStream">Used for sending responses back to the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>A task indicating completion of the handler.</returns>
+        </member>
         <member name="T:mt4_term_api.SubscriptionService.SubscriptionServiceClient">
             <summary>Client for SubscriptionService</summary>
         </member>
@@ -1792,6 +1836,94 @@
         <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
             <summary>Protected constructor to allow creation of configured clients.</summary>
             <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceClient.OnTrade(mt4_term_api.OnTradeRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Streams real-time order/trade events.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /subscription-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceClient.OnTrade(mt4_term_api.OnTradeRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Streams real-time order/trade events.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /subscription-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceClient.OnOpenedOrdersTickets(mt4_term_api.OnOpenedOrdersTicketsRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Streams the tickets of currently opened orders as they change.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /subscription-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceClient.OnOpenedOrdersTickets(mt4_term_api.OnOpenedOrdersTicketsRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Streams the tickets of currently opened orders as they change.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /subscription-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceClient.OnOpenedOrdersProfit(mt4_term_api.OnOpenedOrdersProfitRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Streams the live profit of currently opened orders.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /subscription-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceClient.OnOpenedOrdersProfit(mt4_term_api.OnOpenedOrdersProfitRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Streams the live profit of currently opened orders.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /subscription-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceClient.OnSymbolTick(mt4_term_api.OnSymbolTickRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Streams real-time ticks for the given symbols.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /subscription-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceClient.OnSymbolTick(mt4_term_api.OnSymbolTickRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Streams real-time ticks for the given symbols.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /subscription-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
         </member>
         <member name="M:mt4_term_api.SubscriptionService.SubscriptionServiceClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
             <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
@@ -4715,6 +4847,378 @@
         </member>
         <member name="F:Mt4TermApi.LogFileInfo.ContentFieldNumber">
             <summary>Field number for the "content" field.</summary>
+        </member>
+        <member name="T:mrpc_admin.AdminApi">
+             <summary>
+             ============================================================
+             Admin / diagnostics service (terminal-agnostic — identical to the mt5 copy).
+             Auth via admin_key (matched against the ADMIN_KEY env setting).
+             HTTP-transcoded for the /admin HTML page + cross-pod fan-out, but HIDDEN from
+             Swagger (excluded in SwaggerGen DocInclusionPredicate in Program.cs).
+            
+             NOTE: this file exists ONLY so the mt4 client libraries (create-grpc-libs,
+             proto/mt4) include the admin API, matching mt5. The Terminal Manager binary
+             compiles the single shared mrpc_admin proto from proto/mt5 (see the csproj) —
+             do NOT add this file to the csproj or mrpc_admin.* would be defined twice.
+             ============================================================
+             </summary>
+        </member>
+        <member name="P:mrpc_admin.AdminApi.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:mrpc_admin.AdminApi.AdminApiBase">
+            <summary>Base class for server-side implementations of AdminApi</summary>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiBase.ActiveTerminals(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Active terminals running on THIS pod.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiBase.ActiveTerminalsCluster(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Active terminals across ALL pods of this StatefulSet/Deployment.
+            Lists peer pods via the Kubernetes API, then calls ActiveTerminals on each.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiBase.SystemUsage(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Whole-machine CPU % and physical RAM (current + short history) for THIS pod.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="T:mrpc_admin.AdminApi.AdminApiClient">
+            <summary>Client for AdminApi</summary>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for AdminApi</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for AdminApi that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.ActiveTerminals(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Active terminals running on THIS pod.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.ActiveTerminals(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Active terminals running on THIS pod.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.ActiveTerminalsAsync(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Active terminals running on THIS pod.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.ActiveTerminalsAsync(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Active terminals running on THIS pod.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.ActiveTerminalsCluster(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Active terminals across ALL pods of this StatefulSet/Deployment.
+            Lists peer pods via the Kubernetes API, then calls ActiveTerminals on each.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.ActiveTerminalsCluster(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Active terminals across ALL pods of this StatefulSet/Deployment.
+            Lists peer pods via the Kubernetes API, then calls ActiveTerminals on each.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.ActiveTerminalsClusterAsync(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Active terminals across ALL pods of this StatefulSet/Deployment.
+            Lists peer pods via the Kubernetes API, then calls ActiveTerminals on each.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.ActiveTerminalsClusterAsync(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Active terminals across ALL pods of this StatefulSet/Deployment.
+            Lists peer pods via the Kubernetes API, then calls ActiveTerminals on each.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.SystemUsage(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Whole-machine CPU % and physical RAM (current + short history) for THIS pod.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.SystemUsage(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Whole-machine CPU % and physical RAM (current + short history) for THIS pod.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.SystemUsageAsync(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Whole-machine CPU % and physical RAM (current + short history) for THIS pod.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.SystemUsageAsync(mrpc_admin.ActiveTerminalsRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Whole-machine CPU % and physical RAM (current + short history) for THIS pod.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.BindService(mrpc_admin.AdminApi.AdminApiBase)">
+            <summary>Creates service definition that can be registered with a server</summary>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.BindService(Grpc.Core.ServiceBinderBase,mrpc_admin.AdminApi.AdminApiBase)">
+            <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
+            Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
+            <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+        </member>
+        <member name="T:mrpc_admin.Mt4TermApiAdminReflection">
+            <summary>Holder for reflection information generated from mt4-term-api-admin.proto</summary>
+        </member>
+        <member name="P:mrpc_admin.Mt4TermApiAdminReflection.Descriptor">
+            <summary>File descriptor for mt4-term-api-admin.proto</summary>
+        </member>
+        <member name="F:mrpc_admin.UsageSample.TimeFieldNumber">
+            <summary>Field number for the "time" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.UsageSample.CpuPercentFieldNumber">
+            <summary>Field number for the "cpu_percent" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.UsageSample.RamUsedMbFieldNumber">
+            <summary>Field number for the "ram_used_mb" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.UsageSample.RamTotalMbFieldNumber">
+            <summary>Field number for the "ram_total_mb" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SystemUsageReply.CpuPercentFieldNumber">
+            <summary>Field number for the "cpu_percent" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SystemUsageReply.RamUsedMbFieldNumber">
+            <summary>Field number for the "ram_used_mb" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SystemUsageReply.RamTotalMbFieldNumber">
+            <summary>Field number for the "ram_total_mb" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SystemUsageReply.HistoryFieldNumber">
+            <summary>Field number for the "history" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SystemUsageReply.ErrorFieldNumber">
+            <summary>Field number for the "error" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.ActiveTerminalsRequest.AdminKeyFieldNumber">
+            <summary>Field number for the "admin_key" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.TerminalInfo.IdFieldNumber">
+            <summary>Field number for the "id" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.TerminalInfo.Id">
+            <summary>
+            terminal instance GUID (the `id` header)
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.TerminalInfo.UserNumberFieldNumber">
+            <summary>Field number for the "user_number" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.TerminalInfo.UserNumber">
+            <summary>
+            MrpcTerminalUser&lt;N>
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.TerminalInfo.WindowsUserFieldNumber">
+            <summary>Field number for the "windows_user" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.TerminalInfo.WindowsUser">
+            <summary>
+            e.g. "MrpcTerminalUser3"
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.TerminalInfo.AccountFieldNumber">
+            <summary>Field number for the "account" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.TerminalInfo.Account">
+            <summary>
+            MT login
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.TerminalInfo.ServerFieldNumber">
+            <summary>Field number for the "server" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.TerminalInfo.Server">
+            <summary>
+            broker / MT cluster name
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.TerminalInfo.PortFieldNumber">
+            <summary>Field number for the "port" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.TerminalInfo.Port">
+            <summary>
+            terminal api port
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.TerminalInfo.CreatedAtFieldNumber">
+            <summary>Field number for the "created_at" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.TerminalInfo.WindowsPasswordFieldNumber">
+            <summary>Field number for the "windows_password" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.TerminalInfo.WindowsPassword">
+            <summary>
+            RDP password for windows_user (admin-only)
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.ActiveTerminalsReply.PodFieldNumber">
+            <summary>Field number for the "pod" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.ActiveTerminalsReply.NodeFieldNumber">
+            <summary>Field number for the "node" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.ActiveTerminalsReply.PodIpFieldNumber">
+            <summary>Field number for the "pod_ip" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.ActiveTerminalsReply.TerminalsFieldNumber">
+            <summary>Field number for the "terminals" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.ActiveTerminalsReply.ErrorFieldNumber">
+            <summary>Field number for the "error" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.ActiveTerminalsReply.CpuPercentFieldNumber">
+            <summary>Field number for the "cpu_percent" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.ActiveTerminalsReply.CpuPercent">
+            <summary>
+            whole-machine CPU % for this pod
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.ActiveTerminalsReply.RamUsedMbFieldNumber">
+            <summary>Field number for the "ram_used_mb" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.ActiveTerminalsReply.RamTotalMbFieldNumber">
+            <summary>Field number for the "ram_total_mb" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.ActiveTerminalsReply.UsageHistoryFieldNumber">
+            <summary>Field number for the "usage_history" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.ActiveTerminalsReply.UsageHistory">
+            <summary>
+            short CPU/RAM history
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.PodTerminals.PodFieldNumber">
+            <summary>Field number for the "pod" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.PodTerminals.NodeFieldNumber">
+            <summary>Field number for the "node" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.PodTerminals.PodIpFieldNumber">
+            <summary>Field number for the "pod_ip" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.PodTerminals.NovncUrlFieldNumber">
+            <summary>Field number for the "novnc_url" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.PodTerminals.NovncUrl">
+            <summary>
+            link to the pod's noVNC viewer
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.PodTerminals.TerminalsFieldNumber">
+            <summary>Field number for the "terminals" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.PodTerminals.ErrorFieldNumber">
+            <summary>Field number for the "error" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.PodTerminals.HostIpFieldNumber">
+            <summary>Field number for the "host_ip" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.PodTerminals.HostIp">
+            <summary>
+            node IP (for the RDP NodePort target)
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.PodTerminals.CpuPercentFieldNumber">
+            <summary>Field number for the "cpu_percent" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.PodTerminals.CpuPercent">
+            <summary>
+            whole-machine CPU % for this pod
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.PodTerminals.RamUsedMbFieldNumber">
+            <summary>Field number for the "ram_used_mb" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.PodTerminals.RamTotalMbFieldNumber">
+            <summary>Field number for the "ram_total_mb" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.PodTerminals.UsageHistoryFieldNumber">
+            <summary>Field number for the "usage_history" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.ActiveTerminalsClusterReply.PodsFieldNumber">
+            <summary>Field number for the "pods" field.</summary>
         </member>
     </members>
 </doc>

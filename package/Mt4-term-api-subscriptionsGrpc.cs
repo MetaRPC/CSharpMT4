@@ -104,24 +104,60 @@ namespace mt4_term_api {
     [grpc::BindServiceMethod(typeof(SubscriptionService), "BindService")]
     public abstract partial class SubscriptionServiceBase
     {
+      /// <summary>
+      /// Streams real-time order/trade events.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="responseStream">Used for sending responses back to the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>A task indicating completion of the handler.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task OnTrade(global::mt4_term_api.OnTradeRequest request, grpc::IServerStreamWriter<global::mt4_term_api.OnTradeReply> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
+      /// <summary>
+      /// Streams the tickets of currently opened orders as they change.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="responseStream">Used for sending responses back to the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>A task indicating completion of the handler.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task OnOpenedOrdersTickets(global::mt4_term_api.OnOpenedOrdersTicketsRequest request, grpc::IServerStreamWriter<global::mt4_term_api.OnOpenedOrdersTicketsReply> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
+      /// <summary>
+      /// Streams the live profit of currently opened orders.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="responseStream">Used for sending responses back to the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>A task indicating completion of the handler.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task OnOpenedOrdersProfit(global::mt4_term_api.OnOpenedOrdersProfitRequest request, grpc::IServerStreamWriter<global::mt4_term_api.OnOpenedOrdersProfitReply> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
+      /// <summary>
+      /// Streams real-time ticks for the given symbols.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="responseStream">Used for sending responses back to the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>A task indicating completion of the handler.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task OnSymbolTick(global::mt4_term_api.OnSymbolTickRequest request, grpc::IServerStreamWriter<global::mt4_term_api.OnSymbolTickReply> responseStream, grpc::ServerCallContext context)
       {
@@ -157,41 +193,113 @@ namespace mt4_term_api {
       {
       }
 
+      /// <summary>
+      /// Streams real-time order/trade events.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.OnTradeReply> OnTrade(global::mt4_term_api.OnTradeRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return OnTrade(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// Streams real-time order/trade events.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.OnTradeReply> OnTrade(global::mt4_term_api.OnTradeRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncServerStreamingCall(__Method_OnTrade, null, options, request);
       }
+      /// <summary>
+      /// Streams the tickets of currently opened orders as they change.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.OnOpenedOrdersTicketsReply> OnOpenedOrdersTickets(global::mt4_term_api.OnOpenedOrdersTicketsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return OnOpenedOrdersTickets(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// Streams the tickets of currently opened orders as they change.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.OnOpenedOrdersTicketsReply> OnOpenedOrdersTickets(global::mt4_term_api.OnOpenedOrdersTicketsRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncServerStreamingCall(__Method_OnOpenedOrdersTickets, null, options, request);
       }
+      /// <summary>
+      /// Streams the live profit of currently opened orders.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.OnOpenedOrdersProfitReply> OnOpenedOrdersProfit(global::mt4_term_api.OnOpenedOrdersProfitRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return OnOpenedOrdersProfit(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// Streams the live profit of currently opened orders.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.OnOpenedOrdersProfitReply> OnOpenedOrdersProfit(global::mt4_term_api.OnOpenedOrdersProfitRequest request, grpc::CallOptions options)
       {
         return CallInvoker.AsyncServerStreamingCall(__Method_OnOpenedOrdersProfit, null, options, request);
       }
+      /// <summary>
+      /// Streams real-time ticks for the given symbols.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.OnSymbolTickReply> OnSymbolTick(global::mt4_term_api.OnSymbolTickRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return OnSymbolTick(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// Streams real-time ticks for the given symbols.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.OnSymbolTickReply> OnSymbolTick(global::mt4_term_api.OnSymbolTickRequest request, grpc::CallOptions options)
       {
