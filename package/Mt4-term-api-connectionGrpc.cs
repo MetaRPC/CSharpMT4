@@ -77,6 +77,10 @@ namespace mt4_term_api {
     static readonly grpc::Marshaller<global::mt4_term_api.GetIdRequest> __Marshaller_mt4_term_api_GetIdRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GetIdRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::mt4_term_api.GetIdReply> __Marshaller_mt4_term_api_GetIdReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GetIdReply.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::mt4_term_api.ScreenshotRequest> __Marshaller_mt4_term_api_ScreenshotRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.ScreenshotRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::mt4_term_api.ScreenshotReply> __Marshaller_mt4_term_api_ScreenshotReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.ScreenshotReply.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::mt4_term_api.ConnectExRequest, global::mt4_term_api.ConnectExReply> __Method_ConnectEx = new grpc::Method<global::mt4_term_api.ConnectExRequest, global::mt4_term_api.ConnectExReply>(
@@ -141,6 +145,14 @@ namespace mt4_term_api {
         "GetId",
         __Marshaller_mt4_term_api_GetIdRequest,
         __Marshaller_mt4_term_api_GetIdReply);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::mt4_term_api.ScreenshotRequest, global::mt4_term_api.ScreenshotReply> __Method_Screenshot = new grpc::Method<global::mt4_term_api.ScreenshotRequest, global::mt4_term_api.ScreenshotReply>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "Screenshot",
+        __Marshaller_mt4_term_api_ScreenshotRequest,
+        __Marshaller_mt4_term_api_ScreenshotReply);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -272,6 +284,20 @@ namespace mt4_term_api {
       /// <returns>The response to send back to the client (wrapped by a task).</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::mt4_term_api.GetIdReply> GetId(global::mt4_term_api.GetIdRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Captures a screenshot of the terminal instance window.
+      /// Handled by Terminal Manager: the per-terminal in-process responder grabs the
+      /// MT4 window and the manager returns the image. Requires 'id' header.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::mt4_term_api.ScreenshotReply> Screenshot(global::mt4_term_api.ScreenshotRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -797,6 +823,62 @@ namespace mt4_term_api {
       {
         return CallInvoker.AsyncUnaryCall(__Method_GetId, null, options, request);
       }
+      /// <summary>
+      /// Captures a screenshot of the terminal instance window.
+      /// Handled by Terminal Manager: the per-terminal in-process responder grabs the
+      /// MT4 window and the manager returns the image. Requires 'id' header.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::mt4_term_api.ScreenshotReply Screenshot(global::mt4_term_api.ScreenshotRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return Screenshot(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Captures a screenshot of the terminal instance window.
+      /// Handled by Terminal Manager: the per-terminal in-process responder grabs the
+      /// MT4 window and the manager returns the image. Requires 'id' header.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::mt4_term_api.ScreenshotReply Screenshot(global::mt4_term_api.ScreenshotRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_Screenshot, null, options, request);
+      }
+      /// <summary>
+      /// Captures a screenshot of the terminal instance window.
+      /// Handled by Terminal Manager: the per-terminal in-process responder grabs the
+      /// MT4 window and the manager returns the image. Requires 'id' header.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.ScreenshotReply> ScreenshotAsync(global::mt4_term_api.ScreenshotRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ScreenshotAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Captures a screenshot of the terminal instance window.
+      /// Handled by Terminal Manager: the per-terminal in-process responder grabs the
+      /// MT4 window and the manager returns the image. Requires 'id' header.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.ScreenshotReply> ScreenshotAsync(global::mt4_term_api.ScreenshotRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_Screenshot, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override ConnectionClient NewInstance(ClientBaseConfiguration configuration)
@@ -818,7 +900,8 @@ namespace mt4_term_api {
           .AddMethod(__Method_Disconnect, serviceImpl.Disconnect)
           .AddMethod(__Method_Reconnect, serviceImpl.Reconnect)
           .AddMethod(__Method_GetBrokerServersByBrokerName, serviceImpl.GetBrokerServersByBrokerName)
-          .AddMethod(__Method_GetId, serviceImpl.GetId).Build();
+          .AddMethod(__Method_GetId, serviceImpl.GetId)
+          .AddMethod(__Method_Screenshot, serviceImpl.Screenshot).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -836,6 +919,7 @@ namespace mt4_term_api {
       serviceBinder.AddMethod(__Method_Reconnect, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.ReconnectRequest, global::mt4_term_api.ReconnectReply>(serviceImpl.Reconnect));
       serviceBinder.AddMethod(__Method_GetBrokerServersByBrokerName, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.GetBrokerServersByBrokerNameRequest, global::mt4_term_api.GetBrokerServersByBrokerNameReply>(serviceImpl.GetBrokerServersByBrokerName));
       serviceBinder.AddMethod(__Method_GetId, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.GetIdRequest, global::mt4_term_api.GetIdReply>(serviceImpl.GetId));
+      serviceBinder.AddMethod(__Method_Screenshot, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.ScreenshotRequest, global::mt4_term_api.ScreenshotReply>(serviceImpl.Screenshot));
     }
 
   }

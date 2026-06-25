@@ -886,6 +886,16 @@
             <param name="context">The context of the server-side call handler being invoked.</param>
             <returns>The response to send back to the client (wrapped by a task).</returns>
         </member>
+        <member name="M:mt4_term_api.Connection.ConnectionBase.Screenshot(mt4_term_api.ScreenshotRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Captures a screenshot of the terminal instance window.
+            Handled by Terminal Manager: the per-terminal in-process responder grabs the
+            MT4 window and the manager returns the image. Requires 'id' header.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
         <member name="T:mt4_term_api.Connection.ConnectionClient">
             <summary>Client for Connection</summary>
         </member>
@@ -1287,6 +1297,50 @@
               "user": "1124213727",
               "password": "1tjvjck"
             }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.Screenshot(mt4_term_api.ScreenshotRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Captures a screenshot of the terminal instance window.
+            Handled by Terminal Manager: the per-terminal in-process responder grabs the
+            MT4 window and the manager returns the image. Requires 'id' header.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.Screenshot(mt4_term_api.ScreenshotRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Captures a screenshot of the terminal instance window.
+            Handled by Terminal Manager: the per-terminal in-process responder grabs the
+            MT4 window and the manager returns the image. Requires 'id' header.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ScreenshotAsync(mt4_term_api.ScreenshotRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Captures a screenshot of the terminal instance window.
+            Handled by Terminal Manager: the per-terminal in-process responder grabs the
+            MT4 window and the manager returns the image. Requires 'id' header.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ScreenshotAsync(mt4_term_api.ScreenshotRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Captures a screenshot of the terminal instance window.
+            Handled by Terminal Manager: the per-terminal in-process responder grabs the
+            MT4 window and the manager returns the image. Requires 'id' header.
             </summary>
             <param name="request">The request to send to the server.</param>
             <param name="options">The options for the call.</param>
@@ -2695,6 +2749,27 @@
             <summary>
             Log message text
             </summary>
+        </member>
+        <member name="F:mt4_term_api.ScreenshotReply.DataFieldNumber">
+            <summary>Field number for the "data" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ScreenshotReply.ErrorFieldNumber">
+            <summary>Field number for the "error" field.</summary>
+        </member>
+        <member name="T:mt4_term_api.ScreenshotReply.ResponseOneofCase">
+            <summary>Enum of possible cases for the "response" oneof.</summary>
+        </member>
+        <member name="F:mt4_term_api.ScreenshotData.ImageDataFieldNumber">
+            <summary>Field number for the "image_data" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ScreenshotData.DisplayNumberFieldNumber">
+            <summary>Field number for the "display_number" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ScreenshotData.TerminalIdFieldNumber">
+            <summary>Field number for the "terminal_id" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ScreenshotData.ContentTypeFieldNumber">
+            <summary>Field number for the "content_type" field.</summary>
         </member>
         <member name="F:mt4_term_api.GetBrokerServersByBrokerNameRequest.BrokerNameFieldNumber">
             <summary>Field number for the "BrokerName" field.</summary>
