@@ -896,6 +896,30 @@
             <param name="context">The context of the server-side call handler being invoked.</param>
             <returns>The response to send back to the client (wrapped by a task).</returns>
         </member>
+        <member name="M:mt4_term_api.Connection.ConnectionBase.ConnectStream(mt4_term_api.ConnectRequest,Grpc.Core.IServerStreamWriter{mt4_term_api.ConnectStreamEvent},Grpc.Core.ServerCallContext)">
+            <summary>
+            Same as Connect but streams real-time progress events (incl. live Journal/
+            Experts log lines) while the connection is established.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /connect-stream interactive viewer.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="responseStream">Used for sending responses back to the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>A task indicating completion of the handler.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionBase.ConnectExStream(mt4_term_api.ConnectExRequest,Grpc.Core.IServerStreamWriter{mt4_term_api.ConnectStreamEvent},Grpc.Core.ServerCallContext)">
+            <summary>
+            Same as ConnectEx but streams real-time progress events (incl. live Journal/
+            Experts log lines) while the connection is established.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /connect-stream interactive viewer.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="responseStream">Used for sending responses back to the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>A task indicating completion of the handler.</returns>
+        </member>
         <member name="T:mt4_term_api.Connection.ConnectionClient">
             <summary>Client for Connection</summary>
         </member>
@@ -1346,6 +1370,54 @@
             <param name="options">The options for the call.</param>
             <returns>The call object.</returns>
         </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectStream(mt4_term_api.ConnectRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Same as Connect but streams real-time progress events (incl. live Journal/
+            Experts log lines) while the connection is established.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /connect-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectStream(mt4_term_api.ConnectRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Same as Connect but streams real-time progress events (incl. live Journal/
+            Experts log lines) while the connection is established.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /connect-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectExStream(mt4_term_api.ConnectExRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Same as ConnectEx but streams real-time progress events (incl. live Journal/
+            Experts log lines) while the connection is established.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /connect-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectExStream(mt4_term_api.ConnectExRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Same as ConnectEx but streams real-time progress events (incl. live Journal/
+            Experts log lines) while the connection is established.
+            Requires 'id' header — use GetId to generate.
+            Swagger does not support streaming — use /connect-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
         <member name="M:mt4_term_api.Connection.ConnectionClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
             <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
         </member>
@@ -1516,6 +1588,290 @@
             <param name="serviceImpl">An object implementing the server-side handling logic.</param>
         </member>
         <member name="M:mt4_term_api.Logs.BindService(Grpc.Core.ServiceBinderBase,mt4_term_api.Logs.LogsBase)">
+            <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
+            Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
+            <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+        </member>
+        <member name="T:mt4_term_api.DemoAccount">
+            <summary>
+            Demo account creation service. Automates the MT4 "Open an Account" wizard via
+            Win32 GUI automation (proxied to the terminal's Gui service).
+            Does NOT require 'id' header — auto-picks any available terminal.
+            </summary>
+        </member>
+        <member name="P:mt4_term_api.DemoAccount.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:mt4_term_api.DemoAccount.DemoAccountBase">
+            <summary>Base class for server-side implementations of DemoAccount</summary>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountBase.FindCompanies(mt4_term_api.GuiDemoFindCompaniesRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Search for broker companies by name (reads the wizard's broker ListView).
+            [DefaultValues]
+            { "searchText": "MetaQuotes" }
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountBase.ServersAndAccountTypes(mt4_term_api.GuiDemoServersAndTypesRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Get available servers and account types for a company.
+            [DefaultValues]
+            { "companyName": "MetaQuotes Ltd." }
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountBase.OpenDemoAccount(mt4_term_api.GuiDemoOpenAccountRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Open a demo account. Full wizard flow: search -> select -> fill form -> register.
+            [DefaultValues]
+            { "company": "MetaQuotes Ltd.", "firstName": "Test", "lastName": "User",
+              "email": "test@test.com", "phone": "+1234567890", "timeoutSeconds": "60" }
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountBase.OpenDemoAccountStream(mt4_term_api.GuiDemoOpenAccountRequest,Grpc.Core.IServerStreamWriter{mt4_term_api.DemoAccountStreamEvent},Grpc.Core.ServerCallContext)">
+            <summary>
+            Same as OpenDemoAccount but streams real-time progress events.
+            Swagger does not support streaming — use /demo-account-stream interactive viewer.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="responseStream">Used for sending responses back to the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>A task indicating completion of the handler.</returns>
+        </member>
+        <member name="T:mt4_term_api.DemoAccount.DemoAccountClient">
+            <summary>Client for DemoAccount</summary>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for DemoAccount</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for DemoAccount that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.FindCompanies(mt4_term_api.GuiDemoFindCompaniesRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Search for broker companies by name (reads the wizard's broker ListView).
+            [DefaultValues]
+            { "searchText": "MetaQuotes" }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.FindCompanies(mt4_term_api.GuiDemoFindCompaniesRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Search for broker companies by name (reads the wizard's broker ListView).
+            [DefaultValues]
+            { "searchText": "MetaQuotes" }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.FindCompaniesAsync(mt4_term_api.GuiDemoFindCompaniesRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Search for broker companies by name (reads the wizard's broker ListView).
+            [DefaultValues]
+            { "searchText": "MetaQuotes" }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.FindCompaniesAsync(mt4_term_api.GuiDemoFindCompaniesRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Search for broker companies by name (reads the wizard's broker ListView).
+            [DefaultValues]
+            { "searchText": "MetaQuotes" }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.ServersAndAccountTypes(mt4_term_api.GuiDemoServersAndTypesRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Get available servers and account types for a company.
+            [DefaultValues]
+            { "companyName": "MetaQuotes Ltd." }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.ServersAndAccountTypes(mt4_term_api.GuiDemoServersAndTypesRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Get available servers and account types for a company.
+            [DefaultValues]
+            { "companyName": "MetaQuotes Ltd." }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.ServersAndAccountTypesAsync(mt4_term_api.GuiDemoServersAndTypesRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Get available servers and account types for a company.
+            [DefaultValues]
+            { "companyName": "MetaQuotes Ltd." }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.ServersAndAccountTypesAsync(mt4_term_api.GuiDemoServersAndTypesRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Get available servers and account types for a company.
+            [DefaultValues]
+            { "companyName": "MetaQuotes Ltd." }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.OpenDemoAccount(mt4_term_api.GuiDemoOpenAccountRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Open a demo account. Full wizard flow: search -> select -> fill form -> register.
+            [DefaultValues]
+            { "company": "MetaQuotes Ltd.", "firstName": "Test", "lastName": "User",
+              "email": "test@test.com", "phone": "+1234567890", "timeoutSeconds": "60" }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.OpenDemoAccount(mt4_term_api.GuiDemoOpenAccountRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Open a demo account. Full wizard flow: search -> select -> fill form -> register.
+            [DefaultValues]
+            { "company": "MetaQuotes Ltd.", "firstName": "Test", "lastName": "User",
+              "email": "test@test.com", "phone": "+1234567890", "timeoutSeconds": "60" }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.OpenDemoAccountAsync(mt4_term_api.GuiDemoOpenAccountRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Open a demo account. Full wizard flow: search -> select -> fill form -> register.
+            [DefaultValues]
+            { "company": "MetaQuotes Ltd.", "firstName": "Test", "lastName": "User",
+              "email": "test@test.com", "phone": "+1234567890", "timeoutSeconds": "60" }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.OpenDemoAccountAsync(mt4_term_api.GuiDemoOpenAccountRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Open a demo account. Full wizard flow: search -> select -> fill form -> register.
+            [DefaultValues]
+            { "company": "MetaQuotes Ltd.", "firstName": "Test", "lastName": "User",
+              "email": "test@test.com", "phone": "+1234567890", "timeoutSeconds": "60" }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.OpenDemoAccountStream(mt4_term_api.GuiDemoOpenAccountRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Same as OpenDemoAccount but streams real-time progress events.
+            Swagger does not support streaming — use /demo-account-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.OpenDemoAccountStream(mt4_term_api.GuiDemoOpenAccountRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Same as OpenDemoAccount but streams real-time progress events.
+            Swagger does not support streaming — use /demo-account-stream interactive viewer.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.BindService(mt4_term_api.DemoAccount.DemoAccountBase)">
+            <summary>Creates service definition that can be registered with a server</summary>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.BindService(Grpc.Core.ServiceBinderBase,mt4_term_api.DemoAccount.DemoAccountBase)">
+            <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
+            Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
+            <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+        </member>
+        <member name="T:mt4_term_api.Gui">
+            <summary>
+            Terminal-side GUI-automation service (implemented by mt4-framework-grpc, which
+            P/Invokes mt4-term-gui.dll). The manager's DemoAccount service proxies to these.
+            </summary>
+        </member>
+        <member name="P:mt4_term_api.Gui.Descriptor">
+            <summary>Service descriptor</summary>
+        </member>
+        <member name="T:mt4_term_api.Gui.GuiBase">
+            <summary>Base class for server-side implementations of Gui</summary>
+        </member>
+        <member name="T:mt4_term_api.Gui.GuiClient">
+            <summary>Client for Gui</summary>
+        </member>
+        <member name="M:mt4_term_api.Gui.GuiClient.#ctor(Grpc.Core.ChannelBase)">
+            <summary>Creates a new client for Gui</summary>
+            <param name="channel">The channel to use to make remote calls.</param>
+        </member>
+        <member name="M:mt4_term_api.Gui.GuiClient.#ctor(Grpc.Core.CallInvoker)">
+            <summary>Creates a new client for Gui that uses a custom <c>CallInvoker</c>.</summary>
+            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
+        </member>
+        <member name="M:mt4_term_api.Gui.GuiClient.#ctor">
+            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
+        </member>
+        <member name="M:mt4_term_api.Gui.GuiClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Protected constructor to allow creation of configured clients.</summary>
+            <param name="configuration">The client configuration.</param>
+        </member>
+        <member name="M:mt4_term_api.Gui.GuiClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
+            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
+        </member>
+        <member name="M:mt4_term_api.Gui.BindService(mt4_term_api.Gui.GuiBase)">
+            <summary>Creates service definition that can be registered with a server</summary>
+            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
+        </member>
+        <member name="M:mt4_term_api.Gui.BindService(Grpc.Core.ServiceBinderBase,mt4_term_api.Gui.GuiBase)">
             <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
             Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
             <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
@@ -2841,6 +3197,76 @@
             A SOCKS5 proxy server.
             </summary>
         </member>
+        <member name="T:mt4_term_api.ConnectStreamEvent">
+            <summary>
+            Event message streamed during ConnectStream / ConnectExStream.
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStreamEvent.StepFieldNumber">
+            <summary>Field number for the "step" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectStreamEvent.Step">
+            <summary>
+            Step name: "Init", "Validation", "ColdStart-CreateInstance",
+            "ColdStart-ReadinessCheck", "Journal", "Experts", "Complete", "Error", ...
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStreamEvent.MessageFieldNumber">
+            <summary>Field number for the "message" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectStreamEvent.Message">
+            <summary>
+            Human-readable message with details (for Journal/Experts steps: the log line)
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStreamEvent.LevelFieldNumber">
+            <summary>Field number for the "level" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectStreamEvent.Level">
+            <summary>
+            Log level: INFO, WARN, ERROR
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStreamEvent.ElapsedMsFieldNumber">
+            <summary>Field number for the "elapsed_ms" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectStreamEvent.ElapsedMs">
+            <summary>
+            Elapsed milliseconds since start
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStreamEvent.TimestampFieldNumber">
+            <summary>Field number for the "timestamp" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectStreamEvent.Timestamp">
+            <summary>
+            Timestamp of this event
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStreamEvent.IsFinalFieldNumber">
+            <summary>Field number for the "is_final" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectStreamEvent.IsFinal">
+            <summary>
+            True only on the final event (success or error)
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStreamEvent.ConnectDataFieldNumber">
+            <summary>Field number for the "connect_data" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectStreamEvent.ConnectData">
+            <summary>
+            Populated only on the final success event
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStreamEvent.ErrorDataFieldNumber">
+            <summary>Field number for the "error_data" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectStreamEvent.ErrorData">
+            <summary>
+            Populated only on the final error event
+            </summary>
+        </member>
         <member name="F:mt4_term_api.JournalReply.DataFieldNumber">
             <summary>Field number for the "data" field.</summary>
         </member>
@@ -3374,6 +3800,149 @@
             <summary>
             Deterministic GUID generated from user+password
             </summary>
+        </member>
+        <member name="T:mt4_term_api.Mt4TermApiDemoAccountReflection">
+            <summary>Holder for reflection information generated from mt4-term-api-demo-account.proto</summary>
+        </member>
+        <member name="P:mt4_term_api.Mt4TermApiDemoAccountReflection.Descriptor">
+            <summary>File descriptor for mt4-term-api-demo-account.proto</summary>
+        </member>
+        <member name="T:mt4_term_api.DemoAccountStreamEvent">
+            <summary>
+            Event message streamed during OpenDemoAccountStream.
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.DemoAccountStreamEvent.StepFieldNumber">
+            <summary>Field number for the "step" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.DemoAccountStreamEvent.MessageFieldNumber">
+            <summary>Field number for the "message" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.DemoAccountStreamEvent.LevelFieldNumber">
+            <summary>Field number for the "level" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.DemoAccountStreamEvent.ElapsedMsFieldNumber">
+            <summary>Field number for the "elapsed_ms" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.DemoAccountStreamEvent.TimestampFieldNumber">
+            <summary>Field number for the "timestamp" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.DemoAccountStreamEvent.IsFinalFieldNumber">
+            <summary>Field number for the "is_final" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.DemoAccountStreamEvent.AccountDataFieldNumber">
+            <summary>Field number for the "account_data" field.</summary>
+        </member>
+        <member name="T:mt4_term_api.Mt4TermApiGuiReflection">
+            <summary>Holder for reflection information generated from mt4-term-api-gui.proto</summary>
+        </member>
+        <member name="P:mt4_term_api.Mt4TermApiGuiReflection.Descriptor">
+            <summary>File descriptor for mt4-term-api-gui.proto</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoFindCompaniesRequest.SearchTextFieldNumber">
+            <summary>Field number for the "search_text" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoFindCompaniesRequest.TimeoutSecondsFieldNumber">
+            <summary>Field number for the "timeout_seconds" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoFindCompaniesReply.ResultCodeFieldNumber">
+            <summary>Field number for the "result_code" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoFindCompaniesReply.CompaniesFieldNumber">
+            <summary>Field number for the "companies" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoFindCompaniesReply.DebugLogFieldNumber">
+            <summary>Field number for the "debug_log" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoCompany.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoCompany.ShortNameFieldNumber">
+            <summary>Field number for the "short_name" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesRequest.CompanyNameFieldNumber">
+            <summary>Field number for the "company_name" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesRequest.TimeoutSecondsFieldNumber">
+            <summary>Field number for the "timeout_seconds" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesReply.ResultCodeFieldNumber">
+            <summary>Field number for the "result_code" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesReply.ServersFieldNumber">
+            <summary>Field number for the "servers" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesReply.AccountTypesFieldNumber">
+            <summary>Field number for the "account_types" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesReply.DepositsFieldNumber">
+            <summary>Field number for the "deposits" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesReply.LeveragesFieldNumber">
+            <summary>Field number for the "leverages" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesReply.DebugLogFieldNumber">
+            <summary>Field number for the "debug_log" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountRequest.CompanyFieldNumber">
+            <summary>Field number for the "company" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountRequest.FirstNameFieldNumber">
+            <summary>Field number for the "first_name" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountRequest.LastNameFieldNumber">
+            <summary>Field number for the "last_name" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountRequest.EmailFieldNumber">
+            <summary>Field number for the "email" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountRequest.PhoneFieldNumber">
+            <summary>Field number for the "phone" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountRequest.ServerFieldNumber">
+            <summary>Field number for the "server" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountRequest.AccountTypeFieldNumber">
+            <summary>Field number for the "account_type" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountRequest.TimeoutSecondsFieldNumber">
+            <summary>Field number for the "timeout_seconds" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountReply.ResultCodeFieldNumber">
+            <summary>Field number for the "result_code" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountReply.LoginFieldNumber">
+            <summary>Field number for the "login" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountReply.PasswordFieldNumber">
+            <summary>Field number for the "password" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountReply.InvestorFieldNumber">
+            <summary>Field number for the "investor" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountReply.ServerFieldNumber">
+            <summary>Field number for the "server" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoOpenAccountReply.DebugLogFieldNumber">
+            <summary>Field number for the "debug_log" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoProgressEvent.StepFieldNumber">
+            <summary>Field number for the "step" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoProgressEvent.MessageFieldNumber">
+            <summary>Field number for the "message" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoProgressEvent.ElapsedMsFieldNumber">
+            <summary>Field number for the "elapsed_ms" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoProgressEvent.IsFinalFieldNumber">
+            <summary>Field number for the "is_final" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoProgressEvent.AccountDataFieldNumber">
+            <summary>Field number for the "account_data" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoProgressEvent.ErrorCodeFieldNumber">
+            <summary>Field number for the "error_code" field.</summary>
         </member>
         <member name="T:mt4_term_api.Mt4TermApiHealthCheckReflection">
             <summary>Holder for reflection information generated from mt4-term-api-health-check.proto</summary>

@@ -26,119 +26,130 @@ namespace mt4_term_api {
           string.Concat(
             "Ch1tdDQtdGVybS1hcGktY29ubmVjdGlvbi5wcm90bxIMbXQ0X3Rlcm1fYXBp",
             "Ghxnb29nbGUvYXBpL2Fubm90YXRpb25zLnByb3RvGh9nb29nbGUvcHJvdG9i",
-            "dWYvdGltZXN0YW1wLnByb3RvGhRtcnBjLW10NC1lcnJvci5wcm90byIQCg5K",
-            "b3VybmFsUmVxdWVzdCJ2CgxKb3VybmFsUmVwbHkSNAoEZGF0YRgBIAEoCzIk",
-            "Lm10NF90ZXJtX2FwaS5HZXRUZXJtaW5hbEpvdXJuYWxEYXRhSAASJAoFZXJy",
-            "b3IYAiABKAsyEy5tdDRfdGVybV9hcGkuRXJyb3JIAEIKCghyZXNwb25zZSJI",
-            "ChZHZXRUZXJtaW5hbEpvdXJuYWxEYXRhEi4KBHJvd3MYASADKAsyIC5tdDRf",
-            "dGVybV9hcGkuVGVybWluYWxKb3VybmFsUm93Il8KElRlcm1pbmFsSm91cm5h",
-            "bFJvdxIoCgR0aW1lGAEgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFt",
-            "cBIOCgZzb3VyY2UYAiABKAkSDwoHbWVzc2FnZRgDIAEoCSITChFTY3JlZW5z",
-            "aG90UmVxdWVzdCJxCg9TY3JlZW5zaG90UmVwbHkSLAoEZGF0YRgBIAEoCzIc",
-            "Lm10NF90ZXJtX2FwaS5TY3JlZW5zaG90RGF0YUgAEiQKBWVycm9yGAIgASgL",
-            "MhMubXQ0X3Rlcm1fYXBpLkVycm9ySABCCgoIcmVzcG9uc2UiZwoOU2NyZWVu",
-            "c2hvdERhdGESEgoKaW1hZ2VfZGF0YRgBIAEoDBIWCg5kaXNwbGF5X251bWJl",
-            "chgCIAEoBRITCgt0ZXJtaW5hbF9pZBgDIAEoCRIUCgxjb250ZW50X3R5cGUY",
-            "BCABKAkiOQojR2V0QnJva2VyU2VydmVyc0J5QnJva2VyTmFtZVJlcXVlc3QS",
-            "EgoKQnJva2VyTmFtZRgBIAEoCSKVAQohR2V0QnJva2VyU2VydmVyc0J5QnJv",
-            "a2VyTmFtZVJlcGx5Ej4KBGRhdGEYASABKAsyLi5tdDRfdGVybV9hcGkuR2V0",
-            "QnJva2VyU2VydmVyc0J5QnJva2VyTmFtZURhdGFIABIkCgVlcnJvchgCIAEo",
-            "CzITLm10NF90ZXJtX2FwaS5FcnJvckgAQgoKCHJlc3BvbnNlIswCCiBHZXRC",
-            "cm9rZXJTZXJ2ZXJzQnlCcm9rZXJOYW1lRGF0YRJLCgZyZXN1bHQYASADKAsy",
-            "Oy5tdDRfdGVybV9hcGkuR2V0QnJva2VyU2VydmVyc0J5QnJva2VyTmFtZURh",
-            "dGEuQnJva2VyUmVzdWx0Gm0KDEJyb2tlclJlc3VsdBIPCgdjb21wYW55GAEg",
-            "ASgJEkwKB3Jlc3VsdHMYAiADKAsyOy5tdDRfdGVybV9hcGkuR2V0QnJva2Vy",
-            "U2VydmVyc0J5QnJva2VyTmFtZURhdGEuQnJva2VyU2VydmVyGmwKDEJyb2tl",
-            "clNlcnZlchIMCgRuYW1lGAEgASgJEhUKCGxvZ29fdXJsGAIgASgJSACIAQES",
-            "EQoEc2l0ZRgDIAEoCUgBiAEBEg4KBmFjY2VzcxgEIAMoCUILCglfbG9nb191",
-            "cmxCBwoFX3NpdGUi6AEKEENvbm5lY3RFeFJlcXVlc3QSDAoEdXNlchgBIAEo",
-            "BBIQCghwYXNzd29yZBgCIAEoCRIXCg9tdF9jbHVzdGVyX25hbWUYAyABKAkS",
-            "HgoRYmFzZV9jaGFydF9zeW1ib2wYBCABKAlIAIgBARIzCg5leHBlcnRzX3Rv",
-            "X2FkZBgFIAMoCzIbLm10NF90ZXJtX2FwaS5FeHBlcnRBZHZpc2VyEhwKD3Rp",
-            "bWVvdXRfc2Vjb25kcxgGIAEoDUgBiAEBQhQKEl9iYXNlX2NoYXJ0X3N5bWJv",
-            "bEISChBfdGltZW91dF9zZWNvbmRzIm0KDkNvbm5lY3RFeFJlcGx5EikKBGRh",
-            "dGEYASABKAsyGS5tdDRfdGVybV9hcGkuQ29ubmVjdERhdGFIABIkCgVlcnJv",
-            "chgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJvckgAQgoKCHJlc3BvbnNlIkoK",
-            "EFJlY29ubmVjdFJlcXVlc3QSHwoSZm9yY2VfcmVjb25uZWN0aW9uGAEgASgI",
-            "SACIAQFCFQoTX2ZvcmNlX3JlY29ubmVjdGlvbiJvCg5SZWNvbm5lY3RSZXBs",
-            "eRIrCgRkYXRhGAEgASgLMhsubXQ0X3Rlcm1fYXBpLlJlY29ubmVjdERhdGFI",
+            "dWYvdGltZXN0YW1wLnByb3RvGhRtcnBjLW10NC1lcnJvci5wcm90byLxAQoS",
+            "Q29ubmVjdFN0cmVhbUV2ZW50EgwKBHN0ZXAYASABKAkSDwoHbWVzc2FnZRgC",
+            "IAEoCRINCgVsZXZlbBgDIAEoCRISCgplbGFwc2VkX21zGAQgASgDEi0KCXRp",
+            "bWVzdGFtcBgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASEAoI",
+            "aXNfZmluYWwYBiABKAgSLwoMY29ubmVjdF9kYXRhGAcgASgLMhkubXQ0X3Rl",
+            "cm1fYXBpLkNvbm5lY3REYXRhEicKCmVycm9yX2RhdGEYCCABKAsyEy5tdDRf",
+            "dGVybV9hcGkuRXJyb3IiEAoOSm91cm5hbFJlcXVlc3QidgoMSm91cm5hbFJl",
+            "cGx5EjQKBGRhdGEYASABKAsyJC5tdDRfdGVybV9hcGkuR2V0VGVybWluYWxK",
+            "b3VybmFsRGF0YUgAEiQKBWVycm9yGAIgASgLMhMubXQ0X3Rlcm1fYXBpLkVy",
+            "cm9ySABCCgoIcmVzcG9uc2UiSAoWR2V0VGVybWluYWxKb3VybmFsRGF0YRIu",
+            "CgRyb3dzGAEgAygLMiAubXQ0X3Rlcm1fYXBpLlRlcm1pbmFsSm91cm5hbFJv",
+            "dyJfChJUZXJtaW5hbEpvdXJuYWxSb3cSKAoEdGltZRgBIAEoCzIaLmdvb2ds",
+            "ZS5wcm90b2J1Zi5UaW1lc3RhbXASDgoGc291cmNlGAIgASgJEg8KB21lc3Nh",
+            "Z2UYAyABKAkiEwoRU2NyZWVuc2hvdFJlcXVlc3QicQoPU2NyZWVuc2hvdFJl",
+            "cGx5EiwKBGRhdGEYASABKAsyHC5tdDRfdGVybV9hcGkuU2NyZWVuc2hvdERh",
+            "dGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJvckgAQgoK",
+            "CHJlc3BvbnNlImcKDlNjcmVlbnNob3REYXRhEhIKCmltYWdlX2RhdGEYASAB",
+            "KAwSFgoOZGlzcGxheV9udW1iZXIYAiABKAUSEwoLdGVybWluYWxfaWQYAyAB",
+            "KAkSFAoMY29udGVudF90eXBlGAQgASgJIjkKI0dldEJyb2tlclNlcnZlcnNC",
+            "eUJyb2tlck5hbWVSZXF1ZXN0EhIKCkJyb2tlck5hbWUYASABKAkilQEKIUdl",
+            "dEJyb2tlclNlcnZlcnNCeUJyb2tlck5hbWVSZXBseRI+CgRkYXRhGAEgASgL",
+            "Mi4ubXQ0X3Rlcm1fYXBpLkdldEJyb2tlclNlcnZlcnNCeUJyb2tlck5hbWVE",
+            "YXRhSAASJAoFZXJyb3IYAiABKAsyEy5tdDRfdGVybV9hcGkuRXJyb3JIAEIK",
+            "CghyZXNwb25zZSLMAgogR2V0QnJva2VyU2VydmVyc0J5QnJva2VyTmFtZURh",
+            "dGESSwoGcmVzdWx0GAEgAygLMjsubXQ0X3Rlcm1fYXBpLkdldEJyb2tlclNl",
+            "cnZlcnNCeUJyb2tlck5hbWVEYXRhLkJyb2tlclJlc3VsdBptCgxCcm9rZXJS",
+            "ZXN1bHQSDwoHY29tcGFueRgBIAEoCRJMCgdyZXN1bHRzGAIgAygLMjsubXQ0",
+            "X3Rlcm1fYXBpLkdldEJyb2tlclNlcnZlcnNCeUJyb2tlck5hbWVEYXRhLkJy",
+            "b2tlclNlcnZlchpsCgxCcm9rZXJTZXJ2ZXISDAoEbmFtZRgBIAEoCRIVCghs",
+            "b2dvX3VybBgCIAEoCUgAiAEBEhEKBHNpdGUYAyABKAlIAYgBARIOCgZhY2Nl",
+            "c3MYBCADKAlCCwoJX2xvZ29fdXJsQgcKBV9zaXRlIugBChBDb25uZWN0RXhS",
+            "ZXF1ZXN0EgwKBHVzZXIYASABKAQSEAoIcGFzc3dvcmQYAiABKAkSFwoPbXRf",
+            "Y2x1c3Rlcl9uYW1lGAMgASgJEh4KEWJhc2VfY2hhcnRfc3ltYm9sGAQgASgJ",
+            "SACIAQESMwoOZXhwZXJ0c190b19hZGQYBSADKAsyGy5tdDRfdGVybV9hcGku",
+            "RXhwZXJ0QWR2aXNlchIcCg90aW1lb3V0X3NlY29uZHMYBiABKA1IAYgBAUIU",
+            "ChJfYmFzZV9jaGFydF9zeW1ib2xCEgoQX3RpbWVvdXRfc2Vjb25kcyJtCg5D",
+            "b25uZWN0RXhSZXBseRIpCgRkYXRhGAEgASgLMhkubXQ0X3Rlcm1fYXBpLkNv",
+            "bm5lY3REYXRhSAASJAoFZXJyb3IYAiABKAsyEy5tdDRfdGVybV9hcGkuRXJy",
+            "b3JIAEIKCghyZXNwb25zZSJKChBSZWNvbm5lY3RSZXF1ZXN0Eh8KEmZvcmNl",
+            "X3JlY29ubmVjdGlvbhgBIAEoCEgAiAEBQhUKE19mb3JjZV9yZWNvbm5lY3Rp",
+            "b24ibwoOUmVjb25uZWN0UmVwbHkSKwoEZGF0YRgBIAEoCzIbLm10NF90ZXJt",
+            "X2FwaS5SZWNvbm5lY3REYXRhSAASJAoFZXJyb3IYAiABKAsyEy5tdDRfdGVy",
+            "bV9hcGkuRXJyb3JIAEIKCghyZXNwb25zZSLhAQoNUmVjb25uZWN0RGF0YRIe",
+            "ChZ0ZXJtaW5hbF93YXNfcmVjcmVhdGVkGAEgASgIEjEKDXRlcm1pbmFsX3R5",
+            "cGUYAiABKA4yGi5tdDRfdGVybV9hcGkuVGVybWluYWxUeXBlEh4KFnRlcm1p",
+            "bmFsX2luc3RhbmNlX2d1aWQYAyABKAkSKwojb2xkX3Rlcm1pbmFsX2Z1bGxf",
+            "bGl2ZV90aW1lX3NlY29uZHMYBCABKAMSMAoNb2xkX2xvZ19maWxlcxgFIAMo",
+            "CzIZLm10NF90ZXJtX2FwaS5Mb2dGaWxlSW5mbyKzAQoOQ29ubmVjdFJlcXVl",
+            "c3QSDAoEdXNlchgBIAEoBBIQCghwYXNzd29yZBgCIAEoCRIMCgRob3N0GAMg",
+            "ASgJEgwKBHBvcnQYBCABKAUSMwoOZXhwZXJ0c190b19hZGQYBSADKAsyGy5t",
+            "dDRfdGVybV9hcGkuRXhwZXJ0QWR2aXNlchIcCg90aW1lb3V0X3NlY29uZHMY",
+            "BiABKA1IAIgBAUISChBfdGltZW91dF9zZWNvbmRzIjgKDUV4cGVydEFkdmlz",
+            "ZXISEQoJZmlsZV9uYW1lGAEgASgJEhQKDGZpbGVfY29udGVudBgCIAEoDCJr",
+            "CgxDb25uZWN0UmVwbHkSKQoEZGF0YRgBIAEoCzIZLm10NF90ZXJtX2FwaS5D",
+            "b25uZWN0RGF0YUgAEiQKBWVycm9yGAIgASgLMhMubXQ0X3Rlcm1fYXBpLkVy",
+            "cm9ySABCCgoIcmVzcG9uc2UiYAoLQ29ubmVjdERhdGESHgoWdGVybWluYWxf",
+            "aW5zdGFuY2VfZ3VpZBgBIAEoCRIxCg10ZXJtaW5hbF90eXBlGAMgASgOMhou",
+            "bXQ0X3Rlcm1fYXBpLlRlcm1pbmFsVHlwZSK1AgoTQ29ubmVjdFByb3h5UmVx",
+            "dWVzdBIMCgR1c2VyGAEgASgEEhAKCHBhc3N3b3JkGAIgASgJEgwKBGhvc3QY",
+            "AyABKAkSDAoEcG9ydBgEIAEoBRIRCglwcm94eVVzZXIYBSABKAkSFQoNcHJv",
+            "eHlQYXNzd29yZBgGIAEoCRIRCglwcm94eUhvc3QYByABKAkSEQoJcHJveHlQ",
+            "b3J0GAggASgNEisKCXByb3h5VHlwZRgJIAEoDjIYLm10NF90ZXJtX2FwaS5Q",
+            "cm94eVR5cGVzEjMKDmV4cGVydHNfdG9fYWRkGAogAygLMhsubXQ0X3Rlcm1f",
+            "YXBpLkV4cGVydEFkdmlzZXISHAoPdGltZW91dF9zZWNvbmRzGAsgASgNSACI",
+            "AQFCEgoQX3RpbWVvdXRfc2Vjb25kcyJ1ChFDb25uZWN0UHJveHlSZXBseRIu",
+            "CgRkYXRhGAEgASgLMh4ubXQ0X3Rlcm1fYXBpLkNvbm5lY3RQcm94eURhdGFI",
             "ABIkCgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJvckgAQgoKCHJl",
-            "c3BvbnNlIuEBCg1SZWNvbm5lY3REYXRhEh4KFnRlcm1pbmFsX3dhc19yZWNy",
-            "ZWF0ZWQYASABKAgSMQoNdGVybWluYWxfdHlwZRgCIAEoDjIaLm10NF90ZXJt",
-            "X2FwaS5UZXJtaW5hbFR5cGUSHgoWdGVybWluYWxfaW5zdGFuY2VfZ3VpZBgD",
-            "IAEoCRIrCiNvbGRfdGVybWluYWxfZnVsbF9saXZlX3RpbWVfc2Vjb25kcxgE",
-            "IAEoAxIwCg1vbGRfbG9nX2ZpbGVzGAUgAygLMhkubXQ0X3Rlcm1fYXBpLkxv",
-            "Z0ZpbGVJbmZvIrMBCg5Db25uZWN0UmVxdWVzdBIMCgR1c2VyGAEgASgEEhAK",
-            "CHBhc3N3b3JkGAIgASgJEgwKBGhvc3QYAyABKAkSDAoEcG9ydBgEIAEoBRIz",
-            "Cg5leHBlcnRzX3RvX2FkZBgFIAMoCzIbLm10NF90ZXJtX2FwaS5FeHBlcnRB",
-            "ZHZpc2VyEhwKD3RpbWVvdXRfc2Vjb25kcxgGIAEoDUgAiAEBQhIKEF90aW1l",
-            "b3V0X3NlY29uZHMiOAoNRXhwZXJ0QWR2aXNlchIRCglmaWxlX25hbWUYASAB",
-            "KAkSFAoMZmlsZV9jb250ZW50GAIgASgMImsKDENvbm5lY3RSZXBseRIpCgRk",
-            "YXRhGAEgASgLMhkubXQ0X3Rlcm1fYXBpLkNvbm5lY3REYXRhSAASJAoFZXJy",
-            "b3IYAiABKAsyEy5tdDRfdGVybV9hcGkuRXJyb3JIAEIKCghyZXNwb25zZSJg",
-            "CgtDb25uZWN0RGF0YRIeChZ0ZXJtaW5hbF9pbnN0YW5jZV9ndWlkGAEgASgJ",
-            "EjEKDXRlcm1pbmFsX3R5cGUYAyABKA4yGi5tdDRfdGVybV9hcGkuVGVybWlu",
-            "YWxUeXBlIrUCChNDb25uZWN0UHJveHlSZXF1ZXN0EgwKBHVzZXIYASABKAQS",
-            "EAoIcGFzc3dvcmQYAiABKAkSDAoEaG9zdBgDIAEoCRIMCgRwb3J0GAQgASgF",
-            "EhEKCXByb3h5VXNlchgFIAEoCRIVCg1wcm94eVBhc3N3b3JkGAYgASgJEhEK",
-            "CXByb3h5SG9zdBgHIAEoCRIRCglwcm94eVBvcnQYCCABKA0SKwoJcHJveHlU",
-            "eXBlGAkgASgOMhgubXQ0X3Rlcm1fYXBpLlByb3h5VHlwZXMSMwoOZXhwZXJ0",
-            "c190b19hZGQYCiADKAsyGy5tdDRfdGVybV9hcGkuRXhwZXJ0QWR2aXNlchIc",
-            "Cg90aW1lb3V0X3NlY29uZHMYCyABKA1IAIgBAUISChBfdGltZW91dF9zZWNv",
-            "bmRzInUKEUNvbm5lY3RQcm94eVJlcGx5Ei4KBGRhdGEYASABKAsyHi5tdDRf",
-            "dGVybV9hcGkuQ29ubmVjdFByb3h5RGF0YUgAEiQKBWVycm9yGAIgASgLMhMu",
-            "bXQ0X3Rlcm1fYXBpLkVycm9ySABCCgoIcmVzcG9uc2UiYAoQQ29ubmVjdFBy",
-            "b3h5RGF0YRIZChF1bmlxdWVfaWRlbnRpZmllchgBIAEoCRIxCg10ZXJtaW5h",
-            "bF90eXBlGAIgASgOMhoubXQ0X3Rlcm1fYXBpLlRlcm1pbmFsVHlwZSIVChND",
-            "aGVja0Nvbm5lY3RSZXF1ZXN0InUKEUNoZWNrQ29ubmVjdFJlcGx5Ei4KBGRh",
-            "dGEYASABKAsyHi5tdDRfdGVybV9hcGkuQ2hlY2tDb25uZWN0RGF0YUgAEiQK",
-            "BWVycm9yGAIgASgLMhMubXQ0X3Rlcm1fYXBpLkVycm9ySABCCgoIcmVzcG9u",
-            "c2UiZgoQQ2hlY2tDb25uZWN0RGF0YRIZChF1bmlxdWVfaWRlbnRpZmllchgB",
-            "IAEoCRI3CgxoZWFsdGhfY2hlY2sYAiABKAsyIS5tdDRfdGVybV9hcGkuVGVy",
-            "bWluYWxIZWFsdGhDaGVjayJpChNUZXJtaW5hbEhlYWx0aENoZWNrEhAKCGlz",
-            "X2FsaXZlGAEgASgIEhQKDGFwaV9pc19hbGl2ZRgCIAEoCBIqCiJ0ZXJtaW5h",
-            "bF9pc19jb25uZWN0ZWRfdG9fbXRfc2VydmVyGAMgASgIIhMKEURpc2Nvbm5l",
-            "Y3RSZXF1ZXN0InEKD0Rpc2Nvbm5lY3RSZXBseRIsCgRkYXRhGAEgASgLMhwu",
-            "bXQ0X3Rlcm1fYXBpLkRpc2Nvbm5lY3REYXRhSAASJAoFZXJyb3IYAiABKAsy",
-            "Ey5tdDRfdGVybV9hcGkuRXJyb3JIAEIKCghyZXNwb25zZSJLCg5EaXNjb25u",
-            "ZWN0RGF0YRIZChF1bmlxdWVfaWRlbnRpZmllchgBIAEoCRIeChZmdWxsX2xp",
-            "ZmVfdGltZV9zZWNvbmRzGAIgASgDIi4KDEdldElkUmVxdWVzdBIMCgR1c2Vy",
-            "GAEgASgJEhAKCHBhc3N3b3JkGAIgASgJImcKCkdldElkUmVwbHkSJwoEZGF0",
-            "YRgBIAEoCzIXLm10NF90ZXJtX2FwaS5HZXRJZERhdGFIABIkCgVlcnJvchgC",
-            "IAEoCzITLm10NF90ZXJtX2FwaS5FcnJvckgAQgoKCHJlc3BvbnNlIhcKCUdl",
-            "dElkRGF0YRIKCgJpZBgBIAEoCSo5CgpQcm94eVR5cGVzEggKBE5vbmUQABIJ",
-            "CgVIdHRwcxABEgoKBlNvY2tzNBACEgoKBlNvY2tzNRADKiAKDFRlcm1pbmFs",
-            "VHlwZRIHCgNNVDQQABIHCgNNVDUQATK4BwoKQ29ubmVjdGlvbhJdCglDb25u",
-            "ZWN0RXgSHi5tdDRfdGVybV9hcGkuQ29ubmVjdEV4UmVxdWVzdBocLm10NF90",
-            "ZXJtX2FwaS5Db25uZWN0RXhSZXBseSISgtPkkwIMEgovQ29ubmVjdEV4ElUK",
-            "B0Nvbm5lY3QSHC5tdDRfdGVybV9hcGkuQ29ubmVjdFJlcXVlc3QaGi5tdDRf",
-            "dGVybV9hcGkuQ29ubmVjdFJlcGx5IhCC0+STAgoSCC9Db25uZWN0EmkKDENv",
-            "bm5lY3RQcm94eRIhLm10NF90ZXJtX2FwaS5Db25uZWN0UHJveHlSZXF1ZXN0",
-            "Gh8ubXQ0X3Rlcm1fYXBpLkNvbm5lY3RQcm94eVJlcGx5IhWC0+STAg8SDS9D",
-            "b25uZWN0UHJveHkSaQoMQ2hlY2tDb25uZWN0EiEubXQ0X3Rlcm1fYXBpLkNo",
-            "ZWNrQ29ubmVjdFJlcXVlc3QaHy5tdDRfdGVybV9hcGkuQ2hlY2tDb25uZWN0",
-            "UmVwbHkiFYLT5JMCDxINL0NoZWNrQ29ubmVjdBJhCgpEaXNjb25uZWN0Eh8u",
-            "bXQ0X3Rlcm1fYXBpLkRpc2Nvbm5lY3RSZXF1ZXN0Gh0ubXQ0X3Rlcm1fYXBp",
-            "LkRpc2Nvbm5lY3RSZXBseSITgtPkkwINEgsvRGlzY29ubmVjdBJdCglSZWNv",
-            "bm5lY3QSHi5tdDRfdGVybV9hcGkuUmVjb25uZWN0UmVxdWVzdBocLm10NF90",
-            "ZXJtX2FwaS5SZWNvbm5lY3RSZXBseSISgtPkkwIMEgovUmVjb25uZWN0EqkB",
-            "ChxHZXRCcm9rZXJTZXJ2ZXJzQnlCcm9rZXJOYW1lEjEubXQ0X3Rlcm1fYXBp",
-            "LkdldEJyb2tlclNlcnZlcnNCeUJyb2tlck5hbWVSZXF1ZXN0Gi8ubXQ0X3Rl",
-            "cm1fYXBpLkdldEJyb2tlclNlcnZlcnNCeUJyb2tlck5hbWVSZXBseSIlgtPk",
-            "kwIfEh0vR2V0QnJva2VyU2VydmVyc0J5QnJva2VyTmFtZRJNCgVHZXRJZBIa",
-            "Lm10NF90ZXJtX2FwaS5HZXRJZFJlcXVlc3QaGC5tdDRfdGVybV9hcGkuR2V0",
-            "SWRSZXBseSIOgtPkkwIIEgYvR2V0SWQSYQoKU2NyZWVuc2hvdBIfLm10NF90",
-            "ZXJtX2FwaS5TY3JlZW5zaG90UmVxdWVzdBodLm10NF90ZXJtX2FwaS5TY3Jl",
-            "ZW5zaG90UmVwbHkiE4LT5JMCDRILL1NjcmVlbnNob3QyvgEKBExvZ3MSWgoH",
-            "Sm91cm5hbBIcLm10NF90ZXJtX2FwaS5Kb3VybmFsUmVxdWVzdBoaLm10NF90",
-            "ZXJtX2FwaS5Kb3VybmFsUmVwbHkiFYLT5JMCDxINL0xvZ3MvSm91cm5hbBJa",
-            "CgdFeHBlcnRzEhwubXQ0X3Rlcm1fYXBpLkpvdXJuYWxSZXF1ZXN0GhoubXQ0",
-            "X3Rlcm1fYXBpLkpvdXJuYWxSZXBseSIVgtPkkwIPEg0vTG9ncy9FeHBlcnRz",
-            "QkJaMWdpdC5tdGFwaS5pby9yb290L21ycGMtcHJvdG8uZ2l0L210NC9saWJy",
-            "YXJpZXMvZ2+qAgxtdDRfdGVybV9hcGliBnByb3RvMw=="));
+            "c3BvbnNlImAKEENvbm5lY3RQcm94eURhdGESGQoRdW5pcXVlX2lkZW50aWZp",
+            "ZXIYASABKAkSMQoNdGVybWluYWxfdHlwZRgCIAEoDjIaLm10NF90ZXJtX2Fw",
+            "aS5UZXJtaW5hbFR5cGUiFQoTQ2hlY2tDb25uZWN0UmVxdWVzdCJ1ChFDaGVj",
+            "a0Nvbm5lY3RSZXBseRIuCgRkYXRhGAEgASgLMh4ubXQ0X3Rlcm1fYXBpLkNo",
+            "ZWNrQ29ubmVjdERhdGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2Fw",
+            "aS5FcnJvckgAQgoKCHJlc3BvbnNlImYKEENoZWNrQ29ubmVjdERhdGESGQoR",
+            "dW5pcXVlX2lkZW50aWZpZXIYASABKAkSNwoMaGVhbHRoX2NoZWNrGAIgASgL",
+            "MiEubXQ0X3Rlcm1fYXBpLlRlcm1pbmFsSGVhbHRoQ2hlY2siaQoTVGVybWlu",
+            "YWxIZWFsdGhDaGVjaxIQCghpc19hbGl2ZRgBIAEoCBIUCgxhcGlfaXNfYWxp",
+            "dmUYAiABKAgSKgoidGVybWluYWxfaXNfY29ubmVjdGVkX3RvX210X3NlcnZl",
+            "chgDIAEoCCITChFEaXNjb25uZWN0UmVxdWVzdCJxCg9EaXNjb25uZWN0UmVw",
+            "bHkSLAoEZGF0YRgBIAEoCzIcLm10NF90ZXJtX2FwaS5EaXNjb25uZWN0RGF0",
+            "YUgAEiQKBWVycm9yGAIgASgLMhMubXQ0X3Rlcm1fYXBpLkVycm9ySABCCgoI",
+            "cmVzcG9uc2UiSwoORGlzY29ubmVjdERhdGESGQoRdW5pcXVlX2lkZW50aWZp",
+            "ZXIYASABKAkSHgoWZnVsbF9saWZlX3RpbWVfc2Vjb25kcxgCIAEoAyIuCgxH",
+            "ZXRJZFJlcXVlc3QSDAoEdXNlchgBIAEoCRIQCghwYXNzd29yZBgCIAEoCSJn",
+            "CgpHZXRJZFJlcGx5EicKBGRhdGEYASABKAsyFy5tdDRfdGVybV9hcGkuR2V0",
+            "SWREYXRhSAASJAoFZXJyb3IYAiABKAsyEy5tdDRfdGVybV9hcGkuRXJyb3JI",
+            "AEIKCghyZXNwb25zZSIXCglHZXRJZERhdGESCgoCaWQYASABKAkqOQoKUHJv",
+            "eHlUeXBlcxIICgROb25lEAASCQoFSHR0cHMQARIKCgZTb2NrczQQAhIKCgZT",
+            "b2NrczUQAyogCgxUZXJtaW5hbFR5cGUSBwoDTVQ0EAASBwoDTVQ1EAEylAkK",
+            "CkNvbm5lY3Rpb24SXQoJQ29ubmVjdEV4Eh4ubXQ0X3Rlcm1fYXBpLkNvbm5l",
+            "Y3RFeFJlcXVlc3QaHC5tdDRfdGVybV9hcGkuQ29ubmVjdEV4UmVwbHkiEoLT",
+            "5JMCDBIKL0Nvbm5lY3RFeBJVCgdDb25uZWN0EhwubXQ0X3Rlcm1fYXBpLkNv",
+            "bm5lY3RSZXF1ZXN0GhoubXQ0X3Rlcm1fYXBpLkNvbm5lY3RSZXBseSIQgtPk",
+            "kwIKEggvQ29ubmVjdBJpCgxDb25uZWN0UHJveHkSIS5tdDRfdGVybV9hcGku",
+            "Q29ubmVjdFByb3h5UmVxdWVzdBofLm10NF90ZXJtX2FwaS5Db25uZWN0UHJv",
+            "eHlSZXBseSIVgtPkkwIPEg0vQ29ubmVjdFByb3h5EmkKDENoZWNrQ29ubmVj",
+            "dBIhLm10NF90ZXJtX2FwaS5DaGVja0Nvbm5lY3RSZXF1ZXN0Gh8ubXQ0X3Rl",
+            "cm1fYXBpLkNoZWNrQ29ubmVjdFJlcGx5IhWC0+STAg8SDS9DaGVja0Nvbm5l",
+            "Y3QSYQoKRGlzY29ubmVjdBIfLm10NF90ZXJtX2FwaS5EaXNjb25uZWN0UmVx",
+            "dWVzdBodLm10NF90ZXJtX2FwaS5EaXNjb25uZWN0UmVwbHkiE4LT5JMCDRIL",
+            "L0Rpc2Nvbm5lY3QSXQoJUmVjb25uZWN0Eh4ubXQ0X3Rlcm1fYXBpLlJlY29u",
+            "bmVjdFJlcXVlc3QaHC5tdDRfdGVybV9hcGkuUmVjb25uZWN0UmVwbHkiEoLT",
+            "5JMCDBIKL1JlY29ubmVjdBKpAQocR2V0QnJva2VyU2VydmVyc0J5QnJva2Vy",
+            "TmFtZRIxLm10NF90ZXJtX2FwaS5HZXRCcm9rZXJTZXJ2ZXJzQnlCcm9rZXJO",
+            "YW1lUmVxdWVzdBovLm10NF90ZXJtX2FwaS5HZXRCcm9rZXJTZXJ2ZXJzQnlC",
+            "cm9rZXJOYW1lUmVwbHkiJYLT5JMCHxIdL0dldEJyb2tlclNlcnZlcnNCeUJy",
+            "b2tlck5hbWUSTQoFR2V0SWQSGi5tdDRfdGVybV9hcGkuR2V0SWRSZXF1ZXN0",
+            "GhgubXQ0X3Rlcm1fYXBpLkdldElkUmVwbHkiDoLT5JMCCBIGL0dldElkEmEK",
+            "ClNjcmVlbnNob3QSHy5tdDRfdGVybV9hcGkuU2NyZWVuc2hvdFJlcXVlc3Qa",
+            "HS5tdDRfdGVybV9hcGkuU2NyZWVuc2hvdFJlcGx5IhOC0+STAg0SCy9TY3Jl",
+            "ZW5zaG90EmkKDUNvbm5lY3RTdHJlYW0SHC5tdDRfdGVybV9hcGkuQ29ubmVj",
+            "dFJlcXVlc3QaIC5tdDRfdGVybV9hcGkuQ29ubmVjdFN0cmVhbUV2ZW50IhaC",
+            "0+STAhASDi9Db25uZWN0U3RyZWFtMAESbwoPQ29ubmVjdEV4U3RyZWFtEh4u",
+            "bXQ0X3Rlcm1fYXBpLkNvbm5lY3RFeFJlcXVlc3QaIC5tdDRfdGVybV9hcGku",
+            "Q29ubmVjdFN0cmVhbUV2ZW50IhiC0+STAhISEC9Db25uZWN0RXhTdHJlYW0w",
+            "ATK+AQoETG9ncxJaCgdKb3VybmFsEhwubXQ0X3Rlcm1fYXBpLkpvdXJuYWxS",
+            "ZXF1ZXN0GhoubXQ0X3Rlcm1fYXBpLkpvdXJuYWxSZXBseSIVgtPkkwIPEg0v",
+            "TG9ncy9Kb3VybmFsEloKB0V4cGVydHMSHC5tdDRfdGVybV9hcGkuSm91cm5h",
+            "bFJlcXVlc3QaGi5tdDRfdGVybV9hcGkuSm91cm5hbFJlcGx5IhWC0+STAg8S",
+            "DS9Mb2dzL0V4cGVydHNCQloxZ2l0Lm10YXBpLmlvL3Jvb3QvbXJwYy1wcm90",
+            "by5naXQvbXQ0L2xpYnJhcmllcy9nb6oCDG10NF90ZXJtX2FwaWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Api.AnnotationsReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Mt4TermApi.MrpcMt4ErrorReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::mt4_term_api.ProxyTypes), typeof(global::mt4_term_api.TerminalType), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectStreamEvent), global::mt4_term_api.ConnectStreamEvent.Parser, new[]{ "Step", "Message", "Level", "ElapsedMs", "Timestamp", "IsFinal", "ConnectData", "ErrorData" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.JournalRequest), global::mt4_term_api.JournalRequest.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.JournalReply), global::mt4_term_api.JournalReply.Parser, new[]{ "Data", "Error" }, new[]{ "Response" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.GetTerminalJournalData), global::mt4_term_api.GetTerminalJournalData.Parser, new[]{ "Rows" }, null, null, null, null),
@@ -208,6 +219,509 @@ namespace mt4_term_api {
   #endregion
 
   #region Messages
+  /// <summary>
+  /// Event message streamed during ConnectStream / ConnectExStream.
+  /// </summary>
+  public sealed partial class ConnectStreamEvent : pb::IMessage<ConnectStreamEvent>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<ConnectStreamEvent> _parser = new pb::MessageParser<ConnectStreamEvent>(() => new ConnectStreamEvent());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<ConnectStreamEvent> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[0]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ConnectStreamEvent() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ConnectStreamEvent(ConnectStreamEvent other) : this() {
+      step_ = other.step_;
+      message_ = other.message_;
+      level_ = other.level_;
+      elapsedMs_ = other.elapsedMs_;
+      timestamp_ = other.timestamp_ != null ? other.timestamp_.Clone() : null;
+      isFinal_ = other.isFinal_;
+      connectData_ = other.connectData_ != null ? other.connectData_.Clone() : null;
+      errorData_ = other.errorData_ != null ? other.errorData_.Clone() : null;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ConnectStreamEvent Clone() {
+      return new ConnectStreamEvent(this);
+    }
+
+    /// <summary>Field number for the "step" field.</summary>
+    public const int StepFieldNumber = 1;
+    private string step_ = "";
+    /// <summary>
+    /// Step name: "Init", "Validation", "ColdStart-CreateInstance",
+    /// "ColdStart-ReadinessCheck", "Journal", "Experts", "Complete", "Error", ...
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Step {
+      get { return step_; }
+      set {
+        step_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "message" field.</summary>
+    public const int MessageFieldNumber = 2;
+    private string message_ = "";
+    /// <summary>
+    /// Human-readable message with details (for Journal/Experts steps: the log line)
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Message {
+      get { return message_; }
+      set {
+        message_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "level" field.</summary>
+    public const int LevelFieldNumber = 3;
+    private string level_ = "";
+    /// <summary>
+    /// Log level: INFO, WARN, ERROR
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Level {
+      get { return level_; }
+      set {
+        level_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    /// <summary>Field number for the "elapsed_ms" field.</summary>
+    public const int ElapsedMsFieldNumber = 4;
+    private long elapsedMs_;
+    /// <summary>
+    /// Elapsed milliseconds since start
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long ElapsedMs {
+      get { return elapsedMs_; }
+      set {
+        elapsedMs_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "timestamp" field.</summary>
+    public const int TimestampFieldNumber = 5;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp timestamp_;
+    /// <summary>
+    /// Timestamp of this event
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Google.Protobuf.WellKnownTypes.Timestamp Timestamp {
+      get { return timestamp_; }
+      set {
+        timestamp_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "is_final" field.</summary>
+    public const int IsFinalFieldNumber = 6;
+    private bool isFinal_;
+    /// <summary>
+    /// True only on the final event (success or error)
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool IsFinal {
+      get { return isFinal_; }
+      set {
+        isFinal_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "connect_data" field.</summary>
+    public const int ConnectDataFieldNumber = 7;
+    private global::mt4_term_api.ConnectData connectData_;
+    /// <summary>
+    /// Populated only on the final success event
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::mt4_term_api.ConnectData ConnectData {
+      get { return connectData_; }
+      set {
+        connectData_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "error_data" field.</summary>
+    public const int ErrorDataFieldNumber = 8;
+    private global::Mt4TermApi.Error errorData_;
+    /// <summary>
+    /// Populated only on the final error event
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Mt4TermApi.Error ErrorData {
+      get { return errorData_; }
+      set {
+        errorData_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as ConnectStreamEvent);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(ConnectStreamEvent other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Step != other.Step) return false;
+      if (Message != other.Message) return false;
+      if (Level != other.Level) return false;
+      if (ElapsedMs != other.ElapsedMs) return false;
+      if (!object.Equals(Timestamp, other.Timestamp)) return false;
+      if (IsFinal != other.IsFinal) return false;
+      if (!object.Equals(ConnectData, other.ConnectData)) return false;
+      if (!object.Equals(ErrorData, other.ErrorData)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Step.Length != 0) hash ^= Step.GetHashCode();
+      if (Message.Length != 0) hash ^= Message.GetHashCode();
+      if (Level.Length != 0) hash ^= Level.GetHashCode();
+      if (ElapsedMs != 0L) hash ^= ElapsedMs.GetHashCode();
+      if (timestamp_ != null) hash ^= Timestamp.GetHashCode();
+      if (IsFinal != false) hash ^= IsFinal.GetHashCode();
+      if (connectData_ != null) hash ^= ConnectData.GetHashCode();
+      if (errorData_ != null) hash ^= ErrorData.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Step.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Step);
+      }
+      if (Message.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Message);
+      }
+      if (Level.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Level);
+      }
+      if (ElapsedMs != 0L) {
+        output.WriteRawTag(32);
+        output.WriteInt64(ElapsedMs);
+      }
+      if (timestamp_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(Timestamp);
+      }
+      if (IsFinal != false) {
+        output.WriteRawTag(48);
+        output.WriteBool(IsFinal);
+      }
+      if (connectData_ != null) {
+        output.WriteRawTag(58);
+        output.WriteMessage(ConnectData);
+      }
+      if (errorData_ != null) {
+        output.WriteRawTag(66);
+        output.WriteMessage(ErrorData);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Step.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(Step);
+      }
+      if (Message.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Message);
+      }
+      if (Level.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(Level);
+      }
+      if (ElapsedMs != 0L) {
+        output.WriteRawTag(32);
+        output.WriteInt64(ElapsedMs);
+      }
+      if (timestamp_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(Timestamp);
+      }
+      if (IsFinal != false) {
+        output.WriteRawTag(48);
+        output.WriteBool(IsFinal);
+      }
+      if (connectData_ != null) {
+        output.WriteRawTag(58);
+        output.WriteMessage(ConnectData);
+      }
+      if (errorData_ != null) {
+        output.WriteRawTag(66);
+        output.WriteMessage(ErrorData);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (Step.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Step);
+      }
+      if (Message.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Message);
+      }
+      if (Level.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Level);
+      }
+      if (ElapsedMs != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(ElapsedMs);
+      }
+      if (timestamp_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Timestamp);
+      }
+      if (IsFinal != false) {
+        size += 1 + 1;
+      }
+      if (connectData_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ConnectData);
+      }
+      if (errorData_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ErrorData);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(ConnectStreamEvent other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Step.Length != 0) {
+        Step = other.Step;
+      }
+      if (other.Message.Length != 0) {
+        Message = other.Message;
+      }
+      if (other.Level.Length != 0) {
+        Level = other.Level;
+      }
+      if (other.ElapsedMs != 0L) {
+        ElapsedMs = other.ElapsedMs;
+      }
+      if (other.timestamp_ != null) {
+        if (timestamp_ == null) {
+          Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        Timestamp.MergeFrom(other.Timestamp);
+      }
+      if (other.IsFinal != false) {
+        IsFinal = other.IsFinal;
+      }
+      if (other.connectData_ != null) {
+        if (connectData_ == null) {
+          ConnectData = new global::mt4_term_api.ConnectData();
+        }
+        ConnectData.MergeFrom(other.ConnectData);
+      }
+      if (other.errorData_ != null) {
+        if (errorData_ == null) {
+          ErrorData = new global::Mt4TermApi.Error();
+        }
+        ErrorData.MergeFrom(other.ErrorData);
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            Step = input.ReadString();
+            break;
+          }
+          case 18: {
+            Message = input.ReadString();
+            break;
+          }
+          case 26: {
+            Level = input.ReadString();
+            break;
+          }
+          case 32: {
+            ElapsedMs = input.ReadInt64();
+            break;
+          }
+          case 42: {
+            if (timestamp_ == null) {
+              Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(Timestamp);
+            break;
+          }
+          case 48: {
+            IsFinal = input.ReadBool();
+            break;
+          }
+          case 58: {
+            if (connectData_ == null) {
+              ConnectData = new global::mt4_term_api.ConnectData();
+            }
+            input.ReadMessage(ConnectData);
+            break;
+          }
+          case 66: {
+            if (errorData_ == null) {
+              ErrorData = new global::Mt4TermApi.Error();
+            }
+            input.ReadMessage(ErrorData);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            Step = input.ReadString();
+            break;
+          }
+          case 18: {
+            Message = input.ReadString();
+            break;
+          }
+          case 26: {
+            Level = input.ReadString();
+            break;
+          }
+          case 32: {
+            ElapsedMs = input.ReadInt64();
+            break;
+          }
+          case 42: {
+            if (timestamp_ == null) {
+              Timestamp = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(Timestamp);
+            break;
+          }
+          case 48: {
+            IsFinal = input.ReadBool();
+            break;
+          }
+          case 58: {
+            if (connectData_ == null) {
+              ConnectData = new global::mt4_term_api.ConnectData();
+            }
+            input.ReadMessage(ConnectData);
+            break;
+          }
+          case 66: {
+            if (errorData_ == null) {
+              ErrorData = new global::Mt4TermApi.Error();
+            }
+            input.ReadMessage(ErrorData);
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
   public sealed partial class JournalRequest : pb::IMessage<JournalRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -222,7 +736,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[0]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[1]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -374,7 +888,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[1]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[2]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -659,7 +1173,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[2]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[3]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -840,7 +1354,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[3]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[4]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1121,7 +1635,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[4]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[5]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1273,7 +1787,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[5]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1558,7 +2072,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[6]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1858,7 +2372,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[7]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2047,7 +2561,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[8]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2332,7 +2846,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[9]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3047,7 +3561,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[10]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3454,7 +3968,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[11]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3740,7 +4254,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[12]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3946,7 +4460,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[13]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4231,7 +4745,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[14]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4558,7 +5072,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[15]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4950,7 +5464,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[16]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5179,7 +5693,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[17]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5464,7 +5978,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[18]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5711,7 +6225,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[19]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[20]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6303,7 +6817,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[20]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[21]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6588,7 +7102,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[21]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[22]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6823,7 +7337,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[22]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[23]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6975,7 +7489,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[23]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[24]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7260,7 +7774,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[24]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[25]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7501,7 +8015,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[25]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[26]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7770,7 +8284,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[26]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[27]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7922,7 +8436,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[27]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[28]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8207,7 +8721,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[28]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[29]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8436,7 +8950,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[29]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[30]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8668,7 +9182,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[30]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[31]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8953,7 +9467,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[31]; }
+      get { return global::mt4_term_api.Mt4TermApiConnectionReflection.Descriptor.MessageTypes[32]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

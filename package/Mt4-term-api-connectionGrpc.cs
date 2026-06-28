@@ -81,6 +81,8 @@ namespace mt4_term_api {
     static readonly grpc::Marshaller<global::mt4_term_api.ScreenshotRequest> __Marshaller_mt4_term_api_ScreenshotRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.ScreenshotRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::mt4_term_api.ScreenshotReply> __Marshaller_mt4_term_api_ScreenshotReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.ScreenshotReply.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::mt4_term_api.ConnectStreamEvent> __Marshaller_mt4_term_api_ConnectStreamEvent = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.ConnectStreamEvent.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::mt4_term_api.ConnectExRequest, global::mt4_term_api.ConnectExReply> __Method_ConnectEx = new grpc::Method<global::mt4_term_api.ConnectExRequest, global::mt4_term_api.ConnectExReply>(
@@ -153,6 +155,22 @@ namespace mt4_term_api {
         "Screenshot",
         __Marshaller_mt4_term_api_ScreenshotRequest,
         __Marshaller_mt4_term_api_ScreenshotReply);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::mt4_term_api.ConnectRequest, global::mt4_term_api.ConnectStreamEvent> __Method_ConnectStream = new grpc::Method<global::mt4_term_api.ConnectRequest, global::mt4_term_api.ConnectStreamEvent>(
+        grpc::MethodType.ServerStreaming,
+        __ServiceName,
+        "ConnectStream",
+        __Marshaller_mt4_term_api_ConnectRequest,
+        __Marshaller_mt4_term_api_ConnectStreamEvent);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::mt4_term_api.ConnectExRequest, global::mt4_term_api.ConnectStreamEvent> __Method_ConnectExStream = new grpc::Method<global::mt4_term_api.ConnectExRequest, global::mt4_term_api.ConnectStreamEvent>(
+        grpc::MethodType.ServerStreaming,
+        __ServiceName,
+        "ConnectExStream",
+        __Marshaller_mt4_term_api_ConnectExRequest,
+        __Marshaller_mt4_term_api_ConnectStreamEvent);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -298,6 +316,38 @@ namespace mt4_term_api {
       /// <returns>The response to send back to the client (wrapped by a task).</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::mt4_term_api.ScreenshotReply> Screenshot(global::mt4_term_api.ScreenshotRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Same as Connect but streams real-time progress events (incl. live Journal/
+      /// Experts log lines) while the connection is established.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /connect-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="responseStream">Used for sending responses back to the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>A task indicating completion of the handler.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task ConnectStream(global::mt4_term_api.ConnectRequest request, grpc::IServerStreamWriter<global::mt4_term_api.ConnectStreamEvent> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Same as ConnectEx but streams real-time progress events (incl. live Journal/
+      /// Experts log lines) while the connection is established.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /connect-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="responseStream">Used for sending responses back to the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>A task indicating completion of the handler.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task ConnectExStream(global::mt4_term_api.ConnectExRequest request, grpc::IServerStreamWriter<global::mt4_term_api.ConnectStreamEvent> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -879,6 +929,66 @@ namespace mt4_term_api {
       {
         return CallInvoker.AsyncUnaryCall(__Method_Screenshot, null, options, request);
       }
+      /// <summary>
+      /// Same as Connect but streams real-time progress events (incl. live Journal/
+      /// Experts log lines) while the connection is established.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /connect-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.ConnectStreamEvent> ConnectStream(global::mt4_term_api.ConnectRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ConnectStream(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Same as Connect but streams real-time progress events (incl. live Journal/
+      /// Experts log lines) while the connection is established.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /connect-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.ConnectStreamEvent> ConnectStream(global::mt4_term_api.ConnectRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncServerStreamingCall(__Method_ConnectStream, null, options, request);
+      }
+      /// <summary>
+      /// Same as ConnectEx but streams real-time progress events (incl. live Journal/
+      /// Experts log lines) while the connection is established.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /connect-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.ConnectStreamEvent> ConnectExStream(global::mt4_term_api.ConnectExRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ConnectExStream(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Same as ConnectEx but streams real-time progress events (incl. live Journal/
+      /// Experts log lines) while the connection is established.
+      /// Requires 'id' header — use GetId to generate.
+      /// Swagger does not support streaming — use /connect-stream interactive viewer.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.ConnectStreamEvent> ConnectExStream(global::mt4_term_api.ConnectExRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncServerStreamingCall(__Method_ConnectExStream, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override ConnectionClient NewInstance(ClientBaseConfiguration configuration)
@@ -901,7 +1011,9 @@ namespace mt4_term_api {
           .AddMethod(__Method_Reconnect, serviceImpl.Reconnect)
           .AddMethod(__Method_GetBrokerServersByBrokerName, serviceImpl.GetBrokerServersByBrokerName)
           .AddMethod(__Method_GetId, serviceImpl.GetId)
-          .AddMethod(__Method_Screenshot, serviceImpl.Screenshot).Build();
+          .AddMethod(__Method_Screenshot, serviceImpl.Screenshot)
+          .AddMethod(__Method_ConnectStream, serviceImpl.ConnectStream)
+          .AddMethod(__Method_ConnectExStream, serviceImpl.ConnectExStream).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -920,6 +1032,8 @@ namespace mt4_term_api {
       serviceBinder.AddMethod(__Method_GetBrokerServersByBrokerName, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.GetBrokerServersByBrokerNameRequest, global::mt4_term_api.GetBrokerServersByBrokerNameReply>(serviceImpl.GetBrokerServersByBrokerName));
       serviceBinder.AddMethod(__Method_GetId, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.GetIdRequest, global::mt4_term_api.GetIdReply>(serviceImpl.GetId));
       serviceBinder.AddMethod(__Method_Screenshot, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.ScreenshotRequest, global::mt4_term_api.ScreenshotReply>(serviceImpl.Screenshot));
+      serviceBinder.AddMethod(__Method_ConnectStream, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::mt4_term_api.ConnectRequest, global::mt4_term_api.ConnectStreamEvent>(serviceImpl.ConnectStream));
+      serviceBinder.AddMethod(__Method_ConnectExStream, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::mt4_term_api.ConnectExRequest, global::mt4_term_api.ConnectStreamEvent>(serviceImpl.ConnectExStream));
     }
 
   }
