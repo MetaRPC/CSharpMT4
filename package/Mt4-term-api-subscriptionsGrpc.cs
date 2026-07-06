@@ -153,6 +153,10 @@ namespace mt4_term_api {
       /// Streams real-time ticks for the given symbols.
       /// Requires 'id' header — use GetId to generate.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// [DefaultValues]
+      /// {
+      ///   "symbolNames": "EURUSD,BTCUSD"
+      /// }
       /// </summary>
       /// <param name="request">The request received from the client.</param>
       /// <param name="responseStream">Used for sending responses back to the client.</param>
@@ -281,6 +285,10 @@ namespace mt4_term_api {
       /// Streams real-time ticks for the given symbols.
       /// Requires 'id' header — use GetId to generate.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// [DefaultValues]
+      /// {
+      ///   "symbolNames": "EURUSD,BTCUSD"
+      /// }
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
@@ -296,6 +304,10 @@ namespace mt4_term_api {
       /// Streams real-time ticks for the given symbols.
       /// Requires 'id' header — use GetId to generate.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
+      /// [DefaultValues]
+      /// {
+      ///   "symbolNames": "EURUSD,BTCUSD"
+      /// }
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
       /// <param name="options">The options for the call.</param>
