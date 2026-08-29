@@ -855,6 +855,31 @@
             <param name="context">The context of the server-side call handler being invoked.</param>
             <returns>The response to send back to the client (wrapped by a task).</returns>
         </member>
+        <member name="M:mt4_term_api.Connection.ConnectionBase.ConnectState(mt4_term_api.ConnectStateRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Returns detailed live connection state of this terminal instance
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionBase.OnConnectState(mt4_term_api.OnConnectStateRequest,Grpc.Core.IServerStreamWriter{mt4_term_api.OnConnectStateReply},Grpc.Core.ServerCallContext)">
+            <summary>
+            Streams real-time connection state changes for specified or visible terminals
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="responseStream">Used for sending responses back to the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>A task indicating completion of the handler.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionBase.ConnectionStatus(mt4_term_api.ConnectionStatusRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Deprecated alias for ConnectState
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
         <member name="M:mt4_term_api.Connection.ConnectionBase.Disconnect(mt4_term_api.DisconnectRequest,Grpc.Core.ServerCallContext)">
             <summary>
             Close terminal connection to MT4 server
@@ -866,6 +891,17 @@
         <member name="M:mt4_term_api.Connection.ConnectionBase.Reconnect(mt4_term_api.ReconnectRequest,Grpc.Core.ServerCallContext)">
             <summary>
             If you need to recreate terminal instance with the same id
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionBase.ConnectByToken(mt4_term_api.ConnectByTokenRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Rebuild a terminal instance from a previously-saved token_details_mt4 row. The id header
+            names the terminal to bring back; every credential (User/Password/Server or Host+Port,
+            proxy settings, servers.dat bytes, PfxFile, HardwareId, Build) is read from the DB. Same
+            reply as ConnectEx so callers do not need a separate result path.
             </summary>
             <param name="request">The request received from the client.</param>
             <param name="context">The context of the server-side call handler being invoked.</param>
@@ -1196,6 +1232,96 @@
             <param name="options">The options for the call.</param>
             <returns>The call object.</returns>
         </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectState(mt4_term_api.ConnectStateRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Returns detailed live connection state of this terminal instance
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectState(mt4_term_api.ConnectStateRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Returns detailed live connection state of this terminal instance
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectStateAsync(mt4_term_api.ConnectStateRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Returns detailed live connection state of this terminal instance
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectStateAsync(mt4_term_api.ConnectStateRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Returns detailed live connection state of this terminal instance
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.OnConnectState(mt4_term_api.OnConnectStateRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Streams real-time connection state changes for specified or visible terminals
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.OnConnectState(mt4_term_api.OnConnectStateRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Streams real-time connection state changes for specified or visible terminals
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectionStatus(mt4_term_api.ConnectionStatusRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Deprecated alias for ConnectState
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectionStatus(mt4_term_api.ConnectionStatusRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Deprecated alias for ConnectState
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectionStatusAsync(mt4_term_api.ConnectionStatusRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Deprecated alias for ConnectState
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectionStatusAsync(mt4_term_api.ConnectionStatusRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Deprecated alias for ConnectState
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
         <member name="M:mt4_term_api.Connection.ConnectionClient.Disconnect(mt4_term_api.DisconnectRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
             <summary>
             Close terminal connection to MT4 server
@@ -1263,6 +1389,54 @@
         <member name="M:mt4_term_api.Connection.ConnectionClient.ReconnectAsync(mt4_term_api.ReconnectRequest,Grpc.Core.CallOptions)">
             <summary>
             If you need to recreate terminal instance with the same id
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectByToken(mt4_term_api.ConnectByTokenRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Rebuild a terminal instance from a previously-saved token_details_mt4 row. The id header
+            names the terminal to bring back; every credential (User/Password/Server or Host+Port,
+            proxy settings, servers.dat bytes, PfxFile, HardwareId, Build) is read from the DB. Same
+            reply as ConnectEx so callers do not need a separate result path.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectByToken(mt4_term_api.ConnectByTokenRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Rebuild a terminal instance from a previously-saved token_details_mt4 row. The id header
+            names the terminal to bring back; every credential (User/Password/Server or Host+Port,
+            proxy settings, servers.dat bytes, PfxFile, HardwareId, Build) is read from the DB. Same
+            reply as ConnectEx so callers do not need a separate result path.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectByTokenAsync(mt4_term_api.ConnectByTokenRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Rebuild a terminal instance from a previously-saved token_details_mt4 row. The id header
+            names the terminal to bring back; every credential (User/Password/Server or Host+Port,
+            proxy settings, servers.dat bytes, PfxFile, HardwareId, Build) is read from the DB. Same
+            reply as ConnectEx so callers do not need a separate result path.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Connection.ConnectionClient.ConnectByTokenAsync(mt4_term_api.ConnectByTokenRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Rebuild a terminal instance from a previously-saved token_details_mt4 row. The id header
+            names the terminal to bring back; every credential (User/Password/Server or Host+Port,
+            proxy settings, servers.dat bytes, PfxFile, HardwareId, Build) is read from the DB. Same
+            reply as ConnectEx so callers do not need a separate result path.
             </summary>
             <param name="request">The request to send to the server.</param>
             <param name="options">The options for the call.</param>
@@ -1473,6 +1647,16 @@
             <param name="context">The context of the server-side call handler being invoked.</param>
             <returns>The response to send back to the client (wrapped by a task).</returns>
         </member>
+        <member name="M:mt4_term_api.Logs.LogsBase.OnJournal(mt4_term_api.OnJournalRequest,Grpc.Core.IServerStreamWriter{mt4_term_api.OnJournalReply},Grpc.Core.ServerCallContext)">
+            <summary>
+            Streams log entries from the terminal Journal tab in real-time.
+            Requires 'id' header with the terminal connection GUID returned by Connect.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="responseStream">Used for sending responses back to the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>A task indicating completion of the handler.</returns>
+        </member>
         <member name="M:mt4_term_api.Logs.LogsBase.Experts(mt4_term_api.JournalRequest,Grpc.Core.ServerCallContext)">
             <summary>
             Returns log entries from the terminal Experts tab.
@@ -1483,6 +1667,16 @@
             <param name="request">The request received from the client.</param>
             <param name="context">The context of the server-side call handler being invoked.</param>
             <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsBase.OnExperts(mt4_term_api.OnJournalRequest,Grpc.Core.IServerStreamWriter{mt4_term_api.OnJournalReply},Grpc.Core.ServerCallContext)">
+            <summary>
+            Streams log entries from the terminal Experts tab in real-time.
+            Requires 'id' header with the terminal connection GUID returned by Connect.
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="responseStream">Used for sending responses back to the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>A task indicating completion of the handler.</returns>
         </member>
         <member name="T:mt4_term_api.Logs.LogsClient">
             <summary>Client for Logs</summary>
@@ -1550,6 +1744,26 @@
             <param name="options">The options for the call.</param>
             <returns>The call object.</returns>
         </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.OnJournal(mt4_term_api.OnJournalRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Streams log entries from the terminal Journal tab in real-time.
+            Requires 'id' header with the terminal connection GUID returned by Connect.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.OnJournal(mt4_term_api.OnJournalRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Streams log entries from the terminal Journal tab in real-time.
+            Requires 'id' header with the terminal connection GUID returned by Connect.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
         <member name="M:mt4_term_api.Logs.LogsClient.Experts(mt4_term_api.JournalRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
             <summary>
             Returns log entries from the terminal Experts tab.
@@ -1593,6 +1807,26 @@
             The Experts tab contains messages from Expert Advisors (EAs), scripts and indicators
             including Print() output, initialization/deinitialization events and runtime errors.
             Works regardless of which tab is currently active in the terminal UI.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.OnExperts(mt4_term_api.OnJournalRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Streams log entries from the terminal Experts tab in real-time.
+            Requires 'id' header with the terminal connection GUID returned by Connect.
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.Logs.LogsClient.OnExperts(mt4_term_api.OnJournalRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Streams log entries from the terminal Experts tab in real-time.
+            Requires 'id' header with the terminal connection GUID returned by Connect.
             </summary>
             <param name="request">The request to send to the server.</param>
             <param name="options">The options for the call.</param>
@@ -3306,6 +3540,15 @@
         <member name="T:mt4_term_api.JournalReply.ResponseOneofCase">
             <summary>Enum of possible cases for the "response" oneof.</summary>
         </member>
+        <member name="F:mt4_term_api.OnJournalReply.DataFieldNumber">
+            <summary>Field number for the "data" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.OnJournalReply.ErrorFieldNumber">
+            <summary>Field number for the "error" field.</summary>
+        </member>
+        <member name="T:mt4_term_api.OnJournalReply.ResponseOneofCase">
+            <summary>Enum of possible cases for the "response" oneof.</summary>
+        </member>
         <member name="F:mt4_term_api.GetTerminalJournalData.RowsFieldNumber">
             <summary>Field number for the "rows" field.</summary>
         </member>
@@ -3467,6 +3710,56 @@
         <member name="M:mt4_term_api.ConnectExRequest.ClearTimeoutSeconds">
             <summary>Clears the value of the "timeout_seconds" field</summary>
         </member>
+        <member name="F:mt4_term_api.ConnectExRequest.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectExRequest.Name">
+            <summary>
+            Optional terminal name or creator identifier [Optional]
+            </summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectExRequest.HasName">
+            <summary>Gets whether the "name" field is set</summary>
+        </member>
+        <member name="M:mt4_term_api.ConnectExRequest.ClearName">
+            <summary>Clears the value of the "name" field</summary>
+        </member>
+        <member name="T:mt4_term_api.ConnectByTokenRequest">
+            <summary>
+            Rebuild a terminal from token_details_mt4. All the credentials (User/Password/Server or
+            Host+Port, proxy, servers.dat, PFX, HardwareId, Build) come from the DB row; the request
+            carries only optional wait/base-chart overrides. The terminal id MUST be supplied in the
+            grpc 'id' header (same as every other Connect*/query call).
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectByTokenRequest.BaseChartSymbolFieldNumber">
+            <summary>Field number for the "base_chart_symbol" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectByTokenRequest.BaseChartSymbol">
+            <summary>
+            override the base chart symbol [Optional]
+            </summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectByTokenRequest.HasBaseChartSymbol">
+            <summary>Gets whether the "base_chart_symbol" field is set</summary>
+        </member>
+        <member name="M:mt4_term_api.ConnectByTokenRequest.ClearBaseChartSymbol">
+            <summary>Clears the value of the "base_chart_symbol" field</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectByTokenRequest.TimeoutSecondsFieldNumber">
+            <summary>Field number for the "timeout_seconds" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectByTokenRequest.TimeoutSeconds">
+            <summary>
+            override how long to wait for the terminal (default 60) [Optional]
+            </summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectByTokenRequest.HasTimeoutSeconds">
+            <summary>Gets whether the "timeout_seconds" field is set</summary>
+        </member>
+        <member name="M:mt4_term_api.ConnectByTokenRequest.ClearTimeoutSeconds">
+            <summary>Clears the value of the "timeout_seconds" field</summary>
+        </member>
         <member name="F:mt4_term_api.ConnectExReply.DataFieldNumber">
             <summary>Field number for the "data" field.</summary>
         </member>
@@ -3563,6 +3856,20 @@
         <member name="M:mt4_term_api.ConnectRequest.ClearTimeoutSeconds">
             <summary>Clears the value of the "timeout_seconds" field</summary>
         </member>
+        <member name="F:mt4_term_api.ConnectRequest.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectRequest.Name">
+            <summary>
+            Optional terminal name or creator identifier [Optional]
+            </summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectRequest.HasName">
+            <summary>Gets whether the "name" field is set</summary>
+        </member>
+        <member name="M:mt4_term_api.ConnectRequest.ClearName">
+            <summary>Clears the value of the "name" field</summary>
+        </member>
         <member name="F:mt4_term_api.ExpertAdviser.FileNameFieldNumber">
             <summary>Field number for the "file_name" field.</summary>
         </member>
@@ -3636,7 +3943,7 @@
         </member>
         <member name="P:mt4_term_api.ConnectProxyRequest.Host">
             <summary>
-            Host - ip adddress or dns name. [Required]
+            Host - ip address or dns name. [Required]
             </summary>
         </member>
         <member name="F:mt4_term_api.ConnectProxyRequest.PortFieldNumber">
@@ -3668,7 +3975,7 @@
         </member>
         <member name="P:mt4_term_api.ConnectProxyRequest.ProxyHost">
             <summary>
-            Proxy server ip adddress [Required]
+            Proxy server ip address [Required]
             </summary>
         </member>
         <member name="F:mt4_term_api.ConnectProxyRequest.ProxyPortFieldNumber">
@@ -3703,6 +4010,20 @@
         </member>
         <member name="M:mt4_term_api.ConnectProxyRequest.ClearTimeoutSeconds">
             <summary>Clears the value of the "timeout_seconds" field</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectProxyRequest.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectProxyRequest.Name">
+            <summary>
+            Optional terminal name or creator identifier [Optional]
+            </summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectProxyRequest.HasName">
+            <summary>Gets whether the "name" field is set</summary>
+        </member>
+        <member name="M:mt4_term_api.ConnectProxyRequest.ClearName">
+            <summary>Clears the value of the "name" field</summary>
         </member>
         <member name="F:mt4_term_api.ConnectProxyReply.DataFieldNumber">
             <summary>Field number for the "data" field.</summary>
@@ -3778,6 +4099,15 @@
             Do not forget to add header 'mt-sticky-session-header' with a Connection unique identifier value
             </summary>
         </member>
+        <member name="F:mt4_term_api.DisconnectRequest.ReasonFieldNumber">
+            <summary>Field number for the "reason" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.DisconnectRequest.HasReason">
+            <summary>Gets whether the "reason" field is set</summary>
+        </member>
+        <member name="M:mt4_term_api.DisconnectRequest.ClearReason">
+            <summary>Clears the value of the "reason" field</summary>
+        </member>
         <member name="F:mt4_term_api.DisconnectReply.DataFieldNumber">
             <summary>Field number for the "data" field.</summary>
         </member>
@@ -3830,6 +4160,92 @@
             <summary>
             Deterministic GUID generated from user+password
             </summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStateReply.DataFieldNumber">
+            <summary>Field number for the "data" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStateReply.ErrorFieldNumber">
+            <summary>Field number for the "error" field.</summary>
+        </member>
+        <member name="T:mt4_term_api.ConnectStateReply.ResponseOneofCase">
+            <summary>Enum of possible cases for the "response" oneof.</summary>
+        </member>
+        <member name="F:mt4_term_api.OnConnectStateRequest.TerminalIdsFieldNumber">
+            <summary>Field number for the "terminal_ids" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.OnConnectStateReply.DataFieldNumber">
+            <summary>Field number for the "data" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.OnConnectStateReply.ErrorFieldNumber">
+            <summary>Field number for the "error" field.</summary>
+        </member>
+        <member name="T:mt4_term_api.OnConnectStateReply.ResponseOneofCase">
+            <summary>Enum of possible cases for the "response" oneof.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStateData.IdFieldNumber">
+            <summary>Field number for the "id" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStateData.StateFieldNumber">
+            <summary>Field number for the "state" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.ConnectStateData.State">
+            <summary>
+            "Started", "Stopped", "CannotConnect", "WrongPassword", "Starting"
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStateData.IsConnectedFieldNumber">
+            <summary>Field number for the "is_connected" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStateData.IsAliveFieldNumber">
+            <summary>Field number for the "is_alive" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStateData.ApiIsAliveFieldNumber">
+            <summary>Field number for the "api_is_alive" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStateData.ServerFieldNumber">
+            <summary>Field number for the "server" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStateData.AccountFieldNumber">
+            <summary>Field number for the "account" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStateData.ErrorMessageFieldNumber">
+            <summary>Field number for the "error_message" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectStateData.TimestampFieldNumber">
+            <summary>Field number for the "timestamp" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectionStatusReply.DataFieldNumber">
+            <summary>Field number for the "data" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectionStatusReply.ErrorFieldNumber">
+            <summary>Field number for the "error" field.</summary>
+        </member>
+        <member name="T:mt4_term_api.ConnectionStatusReply.ResponseOneofCase">
+            <summary>Enum of possible cases for the "response" oneof.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectionStatusData.IdFieldNumber">
+            <summary>Field number for the "id" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectionStatusData.IsConnectedFieldNumber">
+            <summary>Field number for the "is_connected" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectionStatusData.IsAliveFieldNumber">
+            <summary>Field number for the "is_alive" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectionStatusData.ApiIsAliveFieldNumber">
+            <summary>Field number for the "api_is_alive" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectionStatusData.ServerFieldNumber">
+            <summary>Field number for the "server" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectionStatusData.AccountFieldNumber">
+            <summary>Field number for the "account" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectionStatusData.ErrorMessageFieldNumber">
+            <summary>Field number for the "error_message" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.ConnectionStatusData.StateFieldNumber">
+            <summary>Field number for the "state" field.</summary>
         </member>
         <member name="T:mt4_term_api.Mt4TermApiDemoAccountReflection">
             <summary>Holder for reflection information generated from mt4-term-api-demo-account.proto</summary>
@@ -5556,6 +5972,34 @@
             <param name="context">The context of the server-side call handler being invoked.</param>
             <returns>The response to send back to the client (wrapped by a task).</returns>
         </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiBase.GetVersion(mrpc_admin.VersionRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Build/version identity of the Terminal Manager running on THIS pod, so a deploy can be
+            VERIFIED rather than guessed. No admin_key required - it exposes no secrets. mrpc-rest
+            transcodes GET /version-tm onto this (its own build is at GET /version).
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiBase.GetAllLogs(mrpc_admin.GetAllLogsRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            One-shot bundle of EVERY diagnostic log available on this pod: every *.log file on the
+            shared Data folder AND in C:\OEM, plus the Windows Application + System event logs. See the
+            mt5 admin proto for the canonical definition (this copy exists for the mt4 client libs).
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiBase.GetSessionRestoreLogs(mrpc_admin.GetSessionRestoreLogsRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Session restore logs for the latest startup sequence on a pod (stored in MongoDB session_restore_logs).
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
         <member name="T:mrpc_admin.AdminApi.AdminApiClient">
             <summary>Client for AdminApi</summary>
         </member>
@@ -5962,6 +6406,130 @@
             <param name="options">The options for the call.</param>
             <returns>The call object.</returns>
         </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.GetVersion(mrpc_admin.VersionRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Build/version identity of the Terminal Manager running on THIS pod, so a deploy can be
+            VERIFIED rather than guessed. No admin_key required - it exposes no secrets. mrpc-rest
+            transcodes GET /version-tm onto this (its own build is at GET /version).
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.GetVersion(mrpc_admin.VersionRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Build/version identity of the Terminal Manager running on THIS pod, so a deploy can be
+            VERIFIED rather than guessed. No admin_key required - it exposes no secrets. mrpc-rest
+            transcodes GET /version-tm onto this (its own build is at GET /version).
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.GetVersionAsync(mrpc_admin.VersionRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Build/version identity of the Terminal Manager running on THIS pod, so a deploy can be
+            VERIFIED rather than guessed. No admin_key required - it exposes no secrets. mrpc-rest
+            transcodes GET /version-tm onto this (its own build is at GET /version).
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.GetVersionAsync(mrpc_admin.VersionRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Build/version identity of the Terminal Manager running on THIS pod, so a deploy can be
+            VERIFIED rather than guessed. No admin_key required - it exposes no secrets. mrpc-rest
+            transcodes GET /version-tm onto this (its own build is at GET /version).
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.GetAllLogs(mrpc_admin.GetAllLogsRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            One-shot bundle of EVERY diagnostic log available on this pod: every *.log file on the
+            shared Data folder AND in C:\OEM, plus the Windows Application + System event logs. See the
+            mt5 admin proto for the canonical definition (this copy exists for the mt4 client libs).
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.GetAllLogs(mrpc_admin.GetAllLogsRequest,Grpc.Core.CallOptions)">
+            <summary>
+            One-shot bundle of EVERY diagnostic log available on this pod: every *.log file on the
+            shared Data folder AND in C:\OEM, plus the Windows Application + System event logs. See the
+            mt5 admin proto for the canonical definition (this copy exists for the mt4 client libs).
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.GetAllLogsAsync(mrpc_admin.GetAllLogsRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            One-shot bundle of EVERY diagnostic log available on this pod: every *.log file on the
+            shared Data folder AND in C:\OEM, plus the Windows Application + System event logs. See the
+            mt5 admin proto for the canonical definition (this copy exists for the mt4 client libs).
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.GetAllLogsAsync(mrpc_admin.GetAllLogsRequest,Grpc.Core.CallOptions)">
+            <summary>
+            One-shot bundle of EVERY diagnostic log available on this pod: every *.log file on the
+            shared Data folder AND in C:\OEM, plus the Windows Application + System event logs. See the
+            mt5 admin proto for the canonical definition (this copy exists for the mt4 client libs).
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.GetSessionRestoreLogs(mrpc_admin.GetSessionRestoreLogsRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Session restore logs for the latest startup sequence on a pod (stored in MongoDB session_restore_logs).
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.GetSessionRestoreLogs(mrpc_admin.GetSessionRestoreLogsRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Session restore logs for the latest startup sequence on a pod (stored in MongoDB session_restore_logs).
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.GetSessionRestoreLogsAsync(mrpc_admin.GetSessionRestoreLogsRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Session restore logs for the latest startup sequence on a pod (stored in MongoDB session_restore_logs).
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mrpc_admin.AdminApi.AdminApiClient.GetSessionRestoreLogsAsync(mrpc_admin.GetSessionRestoreLogsRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Session restore logs for the latest startup sequence on a pod (stored in MongoDB session_restore_logs).
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
         <member name="M:mrpc_admin.AdminApi.AdminApiClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
             <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
         </member>
@@ -5980,6 +6548,137 @@
         </member>
         <member name="P:mrpc_admin.Mt4TermApiAdminReflection.Descriptor">
             <summary>File descriptor for mt4-term-api-admin.proto</summary>
+        </member>
+        <member name="F:mrpc_admin.GetSessionRestoreLogsRequest.AdminKeyFieldNumber">
+            <summary>Field number for the "admin_key" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.GetSessionRestoreLogsRequest.PodFieldNumber">
+            <summary>Field number for the "pod" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.GetSessionRestoreLogsRequest.LatestOnlyFieldNumber">
+            <summary>Field number for the "latest_only" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SessionRestoreLogEntry.TokenIdFieldNumber">
+            <summary>Field number for the "token_id" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SessionRestoreLogEntry.PlatformFieldNumber">
+            <summary>Field number for the "platform" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SessionRestoreLogEntry.ReasonFieldNumber">
+            <summary>Field number for the "reason" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SessionRestoreLogEntry.OwnerFieldNumber">
+            <summary>Field number for the "owner" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SessionRestoreLogEntry.UserFieldNumber">
+            <summary>Field number for the "user" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SessionRestoreLogEntry.TargetFieldNumber">
+            <summary>Field number for the "target" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SessionRestoreLogEntry.SuccessFieldNumber">
+            <summary>Field number for the "success" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SessionRestoreLogEntry.ErrorFieldNumber">
+            <summary>Field number for the "error" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SessionRestoreLogEntry.ElapsedMsFieldNumber">
+            <summary>Field number for the "elapsed_ms" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.SessionRestoreLogEntry.CreatedUtcFieldNumber">
+            <summary>Field number for the "created_utc" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.GetSessionRestoreLogsReply.EntriesFieldNumber">
+            <summary>Field number for the "entries" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.GetSessionRestoreLogsReply.ErrorFieldNumber">
+            <summary>Field number for the "error" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.GetAllLogsRequest.AdminKeyFieldNumber">
+            <summary>Field number for the "admin_key" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.GetAllLogsRequest.MaxBytesPerLogFieldNumber">
+            <summary>Field number for the "max_bytes_per_log" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.GetAllLogsRequest.MaxBytesPerLog">
+            <summary>
+            per-source tail cap; 0 = server default (64 KiB)
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.GetAllLogsRequest.ExcludeEventLogsFieldNumber">
+            <summary>Field number for the "exclude_event_logs" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.GetAllLogsRequest.ExcludeEventLogs">
+            <summary>
+            set true to SKIP the Windows Application/System event logs (default: included)
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.AllLogsEntry.SourceFieldNumber">
+            <summary>Field number for the "source" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.AllLogsEntry.Source">
+            <summary>
+            "file" | "eventlog"
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.AllLogsEntry.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.AllLogsEntry.PathFieldNumber">
+            <summary>Field number for the "path" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.AllLogsEntry.SizeBytesFieldNumber">
+            <summary>Field number for the "size_bytes" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.AllLogsEntry.ModifiedAtFieldNumber">
+            <summary>Field number for the "modified_at" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.AllLogsEntry.ContentFieldNumber">
+            <summary>Field number for the "content" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.AllLogsEntry.TruncatedFieldNumber">
+            <summary>Field number for the "truncated" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.AllLogsEntry.ErrorFieldNumber">
+            <summary>Field number for the "error" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.GetAllLogsReply.LogsFieldNumber">
+            <summary>Field number for the "logs" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.GetAllLogsReply.ErrorFieldNumber">
+            <summary>Field number for the "error" field.</summary>
+        </member>
+        <member name="F:mrpc_admin.VersionReply.ServiceFieldNumber">
+            <summary>Field number for the "service" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.VersionReply.Service">
+            <summary>
+            "terminal-manager"
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.VersionReply.VersionFieldNumber">
+            <summary>Field number for the "version" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.VersionReply.Version">
+            <summary>
+            AssemblyInformationalVersion (includes git commit)
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.VersionReply.BuildTimeUtcFieldNumber">
+            <summary>Field number for the "build_time_utc" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.VersionReply.BuildTimeUtc">
+            <summary>
+            assembly file last-write, ISO-8601
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.VersionReply.ModeFieldNumber">
+            <summary>Field number for the "mode" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.VersionReply.Mode">
+            <summary>
+            MT4 / MT5 as this process resolved it
+            </summary>
         </member>
         <member name="F:mrpc_admin.ListLogFilesReply.FilesFieldNumber">
             <summary>Field number for the "files" field.</summary>
@@ -6185,6 +6884,20 @@
             <summary>
             RDP password for windows_user (admin-only)
             </summary>
+        </member>
+        <member name="F:mrpc_admin.TerminalInfo.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.TerminalInfo.Name">
+            <summary>
+            terminal name or creator identifier
+            </summary>
+        </member>
+        <member name="P:mrpc_admin.TerminalInfo.HasName">
+            <summary>Gets whether the "name" field is set</summary>
+        </member>
+        <member name="M:mrpc_admin.TerminalInfo.ClearName">
+            <summary>Clears the value of the "name" field</summary>
         </member>
         <member name="F:mrpc_admin.ActiveTerminalsReply.PodFieldNumber">
             <summary>Field number for the "pod" field.</summary>
