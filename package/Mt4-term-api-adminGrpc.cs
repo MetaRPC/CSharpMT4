@@ -96,6 +96,8 @@ namespace mrpc_admin {
     static readonly grpc::Marshaller<global::mrpc_admin.GetSessionRestoreLogsRequest> __Marshaller_mrpc_admin_GetSessionRestoreLogsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mrpc_admin.GetSessionRestoreLogsRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::mrpc_admin.GetSessionRestoreLogsReply> __Marshaller_mrpc_admin_GetSessionRestoreLogsReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mrpc_admin.GetSessionRestoreLogsReply.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::mrpc_admin.GetSessionRestoreStatusReply> __Marshaller_mrpc_admin_GetSessionRestoreStatusReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mrpc_admin.GetSessionRestoreStatusReply.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::mrpc_admin.ActiveTerminalsRequest, global::mrpc_admin.ActiveTerminalsReply> __Method_ActiveTerminals = new grpc::Method<global::mrpc_admin.ActiveTerminalsRequest, global::mrpc_admin.ActiveTerminalsReply>(
@@ -192,6 +194,14 @@ namespace mrpc_admin {
         "GetSessionRestoreLogs",
         __Marshaller_mrpc_admin_GetSessionRestoreLogsRequest,
         __Marshaller_mrpc_admin_GetSessionRestoreLogsReply);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::mrpc_admin.ActiveTerminalsRequest, global::mrpc_admin.GetSessionRestoreStatusReply> __Method_GetSessionRestoreStatus = new grpc::Method<global::mrpc_admin.ActiveTerminalsRequest, global::mrpc_admin.GetSessionRestoreStatusReply>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetSessionRestoreStatus",
+        __Marshaller_mrpc_admin_ActiveTerminalsRequest,
+        __Marshaller_mrpc_admin_GetSessionRestoreStatusReply);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -363,6 +373,18 @@ namespace mrpc_admin {
       /// <returns>The response to send back to the client (wrapped by a task).</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::mrpc_admin.GetSessionRestoreLogsReply> GetSessionRestoreLogs(global::mrpc_admin.GetSessionRestoreLogsRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      /// <summary>
+      /// Session restore watcher status (terminals loaded, queue count, state, diagnostics) for THIS pod.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::mrpc_admin.GetSessionRestoreStatusReply> GetSessionRestoreStatus(global::mrpc_admin.ActiveTerminalsRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -1052,6 +1074,54 @@ namespace mrpc_admin {
       {
         return CallInvoker.AsyncUnaryCall(__Method_GetSessionRestoreLogs, null, options, request);
       }
+      /// <summary>
+      /// Session restore watcher status (terminals loaded, queue count, state, diagnostics) for THIS pod.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::mrpc_admin.GetSessionRestoreStatusReply GetSessionRestoreStatus(global::mrpc_admin.ActiveTerminalsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetSessionRestoreStatus(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Session restore watcher status (terminals loaded, queue count, state, diagnostics) for THIS pod.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::mrpc_admin.GetSessionRestoreStatusReply GetSessionRestoreStatus(global::mrpc_admin.ActiveTerminalsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetSessionRestoreStatus, null, options, request);
+      }
+      /// <summary>
+      /// Session restore watcher status (terminals loaded, queue count, state, diagnostics) for THIS pod.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::mrpc_admin.GetSessionRestoreStatusReply> GetSessionRestoreStatusAsync(global::mrpc_admin.ActiveTerminalsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetSessionRestoreStatusAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      /// <summary>
+      /// Session restore watcher status (terminals loaded, queue count, state, diagnostics) for THIS pod.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::mrpc_admin.GetSessionRestoreStatusReply> GetSessionRestoreStatusAsync(global::mrpc_admin.ActiveTerminalsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetSessionRestoreStatus, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override AdminApiClient NewInstance(ClientBaseConfiguration configuration)
@@ -1077,7 +1147,8 @@ namespace mrpc_admin {
           .AddMethod(__Method_RefreshMrpcRest, serviceImpl.RefreshMrpcRest)
           .AddMethod(__Method_GetVersion, serviceImpl.GetVersion)
           .AddMethod(__Method_GetAllLogs, serviceImpl.GetAllLogs)
-          .AddMethod(__Method_GetSessionRestoreLogs, serviceImpl.GetSessionRestoreLogs).Build();
+          .AddMethod(__Method_GetSessionRestoreLogs, serviceImpl.GetSessionRestoreLogs)
+          .AddMethod(__Method_GetSessionRestoreStatus, serviceImpl.GetSessionRestoreStatus).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -1099,6 +1170,7 @@ namespace mrpc_admin {
       serviceBinder.AddMethod(__Method_GetVersion, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mrpc_admin.VersionRequest, global::mrpc_admin.VersionReply>(serviceImpl.GetVersion));
       serviceBinder.AddMethod(__Method_GetAllLogs, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mrpc_admin.GetAllLogsRequest, global::mrpc_admin.GetAllLogsReply>(serviceImpl.GetAllLogs));
       serviceBinder.AddMethod(__Method_GetSessionRestoreLogs, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mrpc_admin.GetSessionRestoreLogsRequest, global::mrpc_admin.GetSessionRestoreLogsReply>(serviceImpl.GetSessionRestoreLogs));
+      serviceBinder.AddMethod(__Method_GetSessionRestoreStatus, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mrpc_admin.ActiveTerminalsRequest, global::mrpc_admin.GetSessionRestoreStatusReply>(serviceImpl.GetSessionRestoreStatus));
     }
 
   }

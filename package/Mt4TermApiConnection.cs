@@ -59,136 +59,139 @@ namespace mt4_term_api {
             "CzI7Lm10NF90ZXJtX2FwaS5HZXRCcm9rZXJTZXJ2ZXJzQnlCcm9rZXJOYW1l",
             "RGF0YS5Ccm9rZXJTZXJ2ZXIabAoMQnJva2VyU2VydmVyEgwKBG5hbWUYASAB",
             "KAkSFQoIbG9nb191cmwYAiABKAlIAIgBARIRCgRzaXRlGAMgASgJSAGIAQES",
-            "DgoGYWNjZXNzGAQgAygJQgsKCV9sb2dvX3VybEIHCgVfc2l0ZSKEAgoQQ29u",
+            "DgoGYWNjZXNzGAQgAygJQgsKCV9sb2dvX3VybEIHCgVfc2l0ZSKsAgoQQ29u",
             "bmVjdEV4UmVxdWVzdBIMCgR1c2VyGAEgASgEEhAKCHBhc3N3b3JkGAIgASgJ",
             "EhcKD210X2NsdXN0ZXJfbmFtZRgDIAEoCRIeChFiYXNlX2NoYXJ0X3N5bWJv",
             "bBgEIAEoCUgAiAEBEjMKDmV4cGVydHNfdG9fYWRkGAUgAygLMhsubXQ0X3Rl",
             "cm1fYXBpLkV4cGVydEFkdmlzZXISHAoPdGltZW91dF9zZWNvbmRzGAYgASgN",
-            "SAGIAQESEQoEbmFtZRgHIAEoCUgCiAEBQhQKEl9iYXNlX2NoYXJ0X3N5bWJv",
-            "bEISChBfdGltZW91dF9zZWNvbmRzQgcKBV9uYW1lIn8KFUNvbm5lY3RCeVRv",
-            "a2VuUmVxdWVzdBIeChFiYXNlX2NoYXJ0X3N5bWJvbBgBIAEoCUgAiAEBEhwK",
-            "D3RpbWVvdXRfc2Vjb25kcxgCIAEoDUgBiAEBQhQKEl9iYXNlX2NoYXJ0X3N5",
-            "bWJvbEISChBfdGltZW91dF9zZWNvbmRzIm0KDkNvbm5lY3RFeFJlcGx5EikK",
-            "BGRhdGEYASABKAsyGS5tdDRfdGVybV9hcGkuQ29ubmVjdERhdGFIABIkCgVl",
+            "SAGIAQESEQoEbmFtZRgHIAEoCUgCiAEBEhcKCmV4cGlyYXRpb24YCCABKA1I",
+            "A4gBAUIUChJfYmFzZV9jaGFydF9zeW1ib2xCEgoQX3RpbWVvdXRfc2Vjb25k",
+            "c0IHCgVfbmFtZUINCgtfZXhwaXJhdGlvbiKnAQoVQ29ubmVjdEJ5VG9rZW5S",
+            "ZXF1ZXN0Eh4KEWJhc2VfY2hhcnRfc3ltYm9sGAEgASgJSACIAQESHAoPdGlt",
+            "ZW91dF9zZWNvbmRzGAIgASgNSAGIAQESFwoKZXhwaXJhdGlvbhgDIAEoDUgC",
+            "iAEBQhQKEl9iYXNlX2NoYXJ0X3N5bWJvbEISChBfdGltZW91dF9zZWNvbmRz",
+            "Qg0KC19leHBpcmF0aW9uIm0KDkNvbm5lY3RFeFJlcGx5EikKBGRhdGEYASAB",
+            "KAsyGS5tdDRfdGVybV9hcGkuQ29ubmVjdERhdGFIABIkCgVlcnJvchgCIAEo",
+            "CzITLm10NF90ZXJtX2FwaS5FcnJvckgAQgoKCHJlc3BvbnNlIkoKEFJlY29u",
+            "bmVjdFJlcXVlc3QSHwoSZm9yY2VfcmVjb25uZWN0aW9uGAEgASgISACIAQFC",
+            "FQoTX2ZvcmNlX3JlY29ubmVjdGlvbiJvCg5SZWNvbm5lY3RSZXBseRIrCgRk",
+            "YXRhGAEgASgLMhsubXQ0X3Rlcm1fYXBpLlJlY29ubmVjdERhdGFIABIkCgVl",
             "cnJvchgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJvckgAQgoKCHJlc3BvbnNl",
-            "IkoKEFJlY29ubmVjdFJlcXVlc3QSHwoSZm9yY2VfcmVjb25uZWN0aW9uGAEg",
-            "ASgISACIAQFCFQoTX2ZvcmNlX3JlY29ubmVjdGlvbiJvCg5SZWNvbm5lY3RS",
-            "ZXBseRIrCgRkYXRhGAEgASgLMhsubXQ0X3Rlcm1fYXBpLlJlY29ubmVjdERh",
-            "dGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJvckgAQgoK",
-            "CHJlc3BvbnNlIuEBCg1SZWNvbm5lY3REYXRhEh4KFnRlcm1pbmFsX3dhc19y",
-            "ZWNyZWF0ZWQYASABKAgSMQoNdGVybWluYWxfdHlwZRgCIAEoDjIaLm10NF90",
-            "ZXJtX2FwaS5UZXJtaW5hbFR5cGUSHgoWdGVybWluYWxfaW5zdGFuY2VfZ3Vp",
-            "ZBgDIAEoCRIrCiNvbGRfdGVybWluYWxfZnVsbF9saXZlX3RpbWVfc2Vjb25k",
-            "cxgEIAEoAxIwCg1vbGRfbG9nX2ZpbGVzGAUgAygLMhkubXQ0X3Rlcm1fYXBp",
-            "LkxvZ0ZpbGVJbmZvIs8BCg5Db25uZWN0UmVxdWVzdBIMCgR1c2VyGAEgASgE",
-            "EhAKCHBhc3N3b3JkGAIgASgJEgwKBGhvc3QYAyABKAkSDAoEcG9ydBgEIAEo",
-            "BRIzCg5leHBlcnRzX3RvX2FkZBgFIAMoCzIbLm10NF90ZXJtX2FwaS5FeHBl",
-            "cnRBZHZpc2VyEhwKD3RpbWVvdXRfc2Vjb25kcxgGIAEoDUgAiAEBEhEKBG5h",
-            "bWUYByABKAlIAYgBAUISChBfdGltZW91dF9zZWNvbmRzQgcKBV9uYW1lIjgK",
-            "DUV4cGVydEFkdmlzZXISEQoJZmlsZV9uYW1lGAEgASgJEhQKDGZpbGVfY29u",
-            "dGVudBgCIAEoDCJrCgxDb25uZWN0UmVwbHkSKQoEZGF0YRgBIAEoCzIZLm10",
-            "NF90ZXJtX2FwaS5Db25uZWN0RGF0YUgAEiQKBWVycm9yGAIgASgLMhMubXQ0",
-            "X3Rlcm1fYXBpLkVycm9ySABCCgoIcmVzcG9uc2UiYAoLQ29ubmVjdERhdGES",
-            "HgoWdGVybWluYWxfaW5zdGFuY2VfZ3VpZBgBIAEoCRIxCg10ZXJtaW5hbF90",
-            "eXBlGAMgASgOMhoubXQ0X3Rlcm1fYXBpLlRlcm1pbmFsVHlwZSLRAgoTQ29u",
-            "bmVjdFByb3h5UmVxdWVzdBIMCgR1c2VyGAEgASgEEhAKCHBhc3N3b3JkGAIg",
-            "ASgJEgwKBGhvc3QYAyABKAkSDAoEcG9ydBgEIAEoBRIRCglwcm94eVVzZXIY",
-            "BSABKAkSFQoNcHJveHlQYXNzd29yZBgGIAEoCRIRCglwcm94eUhvc3QYByAB",
-            "KAkSEQoJcHJveHlQb3J0GAggASgNEisKCXByb3h5VHlwZRgJIAEoDjIYLm10",
-            "NF90ZXJtX2FwaS5Qcm94eVR5cGVzEjMKDmV4cGVydHNfdG9fYWRkGAogAygL",
-            "MhsubXQ0X3Rlcm1fYXBpLkV4cGVydEFkdmlzZXISHAoPdGltZW91dF9zZWNv",
-            "bmRzGAsgASgNSACIAQESEQoEbmFtZRgMIAEoCUgBiAEBQhIKEF90aW1lb3V0",
-            "X3NlY29uZHNCBwoFX25hbWUidQoRQ29ubmVjdFByb3h5UmVwbHkSLgoEZGF0",
-            "YRgBIAEoCzIeLm10NF90ZXJtX2FwaS5Db25uZWN0UHJveHlEYXRhSAASJAoF",
-            "ZXJyb3IYAiABKAsyEy5tdDRfdGVybV9hcGkuRXJyb3JIAEIKCghyZXNwb25z",
-            "ZSJgChBDb25uZWN0UHJveHlEYXRhEhkKEXVuaXF1ZV9pZGVudGlmaWVyGAEg",
-            "ASgJEjEKDXRlcm1pbmFsX3R5cGUYAiABKA4yGi5tdDRfdGVybV9hcGkuVGVy",
-            "bWluYWxUeXBlIhUKE0NoZWNrQ29ubmVjdFJlcXVlc3QidQoRQ2hlY2tDb25u",
-            "ZWN0UmVwbHkSLgoEZGF0YRgBIAEoCzIeLm10NF90ZXJtX2FwaS5DaGVja0Nv",
+            "IuEBCg1SZWNvbm5lY3REYXRhEh4KFnRlcm1pbmFsX3dhc19yZWNyZWF0ZWQY",
+            "ASABKAgSMQoNdGVybWluYWxfdHlwZRgCIAEoDjIaLm10NF90ZXJtX2FwaS5U",
+            "ZXJtaW5hbFR5cGUSHgoWdGVybWluYWxfaW5zdGFuY2VfZ3VpZBgDIAEoCRIr",
+            "CiNvbGRfdGVybWluYWxfZnVsbF9saXZlX3RpbWVfc2Vjb25kcxgEIAEoAxIw",
+            "Cg1vbGRfbG9nX2ZpbGVzGAUgAygLMhkubXQ0X3Rlcm1fYXBpLkxvZ0ZpbGVJ",
+            "bmZvIvcBCg5Db25uZWN0UmVxdWVzdBIMCgR1c2VyGAEgASgEEhAKCHBhc3N3",
+            "b3JkGAIgASgJEgwKBGhvc3QYAyABKAkSDAoEcG9ydBgEIAEoBRIzCg5leHBl",
+            "cnRzX3RvX2FkZBgFIAMoCzIbLm10NF90ZXJtX2FwaS5FeHBlcnRBZHZpc2Vy",
+            "EhwKD3RpbWVvdXRfc2Vjb25kcxgGIAEoDUgAiAEBEhEKBG5hbWUYByABKAlI",
+            "AYgBARIXCgpleHBpcmF0aW9uGAggASgNSAKIAQFCEgoQX3RpbWVvdXRfc2Vj",
+            "b25kc0IHCgVfbmFtZUINCgtfZXhwaXJhdGlvbiI4Cg1FeHBlcnRBZHZpc2Vy",
+            "EhEKCWZpbGVfbmFtZRgBIAEoCRIUCgxmaWxlX2NvbnRlbnQYAiABKAwiawoM",
+            "Q29ubmVjdFJlcGx5EikKBGRhdGEYASABKAsyGS5tdDRfdGVybV9hcGkuQ29u",
+            "bmVjdERhdGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJv",
+            "ckgAQgoKCHJlc3BvbnNlImAKC0Nvbm5lY3REYXRhEh4KFnRlcm1pbmFsX2lu",
+            "c3RhbmNlX2d1aWQYASABKAkSMQoNdGVybWluYWxfdHlwZRgDIAEoDjIaLm10",
+            "NF90ZXJtX2FwaS5UZXJtaW5hbFR5cGUi+QIKE0Nvbm5lY3RQcm94eVJlcXVl",
+            "c3QSDAoEdXNlchgBIAEoBBIQCghwYXNzd29yZBgCIAEoCRIMCgRob3N0GAMg",
+            "ASgJEgwKBHBvcnQYBCABKAUSEQoJcHJveHlVc2VyGAUgASgJEhUKDXByb3h5",
+            "UGFzc3dvcmQYBiABKAkSEQoJcHJveHlIb3N0GAcgASgJEhEKCXByb3h5UG9y",
+            "dBgIIAEoDRIrCglwcm94eVR5cGUYCSABKA4yGC5tdDRfdGVybV9hcGkuUHJv",
+            "eHlUeXBlcxIzCg5leHBlcnRzX3RvX2FkZBgKIAMoCzIbLm10NF90ZXJtX2Fw",
+            "aS5FeHBlcnRBZHZpc2VyEhwKD3RpbWVvdXRfc2Vjb25kcxgLIAEoDUgAiAEB",
+            "EhEKBG5hbWUYDCABKAlIAYgBARIXCgpleHBpcmF0aW9uGA0gASgNSAKIAQFC",
+            "EgoQX3RpbWVvdXRfc2Vjb25kc0IHCgVfbmFtZUINCgtfZXhwaXJhdGlvbiJ1",
+            "ChFDb25uZWN0UHJveHlSZXBseRIuCgRkYXRhGAEgASgLMh4ubXQ0X3Rlcm1f",
+            "YXBpLkNvbm5lY3RQcm94eURhdGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90",
+            "ZXJtX2FwaS5FcnJvckgAQgoKCHJlc3BvbnNlImAKEENvbm5lY3RQcm94eURh",
+            "dGESGQoRdW5pcXVlX2lkZW50aWZpZXIYASABKAkSMQoNdGVybWluYWxfdHlw",
+            "ZRgCIAEoDjIaLm10NF90ZXJtX2FwaS5UZXJtaW5hbFR5cGUiFQoTQ2hlY2tD",
+            "b25uZWN0UmVxdWVzdCJ1ChFDaGVja0Nvbm5lY3RSZXBseRIuCgRkYXRhGAEg",
+            "ASgLMh4ubXQ0X3Rlcm1fYXBpLkNoZWNrQ29ubmVjdERhdGFIABIkCgVlcnJv",
+            "chgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJvckgAQgoKCHJlc3BvbnNlImYK",
+            "EENoZWNrQ29ubmVjdERhdGESGQoRdW5pcXVlX2lkZW50aWZpZXIYASABKAkS",
+            "NwoMaGVhbHRoX2NoZWNrGAIgASgLMiEubXQ0X3Rlcm1fYXBpLlRlcm1pbmFs",
+            "SGVhbHRoQ2hlY2siaQoTVGVybWluYWxIZWFsdGhDaGVjaxIQCghpc19hbGl2",
+            "ZRgBIAEoCBIUCgxhcGlfaXNfYWxpdmUYAiABKAgSKgoidGVybWluYWxfaXNf",
+            "Y29ubmVjdGVkX3RvX210X3NlcnZlchgDIAEoCCIzChFEaXNjb25uZWN0UmVx",
+            "dWVzdBITCgZyZWFzb24YASABKAlIAIgBAUIJCgdfcmVhc29uInEKD0Rpc2Nv",
+            "bm5lY3RSZXBseRIsCgRkYXRhGAEgASgLMhwubXQ0X3Rlcm1fYXBpLkRpc2Nv",
             "bm5lY3REYXRhSAASJAoFZXJyb3IYAiABKAsyEy5tdDRfdGVybV9hcGkuRXJy",
-            "b3JIAEIKCghyZXNwb25zZSJmChBDaGVja0Nvbm5lY3REYXRhEhkKEXVuaXF1",
-            "ZV9pZGVudGlmaWVyGAEgASgJEjcKDGhlYWx0aF9jaGVjaxgCIAEoCzIhLm10",
-            "NF90ZXJtX2FwaS5UZXJtaW5hbEhlYWx0aENoZWNrImkKE1Rlcm1pbmFsSGVh",
-            "bHRoQ2hlY2sSEAoIaXNfYWxpdmUYASABKAgSFAoMYXBpX2lzX2FsaXZlGAIg",
-            "ASgIEioKInRlcm1pbmFsX2lzX2Nvbm5lY3RlZF90b19tdF9zZXJ2ZXIYAyAB",
-            "KAgiMwoRRGlzY29ubmVjdFJlcXVlc3QSEwoGcmVhc29uGAEgASgJSACIAQFC",
-            "CQoHX3JlYXNvbiJxCg9EaXNjb25uZWN0UmVwbHkSLAoEZGF0YRgBIAEoCzIc",
-            "Lm10NF90ZXJtX2FwaS5EaXNjb25uZWN0RGF0YUgAEiQKBWVycm9yGAIgASgL",
-            "MhMubXQ0X3Rlcm1fYXBpLkVycm9ySABCCgoIcmVzcG9uc2UiSwoORGlzY29u",
-            "bmVjdERhdGESGQoRdW5pcXVlX2lkZW50aWZpZXIYASABKAkSHgoWZnVsbF9s",
-            "aWZlX3RpbWVfc2Vjb25kcxgCIAEoAyIuCgxHZXRJZFJlcXVlc3QSDAoEdXNl",
-            "chgBIAEoCRIQCghwYXNzd29yZBgCIAEoCSJnCgpHZXRJZFJlcGx5EicKBGRh",
-            "dGEYASABKAsyFy5tdDRfdGVybV9hcGkuR2V0SWREYXRhSAASJAoFZXJyb3IY",
-            "AiABKAsyEy5tdDRfdGVybV9hcGkuRXJyb3JIAEIKCghyZXNwb25zZSIXCglH",
-            "ZXRJZERhdGESCgoCaWQYASABKAkiFQoTQ29ubmVjdFN0YXRlUmVxdWVzdCJ1",
-            "ChFDb25uZWN0U3RhdGVSZXBseRIuCgRkYXRhGAEgASgLMh4ubXQ0X3Rlcm1f",
-            "YXBpLkNvbm5lY3RTdGF0ZURhdGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90",
-            "ZXJtX2FwaS5FcnJvckgAQgoKCHJlc3BvbnNlIi0KFU9uQ29ubmVjdFN0YXRl",
-            "UmVxdWVzdBIUCgx0ZXJtaW5hbF9pZHMYASADKAkidwoTT25Db25uZWN0U3Rh",
-            "dGVSZXBseRIuCgRkYXRhGAEgASgLMh4ubXQ0X3Rlcm1fYXBpLkNvbm5lY3RT",
-            "dGF0ZURhdGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJv",
-            "ckgAQgoKCHJlc3BvbnNlItIBChBDb25uZWN0U3RhdGVEYXRhEgoKAmlkGAEg",
-            "ASgJEg0KBXN0YXRlGAIgASgJEhQKDGlzX2Nvbm5lY3RlZBgDIAEoCBIQCghp",
-            "c19hbGl2ZRgEIAEoCBIUCgxhcGlfaXNfYWxpdmUYBSABKAgSDgoGc2VydmVy",
-            "GAYgASgJEg8KB2FjY291bnQYByABKAQSFQoNZXJyb3JfbWVzc2FnZRgIIAEo",
-            "CRItCgl0aW1lc3RhbXAYCSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0",
-            "YW1wIhkKF0Nvbm5lY3Rpb25TdGF0dXNSZXF1ZXN0In0KFUNvbm5lY3Rpb25T",
-            "dGF0dXNSZXBseRIyCgRkYXRhGAEgASgLMiIubXQ0X3Rlcm1fYXBpLkNvbm5l",
-            "Y3Rpb25TdGF0dXNEYXRhSAASJAoFZXJyb3IYAiABKAsyEy5tdDRfdGVybV9h",
-            "cGkuRXJyb3JIAEIKCghyZXNwb25zZSKnAQoUQ29ubmVjdGlvblN0YXR1c0Rh",
-            "dGESCgoCaWQYASABKAkSFAoMaXNfY29ubmVjdGVkGAIgASgIEhAKCGlzX2Fs",
-            "aXZlGAMgASgIEhQKDGFwaV9pc19hbGl2ZRgEIAEoCBIOCgZzZXJ2ZXIYBSAB",
-            "KAkSDwoHYWNjb3VudBgGIAEoBBIVCg1lcnJvcl9tZXNzYWdlGAcgASgJEg0K",
-            "BXN0YXRlGAggASgJKjkKClByb3h5VHlwZXMSCAoETm9uZRAAEgkKBUh0dHBz",
-            "EAESCgoGU29ja3M0EAISCgoGU29ja3M1EAMqIAoMVGVybWluYWxUeXBlEgcK",
-            "A01UNBAAEgcKA01UNRABMt0MCgpDb25uZWN0aW9uEl0KCUNvbm5lY3RFeBIe",
-            "Lm10NF90ZXJtX2FwaS5Db25uZWN0RXhSZXF1ZXN0GhwubXQ0X3Rlcm1fYXBp",
-            "LkNvbm5lY3RFeFJlcGx5IhKC0+STAgwSCi9Db25uZWN0RXgSVQoHQ29ubmVj",
-            "dBIcLm10NF90ZXJtX2FwaS5Db25uZWN0UmVxdWVzdBoaLm10NF90ZXJtX2Fw",
-            "aS5Db25uZWN0UmVwbHkiEILT5JMCChIIL0Nvbm5lY3QSaQoMQ29ubmVjdFBy",
-            "b3h5EiEubXQ0X3Rlcm1fYXBpLkNvbm5lY3RQcm94eVJlcXVlc3QaHy5tdDRf",
-            "dGVybV9hcGkuQ29ubmVjdFByb3h5UmVwbHkiFYLT5JMCDxINL0Nvbm5lY3RQ",
-            "cm94eRJpCgxDaGVja0Nvbm5lY3QSIS5tdDRfdGVybV9hcGkuQ2hlY2tDb25u",
-            "ZWN0UmVxdWVzdBofLm10NF90ZXJtX2FwaS5DaGVja0Nvbm5lY3RSZXBseSIV",
-            "gtPkkwIPEg0vQ2hlY2tDb25uZWN0EmkKDENvbm5lY3RTdGF0ZRIhLm10NF90",
-            "ZXJtX2FwaS5Db25uZWN0U3RhdGVSZXF1ZXN0Gh8ubXQ0X3Rlcm1fYXBpLkNv",
-            "bm5lY3RTdGF0ZVJlcGx5IhWC0+STAg8SDS9Db25uZWN0U3RhdGUScwoOT25D",
-            "b25uZWN0U3RhdGUSIy5tdDRfdGVybV9hcGkuT25Db25uZWN0U3RhdGVSZXF1",
-            "ZXN0GiEubXQ0X3Rlcm1fYXBpLk9uQ29ubmVjdFN0YXRlUmVwbHkiF4LT5JMC",
-            "ERIPL09uQ29ubmVjdFN0YXRlMAESeQoQQ29ubmVjdGlvblN0YXR1cxIlLm10",
-            "NF90ZXJtX2FwaS5Db25uZWN0aW9uU3RhdHVzUmVxdWVzdBojLm10NF90ZXJt",
-            "X2FwaS5Db25uZWN0aW9uU3RhdHVzUmVwbHkiGYLT5JMCExIRL0Nvbm5lY3Rp",
-            "b25TdGF0dXMSYQoKRGlzY29ubmVjdBIfLm10NF90ZXJtX2FwaS5EaXNjb25u",
-            "ZWN0UmVxdWVzdBodLm10NF90ZXJtX2FwaS5EaXNjb25uZWN0UmVwbHkiE4LT",
-            "5JMCDRILL0Rpc2Nvbm5lY3QSXQoJUmVjb25uZWN0Eh4ubXQ0X3Rlcm1fYXBp",
-            "LlJlY29ubmVjdFJlcXVlc3QaHC5tdDRfdGVybV9hcGkuUmVjb25uZWN0UmVw",
-            "bHkiEoLT5JMCDBIKL1JlY29ubmVjdBJsCg5Db25uZWN0QnlUb2tlbhIjLm10",
-            "NF90ZXJtX2FwaS5Db25uZWN0QnlUb2tlblJlcXVlc3QaHC5tdDRfdGVybV9h",
-            "cGkuQ29ubmVjdEV4UmVwbHkiF4LT5JMCERIPL0Nvbm5lY3RCeVRva2VuEqkB",
-            "ChxHZXRCcm9rZXJTZXJ2ZXJzQnlCcm9rZXJOYW1lEjEubXQ0X3Rlcm1fYXBp",
-            "LkdldEJyb2tlclNlcnZlcnNCeUJyb2tlck5hbWVSZXF1ZXN0Gi8ubXQ0X3Rl",
-            "cm1fYXBpLkdldEJyb2tlclNlcnZlcnNCeUJyb2tlck5hbWVSZXBseSIlgtPk",
-            "kwIfEh0vR2V0QnJva2VyU2VydmVyc0J5QnJva2VyTmFtZRJNCgVHZXRJZBIa",
-            "Lm10NF90ZXJtX2FwaS5HZXRJZFJlcXVlc3QaGC5tdDRfdGVybV9hcGkuR2V0",
-            "SWRSZXBseSIOgtPkkwIIEgYvR2V0SWQSYQoKU2NyZWVuc2hvdBIfLm10NF90",
-            "ZXJtX2FwaS5TY3JlZW5zaG90UmVxdWVzdBodLm10NF90ZXJtX2FwaS5TY3Jl",
-            "ZW5zaG90UmVwbHkiE4LT5JMCDRILL1NjcmVlbnNob3QSaQoNQ29ubmVjdFN0",
-            "cmVhbRIcLm10NF90ZXJtX2FwaS5Db25uZWN0UmVxdWVzdBogLm10NF90ZXJt",
-            "X2FwaS5Db25uZWN0U3RyZWFtRXZlbnQiFoLT5JMCEBIOL0Nvbm5lY3RTdHJl",
-            "YW0wARJvCg9Db25uZWN0RXhTdHJlYW0SHi5tdDRfdGVybV9hcGkuQ29ubmVj",
-            "dEV4UmVxdWVzdBogLm10NF90ZXJtX2FwaS5Db25uZWN0U3RyZWFtRXZlbnQi",
-            "GILT5JMCEhIQL0Nvbm5lY3RFeFN0cmVhbTABMooDCgRMb2dzEloKB0pvdXJu",
-            "YWwSHC5tdDRfdGVybV9hcGkuSm91cm5hbFJlcXVlc3QaGi5tdDRfdGVybV9h",
-            "cGkuSm91cm5hbFJlcGx5IhWC0+STAg8SDS9Mb2dzL0pvdXJuYWwSZAoJT25K",
-            "b3VybmFsEh4ubXQ0X3Rlcm1fYXBpLk9uSm91cm5hbFJlcXVlc3QaHC5tdDRf",
-            "dGVybV9hcGkuT25Kb3VybmFsUmVwbHkiF4LT5JMCERIPL0xvZ3MvT25Kb3Vy",
-            "bmFsMAESWgoHRXhwZXJ0cxIcLm10NF90ZXJtX2FwaS5Kb3VybmFsUmVxdWVz",
-            "dBoaLm10NF90ZXJtX2FwaS5Kb3VybmFsUmVwbHkiFYLT5JMCDxINL0xvZ3Mv",
-            "RXhwZXJ0cxJkCglPbkV4cGVydHMSHi5tdDRfdGVybV9hcGkuT25Kb3VybmFs",
-            "UmVxdWVzdBocLm10NF90ZXJtX2FwaS5PbkpvdXJuYWxSZXBseSIXgtPkkwIR",
-            "Eg8vTG9ncy9PbkV4cGVydHMwAUJCWjFnaXQubXRhcGkuaW8vcm9vdC9tcnBj",
-            "LXByb3RvLmdpdC9tdDQvbGlicmFyaWVzL2dvqgIMbXQ0X3Rlcm1fYXBpYgZw",
-            "cm90bzM="));
+            "b3JIAEIKCghyZXNwb25zZSJLCg5EaXNjb25uZWN0RGF0YRIZChF1bmlxdWVf",
+            "aWRlbnRpZmllchgBIAEoCRIeChZmdWxsX2xpZmVfdGltZV9zZWNvbmRzGAIg",
+            "ASgDIi4KDEdldElkUmVxdWVzdBIMCgR1c2VyGAEgASgJEhAKCHBhc3N3b3Jk",
+            "GAIgASgJImcKCkdldElkUmVwbHkSJwoEZGF0YRgBIAEoCzIXLm10NF90ZXJt",
+            "X2FwaS5HZXRJZERhdGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2Fw",
+            "aS5FcnJvckgAQgoKCHJlc3BvbnNlIhcKCUdldElkRGF0YRIKCgJpZBgBIAEo",
+            "CSIVChNDb25uZWN0U3RhdGVSZXF1ZXN0InUKEUNvbm5lY3RTdGF0ZVJlcGx5",
+            "Ei4KBGRhdGEYASABKAsyHi5tdDRfdGVybV9hcGkuQ29ubmVjdFN0YXRlRGF0",
+            "YUgAEiQKBWVycm9yGAIgASgLMhMubXQ0X3Rlcm1fYXBpLkVycm9ySABCCgoI",
+            "cmVzcG9uc2UiLQoVT25Db25uZWN0U3RhdGVSZXF1ZXN0EhQKDHRlcm1pbmFs",
+            "X2lkcxgBIAMoCSJ3ChNPbkNvbm5lY3RTdGF0ZVJlcGx5Ei4KBGRhdGEYASAB",
+            "KAsyHi5tdDRfdGVybV9hcGkuQ29ubmVjdFN0YXRlRGF0YUgAEiQKBWVycm9y",
+            "GAIgASgLMhMubXQ0X3Rlcm1fYXBpLkVycm9ySABCCgoIcmVzcG9uc2Ui0gEK",
+            "EENvbm5lY3RTdGF0ZURhdGESCgoCaWQYASABKAkSDQoFc3RhdGUYAiABKAkS",
+            "FAoMaXNfY29ubmVjdGVkGAMgASgIEhAKCGlzX2FsaXZlGAQgASgIEhQKDGFw",
+            "aV9pc19hbGl2ZRgFIAEoCBIOCgZzZXJ2ZXIYBiABKAkSDwoHYWNjb3VudBgH",
+            "IAEoBBIVCg1lcnJvcl9tZXNzYWdlGAggASgJEi0KCXRpbWVzdGFtcBgJIAEo",
+            "CzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAiGQoXQ29ubmVjdGlvblN0",
+            "YXR1c1JlcXVlc3QifQoVQ29ubmVjdGlvblN0YXR1c1JlcGx5EjIKBGRhdGEY",
+            "ASABKAsyIi5tdDRfdGVybV9hcGkuQ29ubmVjdGlvblN0YXR1c0RhdGFIABIk",
+            "CgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJvckgAQgoKCHJlc3Bv",
+            "bnNlIqcBChRDb25uZWN0aW9uU3RhdHVzRGF0YRIKCgJpZBgBIAEoCRIUCgxp",
+            "c19jb25uZWN0ZWQYAiABKAgSEAoIaXNfYWxpdmUYAyABKAgSFAoMYXBpX2lz",
+            "X2FsaXZlGAQgASgIEg4KBnNlcnZlchgFIAEoCRIPCgdhY2NvdW50GAYgASgE",
+            "EhUKDWVycm9yX21lc3NhZ2UYByABKAkSDQoFc3RhdGUYCCABKAkqOQoKUHJv",
+            "eHlUeXBlcxIICgROb25lEAASCQoFSHR0cHMQARIKCgZTb2NrczQQAhIKCgZT",
+            "b2NrczUQAyogCgxUZXJtaW5hbFR5cGUSBwoDTVQ0EAASBwoDTVQ1EAEy3QwK",
+            "CkNvbm5lY3Rpb24SXQoJQ29ubmVjdEV4Eh4ubXQ0X3Rlcm1fYXBpLkNvbm5l",
+            "Y3RFeFJlcXVlc3QaHC5tdDRfdGVybV9hcGkuQ29ubmVjdEV4UmVwbHkiEoLT",
+            "5JMCDBIKL0Nvbm5lY3RFeBJVCgdDb25uZWN0EhwubXQ0X3Rlcm1fYXBpLkNv",
+            "bm5lY3RSZXF1ZXN0GhoubXQ0X3Rlcm1fYXBpLkNvbm5lY3RSZXBseSIQgtPk",
+            "kwIKEggvQ29ubmVjdBJpCgxDb25uZWN0UHJveHkSIS5tdDRfdGVybV9hcGku",
+            "Q29ubmVjdFByb3h5UmVxdWVzdBofLm10NF90ZXJtX2FwaS5Db25uZWN0UHJv",
+            "eHlSZXBseSIVgtPkkwIPEg0vQ29ubmVjdFByb3h5EmkKDENoZWNrQ29ubmVj",
+            "dBIhLm10NF90ZXJtX2FwaS5DaGVja0Nvbm5lY3RSZXF1ZXN0Gh8ubXQ0X3Rl",
+            "cm1fYXBpLkNoZWNrQ29ubmVjdFJlcGx5IhWC0+STAg8SDS9DaGVja0Nvbm5l",
+            "Y3QSaQoMQ29ubmVjdFN0YXRlEiEubXQ0X3Rlcm1fYXBpLkNvbm5lY3RTdGF0",
+            "ZVJlcXVlc3QaHy5tdDRfdGVybV9hcGkuQ29ubmVjdFN0YXRlUmVwbHkiFYLT",
+            "5JMCDxINL0Nvbm5lY3RTdGF0ZRJzCg5PbkNvbm5lY3RTdGF0ZRIjLm10NF90",
+            "ZXJtX2FwaS5PbkNvbm5lY3RTdGF0ZVJlcXVlc3QaIS5tdDRfdGVybV9hcGku",
+            "T25Db25uZWN0U3RhdGVSZXBseSIXgtPkkwIREg8vT25Db25uZWN0U3RhdGUw",
+            "ARJ5ChBDb25uZWN0aW9uU3RhdHVzEiUubXQ0X3Rlcm1fYXBpLkNvbm5lY3Rp",
+            "b25TdGF0dXNSZXF1ZXN0GiMubXQ0X3Rlcm1fYXBpLkNvbm5lY3Rpb25TdGF0",
+            "dXNSZXBseSIZgtPkkwITEhEvQ29ubmVjdGlvblN0YXR1cxJhCgpEaXNjb25u",
+            "ZWN0Eh8ubXQ0X3Rlcm1fYXBpLkRpc2Nvbm5lY3RSZXF1ZXN0Gh0ubXQ0X3Rl",
+            "cm1fYXBpLkRpc2Nvbm5lY3RSZXBseSITgtPkkwINEgsvRGlzY29ubmVjdBJd",
+            "CglSZWNvbm5lY3QSHi5tdDRfdGVybV9hcGkuUmVjb25uZWN0UmVxdWVzdBoc",
+            "Lm10NF90ZXJtX2FwaS5SZWNvbm5lY3RSZXBseSISgtPkkwIMEgovUmVjb25u",
+            "ZWN0EmwKDkNvbm5lY3RCeVRva2VuEiMubXQ0X3Rlcm1fYXBpLkNvbm5lY3RC",
+            "eVRva2VuUmVxdWVzdBocLm10NF90ZXJtX2FwaS5Db25uZWN0RXhSZXBseSIX",
+            "gtPkkwIREg8vQ29ubmVjdEJ5VG9rZW4SqQEKHEdldEJyb2tlclNlcnZlcnNC",
+            "eUJyb2tlck5hbWUSMS5tdDRfdGVybV9hcGkuR2V0QnJva2VyU2VydmVyc0J5",
+            "QnJva2VyTmFtZVJlcXVlc3QaLy5tdDRfdGVybV9hcGkuR2V0QnJva2VyU2Vy",
+            "dmVyc0J5QnJva2VyTmFtZVJlcGx5IiWC0+STAh8SHS9HZXRCcm9rZXJTZXJ2",
+            "ZXJzQnlCcm9rZXJOYW1lEk0KBUdldElkEhoubXQ0X3Rlcm1fYXBpLkdldElk",
+            "UmVxdWVzdBoYLm10NF90ZXJtX2FwaS5HZXRJZFJlcGx5Ig6C0+STAggSBi9H",
+            "ZXRJZBJhCgpTY3JlZW5zaG90Eh8ubXQ0X3Rlcm1fYXBpLlNjcmVlbnNob3RS",
+            "ZXF1ZXN0Gh0ubXQ0X3Rlcm1fYXBpLlNjcmVlbnNob3RSZXBseSITgtPkkwIN",
+            "EgsvU2NyZWVuc2hvdBJpCg1Db25uZWN0U3RyZWFtEhwubXQ0X3Rlcm1fYXBp",
+            "LkNvbm5lY3RSZXF1ZXN0GiAubXQ0X3Rlcm1fYXBpLkNvbm5lY3RTdHJlYW1F",
+            "dmVudCIWgtPkkwIQEg4vQ29ubmVjdFN0cmVhbTABEm8KD0Nvbm5lY3RFeFN0",
+            "cmVhbRIeLm10NF90ZXJtX2FwaS5Db25uZWN0RXhSZXF1ZXN0GiAubXQ0X3Rl",
+            "cm1fYXBpLkNvbm5lY3RTdHJlYW1FdmVudCIYgtPkkwISEhAvQ29ubmVjdEV4",
+            "U3RyZWFtMAEyigMKBExvZ3MSWgoHSm91cm5hbBIcLm10NF90ZXJtX2FwaS5K",
+            "b3VybmFsUmVxdWVzdBoaLm10NF90ZXJtX2FwaS5Kb3VybmFsUmVwbHkiFYLT",
+            "5JMCDxINL0xvZ3MvSm91cm5hbBJkCglPbkpvdXJuYWwSHi5tdDRfdGVybV9h",
+            "cGkuT25Kb3VybmFsUmVxdWVzdBocLm10NF90ZXJtX2FwaS5PbkpvdXJuYWxS",
+            "ZXBseSIXgtPkkwIREg8vTG9ncy9PbkpvdXJuYWwwARJaCgdFeHBlcnRzEhwu",
+            "bXQ0X3Rlcm1fYXBpLkpvdXJuYWxSZXF1ZXN0GhoubXQ0X3Rlcm1fYXBpLkpv",
+            "dXJuYWxSZXBseSIVgtPkkwIPEg0vTG9ncy9FeHBlcnRzEmQKCU9uRXhwZXJ0",
+            "cxIeLm10NF90ZXJtX2FwaS5PbkpvdXJuYWxSZXF1ZXN0GhwubXQ0X3Rlcm1f",
+            "YXBpLk9uSm91cm5hbFJlcGx5IheC0+STAhESDy9Mb2dzL09uRXhwZXJ0czAB",
+            "QkJaMWdpdC5tdGFwaS5pby9yb290L21ycGMtcHJvdG8uZ2l0L210NC9saWJy",
+            "YXJpZXMvZ2+qAgxtdDRfdGVybV9hcGliBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Api.AnnotationsReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Mt4TermApi.MrpcMt4ErrorReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::mt4_term_api.ProxyTypes), typeof(global::mt4_term_api.TerminalType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -206,17 +209,17 @@ namespace mt4_term_api {
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.GetBrokerServersByBrokerNameReply), global::mt4_term_api.GetBrokerServersByBrokerNameReply.Parser, new[]{ "Data", "Error" }, new[]{ "Response" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.GetBrokerServersByBrokerNameData), global::mt4_term_api.GetBrokerServersByBrokerNameData.Parser, new[]{ "Result" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.GetBrokerServersByBrokerNameData.Types.BrokerResult), global::mt4_term_api.GetBrokerServersByBrokerNameData.Types.BrokerResult.Parser, new[]{ "Company", "Results" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.GetBrokerServersByBrokerNameData.Types.BrokerServer), global::mt4_term_api.GetBrokerServersByBrokerNameData.Types.BrokerServer.Parser, new[]{ "Name", "LogoUrl", "Site", "Access" }, new[]{ "LogoUrl", "Site" }, null, null, null)}),
-            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectExRequest), global::mt4_term_api.ConnectExRequest.Parser, new[]{ "User", "Password", "MtClusterName", "BaseChartSymbol", "ExpertsToAdd", "TimeoutSeconds", "Name" }, new[]{ "BaseChartSymbol", "TimeoutSeconds", "Name" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectByTokenRequest), global::mt4_term_api.ConnectByTokenRequest.Parser, new[]{ "BaseChartSymbol", "TimeoutSeconds" }, new[]{ "BaseChartSymbol", "TimeoutSeconds" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectExRequest), global::mt4_term_api.ConnectExRequest.Parser, new[]{ "User", "Password", "MtClusterName", "BaseChartSymbol", "ExpertsToAdd", "TimeoutSeconds", "Name", "Expiration" }, new[]{ "BaseChartSymbol", "TimeoutSeconds", "Name", "Expiration" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectByTokenRequest), global::mt4_term_api.ConnectByTokenRequest.Parser, new[]{ "BaseChartSymbol", "TimeoutSeconds", "Expiration" }, new[]{ "BaseChartSymbol", "TimeoutSeconds", "Expiration" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectExReply), global::mt4_term_api.ConnectExReply.Parser, new[]{ "Data", "Error" }, new[]{ "Response" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ReconnectRequest), global::mt4_term_api.ReconnectRequest.Parser, new[]{ "ForceReconnection" }, new[]{ "ForceReconnection" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ReconnectReply), global::mt4_term_api.ReconnectReply.Parser, new[]{ "Data", "Error" }, new[]{ "Response" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ReconnectData), global::mt4_term_api.ReconnectData.Parser, new[]{ "TerminalWasRecreated", "TerminalType", "TerminalInstanceGuid", "OldTerminalFullLiveTimeSeconds", "OldLogFiles" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectRequest), global::mt4_term_api.ConnectRequest.Parser, new[]{ "User", "Password", "Host", "Port", "ExpertsToAdd", "TimeoutSeconds", "Name" }, new[]{ "TimeoutSeconds", "Name" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectRequest), global::mt4_term_api.ConnectRequest.Parser, new[]{ "User", "Password", "Host", "Port", "ExpertsToAdd", "TimeoutSeconds", "Name", "Expiration" }, new[]{ "TimeoutSeconds", "Name", "Expiration" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ExpertAdviser), global::mt4_term_api.ExpertAdviser.Parser, new[]{ "FileName", "FileContent" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectReply), global::mt4_term_api.ConnectReply.Parser, new[]{ "Data", "Error" }, new[]{ "Response" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectData), global::mt4_term_api.ConnectData.Parser, new[]{ "TerminalInstanceGuid", "TerminalType" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectProxyRequest), global::mt4_term_api.ConnectProxyRequest.Parser, new[]{ "User", "Password", "Host", "Port", "ProxyUser", "ProxyPassword", "ProxyHost", "ProxyPort", "ProxyType", "ExpertsToAdd", "TimeoutSeconds", "Name" }, new[]{ "TimeoutSeconds", "Name" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectProxyRequest), global::mt4_term_api.ConnectProxyRequest.Parser, new[]{ "User", "Password", "Host", "Port", "ProxyUser", "ProxyPassword", "ProxyHost", "ProxyPort", "ProxyType", "ExpertsToAdd", "TimeoutSeconds", "Name", "Expiration" }, new[]{ "TimeoutSeconds", "Name", "Expiration" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectProxyReply), global::mt4_term_api.ConnectProxyReply.Parser, new[]{ "Data", "Error" }, new[]{ "Response" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.ConnectProxyData), global::mt4_term_api.ConnectProxyData.Parser, new[]{ "UniqueIdentifier", "TerminalType" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.CheckConnectRequest), global::mt4_term_api.CheckConnectRequest.Parser, null, null, null, null, null),
@@ -4080,6 +4083,7 @@ namespace mt4_term_api {
       expertsToAdd_ = other.expertsToAdd_.Clone();
       timeoutSeconds_ = other.timeoutSeconds_;
       name_ = other.name_;
+      expiration_ = other.expiration_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -4230,6 +4234,34 @@ namespace mt4_term_api {
       name_ = null;
     }
 
+    /// <summary>Field number for the "expiration" field.</summary>
+    public const int ExpirationFieldNumber = 8;
+    private uint expiration_;
+    /// <summary>
+    /// Optional terminal lifetime in minutes. 0 (default) = infinite (trial max 15 min). [Optional]
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint Expiration {
+      get { if ((_hasBits0 & 2) != 0) { return expiration_; } else { return 0; } }
+      set {
+        _hasBits0 |= 2;
+        expiration_ = value;
+      }
+    }
+    /// <summary>Gets whether the "expiration" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasExpiration {
+      get { return (_hasBits0 & 2) != 0; }
+    }
+    /// <summary>Clears the value of the "expiration" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearExpiration() {
+      _hasBits0 &= ~2;
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -4252,6 +4284,7 @@ namespace mt4_term_api {
       if(!expertsToAdd_.Equals(other.expertsToAdd_)) return false;
       if (TimeoutSeconds != other.TimeoutSeconds) return false;
       if (Name != other.Name) return false;
+      if (Expiration != other.Expiration) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -4266,6 +4299,7 @@ namespace mt4_term_api {
       hash ^= expertsToAdd_.GetHashCode();
       if (HasTimeoutSeconds) hash ^= TimeoutSeconds.GetHashCode();
       if (HasName) hash ^= Name.GetHashCode();
+      if (HasExpiration) hash ^= Expiration.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -4309,6 +4343,10 @@ namespace mt4_term_api {
         output.WriteRawTag(58);
         output.WriteString(Name);
       }
+      if (HasExpiration) {
+        output.WriteRawTag(64);
+        output.WriteUInt32(Expiration);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -4344,6 +4382,10 @@ namespace mt4_term_api {
         output.WriteRawTag(58);
         output.WriteString(Name);
       }
+      if (HasExpiration) {
+        output.WriteRawTag(64);
+        output.WriteUInt32(Expiration);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -4372,6 +4414,9 @@ namespace mt4_term_api {
       }
       if (HasName) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (HasExpiration) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Expiration);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -4403,6 +4448,9 @@ namespace mt4_term_api {
       }
       if (other.HasName) {
         Name = other.Name;
+      }
+      if (other.HasExpiration) {
+        Expiration = other.Expiration;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -4447,6 +4495,10 @@ namespace mt4_term_api {
             Name = input.ReadString();
             break;
           }
+          case 64: {
+            Expiration = input.ReadUInt32();
+            break;
+          }
         }
       }
     #endif
@@ -4488,6 +4540,10 @@ namespace mt4_term_api {
           }
           case 58: {
             Name = input.ReadString();
+            break;
+          }
+          case 64: {
+            Expiration = input.ReadUInt32();
             break;
           }
         }
@@ -4541,6 +4597,7 @@ namespace mt4_term_api {
       _hasBits0 = other._hasBits0;
       baseChartSymbol_ = other.baseChartSymbol_;
       timeoutSeconds_ = other.timeoutSeconds_;
+      expiration_ = other.expiration_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -4605,6 +4662,34 @@ namespace mt4_term_api {
       _hasBits0 &= ~1;
     }
 
+    /// <summary>Field number for the "expiration" field.</summary>
+    public const int ExpirationFieldNumber = 3;
+    private uint expiration_;
+    /// <summary>
+    /// Optional terminal lifetime in minutes. 0 (default) = infinite (trial max 15 min). [Optional]
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint Expiration {
+      get { if ((_hasBits0 & 2) != 0) { return expiration_; } else { return 0; } }
+      set {
+        _hasBits0 |= 2;
+        expiration_ = value;
+      }
+    }
+    /// <summary>Gets whether the "expiration" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasExpiration {
+      get { return (_hasBits0 & 2) != 0; }
+    }
+    /// <summary>Clears the value of the "expiration" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearExpiration() {
+      _hasBits0 &= ~2;
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -4622,6 +4707,7 @@ namespace mt4_term_api {
       }
       if (BaseChartSymbol != other.BaseChartSymbol) return false;
       if (TimeoutSeconds != other.TimeoutSeconds) return false;
+      if (Expiration != other.Expiration) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -4631,6 +4717,7 @@ namespace mt4_term_api {
       int hash = 1;
       if (HasBaseChartSymbol) hash ^= BaseChartSymbol.GetHashCode();
       if (HasTimeoutSeconds) hash ^= TimeoutSeconds.GetHashCode();
+      if (HasExpiration) hash ^= Expiration.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -4657,6 +4744,10 @@ namespace mt4_term_api {
         output.WriteRawTag(16);
         output.WriteUInt32(TimeoutSeconds);
       }
+      if (HasExpiration) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(Expiration);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -4675,6 +4766,10 @@ namespace mt4_term_api {
         output.WriteRawTag(16);
         output.WriteUInt32(TimeoutSeconds);
       }
+      if (HasExpiration) {
+        output.WriteRawTag(24);
+        output.WriteUInt32(Expiration);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -4690,6 +4785,9 @@ namespace mt4_term_api {
       }
       if (HasTimeoutSeconds) {
         size += 1 + pb::CodedOutputStream.ComputeUInt32Size(TimeoutSeconds);
+      }
+      if (HasExpiration) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Expiration);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -4708,6 +4806,9 @@ namespace mt4_term_api {
       }
       if (other.HasTimeoutSeconds) {
         TimeoutSeconds = other.TimeoutSeconds;
+      }
+      if (other.HasExpiration) {
+        Expiration = other.Expiration;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -4732,6 +4833,10 @@ namespace mt4_term_api {
             TimeoutSeconds = input.ReadUInt32();
             break;
           }
+          case 24: {
+            Expiration = input.ReadUInt32();
+            break;
+          }
         }
       }
     #endif
@@ -4753,6 +4858,10 @@ namespace mt4_term_api {
           }
           case 16: {
             TimeoutSeconds = input.ReadUInt32();
+            break;
+          }
+          case 24: {
+            Expiration = input.ReadUInt32();
             break;
           }
         }
@@ -5908,6 +6017,7 @@ namespace mt4_term_api {
       expertsToAdd_ = other.expertsToAdd_.Clone();
       timeoutSeconds_ = other.timeoutSeconds_;
       name_ = other.name_;
+      expiration_ = other.expiration_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -6043,6 +6153,34 @@ namespace mt4_term_api {
       name_ = null;
     }
 
+    /// <summary>Field number for the "expiration" field.</summary>
+    public const int ExpirationFieldNumber = 8;
+    private uint expiration_;
+    /// <summary>
+    /// Optional terminal lifetime in minutes. 0 (default) = infinite (trial max 15 min). [Optional]
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint Expiration {
+      get { if ((_hasBits0 & 2) != 0) { return expiration_; } else { return 0; } }
+      set {
+        _hasBits0 |= 2;
+        expiration_ = value;
+      }
+    }
+    /// <summary>Gets whether the "expiration" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasExpiration {
+      get { return (_hasBits0 & 2) != 0; }
+    }
+    /// <summary>Clears the value of the "expiration" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearExpiration() {
+      _hasBits0 &= ~2;
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -6065,6 +6203,7 @@ namespace mt4_term_api {
       if(!expertsToAdd_.Equals(other.expertsToAdd_)) return false;
       if (TimeoutSeconds != other.TimeoutSeconds) return false;
       if (Name != other.Name) return false;
+      if (Expiration != other.Expiration) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -6079,6 +6218,7 @@ namespace mt4_term_api {
       hash ^= expertsToAdd_.GetHashCode();
       if (HasTimeoutSeconds) hash ^= TimeoutSeconds.GetHashCode();
       if (HasName) hash ^= Name.GetHashCode();
+      if (HasExpiration) hash ^= Expiration.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -6122,6 +6262,10 @@ namespace mt4_term_api {
         output.WriteRawTag(58);
         output.WriteString(Name);
       }
+      if (HasExpiration) {
+        output.WriteRawTag(64);
+        output.WriteUInt32(Expiration);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -6157,6 +6301,10 @@ namespace mt4_term_api {
         output.WriteRawTag(58);
         output.WriteString(Name);
       }
+      if (HasExpiration) {
+        output.WriteRawTag(64);
+        output.WriteUInt32(Expiration);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -6185,6 +6333,9 @@ namespace mt4_term_api {
       }
       if (HasName) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (HasExpiration) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Expiration);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -6216,6 +6367,9 @@ namespace mt4_term_api {
       }
       if (other.HasName) {
         Name = other.Name;
+      }
+      if (other.HasExpiration) {
+        Expiration = other.Expiration;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -6260,6 +6414,10 @@ namespace mt4_term_api {
             Name = input.ReadString();
             break;
           }
+          case 64: {
+            Expiration = input.ReadUInt32();
+            break;
+          }
         }
       }
     #endif
@@ -6301,6 +6459,10 @@ namespace mt4_term_api {
           }
           case 58: {
             Name = input.ReadString();
+            break;
+          }
+          case 64: {
+            Expiration = input.ReadUInt32();
             break;
           }
         }
@@ -7118,6 +7280,7 @@ namespace mt4_term_api {
       expertsToAdd_ = other.expertsToAdd_.Clone();
       timeoutSeconds_ = other.timeoutSeconds_;
       name_ = other.name_;
+      expiration_ = other.expiration_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -7328,6 +7491,34 @@ namespace mt4_term_api {
       name_ = null;
     }
 
+    /// <summary>Field number for the "expiration" field.</summary>
+    public const int ExpirationFieldNumber = 13;
+    private uint expiration_;
+    /// <summary>
+    /// Optional terminal lifetime in minutes. 0 (default) = infinite (trial max 15 min). [Optional]
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public uint Expiration {
+      get { if ((_hasBits0 & 2) != 0) { return expiration_; } else { return 0; } }
+      set {
+        _hasBits0 |= 2;
+        expiration_ = value;
+      }
+    }
+    /// <summary>Gets whether the "expiration" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasExpiration {
+      get { return (_hasBits0 & 2) != 0; }
+    }
+    /// <summary>Clears the value of the "expiration" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearExpiration() {
+      _hasBits0 &= ~2;
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -7355,6 +7546,7 @@ namespace mt4_term_api {
       if(!expertsToAdd_.Equals(other.expertsToAdd_)) return false;
       if (TimeoutSeconds != other.TimeoutSeconds) return false;
       if (Name != other.Name) return false;
+      if (Expiration != other.Expiration) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -7374,6 +7566,7 @@ namespace mt4_term_api {
       hash ^= expertsToAdd_.GetHashCode();
       if (HasTimeoutSeconds) hash ^= TimeoutSeconds.GetHashCode();
       if (HasName) hash ^= Name.GetHashCode();
+      if (HasExpiration) hash ^= Expiration.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -7437,6 +7630,10 @@ namespace mt4_term_api {
         output.WriteRawTag(98);
         output.WriteString(Name);
       }
+      if (HasExpiration) {
+        output.WriteRawTag(104);
+        output.WriteUInt32(Expiration);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -7492,6 +7689,10 @@ namespace mt4_term_api {
         output.WriteRawTag(98);
         output.WriteString(Name);
       }
+      if (HasExpiration) {
+        output.WriteRawTag(104);
+        output.WriteUInt32(Expiration);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -7535,6 +7736,9 @@ namespace mt4_term_api {
       }
       if (HasName) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (HasExpiration) {
+        size += 1 + pb::CodedOutputStream.ComputeUInt32Size(Expiration);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -7581,6 +7785,9 @@ namespace mt4_term_api {
       }
       if (other.HasName) {
         Name = other.Name;
+      }
+      if (other.HasExpiration) {
+        Expiration = other.Expiration;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -7645,6 +7852,10 @@ namespace mt4_term_api {
             Name = input.ReadString();
             break;
           }
+          case 104: {
+            Expiration = input.ReadUInt32();
+            break;
+          }
         }
       }
     #endif
@@ -7706,6 +7917,10 @@ namespace mt4_term_api {
           }
           case 98: {
             Name = input.ReadString();
+            break;
+          }
+          case 104: {
+            Expiration = input.ReadUInt32();
             break;
           }
         }
