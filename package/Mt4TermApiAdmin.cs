@@ -79,67 +79,71 @@ namespace mrpc_admin {
             "EwoLY3B1X3BlcmNlbnQYASABKAESEwoLcmFtX3VzZWRfbWIYAiABKAQSFAoM",
             "cmFtX3RvdGFsX21iGAMgASgEEigKB2hpc3RvcnkYBCADKAsyFy5tcnBjX2Fk",
             "bWluLlVzYWdlU2FtcGxlEg0KBWVycm9yGAUgASgJIisKFkFjdGl2ZVRlcm1p",
-            "bmFsc1JlcXVlc3QSEQoJYWRtaW5fa2V5GAEgASgJIqgCCgxUZXJtaW5hbElu",
+            "bmFsc1JlcXVlc3QSEQoJYWRtaW5fa2V5GAEgASgJIuADCgxUZXJtaW5hbElu",
             "Zm8SCgoCaWQYASABKAkSEwoLdXNlcl9udW1iZXIYAiABKA0SFAoMd2luZG93",
             "c191c2VyGAMgASgJEg8KB2FjY291bnQYBCABKAQSDgoGc2VydmVyGAUgASgJ",
             "EgwKBHBvcnQYBiABKA0SLgoKY3JlYXRlZF9hdBgHIAEoCzIaLmdvb2dsZS5w",
             "cm90b2J1Zi5UaW1lc3RhbXASGAoQd2luZG93c19wYXNzd29yZBgIIAEoCRIR",
             "CgRuYW1lGAkgASgJSACIAQESDQoFc3RhdGUYCiABKAkSFQoNZXJyb3JfbWVz",
-            "c2FnZRgLIAEoCRIXCgp1c2VyX2VtYWlsGAwgASgJSAGIAQFCBwoFX25hbWVC",
-            "DQoLX3VzZXJfZW1haWwirgIKFEFjdGl2ZVRlcm1pbmFsc1JlcGx5EgsKA3Bv",
-            "ZBgBIAEoCRIMCgRub2RlGAIgASgJEg4KBnBvZF9pcBgDIAEoCRIrCgl0ZXJt",
-            "aW5hbHMYBCADKAsyGC5tcnBjX2FkbWluLlRlcm1pbmFsSW5mbxINCgVlcnJv",
-            "chgFIAEoCRITCgtjcHVfcGVyY2VudBgGIAEoARITCgtyYW1fdXNlZF9tYhgH",
-            "IAEoBBIUCgxyYW1fdG90YWxfbWIYCCABKAQSLgoNdXNhZ2VfaGlzdG9yeRgJ",
-            "IAMoCzIXLm1ycGNfYWRtaW4uVXNhZ2VTYW1wbGUSPwoOcmVzdG9yZV9zdGF0",
-            "dXMYCiABKAsyJy5tcnBjX2FkbWluLlNlc3Npb25SZXN0b3JlV2F0Y2hlclN0",
-            "YXR1cyLKAgoMUG9kVGVybWluYWxzEgsKA3BvZBgBIAEoCRIMCgRub2RlGAIg",
-            "ASgJEg4KBnBvZF9pcBgDIAEoCRIRCglub3ZuY191cmwYBCABKAkSKwoJdGVy",
-            "bWluYWxzGAUgAygLMhgubXJwY19hZG1pbi5UZXJtaW5hbEluZm8SDQoFZXJy",
-            "b3IYBiABKAkSDwoHaG9zdF9pcBgHIAEoCRITCgtjcHVfcGVyY2VudBgIIAEo",
-            "ARITCgtyYW1fdXNlZF9tYhgJIAEoBBIUCgxyYW1fdG90YWxfbWIYCiABKAQS",
-            "LgoNdXNhZ2VfaGlzdG9yeRgLIAMoCzIXLm1ycGNfYWRtaW4uVXNhZ2VTYW1w",
-            "bGUSPwoOcmVzdG9yZV9zdGF0dXMYDCABKAsyJy5tcnBjX2FkbWluLlNlc3Np",
-            "b25SZXN0b3JlV2F0Y2hlclN0YXR1cyJFChtBY3RpdmVUZXJtaW5hbHNDbHVz",
-            "dGVyUmVwbHkSJgoEcG9kcxgBIAMoCzIYLm1ycGNfYWRtaW4uUG9kVGVybWlu",
-            "YWxzMrcMCghBZG1pbkFwaRJxCg9BY3RpdmVUZXJtaW5hbHMSIi5tcnBjX2Fk",
-            "bWluLkFjdGl2ZVRlcm1pbmFsc1JlcXVlc3QaIC5tcnBjX2FkbWluLkFjdGl2",
-            "ZVRlcm1pbmFsc1JlcGx5IhiC0+STAhISEC9BY3RpdmVUZXJtaW5hbHMShgEK",
-            "FkFjdGl2ZVRlcm1pbmFsc0NsdXN0ZXISIi5tcnBjX2FkbWluLkFjdGl2ZVRl",
-            "cm1pbmFsc1JlcXVlc3QaJy5tcnBjX2FkbWluLkFjdGl2ZVRlcm1pbmFsc0Ns",
-            "dXN0ZXJSZXBseSIfgtPkkwIZEhcvQWN0aXZlVGVybWluYWxzQ2x1c3RlchJl",
-            "CgtTeXN0ZW1Vc2FnZRIiLm1ycGNfYWRtaW4uQWN0aXZlVGVybWluYWxzUmVx",
-            "dWVzdBocLm1ycGNfYWRtaW4uU3lzdGVtVXNhZ2VSZXBseSIUgtPkkwIOEgwv",
-            "U3lzdGVtVXNhZ2USaAoMTGlzdExvZ0ZpbGVzEiIubXJwY19hZG1pbi5BY3Rp",
-            "dmVUZXJtaW5hbHNSZXF1ZXN0Gh0ubXJwY19hZG1pbi5MaXN0TG9nRmlsZXNS",
-            "ZXBseSIVgtPkkwIPEg0vTGlzdExvZ0ZpbGVzEl0KCkdldExvZ0ZpbGUSHS5t",
-            "cnBjX2FkbWluLkdldExvZ0ZpbGVSZXF1ZXN0GhsubXJwY19hZG1pbi5HZXRM",
-            "b2dGaWxlUmVwbHkiE4LT5JMCDRILL0dldExvZ0ZpbGUSfQoSR2V0RXZlbnRM",
-            "b2dFbnRyaWVzEiUubXJwY19hZG1pbi5HZXRFdmVudExvZ0VudHJpZXNSZXF1",
-            "ZXN0GiMubXJwY19hZG1pbi5HZXRFdmVudExvZ0VudHJpZXNSZXBseSIbgtPk",
-            "kwIVEhMvR2V0RXZlbnRMb2dFbnRyaWVzEpUBChhDYXB0dXJlU2Vzc2lvblNj",
-            "cmVlbnNob3QSKy5tcnBjX2FkbWluLkNhcHR1cmVTZXNzaW9uU2NyZWVuc2hv",
-            "dFJlcXVlc3QaKS5tcnBjX2FkbWluLkNhcHR1cmVTZXNzaW9uU2NyZWVuc2hv",
-            "dFJlcGx5IiGC0+STAhsSGS9DYXB0dXJlU2Vzc2lvblNjcmVlbnNob3QSpAEK",
-            "HUNhcHR1cmVTZXNzaW9uU2NyZWVuc2hvdE9uUG9kEjAubXJwY19hZG1pbi5D",
-            "YXB0dXJlU2Vzc2lvblNjcmVlbnNob3RPblBvZFJlcXVlc3QaKS5tcnBjX2Fk",
-            "bWluLkNhcHR1cmVTZXNzaW9uU2NyZWVuc2hvdFJlcGx5IiaC0+STAiASHi9D",
-            "YXB0dXJlU2Vzc2lvblNjcmVlbnNob3RPblBvZBJxCg9SZWZyZXNoTXJwY1Jl",
-            "c3QSIi5tcnBjX2FkbWluLkFjdGl2ZVRlcm1pbmFsc1JlcXVlc3QaIC5tcnBj",
-            "X2FkbWluLlJlZnJlc2hNcnBjUmVzdFJlcGx5IhiC0+STAhISEC9SZWZyZXNo",
-            "TXJwY1Jlc3QSVwoKR2V0VmVyc2lvbhIaLm1ycGNfYWRtaW4uVmVyc2lvblJl",
-            "cXVlc3QaGC5tcnBjX2FkbWluLlZlcnNpb25SZXBseSITgtPkkwINEgsvdmVy",
-            "c2lvbi10bRJdCgpHZXRBbGxMb2dzEh0ubXJwY19hZG1pbi5HZXRBbGxMb2dz",
-            "UmVxdWVzdBobLm1ycGNfYWRtaW4uR2V0QWxsTG9nc1JlcGx5IhOC0+STAg0S",
-            "Cy9HZXRBbGxMb2dzEokBChVHZXRTZXNzaW9uUmVzdG9yZUxvZ3MSKC5tcnBj",
-            "X2FkbWluLkdldFNlc3Npb25SZXN0b3JlTG9nc1JlcXVlc3QaJi5tcnBjX2Fk",
-            "bWluLkdldFNlc3Npb25SZXN0b3JlTG9nc1JlcGx5Ih6C0+STAhgSFi9HZXRT",
-            "ZXNzaW9uUmVzdG9yZUxvZ3MSiQEKF0dldFNlc3Npb25SZXN0b3JlU3RhdHVz",
-            "EiIubXJwY19hZG1pbi5BY3RpdmVUZXJtaW5hbHNSZXF1ZXN0GigubXJwY19h",
-            "ZG1pbi5HZXRTZXNzaW9uUmVzdG9yZVN0YXR1c1JlcGx5IiCC0+STAhoSGC9H",
-            "ZXRTZXNzaW9uUmVzdG9yZVN0YXR1c0JAWjFnaXQubXRhcGkuaW8vcm9vdC9t",
-            "cnBjLXByb3RvLmdpdC9tdDQvbGlicmFyaWVzL2dvqgIKbXJwY19hZG1pbmIG",
-            "cHJvdG8z"));
+            "c2FnZRgLIAEoCRIXCgp1c2VyX2VtYWlsGAwgASgJSAGIAQESJQoYc3RhcnR1",
+            "cF9kdXJhdGlvbl9zZWNvbmRzGA0gASgBSAKIAQESNQoMY29ubmVjdGVkX2F0",
+            "GA4gASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgDiAEBEhkKDHN0",
+            "YXJ0dXBfdGltZRgPIAEoCUgEiAEBQgcKBV9uYW1lQg0KC191c2VyX2VtYWls",
+            "QhsKGV9zdGFydHVwX2R1cmF0aW9uX3NlY29uZHNCDwoNX2Nvbm5lY3RlZF9h",
+            "dEIPCg1fc3RhcnR1cF90aW1lIq4CChRBY3RpdmVUZXJtaW5hbHNSZXBseRIL",
+            "CgNwb2QYASABKAkSDAoEbm9kZRgCIAEoCRIOCgZwb2RfaXAYAyABKAkSKwoJ",
+            "dGVybWluYWxzGAQgAygLMhgubXJwY19hZG1pbi5UZXJtaW5hbEluZm8SDQoF",
+            "ZXJyb3IYBSABKAkSEwoLY3B1X3BlcmNlbnQYBiABKAESEwoLcmFtX3VzZWRf",
+            "bWIYByABKAQSFAoMcmFtX3RvdGFsX21iGAggASgEEi4KDXVzYWdlX2hpc3Rv",
+            "cnkYCSADKAsyFy5tcnBjX2FkbWluLlVzYWdlU2FtcGxlEj8KDnJlc3RvcmVf",
+            "c3RhdHVzGAogASgLMicubXJwY19hZG1pbi5TZXNzaW9uUmVzdG9yZVdhdGNo",
+            "ZXJTdGF0dXMiygIKDFBvZFRlcm1pbmFscxILCgNwb2QYASABKAkSDAoEbm9k",
+            "ZRgCIAEoCRIOCgZwb2RfaXAYAyABKAkSEQoJbm92bmNfdXJsGAQgASgJEisK",
+            "CXRlcm1pbmFscxgFIAMoCzIYLm1ycGNfYWRtaW4uVGVybWluYWxJbmZvEg0K",
+            "BWVycm9yGAYgASgJEg8KB2hvc3RfaXAYByABKAkSEwoLY3B1X3BlcmNlbnQY",
+            "CCABKAESEwoLcmFtX3VzZWRfbWIYCSABKAQSFAoMcmFtX3RvdGFsX21iGAog",
+            "ASgEEi4KDXVzYWdlX2hpc3RvcnkYCyADKAsyFy5tcnBjX2FkbWluLlVzYWdl",
+            "U2FtcGxlEj8KDnJlc3RvcmVfc3RhdHVzGAwgASgLMicubXJwY19hZG1pbi5T",
+            "ZXNzaW9uUmVzdG9yZVdhdGNoZXJTdGF0dXMiRQobQWN0aXZlVGVybWluYWxz",
+            "Q2x1c3RlclJlcGx5EiYKBHBvZHMYASADKAsyGC5tcnBjX2FkbWluLlBvZFRl",
+            "cm1pbmFsczK3DAoIQWRtaW5BcGkScQoPQWN0aXZlVGVybWluYWxzEiIubXJw",
+            "Y19hZG1pbi5BY3RpdmVUZXJtaW5hbHNSZXF1ZXN0GiAubXJwY19hZG1pbi5B",
+            "Y3RpdmVUZXJtaW5hbHNSZXBseSIYgtPkkwISEhAvQWN0aXZlVGVybWluYWxz",
+            "EoYBChZBY3RpdmVUZXJtaW5hbHNDbHVzdGVyEiIubXJwY19hZG1pbi5BY3Rp",
+            "dmVUZXJtaW5hbHNSZXF1ZXN0GicubXJwY19hZG1pbi5BY3RpdmVUZXJtaW5h",
+            "bHNDbHVzdGVyUmVwbHkiH4LT5JMCGRIXL0FjdGl2ZVRlcm1pbmFsc0NsdXN0",
+            "ZXISZQoLU3lzdGVtVXNhZ2USIi5tcnBjX2FkbWluLkFjdGl2ZVRlcm1pbmFs",
+            "c1JlcXVlc3QaHC5tcnBjX2FkbWluLlN5c3RlbVVzYWdlUmVwbHkiFILT5JMC",
+            "DhIML1N5c3RlbVVzYWdlEmgKDExpc3RMb2dGaWxlcxIiLm1ycGNfYWRtaW4u",
+            "QWN0aXZlVGVybWluYWxzUmVxdWVzdBodLm1ycGNfYWRtaW4uTGlzdExvZ0Zp",
+            "bGVzUmVwbHkiFYLT5JMCDxINL0xpc3RMb2dGaWxlcxJdCgpHZXRMb2dGaWxl",
+            "Eh0ubXJwY19hZG1pbi5HZXRMb2dGaWxlUmVxdWVzdBobLm1ycGNfYWRtaW4u",
+            "R2V0TG9nRmlsZVJlcGx5IhOC0+STAg0SCy9HZXRMb2dGaWxlEn0KEkdldEV2",
+            "ZW50TG9nRW50cmllcxIlLm1ycGNfYWRtaW4uR2V0RXZlbnRMb2dFbnRyaWVz",
+            "UmVxdWVzdBojLm1ycGNfYWRtaW4uR2V0RXZlbnRMb2dFbnRyaWVzUmVwbHki",
+            "G4LT5JMCFRITL0dldEV2ZW50TG9nRW50cmllcxKVAQoYQ2FwdHVyZVNlc3Np",
+            "b25TY3JlZW5zaG90EisubXJwY19hZG1pbi5DYXB0dXJlU2Vzc2lvblNjcmVl",
+            "bnNob3RSZXF1ZXN0GikubXJwY19hZG1pbi5DYXB0dXJlU2Vzc2lvblNjcmVl",
+            "bnNob3RSZXBseSIhgtPkkwIbEhkvQ2FwdHVyZVNlc3Npb25TY3JlZW5zaG90",
+            "EqQBCh1DYXB0dXJlU2Vzc2lvblNjcmVlbnNob3RPblBvZBIwLm1ycGNfYWRt",
+            "aW4uQ2FwdHVyZVNlc3Npb25TY3JlZW5zaG90T25Qb2RSZXF1ZXN0GikubXJw",
+            "Y19hZG1pbi5DYXB0dXJlU2Vzc2lvblNjcmVlbnNob3RSZXBseSImgtPkkwIg",
+            "Eh4vQ2FwdHVyZVNlc3Npb25TY3JlZW5zaG90T25Qb2QScQoPUmVmcmVzaE1y",
+            "cGNSZXN0EiIubXJwY19hZG1pbi5BY3RpdmVUZXJtaW5hbHNSZXF1ZXN0GiAu",
+            "bXJwY19hZG1pbi5SZWZyZXNoTXJwY1Jlc3RSZXBseSIYgtPkkwISEhAvUmVm",
+            "cmVzaE1ycGNSZXN0ElcKCkdldFZlcnNpb24SGi5tcnBjX2FkbWluLlZlcnNp",
+            "b25SZXF1ZXN0GhgubXJwY19hZG1pbi5WZXJzaW9uUmVwbHkiE4LT5JMCDRIL",
+            "L3ZlcnNpb24tdG0SXQoKR2V0QWxsTG9ncxIdLm1ycGNfYWRtaW4uR2V0QWxs",
+            "TG9nc1JlcXVlc3QaGy5tcnBjX2FkbWluLkdldEFsbExvZ3NSZXBseSITgtPk",
+            "kwINEgsvR2V0QWxsTG9ncxKJAQoVR2V0U2Vzc2lvblJlc3RvcmVMb2dzEigu",
+            "bXJwY19hZG1pbi5HZXRTZXNzaW9uUmVzdG9yZUxvZ3NSZXF1ZXN0GiYubXJw",
+            "Y19hZG1pbi5HZXRTZXNzaW9uUmVzdG9yZUxvZ3NSZXBseSIegtPkkwIYEhYv",
+            "R2V0U2Vzc2lvblJlc3RvcmVMb2dzEokBChdHZXRTZXNzaW9uUmVzdG9yZVN0",
+            "YXR1cxIiLm1ycGNfYWRtaW4uQWN0aXZlVGVybWluYWxzUmVxdWVzdBooLm1y",
+            "cGNfYWRtaW4uR2V0U2Vzc2lvblJlc3RvcmVTdGF0dXNSZXBseSIggtPkkwIa",
+            "EhgvR2V0U2Vzc2lvblJlc3RvcmVTdGF0dXNCQFoxZ2l0Lm10YXBpLmlvL3Jv",
+            "b3QvbXJwYy1wcm90by5naXQvbXQ0L2xpYnJhcmllcy9nb6oCCm1ycGNfYWRt",
+            "aW5iBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Api.AnnotationsReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -166,7 +170,7 @@ namespace mrpc_admin {
             new pbr::GeneratedClrTypeInfo(typeof(global::mrpc_admin.UsageSample), global::mrpc_admin.UsageSample.Parser, new[]{ "Time", "CpuPercent", "RamUsedMb", "RamTotalMb" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mrpc_admin.SystemUsageReply), global::mrpc_admin.SystemUsageReply.Parser, new[]{ "CpuPercent", "RamUsedMb", "RamTotalMb", "History", "Error" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mrpc_admin.ActiveTerminalsRequest), global::mrpc_admin.ActiveTerminalsRequest.Parser, new[]{ "AdminKey" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::mrpc_admin.TerminalInfo), global::mrpc_admin.TerminalInfo.Parser, new[]{ "Id", "UserNumber", "WindowsUser", "Account", "Server", "Port", "CreatedAt", "WindowsPassword", "Name", "State", "ErrorMessage", "UserEmail" }, new[]{ "Name", "UserEmail" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::mrpc_admin.TerminalInfo), global::mrpc_admin.TerminalInfo.Parser, new[]{ "Id", "UserNumber", "WindowsUser", "Account", "Server", "Port", "CreatedAt", "WindowsPassword", "Name", "State", "ErrorMessage", "UserEmail", "StartupDurationSeconds", "ConnectedAt", "StartupTime" }, new[]{ "Name", "UserEmail", "StartupDurationSeconds", "ConnectedAt", "StartupTime" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mrpc_admin.ActiveTerminalsReply), global::mrpc_admin.ActiveTerminalsReply.Parser, new[]{ "Pod", "Node", "PodIp", "Terminals", "Error", "CpuPercent", "RamUsedMb", "RamTotalMb", "UsageHistory", "RestoreStatus" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mrpc_admin.PodTerminals), global::mrpc_admin.PodTerminals.Parser, new[]{ "Pod", "Node", "PodIp", "NovncUrl", "Terminals", "Error", "HostIp", "CpuPercent", "RamUsedMb", "RamTotalMb", "UsageHistory", "RestoreStatus" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mrpc_admin.ActiveTerminalsClusterReply), global::mrpc_admin.ActiveTerminalsClusterReply.Parser, new[]{ "Pods" }, null, null, null, null)
@@ -6880,6 +6884,7 @@ namespace mrpc_admin {
   {
     private static readonly pb::MessageParser<TerminalInfo> _parser = new pb::MessageParser<TerminalInfo>(() => new TerminalInfo());
     private pb::UnknownFieldSet _unknownFields;
+    private int _hasBits0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pb::MessageParser<TerminalInfo> Parser { get { return _parser; } }
@@ -6907,6 +6912,7 @@ namespace mrpc_admin {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public TerminalInfo(TerminalInfo other) : this() {
+      _hasBits0 = other._hasBits0;
       id_ = other.id_;
       userNumber_ = other.userNumber_;
       windowsUser_ = other.windowsUser_;
@@ -6919,6 +6925,9 @@ namespace mrpc_admin {
       state_ = other.state_;
       errorMessage_ = other.errorMessage_;
       userEmail_ = other.userEmail_;
+      startupDurationSeconds_ = other.startupDurationSeconds_;
+      connectedAt_ = other.connectedAt_ != null ? other.connectedAt_.Clone() : null;
+      startupTime_ = other.startupTime_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -7129,6 +7138,76 @@ namespace mrpc_admin {
       userEmail_ = null;
     }
 
+    /// <summary>Field number for the "startup_duration_seconds" field.</summary>
+    public const int StartupDurationSecondsFieldNumber = 13;
+    private double startupDurationSeconds_;
+    /// <summary>
+    /// duration in seconds from instantiation to Connected
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public double StartupDurationSeconds {
+      get { if ((_hasBits0 & 1) != 0) { return startupDurationSeconds_; } else { return 0D; } }
+      set {
+        _hasBits0 |= 1;
+        startupDurationSeconds_ = value;
+      }
+    }
+    /// <summary>Gets whether the "startup_duration_seconds" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasStartupDurationSeconds {
+      get { return (_hasBits0 & 1) != 0; }
+    }
+    /// <summary>Clears the value of the "startup_duration_seconds" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearStartupDurationSeconds() {
+      _hasBits0 &= ~1;
+    }
+
+    /// <summary>Field number for the "connected_at" field.</summary>
+    public const int ConnectedAtFieldNumber = 14;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp connectedAt_;
+    /// <summary>
+    /// timestamp when Connected state was reached
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Google.Protobuf.WellKnownTypes.Timestamp ConnectedAt {
+      get { return connectedAt_; }
+      set {
+        connectedAt_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "startup_time" field.</summary>
+    public const int StartupTimeFieldNumber = 15;
+    private string startupTime_;
+    /// <summary>
+    /// formatted startup duration e.g. "14.2s" or "8s (starting)"
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string StartupTime {
+      get { return startupTime_ ?? ""; }
+      set {
+        startupTime_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+    /// <summary>Gets whether the "startup_time" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasStartupTime {
+      get { return startupTime_ != null; }
+    }
+    /// <summary>Clears the value of the "startup_time" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearStartupTime() {
+      startupTime_ = null;
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -7156,6 +7235,9 @@ namespace mrpc_admin {
       if (State != other.State) return false;
       if (ErrorMessage != other.ErrorMessage) return false;
       if (UserEmail != other.UserEmail) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(StartupDurationSeconds, other.StartupDurationSeconds)) return false;
+      if (!object.Equals(ConnectedAt, other.ConnectedAt)) return false;
+      if (StartupTime != other.StartupTime) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -7175,6 +7257,9 @@ namespace mrpc_admin {
       if (State.Length != 0) hash ^= State.GetHashCode();
       if (ErrorMessage.Length != 0) hash ^= ErrorMessage.GetHashCode();
       if (HasUserEmail) hash ^= UserEmail.GetHashCode();
+      if (HasStartupDurationSeconds) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(StartupDurationSeconds);
+      if (connectedAt_ != null) hash ^= ConnectedAt.GetHashCode();
+      if (HasStartupTime) hash ^= StartupTime.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -7241,6 +7326,18 @@ namespace mrpc_admin {
         output.WriteRawTag(98);
         output.WriteString(UserEmail);
       }
+      if (HasStartupDurationSeconds) {
+        output.WriteRawTag(105);
+        output.WriteDouble(StartupDurationSeconds);
+      }
+      if (connectedAt_ != null) {
+        output.WriteRawTag(114);
+        output.WriteMessage(ConnectedAt);
+      }
+      if (HasStartupTime) {
+        output.WriteRawTag(122);
+        output.WriteString(StartupTime);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -7299,6 +7396,18 @@ namespace mrpc_admin {
         output.WriteRawTag(98);
         output.WriteString(UserEmail);
       }
+      if (HasStartupDurationSeconds) {
+        output.WriteRawTag(105);
+        output.WriteDouble(StartupDurationSeconds);
+      }
+      if (connectedAt_ != null) {
+        output.WriteRawTag(114);
+        output.WriteMessage(ConnectedAt);
+      }
+      if (HasStartupTime) {
+        output.WriteRawTag(122);
+        output.WriteString(StartupTime);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -7344,6 +7453,15 @@ namespace mrpc_admin {
       }
       if (HasUserEmail) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(UserEmail);
+      }
+      if (HasStartupDurationSeconds) {
+        size += 1 + 8;
+      }
+      if (connectedAt_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ConnectedAt);
+      }
+      if (HasStartupTime) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(StartupTime);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -7395,6 +7513,18 @@ namespace mrpc_admin {
       }
       if (other.HasUserEmail) {
         UserEmail = other.UserEmail;
+      }
+      if (other.HasStartupDurationSeconds) {
+        StartupDurationSeconds = other.StartupDurationSeconds;
+      }
+      if (other.connectedAt_ != null) {
+        if (connectedAt_ == null) {
+          ConnectedAt = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        ConnectedAt.MergeFrom(other.ConnectedAt);
+      }
+      if (other.HasStartupTime) {
+        StartupTime = other.StartupTime;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -7462,6 +7592,21 @@ namespace mrpc_admin {
             UserEmail = input.ReadString();
             break;
           }
+          case 105: {
+            StartupDurationSeconds = input.ReadDouble();
+            break;
+          }
+          case 114: {
+            if (connectedAt_ == null) {
+              ConnectedAt = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(ConnectedAt);
+            break;
+          }
+          case 122: {
+            StartupTime = input.ReadString();
+            break;
+          }
         }
       }
     #endif
@@ -7526,6 +7671,21 @@ namespace mrpc_admin {
           }
           case 98: {
             UserEmail = input.ReadString();
+            break;
+          }
+          case 105: {
+            StartupDurationSeconds = input.ReadDouble();
+            break;
+          }
+          case 114: {
+            if (connectedAt_ == null) {
+              ConnectedAt = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(ConnectedAt);
+            break;
+          }
+          case 122: {
+            StartupTime = input.ReadString();
             break;
           }
         }
