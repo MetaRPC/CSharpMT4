@@ -294,9 +294,9 @@ except Exception as e:
 
 ## 📝 Documentation
 
-- [MT4Account Master Overview](../MT4Account/MT4Account.Master.Overview.md) - Complete API reference (40 methods)
-- [MT4Service Overview](../MT4Service/MT4Service.Overview.md) - Mid-level wrapper (36 methods)
-- [MT4Sugar Master Overview](../MT4Sugar/MT4Sugar.Master.Overview.md) - High-level Sugar API (62+ methods)
+- [MT4Account Master Overview](../API_Reference/MT4Account.md) - Complete API reference (40 methods)
+- [MT4Service Overview](../API_Reference/MT4Service.md) - Mid-level wrapper (36 methods)
+- [MT4Sugar Master Overview](../API_Reference/MT4Sugar.md) - High-level Sugar API (62+ methods)
 - [ENUMS Usage Reference](ENUMS_USAGE_REFERENCE.md) - All ENUMs in one place
 
 ## 🔑 Configuration
@@ -331,7 +331,7 @@ $env:MT4_PASSWORD="YourPassword"
 $env:MT4_GRPC_SERVER="127.0.0.1:9999"
 ```
 
-See [demo_helpers.py](../../examples/0_common/demo_helpers.py) for details.
+See [demo_helpers.py](#) for details.
 
 ## Tips
 

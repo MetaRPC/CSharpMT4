@@ -306,7 +306,7 @@ Follow our main getting started guide to connect PyMT4 to your MT4 account:
 PyMT4 is built in **three levels**, from low-level to high-level. You can choose where to start depending on your needs:
 
 #### Level 1: MT4Account (Low-Level gRPC Foundation)
-👉 **[MT4Account Overview](../MT4Account/MT4Account.Master.Overview.md)**
+👉 **[MT4Account Overview](../API_Reference/MT4Account.md)**
 
 - **Direct gRPC calls** to MT4 terminal
 - **Foundation of everything** - all other levels use this internally
@@ -314,7 +314,7 @@ PyMT4 is built in **three levels**, from low-level to high-level. You can choose
 - Best for: Advanced users who need fine-grained control
 
 #### Level 2: MT4Service (Convenient Wrappers)
-👉 **[MT4Service Overview](../MT4Service/MT4Service.Overview.md)**
+👉 **[MT4Service Overview](../API_Reference/MT4Service.md)**
 
 - **Wrapper methods** over MT4Account gRPC calls
 - Simplified error handling and response parsing
@@ -322,7 +322,7 @@ PyMT4 is built in **three levels**, from low-level to high-level. You can choose
 - Best for: Most common trading scenarios
 
 #### Level 3: MT4Sugar (High-Level Helpers)
-👉 **[MT4Sugar API Overview](../MT4Sugar/MT4Sugar.Master.Overview.md)**
+👉 **[MT4Sugar API Overview](../API_Reference/MT4Sugar.md)**
 
 - **Syntactic sugar** and convenience methods
 - Chainable operations, smart defaults

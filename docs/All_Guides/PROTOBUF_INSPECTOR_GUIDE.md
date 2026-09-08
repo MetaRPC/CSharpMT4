@@ -1147,7 +1147,7 @@ NAVIGATION:
 **Next Steps:**
 
 - Run `python main.py inspect` and explore!
-- Check [MT4Account Master Overview](../MT4Account/MT4Account.Master.Overview.md) for complete API documentation
+- Check [MT4Account Master Overview](../API_Reference/MT4Account.md) for complete API documentation
 - Try the demo examples in `examples/`
 - See [RETURN_CODES_REFERENCE.md](RETURN_CODES_REFERENCE.md) for error codes
 - See [USERCODE_SANDBOX_GUIDE.md](USERCODE_SANDBOX_GUIDE.md) for coding examples
