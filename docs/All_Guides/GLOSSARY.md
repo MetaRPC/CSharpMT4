@@ -263,7 +263,7 @@ Python's pattern for automatic resource cleanup.
 account = MT4Account.create(
     user=591129415,
     password="password",
-    grpc_server="mt5.mrpc.pro:443"
+    grpc_server="mt4.mrpc.pro:443"
 )
 
 await account.connect_by_server_name(
@@ -305,7 +305,7 @@ Without `channel.close()`, the connection stays open and may cause resource leak
 account = MT4Account.create(
     user=591129415,
     password="password",
-    grpc_server="mt5.mrpc.pro:443"
+    grpc_server="mt4.mrpc.pro:443"
 )
 
 try:
@@ -583,7 +583,7 @@ High-performance RPC (Remote Procedure Call) framework using HTTP/2.
 account = MT4Account.create(
     user=591129415,
     password="password",
-    grpc_server="mt5.mrpc.pro:443"
+    grpc_server="mt4.mrpc.pro:443"
 )
 
 await account.connect_by_server_name(
@@ -970,7 +970,7 @@ Configuration via environment variables or .env file.
 MT4_USER=591129415
 MT4_PASSWORD="YourPassword"
 MT4_SERVER="FxPro-MT4 Demo"
-MT4_GRPC_HOST="mt5.mrpc.pro:443"
+MT4_GRPC_HOST="mt4.mrpc.pro:443"
 
 # Optional (have defaults)
 MT4_SYMBOL="EURUSD"
@@ -1014,7 +1014,7 @@ Configuration file for environment variables.
 MT4_USER=591129415
 MT4_PASSWORD=YourPassword
 MT4_SERVER=FxPro-MT4 Demo
-MT4_GRPC_HOST=mt5.mrpc.pro:443
+MT4_GRPC_HOST=mt4.mrpc.pro:443
 MT4_SYMBOL=EURUSD
 MT4_VOLUME=0.01
 ```

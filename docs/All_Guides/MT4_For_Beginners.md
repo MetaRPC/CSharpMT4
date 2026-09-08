@@ -171,9 +171,9 @@ Now that you have an MT4 demo account, you need to configure PyMT4 to connect to
 {
   "user": 591129415,
   "password": "YourPasswordHere",
-  "host": "mt5.mrpc.pro",
+  "host": "mt4.mrpc.pro",
   "port": 443,
-  "grpc_server": "mt5.mrpc.pro:443",
+  "grpc_server": "mt4.mrpc.pro:443",
   "mt_cluster": "MetaQuotes-Demo",
   "test_symbol": "EURUSD",
   "test_volume": 0.01

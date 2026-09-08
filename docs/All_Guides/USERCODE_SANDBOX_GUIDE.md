@@ -309,7 +309,7 @@ Create `examples/0_common/settings.json`:
 {
   "user": 591129415,
   "password": "YourPassword",
-  "grpc_server": "127.0.0.1:9999",
+  "grpc_server": "mt4.mrpc.pro:443",
   "mt_cluster": "MetaQuotes-Demo",
   "test_symbol": "EURUSD",
   "test_volume": 0.01
@@ -322,13 +322,13 @@ Create `examples/0_common/settings.json`:
 # Linux/Mac
 export MT4_USER=591129415
 export MT4_PASSWORD="YourPassword"
-export MT4_GRPC_SERVER="127.0.0.1:9999"
+export MT4_GRPC_SERVER="mt4.mrpc.pro:443"
 export MT4_CLUSTER="MetaQuotes-Demo"
 
 # Windows PowerShell
 $env:MT4_USER="591129415"
 $env:MT4_PASSWORD="YourPassword"
-$env:MT4_GRPC_SERVER="127.0.0.1:9999"
+$env:MT4_GRPC_SERVER="mt4.mrpc.pro:443"
 ```
 
 See [demo_helpers.py](#) for details.

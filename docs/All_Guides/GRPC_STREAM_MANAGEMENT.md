@@ -41,7 +41,7 @@ async def main():
     account = MT4Account(
         user=12345,
         password="password",
-        grpc_server="mt5.mrpc.pro:443"
+        grpc_server="mt4.mrpc.pro:443"
     )
     await account.connect_by_server_name(
         server_name="YourBroker-Demo",
@@ -85,7 +85,7 @@ async def main():
     account = MT4Account(
         user=12345,
         password="password",
-        grpc_server="mt5.mrpc.pro:443"
+        grpc_server="mt4.mrpc.pro:443"
     )
     await account.connect_by_server_name(
         server_name="YourBroker-Demo",
@@ -166,7 +166,7 @@ async def quick_stream_example():
     account = MT4Account(
         user=12345,
         password="password",
-        grpc_server="mt5.mrpc.pro:443"
+        grpc_server="mt4.mrpc.pro:443"
     )
     await account.connect_by_server_name(
         server_name="YourBroker-Demo",
@@ -206,7 +206,7 @@ async def event_limited_streaming():
     account = MT4Account(
         user=12345,
         password="password",
-        grpc_server="mt5.mrpc.pro:443"
+        grpc_server="mt4.mrpc.pro:443"
     )
     await account.connect_by_server_name(
         server_name="YourBroker-Demo",
@@ -250,7 +250,7 @@ async def condition_based_stop():
     account = MT4Account(
         user=12345,
         password="password",
-        grpc_server="mt5.mrpc.pro:443"
+        grpc_server="mt4.mrpc.pro:443"
     )
     await account.connect_by_server_name(
         server_name="YourBroker-Demo",
@@ -326,7 +326,7 @@ async def main():
     account = MT4Account(
         user=12345,
         password="password",
-        grpc_server="mt5.mrpc.pro:443"
+        grpc_server="mt4.mrpc.pro:443"
     )
     await account.connect_by_server_name(
         server_name="YourBroker-Demo",
@@ -365,7 +365,7 @@ When working with gRPC streaming in PyMT4, understanding the stream lifecycle is
 ```python
 # ❌ BAD: Stream continues running forever
 async def bad_example():
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     count = 0
@@ -400,7 +400,7 @@ async def bad_example():
 
 ```python
 async def proper_cancellation():
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     # ✅ CRITICAL: Create cancellation event
@@ -433,7 +433,7 @@ asyncio.run(proper_cancellation())
 
 ```python
 async def timeout_pattern():
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     cancel_event = asyncio.Event()
@@ -473,7 +473,7 @@ asyncio.run(timeout_pattern())
 
 ```python
 async def proper_cleanup():
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     cancel_event = asyncio.Event()
@@ -512,7 +512,7 @@ asyncio.run(proper_cleanup())
 ```python
 # ❌ WRONG: No way to stop stream gracefully
 async def bad():
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     async for tick_data in account.on_symbol_tick(symbols=["EURUSD"]):
@@ -524,7 +524,7 @@ async def bad():
 ```python
 # ✅ CORRECT: Can stop gracefully anytime
 async def good():
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     cancel_event = asyncio.Event()
@@ -544,7 +544,7 @@ async def good():
 ```python
 # ❌ WRONG: Break doesn't cleanup resources
 async def bad():
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     async for tick_data in account.on_symbol_tick(symbols=["EURUSD"]):
@@ -558,7 +558,7 @@ async def bad():
 ```python
 # ✅ CORRECT: Proper cleanup in finally
 async def good():
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     cancel_event = asyncio.Event()
@@ -587,7 +587,7 @@ async def good():
 ```python
 # ❌ WRONG: Channel never closed
 async def bad():
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     cancel_event = asyncio.Event()
@@ -606,7 +606,7 @@ async def bad():
 ```python
 # ✅ CORRECT: Always close in finally
 async def good():
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     cancel_event = asyncio.Event()
@@ -641,7 +641,7 @@ async def filter_trade_events():
     Monitor trade events and filter by type using protobuf enums.
     Shows how to work with SUB_ENUM_TRADE_TRANSACTION_TYPE.
     """
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     cancel_event = asyncio.Event()
@@ -694,7 +694,7 @@ async def sort_positions_by_profit():
     Monitor position profits and sort by P&L.
     Shows advanced data processing with streaming.
     """
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     cancel_event = asyncio.Event()
@@ -766,7 +766,7 @@ async def filter_orders_by_state():
     Monitor trade events and filter orders by state and type.
     Shows complex filtering using multiple enums.
     """
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     cancel_event = asyncio.Event()
@@ -833,7 +833,7 @@ async def aggregate_and_sort_ticks():
     Aggregate ticks from multiple symbols and sort by spread.
     Shows advanced data processing with multiple symbols.
     """
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     cancel_event = asyncio.Event()
@@ -913,7 +913,7 @@ async def multiple_concurrent_streams():
     Run multiple streaming methods concurrently.
     Shows proper management of multiple streams.
     """
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     # ✅ Single cancellation event for ALL streams
@@ -1155,7 +1155,7 @@ async def check_task_leaks():
     print(f"Tasks before: {before}")
 
     # Your streaming code here...
-    account = MT4Account(user=12345, password="password", grpc_server="mt5.mrpc.pro:443")
+    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
     await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
 
     cancel_event = asyncio.Event()
