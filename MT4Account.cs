@@ -1,4 +1,4 @@
-﻿using Grpc.Core;
+using Grpc.Core;
 using Grpc.Net.Client;
 using mt4_term_api;
 using System;
@@ -357,9 +357,7 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         Password = Password,
         Host = host,
         Port = port,
-        BaseChartSymbol = baseChartSymbol,
-        WaitForTerminalIsAlive = waitForTerminalIsAlive,
-        TerminalReadinessWaitingTimeoutSeconds = timeoutSeconds
+        TimeoutSeconds = (uint)timeoutSeconds
     };
 
     Metadata? headers = Id != default ? new Metadata { { HeaderIdKey, Id.ToString() } } : null;
@@ -462,7 +460,7 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         Password = Password,
         MtClusterName = serverName,
         BaseChartSymbol = baseChartSymbol,
-        TerminalReadinessWaitingTimeoutSeconds = timeoutSeconds,
+        TimeoutSeconds = (uint)timeoutSeconds,
         // If supported by proto:
         // WaitForTerminalIsAlive = waitForTerminalIsAlive
     };
