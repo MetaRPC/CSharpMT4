@@ -1,61 +1,99 @@
-site_name: MetaRPC MT4 C# Documentation
+site_name: CSharpMT4 SDK Documentation
+site_url: https://metarpc.github.io/CSharpMT4/
+site_description: Complete C# SDK for MetaTrader 4 trading automation via gRPC
 
-nav:
-  - Home: index.md
-  - API Reference: api/mt4_term_api/MT4Account.md
-
-  - Account:
-      - Show Account Summary: Account/ShowAccountSummary.md
-
-  - Market Info:
-      - Overview: Market Info/Market_Info_Overview.md
-      - Show Quote: Market Info/ShowQuote.md
-      - Show Quotes Many: Market Info/ShowQuotesMany.md
-      - Show Quote History: Market Info/ShowQuoteHistory.md
-      - Show Symbol Params: Market Info/ShowSymbolParams.md
-      - Show Symbol Info: Market Info/ShowSymbolInfo.md
-      - Show All Symbols: Market Info/ShowAllSymbols.md
-      - Show Tick Values: Market Info/ShowTickValues.md
-
-  - Order Operations:
-      - Overview: Orders/Orders_Overview.md
-      - Show Opened Orders: Orders/ShowOpenedOrders.md
-      - Show Opened Order Tickets: Orders/ShowOpenedOrderTickets.md
-      - Show Orders History: Orders/ShowOrdersHistory.md
-      - Close Order: Orders/CloseOrderExample.md
-      - Close By Order: Orders/CloseByOrderExample.md
-      - Order Send: Orders/ShowOrderSendExample.md
-
-  - Streaming:
-      - Overview: Streaming/Streaming_Overview.md
-      - Show Real-Time Quotes: Streaming/ShowRealTimeQuotes.md
-      - Stream Opened Order Profits: Streaming/StreamOpenedOrderProfits.md
-      - Stream Opened Order Tickets: Streaming/StreamOpenedOrderTickets.md
-      - Stream Trade Updates: Streaming/StreamTradeUpdates.md
-
-  - Guides:
-      - CLI Using: CLI_Using.md
-      - Beginner Run Guide: Beginner_Run_Guide.md
-      - Your Easy Start: Your_Easy_Start.md
+repo_name: MetaRPC/CSharpMT4
+repo_url: https://github.com/MetaRPC/CSharpMT4
+edit_uri: edit/main/docs/
 
 theme:
   name: material
+  language: en
+  font:
+    text: Inter
+    code: JetBrains Mono
+  icon:
+    logo: material/language-csharp
+    repo: fontawesome/brands/github
   palette:
-    - scheme: default
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
       primary: indigo
+      accent: indigo
       toggle:
-        icon: material/weather-night
+        icon: material/brightness-7
         name: Switch to dark mode
-    - scheme: slate
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
       primary: indigo
+      accent: indigo
       toggle:
-        icon: material/weather-sunny
+        icon: material/brightness-4
         name: Switch to light mode
   features:
-    - palette.toggle
-    - palette.auto
+    - navigation.tracking
+    - navigation.expand
+    - navigation.top
+    - navigation.footer
+    - content.code.copy
+    - toc.follow
+  custom_dir: docs/includes
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/MetaRPC/CSharpMT4
+      name: CSharpMT4 on GitHub
+
+extra_css:
+  - styles/custom.css
+
+extra_javascript:
+  - javascripts/ux.js
 
 markdown_extensions:
-  - pymdownx.tabbed:
-      alternate_style: true
+  - admonition
+  - md_in_html
+  - tables
+  - attr_list
+  - pymdownx.details
   - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - toc:
+      permalink: "¶"
+      toc_depth: 3
+
+plugins:
+  - search
+
+copyright: >
+  Copyright © 2024–2025 MetaRPC. MT4 is a trademark of MetaQuotes Software Corp.
+  This documentation is community-maintained and not affiliated with MetaQuotes.
+
+nav:
+  - Home: index.md
+
+  - Guides:
+    - Getting Started: All_Guides/GETTING_STARTED.md
+    - Your First Project: All_Guides/Your_First_Project.md
+    - Project Map: All_Guides/PROJECT_MAP.md
+    - Glossary: All_Guides/GLOSSARY.md
+    - MT4 for Beginners: All_Guides/MT4_For_Beginners.md
+    - gRPC Streaming: All_Guides/GRPC_STREAM_MANAGEMENT.md
+    - Return Codes: All_Guides/RETURN_CODES_REFERENCE.md
+    - ENUMs Reference: All_Guides/ENUMS_USAGE_REFERENCE.md
+    - Protobuf Inspector: All_Guides/PROTOBUF_INSPECTOR_GUIDE.md
+    - UserCode Sandbox: All_Guides/USERCODE_SANDBOX_GUIDE.md
+    - Sync vs Async: All_Guides/SYNC_VS_ASYNC.md
+
+  - API Reference:
+    - MT4Account API: API_Reference/MT4Account.md
+    - MT4Service API: API_Reference/MT4Service.md
+    - MT4Sugar API: API_Reference/MT4Sugar.md
+
+  - Strategies:
+    - Master Overview: Strategies/Strategies.Master.Overview.md
+    - Presets: Strategies/Presets/AdaptiveMarketModePreset.md
