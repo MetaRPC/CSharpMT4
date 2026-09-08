@@ -22,4 +22,23 @@ public class MT4ServiceTests
         Assert.Null(account.Host);
         Assert.Null(account.ServerName);
     }
+
+    [Fact]
+    public void TestGetIdRequest_ProtoSerialization()
+    {
+        var req = new mt4_term_api.GetIdRequest
+        {
+            User = "12345678",
+            Password = "demo_password"
+        };
+        Assert.Equal("12345678", req.User);
+        Assert.Equal("demo_password", req.Password);
+
+        var reply = new mt4_term_api.GetIdReply
+        {
+            Data = new mt4_term_api.GetIdData { Id = "68c935ee-a2b1-4f3e-bb36-3982845cfa85" }
+        };
+        Assert.NotNull(reply.Data);
+        Assert.Equal("68c935ee-a2b1-4f3e-bb36-3982845cfa85", reply.Data.Id);
+    }
 }

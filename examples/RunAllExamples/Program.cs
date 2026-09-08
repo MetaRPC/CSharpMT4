@@ -39,8 +39,8 @@ class Program
         // Required:
         var user       = EnvUtil.EnvUlong(("MT4_USER", 0UL), ("MT4_LOGIN", 0UL));
         var password   = EnvUtil.Env("MT4_PASSWORD");
-        var grpcServer = EnvUtil.Env("GRPC_SERVER");            // e.g. http://localhost:5000 or https://host:443
-        var serverName = EnvUtil.Env("MT4_SERVER_NAME", EnvUtil.Env("MT4_SERVER"));
+        var grpcServer = EnvUtil.Env("GRPC_SERVER", "https://mt4.mrpc.pro:443");
+        var serverName = EnvUtil.Env("MT4_SERVER_NAME", EnvUtil.Env("MT4_SERVER", "MetaQuotes-Demo"));
 
         // Optional:
         var baseSymbolRaw = EnvUtil.Env("BASE_CHART_SYMBOL", "EURUSD");
