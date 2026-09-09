@@ -281,7 +281,7 @@ public MT4Account(ulong user, string password, string? grpcServer = null, string
     TradeClient        = new TradingHelper.TradingHelperClient(GrpcChannel);
     MarketInfoClient   = new MarketInfo.MarketInfoClient(GrpcChannel);
 
-    Id = (id != default) ? id : ComputeDeterministicTerminalId(user, password);
+    Id = (id != default) ? id : GetId();
     _logger = logger ?? NullLogger<MT4Account>.Instance;
 }
 
@@ -302,21 +302,57 @@ public async Task<Guid> GetIdAsync(CancellationToken cancellationToken = default
         User = User.ToString(),
         Password = Password
     };
-    var reply = await ConnectionClient.GetIdAsync(request, GetHeaders(), null, cancellationToken);
-    if (reply.Error != null)
+    try
     {
-        throw new ApiExceptionMT4(reply.Error);
+        var reply = await ConnectionClient.GetIdAsync(request, GetHeaders(), null, cancellationToken);
+        if (reply.Error != null)
+        {
+            throw new ApiExceptionMT4(reply.Error);
+        }
+        if (reply.Data?.Id != null && Guid.TryParse(reply.Data.Id, out var parsed))
+        {
+            Id = parsed;
+        }
     }
-    if (reply.Data?.Id != null && Guid.TryParse(reply.Data.Id, out var parsed))
+    catch (RpcException)
     {
-        Id = parsed;
+        Id = ComputeDeterministicTerminalId(User, Password);
+    }
+    catch (Exception)
+    {
+        Id = ComputeDeterministicTerminalId(User, Password);
     }
     return Id;
 }
 
 public Guid GetId()
 {
-    return GetIdAsync().GetAwaiter().GetResult();
+    var request = new GetIdRequest
+    {
+        User = User.ToString(),
+        Password = Password
+    };
+    try
+    {
+        var reply = ConnectionClient.GetId(request, GetHeaders());
+        if (reply.Error != null)
+        {
+            throw new ApiExceptionMT4(reply.Error);
+        }
+        if (reply.Data?.Id != null && Guid.TryParse(reply.Data.Id, out var parsed))
+        {
+            Id = parsed;
+        }
+    }
+    catch (RpcException)
+    {
+        Id = ComputeDeterministicTerminalId(User, Password);
+    }
+    catch (Exception)
+    {
+        Id = ComputeDeterministicTerminalId(User, Password);
+    }
+    return Id;
 }
         
 

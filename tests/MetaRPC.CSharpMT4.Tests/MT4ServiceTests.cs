@@ -24,6 +24,14 @@ public class MT4ServiceTests
     }
 
     [Fact]
+    public void TestMT4Account_AutoGetId()
+    {
+        var account = new MT4Account(12345678, "demo_password", "https://mt4.mrpc.pro:443", "test_api_key");
+        Assert.NotEqual(Guid.Empty, account.Id);
+        Assert.Equal("test_api_key", account.ApiKey);
+    }
+
+    [Fact]
     public void TestGetIdRequest_ProtoSerialization()
     {
         var req = new mt4_term_api.GetIdRequest
