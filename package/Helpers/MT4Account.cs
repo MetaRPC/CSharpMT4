@@ -1,4 +1,4 @@
-﻿using Grpc.Core;
+using Grpc.Core;
 using Grpc.Net.Client;
 using System;
 using System.Collections.Generic;
@@ -81,6 +81,24 @@ namespace mt4_term_api
         /// </summary>
         public Guid Id { get; private set; } = default;
 
+        /// <summary>
+        /// Gets or sets the MetaRPC API key for authentication.
+        /// </summary>
+        public string? ApiKey { get; set; }
+
+        /// <summary>
+        /// Computes a stable deterministic GUID based on account credentials (user + password).
+        /// Matches the server's GetId algorithm.
+        /// </summary>
+        public static Guid ComputeDeterministicTerminalId(ulong user, string password)
+        {
+            using var sha256 = System.Security.Cryptography.SHA256.Create();
+            var hash = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes($"{user}:{password}"));
+            var guidBytes = new byte[16];
+            Array.Copy(hash, guidBytes, 16);
+            return new Guid(guidBytes);
+        }
+
         private bool Connected => !(Host is null) || !(ServerName is null);
 
         /// <summary>
@@ -88,13 +106,15 @@ namespace mt4_term_api
         /// </summary>
         /// <param name="user">The MT4 user account number.</param>
         /// <param name="password">The password for the user account.</param>
-        /// <param name="grpcServer">The address of the gRPC server (optional).</param>
-        /// <param name="id">An optional unique identifier for the account instance.</param>
-        public MT4Account(ulong user, string password, string? grpcServer = null, Guid id = default)
+        /// <param name="grpcServer">The address of the gRPC server (optional, default https://mt4.mrpc.pro:443).</param>
+        /// <param name="apiKey">The MetaRPC API key (optional, falls back to MRPC_API_KEY environment variable).</param>
+        /// <param name="id">An optional unique identifier for the account instance (auto-generated if default).</param>
+        public MT4Account(ulong user, string password, string? grpcServer = null, string? apiKey = null, Guid id = default)
         {
             User = user;
             Password = password;
             GrpcServer = grpcServer ?? "https://mt4.mrpc.pro:443";
+            ApiKey = apiKey ?? Environment.GetEnvironmentVariable("MRPC_API_KEY");
             GrpcChannel = GrpcChannel.ForAddress(GrpcServer);
 
             ConnectionClient = new Connection.ConnectionClient(GrpcChannel);
@@ -103,7 +123,54 @@ namespace mt4_term_api
             TradeClient = new TradingHelper.TradingHelperClient(GrpcChannel);
             MarketInfoClient = new MarketInfo.MarketInfoClient(GrpcChannel);
 
-            Id = id;
+            Id = (id != default) ? id : ComputeDeterministicTerminalId(user, password);
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MT4Account"/> class with user, password and API key.
+        /// </summary>
+        public MT4Account(ulong user, string password, string? apiKey)
+            : this(user, password, null, apiKey, default)
+        {
+        }
+
+        /// <summary>
+        /// Backward-compatible constructor for existing code passing (user, password, grpcServer, id).
+        /// </summary>
+        public MT4Account(ulong user, string password, string? grpcServer, Guid id)
+            : this(user, password, grpcServer, null, id)
+        {
+        }
+
+        /// <summary>
+        /// Retrieves the deterministic account ID via the server's GetId endpoint.
+        /// Note: The constructor automatically computes this ID deterministically on initialization.
+        /// </summary>
+        public async Task<Guid> GetIdAsync(CancellationToken cancellationToken = default)
+        {
+            var request = new GetIdRequest
+            {
+                User = User.ToString(),
+                Password = Password
+            };
+            var reply = await ConnectionClient.GetIdAsync(request, GetHeaders(), null, cancellationToken);
+            if (reply.Error != null)
+            {
+                throw new ApiExceptionMT4(reply.Error);
+            }
+            if (reply.Data?.Id != null && Guid.TryParse(reply.Data.Id, out var parsed))
+            {
+                Id = parsed;
+            }
+            return Id;
+        }
+
+        /// <summary>
+        /// Synchronously calls GetIdAsync.
+        /// </summary>
+        public Guid GetId()
+        {
+            return GetIdAsync().GetAwaiter().GetResult();
         }
 
         async Task Reconnect(DateTime? deadline, CancellationToken cancellationToken)
@@ -149,12 +216,7 @@ namespace mt4_term_api
                 TimeoutSeconds = (uint)timeoutSeconds
             };
 
-            Metadata? headers = null;
-            if (Id != default)
-            {
-                headers = new Metadata { { "id", Id.ToString() } };
-            }
-
+            var headers = GetHeaders();
             var res = await ConnectionClient.ConnectAsync(connectRequest, headers, deadline, cancellationToken);
             if (res.Error != null)
                 throw new ApiExceptionMT4(res.Error);
@@ -162,7 +224,10 @@ namespace mt4_term_api
             Port = port;
             BaseChartSymbol = baseChartSymbol;
             ConnectTimeoutSeconds = timeoutSeconds;
-            Id = Guid.Parse(res.Data.TerminalInstanceGuid);
+            if (res.Data?.TerminalInstanceGuid != null && Guid.TryParse(res.Data.TerminalInstanceGuid, out var parsedHostGuid))
+            {
+                Id = parsedHostGuid;
+            }
         }
 
         /// <summary>
@@ -190,6 +255,8 @@ namespace mt4_term_api
         /// <param name="baseChartSymbol">The base chart symbol to use (e.g., "EURUSD").</param>
         /// <param name="waitForTerminalIsAlive">Whether to wait for terminal readiness before returning.</param>
         /// <param name="timeoutSeconds">How long to wait for terminal readiness before timing out.</param>
+        /// <param name="deadline">Optional gRPC deadline for the operation.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
         /// <returns>A task representing the asynchronous connection operation.</returns>
         /// <exception cref="ApiExceptionMT4">Thrown if the server returns an error response.</exception>
         /// <exception cref="Grpc.Core.RpcException">Thrown if the gRPC connection fails.</exception>
@@ -212,12 +279,7 @@ namespace mt4_term_api
                 TimeoutSeconds = (uint)timeoutSeconds
             };
 
-            Metadata? headers = null;
-            if (Id != default)
-            {
-                headers = new Metadata { { "id", Id.ToString() } };
-            }
-
+            var headers = GetHeaders();
             var res = await ConnectionClient.ConnectExAsync(connectRequest, headers, deadline, cancellationToken);
 
             if (res.Error != null)
@@ -225,7 +287,10 @@ namespace mt4_term_api
             ServerName = serverName;
             BaseChartSymbol = baseChartSymbol;
             ConnectTimeoutSeconds = timeoutSeconds;
-            Id = Guid.Parse(res.Data.TerminalInstanceGuid);
+            if (res.Data?.TerminalInstanceGuid != null && Guid.TryParse(res.Data.TerminalInstanceGuid, out var parsedExGuid))
+            {
+                Id = parsedExGuid;
+            }
         }
 
         /// <summary>
@@ -248,9 +313,18 @@ namespace mt4_term_api
         // Account helper methods --------------------------------------------------------------------------------------------------------
         //
 
-        private Metadata GetHeaders()
+        public Metadata GetHeaders()
         {
-            return new Metadata { { "id", Id.ToString() } };
+            var headers = new Metadata();
+            if (Id != default)
+            {
+                headers.Add("id", Id.ToString());
+            }
+            if (!string.IsNullOrEmpty(ApiKey))
+            {
+                headers.Add("apikey", ApiKey);
+            }
+            return headers;
         }
 
         private async Task<T> ExecuteWithReconnect<T>(

@@ -88,6 +88,24 @@ namespace MetaRPC.CSharpMT4
         /// Gets the unique identifier for the account instance.
         /// </summary>
         public Guid Id { get; private set; } = default;
+
+        /// <summary>
+        /// Gets or sets the MetaRPC API key for authentication.
+        /// </summary>
+        public string? ApiKey { get; set; }
+
+        /// <summary>
+        /// Computes a stable deterministic GUID based on account credentials (user + password).
+        /// Matches the server's GetId algorithm.
+        /// </summary>
+        public static Guid ComputeDeterministicTerminalId(ulong user, string password)
+        {
+            using var sha256 = System.Security.Cryptography.SHA256.Create();
+            var hash = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes($"{user}:{password}"));
+            var guidBytes = new byte[16];
+            Array.Copy(hash, guidBytes, 16);
+            return new Guid(guidBytes);
+        }
         
         // How we were connected last time
         private enum ConnectionMode { None, HostPort, ServerName }
@@ -99,7 +117,7 @@ namespace MetaRPC.CSharpMT4
         // put this near other fields in MT4Account
         private const string HeaderIdKey = "id";
 
-        public bool IsConnected => !_disposed && Id != default;
+        public bool IsConnected => !_disposed && (Host != null || ServerName != null);
 
         
         // Max restarts for streaming calls before we give up
@@ -149,18 +167,23 @@ namespace MetaRPC.CSharpMT4
 
 
 private void EnsureConnected()
-        {
-            // Guard: do not perform RPC calls without a valid terminal instance Id
-            if (!IsConnected)
-                throw new ConnectExceptionMT4("Not connected: missing terminal instance Id. Call Connect* first.");
-        }
-
-// Replace old GetHeaders() with this version:
-private Metadata GetHeaders()
 {
-    // Ensure we never send an empty Id header
-    EnsureConnected();
-    return new Metadata { { HeaderIdKey, Id.ToString() } };
+    if (!IsConnected)
+        throw new ConnectExceptionMT4("Not connected: Call Connect* first.");
+}
+
+public Metadata GetHeaders()
+{
+    var headers = new Metadata();
+    if (Id != default)
+    {
+        headers.Add(HeaderIdKey, Id.ToString());
+    }
+    if (!string.IsNullOrEmpty(ApiKey))
+    {
+        headers.Add("apikey", ApiKey);
+    }
+    return headers;
 }
 
 // Retry/backoff settings for unary RPC calls
@@ -205,23 +228,12 @@ public void Dispose()
 
     try
     {
-        // If you have a server-side Disconnect RPC, you can call it here
-        // wrapped in try/catch and without throwing on failure.
-        // Example (pseudo):
-        // var headers = Id != default ? new Metadata { { HeaderIdKey, Id.ToString() } } : null;
-        // try { ConnectionClient.Disconnect(new DisconnectRequest(), headers); } catch {}
-
         // Dispose the channel to release HTTP/2 connections and sockets
         GrpcChannel?.Dispose();
     }
     catch
     {
         // swallow dispose-time exceptions; nothing we can reasonably do here in console apps
-    }
-    finally
-    {
-        // Make future calls fail fast with a clear message
-        ResetState();
     }
 }
 public ValueTask DisposeAsync()
@@ -241,24 +253,20 @@ public ValueTask DisposeAsync()
         
        private readonly Microsoft.Extensions.Logging.ILogger<MT4Account>? _logger;
 
-
-public MT4Account(ulong user, string password, string? grpcServer = null, Guid id = default,
+public MT4Account(ulong user, string password, string? grpcServer = null, string? apiKey = null, Guid id = default,
                   ILogger<MT4Account>? logger = null)
 {
     User = user;
     Password = password;
     GrpcServer = grpcServer ?? "https://mt4.mrpc.pro:443";
+    ApiKey = apiKey ?? Environment.GetEnvironmentVariable("MRPC_API_KEY");
 
     // HTTP/2 keepalive to keep long streams healthy behind NAT/firewalls
     var handler = new SocketsHttpHandler
     {
-        // Frequency of keepalive pings when the connection is inactive
         KeepAlivePingDelay = TimeSpan.FromSeconds(30),
-        // How long have we been waiting for a ping response?
         KeepAlivePingTimeout = TimeSpan.FromSeconds(10),
-        // Allow multiple HTTP/2 connections per host (useful for parallel streams)
         EnableMultipleHttp2Connections = true,
-        // Slightly reduce the idle timeout so that the runtime does not keep "dead" sockets for too long.
         PooledConnectionIdleTimeout = TimeSpan.FromMinutes(2),
     };
 
@@ -273,8 +281,42 @@ public MT4Account(ulong user, string password, string? grpcServer = null, Guid i
     TradeClient        = new TradingHelper.TradingHelperClient(GrpcChannel);
     MarketInfoClient   = new MarketInfo.MarketInfoClient(GrpcChannel);
 
-    Id = id;
+    Id = (id != default) ? id : ComputeDeterministicTerminalId(user, password);
     _logger = logger ?? NullLogger<MT4Account>.Instance;
+}
+
+public MT4Account(ulong user, string password, string? apiKey)
+    : this(user, password, null, apiKey, default, null)
+{
+}
+
+public MT4Account(ulong user, string password, string? grpcServer, Guid id, ILogger<MT4Account>? logger = null)
+    : this(user, password, grpcServer, null, id, logger)
+{
+}
+
+public async Task<Guid> GetIdAsync(CancellationToken cancellationToken = default)
+{
+    var request = new GetIdRequest
+    {
+        User = User.ToString(),
+        Password = Password
+    };
+    var reply = await ConnectionClient.GetIdAsync(request, GetHeaders(), null, cancellationToken);
+    if (reply.Error != null)
+    {
+        throw new ApiExceptionMT4(reply.Error);
+    }
+    if (reply.Data?.Id != null && Guid.TryParse(reply.Data.Id, out var parsed))
+    {
+        Id = parsed;
+    }
+    return Id;
+}
+
+public Guid GetId()
+{
+    return GetIdAsync().GetAwaiter().GetResult();
 }
         
 
@@ -360,7 +402,7 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         TimeoutSeconds = (uint)timeoutSeconds
     };
 
-    Metadata? headers = Id != default ? new Metadata { { HeaderIdKey, Id.ToString() } } : null;
+    Metadata headers = GetHeaders();
 
     RpcException? lastRpcEx = null;
 
@@ -465,7 +507,7 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         // WaitForTerminalIsAlive = waitForTerminalIsAlive
     };
 
-    Metadata? headers = Id != default ? new Metadata { { HeaderIdKey, Id.ToString() } } : null;
+    Metadata headers = GetHeaders();
 
     RpcException? lastRpcEx = null;
 
