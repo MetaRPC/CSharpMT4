@@ -1,0 +1,1629 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Complete C# SDK for MetaTrader 4 trading automation via gRPC">
+      
+      
+      
+        <link rel="canonical" href="https://metarpc.github.io/CSharpMT4/api/Mt4TermApi/MqlErrorCode/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>MqlErrorCode enumeration - CSharpMT4 SDK Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../styles/custom.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#mqlerrorcode-enumeration" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="CSharpMT4 SDK Documentation" class="md-header__button md-logo" aria-label="CSharpMT4 SDK Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m11.5 15.97.41 2.44c-.26.14-.68.27-1.24.39-.57.13-1.24.2-2.01.2-2.21-.04-3.87-.7-4.98-1.96Q2 15.135 2 12.21c.05-2.31.72-4.08 2-5.32C5.32 5.64 6.96 5 8.94 5c.75 0 1.4.07 1.94.19s.94.25 1.2.4l-.58 2.49-1.06-.34c-.4-.1-.86-.15-1.39-.15-1.16-.01-2.12.36-2.87 1.1-.76.73-1.15 1.85-1.18 3.34 0 1.36.37 2.42 1.08 3.2.71.77 1.71 1.17 2.99 1.18l1.33-.12c.43-.08.79-.19 1.1-.32M13.89 19l.61-4H13l.34-2h1.5l.32-2h-1.5L14 9h1.5l.61-4h2l-.61 4h1l.61-4h2l-.61 4H22l-.34 2h-1.5l-.32 2h1.5L21 15h-1.5l-.61 4h-2l.61-4h-1l-.61 4zm2.95-6h1l.32-2h-1z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CSharpMT4 SDK Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              MqlErrorCode enumeration
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/MetaRPC/CSharpMT4" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MetaRPC/CSharpMT4
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="CSharpMT4 SDK Documentation" class="md-nav__button md-logo" aria-label="CSharpMT4 SDK Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m11.5 15.97.41 2.44c-.26.14-.68.27-1.24.39-.57.13-1.24.2-2.01.2-2.21-.04-3.87-.7-4.98-1.96Q2 15.135 2 12.21c.05-2.31.72-4.08 2-5.32C5.32 5.64 6.96 5 8.94 5c.75 0 1.4.07 1.94.19s.94.25 1.2.4l-.58 2.49-1.06-.34c-.4-.1-.86-.15-1.39-.15-1.16-.01-2.12.36-2.87 1.1-.76.73-1.15 1.85-1.18 3.34 0 1.36.37 2.42 1.08 3.2.71.77 1.71 1.17 2.99 1.18l1.33-.12c.43-.08.79-.19 1.1-.32M13.89 19l.61-4H13l.34-2h1.5l.32-2h-1.5L14 9h1.5l.61-4h2l-.61 4h1l.61-4h2l-.61 4H22l-.34 2h-1.5l-.32 2h1.5L21 15h-1.5l-.61 4h-2l.61-4h-1l-.61 4zm2.95-6h1l.32-2h-1z"/></svg>
+
+    </a>
+    CSharpMT4 SDK Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/MetaRPC/CSharpMT4" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    MetaRPC/CSharpMT4
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../All_Guides/GETTING_STARTED/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../All_Guides/Your_First_Project/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Your First Project
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../All_Guides/PROJECT_MAP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Project Map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../All_Guides/GLOSSARY/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../All_Guides/MT4_For_Beginners/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MT4 for Beginners
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../All_Guides/GRPC_STREAM_MANAGEMENT/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    gRPC Streaming
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../All_Guides/RETURN_CODES_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Return Codes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../All_Guides/ENUMS_USAGE_REFERENCE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    ENUMs Reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../All_Guides/PROTOBUF_INSPECTOR_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Protobuf Inspector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../All_Guides/USERCODE_SANDBOX_GUIDE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    UserCode Sandbox
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../All_Guides/SYNC_VS_ASYNC/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Sync vs Async
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../API_Reference/MT4Account/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MT4Account API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../API_Reference/MT4Service/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MT4Service API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../API_Reference/MT4Sugar/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    MT4Sugar API
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Strategies
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Strategies
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Strategies/Strategies.Master.Overview/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Master Overview
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../Strategies/Presets/AdaptiveMarketModePreset/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Presets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Values
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="mqlerrorcode-enumeration">MqlErrorCode enumeration<a class="headerlink" href="#mqlerrorcode-enumeration" title="Permanent link">¶</a></h1>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">public</span><span class="w"> </span><span class="k">enum</span><span class="w"> </span><span class="n">MqlErrorCode</span>
+</code></pre></div>
+<h2 id="values">Values<a class="headerlink" href="#values" title="Permanent link">¶</a></h2>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>value</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ErrNoError</td>
+<td><code>0</code></td>
+<td>No error</td>
+</tr>
+<tr>
+<td>ErrNoResult</td>
+<td><code>1</code></td>
+<td>No result</td>
+</tr>
+<tr>
+<td>ErrCommonError</td>
+<td><code>2</code></td>
+<td>Common error</td>
+</tr>
+<tr>
+<td>ErrInvalidTradeParameters</td>
+<td><code>3</code></td>
+<td>Invalid trade parameters</td>
+</tr>
+<tr>
+<td>ErrServerBusy</td>
+<td><code>4</code></td>
+<td>Server busy</td>
+</tr>
+<tr>
+<td>ErrOldVersion</td>
+<td><code>5</code></td>
+<td>Old version</td>
+</tr>
+<tr>
+<td>ErrNoConnection</td>
+<td><code>6</code></td>
+<td>No connection</td>
+</tr>
+<tr>
+<td>ErrNotEnoughRights</td>
+<td><code>7</code></td>
+<td>Not enough rights</td>
+</tr>
+<tr>
+<td>ErrTooFrequentRequests</td>
+<td><code>8</code></td>
+<td>Too frequent requests</td>
+</tr>
+<tr>
+<td>ErrMalfunctionalTrade</td>
+<td><code>9</code></td>
+<td>Malfunctional trade</td>
+</tr>
+<tr>
+<td>ErrAccountDisabled</td>
+<td><code>64</code></td>
+<td>Account disabled</td>
+</tr>
+<tr>
+<td>ErrInvalidAccount</td>
+<td><code>65</code></td>
+<td>Invalid account</td>
+</tr>
+<tr>
+<td>ErrTradeTimeout</td>
+<td><code>128</code></td>
+<td>Trade timeout</td>
+</tr>
+<tr>
+<td>ErrInvalidPrice</td>
+<td><code>129</code></td>
+<td>Invalid price</td>
+</tr>
+<tr>
+<td>ErrInvalidStops</td>
+<td><code>130</code></td>
+<td>Invalid stops</td>
+</tr>
+<tr>
+<td>ErrInvalidTradeVolume</td>
+<td><code>131</code></td>
+<td>Invalid trade volume</td>
+</tr>
+<tr>
+<td>ErrMarketClosed</td>
+<td><code>132</code></td>
+<td>Market closed</td>
+</tr>
+<tr>
+<td>ErrTradeDisabled</td>
+<td><code>133</code></td>
+<td>Trade disabled</td>
+</tr>
+<tr>
+<td>ErrNotEnoughMoney</td>
+<td><code>134</code></td>
+<td>Not enough money</td>
+</tr>
+<tr>
+<td>ErrPriceChanged</td>
+<td><code>135</code></td>
+<td>Price changed</td>
+</tr>
+<tr>
+<td>ErrOffQuotes</td>
+<td><code>136</code></td>
+<td>Off quotes</td>
+</tr>
+<tr>
+<td>ErrBrokerBusy</td>
+<td><code>137</code></td>
+<td>Broker busy</td>
+</tr>
+<tr>
+<td>ErrRequote</td>
+<td><code>138</code></td>
+<td>Requote</td>
+</tr>
+<tr>
+<td>ErrOrderLocked</td>
+<td><code>139</code></td>
+<td>Order locked</td>
+</tr>
+<tr>
+<td>ErrLongPositionsOnlyAllowed</td>
+<td><code>140</code></td>
+<td>Long positions only allowed</td>
+</tr>
+<tr>
+<td>ErrTooManyRequests</td>
+<td><code>141</code></td>
+<td>Too many requests</td>
+</tr>
+<tr>
+<td>ErrTradeModifyDenied</td>
+<td><code>145</code></td>
+<td>Trade modify denied</td>
+</tr>
+<tr>
+<td>ErrTradeContextBusy</td>
+<td><code>146</code></td>
+<td>Trade context busy</td>
+</tr>
+<tr>
+<td>ErrTradeExpirationDenied</td>
+<td><code>147</code></td>
+<td>Trade expiration denied</td>
+</tr>
+<tr>
+<td>ErrTradeTooManyOrders</td>
+<td><code>148</code></td>
+<td>Too many trade orders</td>
+</tr>
+<tr>
+<td>ErrTradeHedgeProhibited</td>
+<td><code>149</code></td>
+<td>Trade hedge prohibited</td>
+</tr>
+<tr>
+<td>ErrTradeProhibitedByFifo</td>
+<td><code>150</code></td>
+<td>Trade prohibited by FIFO</td>
+</tr>
+<tr>
+<td>ErrNoMqlerror</td>
+<td><code>4000</code></td>
+<td>No MQL error</td>
+</tr>
+<tr>
+<td>ErrWrongFunctionPointer</td>
+<td><code>4001</code></td>
+<td>Wrong function pointer</td>
+</tr>
+<tr>
+<td>ErrArrayIndexOutOfRange</td>
+<td><code>4002</code></td>
+<td>Array index out of range</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForCallStack</td>
+<td><code>4003</code></td>
+<td>No memory for call stack</td>
+</tr>
+<tr>
+<td>ErrRecursiveStackOverflow</td>
+<td><code>4004</code></td>
+<td>Recursive stack overflow</td>
+</tr>
+<tr>
+<td>ErrNotEnoughStackForParam</td>
+<td><code>4005</code></td>
+<td>Not enough stack for parameter</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForParamString</td>
+<td><code>4006</code></td>
+<td>No memory for parameter string</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForTempString</td>
+<td><code>4007</code></td>
+<td>No memory for temp string</td>
+</tr>
+<tr>
+<td>ErrNotInitializedString</td>
+<td><code>4008</code></td>
+<td>Not initialized string</td>
+</tr>
+<tr>
+<td>ErrNotInitializedArraystring</td>
+<td><code>4009</code></td>
+<td>Not initialized array string</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForArraystring</td>
+<td><code>4010</code></td>
+<td>No memory for array string</td>
+</tr>
+<tr>
+<td>ErrTooLongString</td>
+<td><code>4011</code></td>
+<td>Too long string</td>
+</tr>
+<tr>
+<td>ErrRemainderFromZeroDivide</td>
+<td><code>4012</code></td>
+<td>Remainder from zero divide</td>
+</tr>
+<tr>
+<td>ErrZeroDivide</td>
+<td><code>4013</code></td>
+<td>Zero divide</td>
+</tr>
+<tr>
+<td>ErrUnknownCommand</td>
+<td><code>4014</code></td>
+<td>Unknown command</td>
+</tr>
+<tr>
+<td>ErrWrongJump</td>
+<td><code>4015</code></td>
+<td>Wrong jump</td>
+</tr>
+<tr>
+<td>ErrNotInitializedArray</td>
+<td><code>4016</code></td>
+<td>Not initialized array</td>
+</tr>
+<tr>
+<td>ErrDllCallsNotAllowed</td>
+<td><code>4017</code></td>
+<td>DLL calls not allowed</td>
+</tr>
+<tr>
+<td>ErrCannotLoadLibrary</td>
+<td><code>4018</code></td>
+<td>Cannot load library</td>
+</tr>
+<tr>
+<td>ErrCannotCallFunction</td>
+<td><code>4019</code></td>
+<td>Cannot call function</td>
+</tr>
+<tr>
+<td>ErrExternalCallsNotAllowed</td>
+<td><code>4020</code></td>
+<td>External calls not allowed</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForReturnedStr</td>
+<td><code>4021</code></td>
+<td>No memory for returned string</td>
+</tr>
+<tr>
+<td>ErrSystemBusy</td>
+<td><code>4022</code></td>
+<td>System busy</td>
+</tr>
+<tr>
+<td>ErrDllfuncCriticalerror</td>
+<td><code>4023</code></td>
+<td>DLL function critical error</td>
+</tr>
+<tr>
+<td>ErrInternalError</td>
+<td><code>4024</code></td>
+<td>Internal error</td>
+</tr>
+<tr>
+<td>ErrOutOfMemory</td>
+<td><code>4025</code></td>
+<td>Out of memory</td>
+</tr>
+<tr>
+<td>ErrInvalidPointer</td>
+<td><code>4026</code></td>
+<td>Invalid pointer</td>
+</tr>
+<tr>
+<td>ErrFormatTooManyFormatters</td>
+<td><code>4027</code></td>
+<td>Too many formatters</td>
+</tr>
+<tr>
+<td>ErrFormatTooManyParameters</td>
+<td><code>4028</code></td>
+<td>Too many parameters</td>
+</tr>
+<tr>
+<td>ErrArrayInvalid</td>
+<td><code>4029</code></td>
+<td>Invalid array</td>
+</tr>
+<tr>
+<td>ErrChartNoreply</td>
+<td><code>4030</code></td>
+<td>Chart no reply</td>
+</tr>
+<tr>
+<td>ErrInvalidFunctionParamscnt</td>
+<td><code>4050</code></td>
+<td>Invalid function parameters count</td>
+</tr>
+<tr>
+<td>ErrInvalidFunctionParamvalue</td>
+<td><code>4051</code></td>
+<td>Invalid function parameter value</td>
+</tr>
+<tr>
+<td>ErrStringFunctionInternal</td>
+<td><code>4052</code></td>
+<td>String function internal error</td>
+</tr>
+<tr>
+<td>ErrSomeArrayError</td>
+<td><code>4053</code></td>
+<td>Some array error</td>
+</tr>
+<tr>
+<td>ErrIncorrectSeriesarrayUsing</td>
+<td><code>4054</code></td>
+<td>Incorrect series array usage</td>
+</tr>
+<tr>
+<td>ErrCustomIndicatorError</td>
+<td><code>4055</code></td>
+<td>Custom indicator error</td>
+</tr>
+<tr>
+<td>ErrIncompatibleArrays</td>
+<td><code>4056</code></td>
+<td>Incompatible arrays</td>
+</tr>
+<tr>
+<td>ErrGlobalVariablesProcessing</td>
+<td><code>4057</code></td>
+<td>Global variables processing error</td>
+</tr>
+<tr>
+<td>ErrGlobalVariableNotFound</td>
+<td><code>4058</code></td>
+<td>Global variable not found</td>
+</tr>
+<tr>
+<td>ErrFuncNotAllowedInTesting</td>
+<td><code>4059</code></td>
+<td>Function not allowed in testing</td>
+</tr>
+<tr>
+<td>ErrFunctionNotConfirmed</td>
+<td><code>4060</code></td>
+<td>Function not confirmed</td>
+</tr>
+<tr>
+<td>ErrSendMailError</td>
+<td><code>4061</code></td>
+<td>Send mail error</td>
+</tr>
+<tr>
+<td>ErrStringParameterExpected</td>
+<td><code>4062</code></td>
+<td>String parameter expected</td>
+</tr>
+<tr>
+<td>ErrIntegerParameterExpected</td>
+<td><code>4063</code></td>
+<td>Integer parameter expected</td>
+</tr>
+<tr>
+<td>ErrDoubleParameterExpected</td>
+<td><code>4064</code></td>
+<td>Double parameter expected</td>
+</tr>
+<tr>
+<td>ErrArrayAsParameterExpected</td>
+<td><code>4065</code></td>
+<td>Array as parameter expected</td>
+</tr>
+<tr>
+<td>ErrHistoryWillUpdated</td>
+<td><code>4066</code></td>
+<td>History will be updated</td>
+</tr>
+<tr>
+<td>ErrTradeError</td>
+<td><code>4067</code></td>
+<td>Trade error</td>
+</tr>
+<tr>
+<td>ErrResourceNotFound</td>
+<td><code>4068</code></td>
+<td>Resource not found</td>
+</tr>
+<tr>
+<td>ErrResourceNotSupported</td>
+<td><code>4069</code></td>
+<td>Resource not supported</td>
+</tr>
+<tr>
+<td>ErrResourceDuplicated</td>
+<td><code>4070</code></td>
+<td>Resource duplicated</td>
+</tr>
+<tr>
+<td>ErrIndicatorCannotInit</td>
+<td><code>4071</code></td>
+<td>Indicator cannot initialize</td>
+</tr>
+<tr>
+<td>ErrIndicatorCannotLoad</td>
+<td><code>4072</code></td>
+<td>Indicator cannot load</td>
+</tr>
+<tr>
+<td>ErrNoHistoryData</td>
+<td><code>4073</code></td>
+<td>No history data</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForHistory</td>
+<td><code>4074</code></td>
+<td>No memory for history</td>
+</tr>
+<tr>
+<td>ErrNoMemoryForIndicator</td>
+<td><code>4075</code></td>
+<td>No memory for indicator</td>
+</tr>
+<tr>
+<td>ErrEndOfFile</td>
+<td><code>4099</code></td>
+<td>End of file</td>
+</tr>
+<tr>
+<td>ErrSomeFileError</td>
+<td><code>4100</code></td>
+<td>Some file error</td>
+</tr>
+<tr>
+<td>ErrWrongFileName</td>
+<td><code>4101</code></td>
+<td>Wrong file name</td>
+</tr>
+<tr>
+<td>ErrTooManyOpenedFiles</td>
+<td><code>4102</code></td>
+<td>Too many opened files</td>
+</tr>
+<tr>
+<td>ErrCannotOpenFile</td>
+<td><code>4103</code></td>
+<td>Cannot open file</td>
+</tr>
+<tr>
+<td>ErrIncompatibleFileaccess</td>
+<td><code>4104</code></td>
+<td>Incompatible file access</td>
+</tr>
+<tr>
+<td>ErrNoOrderSelected</td>
+<td><code>4105</code></td>
+<td>No order selected</td>
+</tr>
+<tr>
+<td>ErrUnknownSymbol</td>
+<td><code>4106</code></td>
+<td>Unknown symbol</td>
+</tr>
+<tr>
+<td>ErrInvalidPriceParam</td>
+<td><code>4107</code></td>
+<td>Invalid price parameter</td>
+</tr>
+<tr>
+<td>ErrInvalidTicket</td>
+<td><code>4108</code></td>
+<td>Invalid ticket</td>
+</tr>
+<tr>
+<td>ErrTradeNotAllowed</td>
+<td><code>4109</code></td>
+<td>Trade not allowed</td>
+</tr>
+<tr>
+<td>ErrLongsNotAllowed</td>
+<td><code>4110</code></td>
+<td>Longs not allowed</td>
+</tr>
+<tr>
+<td>ErrShortsNotAllowed</td>
+<td><code>4111</code></td>
+<td>Shorts not allowed</td>
+</tr>
+<tr>
+<td>ErrTradeExpertDisabledByServer</td>
+<td><code>4112</code></td>
+<td>Trade expert disabled by server</td>
+</tr>
+<tr>
+<td>ErrObjectAlreadyExists</td>
+<td><code>4200</code></td>
+<td>Object already exists</td>
+</tr>
+<tr>
+<td>ErrUnknownObjectProperty</td>
+<td><code>4201</code></td>
+<td>Unknown object property</td>
+</tr>
+<tr>
+<td>ErrObjectDoesNotExist</td>
+<td><code>4202</code></td>
+<td>Object does not exist</td>
+</tr>
+<tr>
+<td>ErrUnknownObjectType</td>
+<td><code>4203</code></td>
+<td>Unknown object type</td>
+</tr>
+<tr>
+<td>ErrNoObjectName</td>
+<td><code>4204</code></td>
+<td>No object name</td>
+</tr>
+<tr>
+<td>ErrObjectCoordinatesError</td>
+<td><code>4205</code></td>
+<td>Object coordinates error</td>
+</tr>
+<tr>
+<td>ErrNoSpecifiedSubwindow</td>
+<td><code>4206</code></td>
+<td>No specified subwindow</td>
+</tr>
+<tr>
+<td>ErrSomeObjectError</td>
+<td><code>4207</code></td>
+<td>Some object error</td>
+</tr>
+<tr>
+<td>ErrFileCannotOpen</td>
+<td><code>5004</code></td>
+<td>Cannot open file</td>
+</tr>
+</tbody>
+</table>
+<h2 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">¶</a></h2>
+<ul>
+<li>namespace <a href="../../MetaRPC.MT4/">Mt4TermApi</a></li>
+</ul>
+<!-- DO NOT EDIT: generated by xmldocmd for MetaRPC.MT4.dll -->
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright © 2024–2025 MetaRPC. MT4 is a trademark of MetaQuotes Software Corp. This documentation is community-maintained and not affiliated with MetaQuotes.
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        
+<div class="md-social">
+  
+    
+    
+    
+    
+    <a href="https://github.com/MetaRPC/CSharpMT4" target="_blank" rel="noopener" title="CSharpMT4 on GitHub" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["navigation.tracking", "navigation.expand", "navigation.top", "navigation.footer", "content.code.copy", "toc.follow"], "search": "../../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../../javascripts/ux.js"></script>
+      
+    
+  </body>
+</html>
