@@ -1,4 +1,4 @@
-﻿using Grpc.Core;
+using Grpc.Core;
 using Grpc.Net.Client;
 using System;
 using System.Collections.Generic;
@@ -208,7 +208,6 @@ namespace mt4_term_api
                 User = User,
                 Password = Password,
                 MtClusterName = serverName,
-                BaseChartSymbol = baseChartSymbol,
                 TimeoutSeconds = (uint)timeoutSeconds
             };
 

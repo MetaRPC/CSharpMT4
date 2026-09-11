@@ -53,6 +53,22 @@ namespace mt4_term_api {
     static readonly grpc::Marshaller<global::mt4_term_api.OpenTerminalChartWithEaRequest> __Marshaller_mt4_term_api_OpenTerminalChartWithEaRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.OpenTerminalChartWithEaRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::mt4_term_api.OpenTerminalChartWithEaReply> __Marshaller_mt4_term_api_OpenTerminalChartWithEaReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.OpenTerminalChartWithEaReply.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::mt4_term_api.AttachEaRequest> __Marshaller_mt4_term_api_AttachEaRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.AttachEaRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::mt4_term_api.AttachEaReply> __Marshaller_mt4_term_api_AttachEaReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.AttachEaReply.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::mt4_term_api.GetRunningEasRequest> __Marshaller_mt4_term_api_GetRunningEasRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GetRunningEasRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::mt4_term_api.GetRunningEasReply> __Marshaller_mt4_term_api_GetRunningEasReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GetRunningEasReply.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::mt4_term_api.GetEaLogsRequest> __Marshaller_mt4_term_api_GetEaLogsRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GetEaLogsRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::mt4_term_api.GetEaLogsReply> __Marshaller_mt4_term_api_GetEaLogsReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GetEaLogsReply.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::mt4_term_api.StopEaRequest> __Marshaller_mt4_term_api_StopEaRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.StopEaRequest.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::mt4_term_api.StopEaReply> __Marshaller_mt4_term_api_StopEaReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.StopEaReply.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::mt4_term_api.GetEaParamsRequest, global::mt4_term_api.GetEaParamsReply> __Method_GetEaParams = new grpc::Method<global::mt4_term_api.GetEaParamsRequest, global::mt4_term_api.GetEaParamsReply>(
@@ -69,6 +85,38 @@ namespace mt4_term_api {
         "OpenTerminalChartWithEa",
         __Marshaller_mt4_term_api_OpenTerminalChartWithEaRequest,
         __Marshaller_mt4_term_api_OpenTerminalChartWithEaReply);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::mt4_term_api.AttachEaRequest, global::mt4_term_api.AttachEaReply> __Method_AttachEa = new grpc::Method<global::mt4_term_api.AttachEaRequest, global::mt4_term_api.AttachEaReply>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "AttachEa",
+        __Marshaller_mt4_term_api_AttachEaRequest,
+        __Marshaller_mt4_term_api_AttachEaReply);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::mt4_term_api.GetRunningEasRequest, global::mt4_term_api.GetRunningEasReply> __Method_GetRunningEas = new grpc::Method<global::mt4_term_api.GetRunningEasRequest, global::mt4_term_api.GetRunningEasReply>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetRunningEas",
+        __Marshaller_mt4_term_api_GetRunningEasRequest,
+        __Marshaller_mt4_term_api_GetRunningEasReply);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::mt4_term_api.GetEaLogsRequest, global::mt4_term_api.GetEaLogsReply> __Method_GetEaLogs = new grpc::Method<global::mt4_term_api.GetEaLogsRequest, global::mt4_term_api.GetEaLogsReply>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "GetEaLogs",
+        __Marshaller_mt4_term_api_GetEaLogsRequest,
+        __Marshaller_mt4_term_api_GetEaLogsReply);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::mt4_term_api.StopEaRequest, global::mt4_term_api.StopEaReply> __Method_StopEa = new grpc::Method<global::mt4_term_api.StopEaRequest, global::mt4_term_api.StopEaReply>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "StopEa",
+        __Marshaller_mt4_term_api_StopEaRequest,
+        __Marshaller_mt4_term_api_StopEaReply);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -88,6 +136,30 @@ namespace mt4_term_api {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::mt4_term_api.OpenTerminalChartWithEaReply> OpenTerminalChartWithEa(global::mt4_term_api.OpenTerminalChartWithEaRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::mt4_term_api.AttachEaReply> AttachEa(global::mt4_term_api.AttachEaRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::mt4_term_api.GetRunningEasReply> GetRunningEas(global::mt4_term_api.GetRunningEasRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::mt4_term_api.GetEaLogsReply> GetEaLogs(global::mt4_term_api.GetEaLogsRequest request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::mt4_term_api.StopEaReply> StopEa(global::mt4_term_api.StopEaRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -161,6 +233,86 @@ namespace mt4_term_api {
       {
         return CallInvoker.AsyncUnaryCall(__Method_OpenTerminalChartWithEa, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::mt4_term_api.AttachEaReply AttachEa(global::mt4_term_api.AttachEaRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return AttachEa(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::mt4_term_api.AttachEaReply AttachEa(global::mt4_term_api.AttachEaRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_AttachEa, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.AttachEaReply> AttachEaAsync(global::mt4_term_api.AttachEaRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return AttachEaAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.AttachEaReply> AttachEaAsync(global::mt4_term_api.AttachEaRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_AttachEa, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::mt4_term_api.GetRunningEasReply GetRunningEas(global::mt4_term_api.GetRunningEasRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetRunningEas(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::mt4_term_api.GetRunningEasReply GetRunningEas(global::mt4_term_api.GetRunningEasRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetRunningEas, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.GetRunningEasReply> GetRunningEasAsync(global::mt4_term_api.GetRunningEasRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetRunningEasAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.GetRunningEasReply> GetRunningEasAsync(global::mt4_term_api.GetRunningEasRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetRunningEas, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::mt4_term_api.GetEaLogsReply GetEaLogs(global::mt4_term_api.GetEaLogsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetEaLogs(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::mt4_term_api.GetEaLogsReply GetEaLogs(global::mt4_term_api.GetEaLogsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_GetEaLogs, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.GetEaLogsReply> GetEaLogsAsync(global::mt4_term_api.GetEaLogsRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetEaLogsAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.GetEaLogsReply> GetEaLogsAsync(global::mt4_term_api.GetEaLogsRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_GetEaLogs, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::mt4_term_api.StopEaReply StopEa(global::mt4_term_api.StopEaRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return StopEa(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::mt4_term_api.StopEaReply StopEa(global::mt4_term_api.StopEaRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_StopEa, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.StopEaReply> StopEaAsync(global::mt4_term_api.StopEaRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return StopEaAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.StopEaReply> StopEaAsync(global::mt4_term_api.StopEaRequest request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_StopEa, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override ChartsClient NewInstance(ClientBaseConfiguration configuration)
@@ -176,7 +328,11 @@ namespace mt4_term_api {
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_GetEaParams, serviceImpl.GetEaParams)
-          .AddMethod(__Method_OpenTerminalChartWithEa, serviceImpl.OpenTerminalChartWithEa).Build();
+          .AddMethod(__Method_OpenTerminalChartWithEa, serviceImpl.OpenTerminalChartWithEa)
+          .AddMethod(__Method_AttachEa, serviceImpl.AttachEa)
+          .AddMethod(__Method_GetRunningEas, serviceImpl.GetRunningEas)
+          .AddMethod(__Method_GetEaLogs, serviceImpl.GetEaLogs)
+          .AddMethod(__Method_StopEa, serviceImpl.StopEa).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -188,6 +344,10 @@ namespace mt4_term_api {
     {
       serviceBinder.AddMethod(__Method_GetEaParams, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.GetEaParamsRequest, global::mt4_term_api.GetEaParamsReply>(serviceImpl.GetEaParams));
       serviceBinder.AddMethod(__Method_OpenTerminalChartWithEa, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.OpenTerminalChartWithEaRequest, global::mt4_term_api.OpenTerminalChartWithEaReply>(serviceImpl.OpenTerminalChartWithEa));
+      serviceBinder.AddMethod(__Method_AttachEa, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.AttachEaRequest, global::mt4_term_api.AttachEaReply>(serviceImpl.AttachEa));
+      serviceBinder.AddMethod(__Method_GetRunningEas, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.GetRunningEasRequest, global::mt4_term_api.GetRunningEasReply>(serviceImpl.GetRunningEas));
+      serviceBinder.AddMethod(__Method_GetEaLogs, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.GetEaLogsRequest, global::mt4_term_api.GetEaLogsReply>(serviceImpl.GetEaLogs));
+      serviceBinder.AddMethod(__Method_StopEa, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.StopEaRequest, global::mt4_term_api.StopEaReply>(serviceImpl.StopEa));
     }
 
   }
