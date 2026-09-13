@@ -4731,7 +4731,7 @@
         </member>
         <member name="P:mt4_term_api.ConnectStateData.State">
             <summary>
-            "Queued", "Starting", "Authorizing", "Syncing", "Connected", "WrongPassword", "CannotConnect", "Stopped", "Expired"
+            "Queued", "Starting", "Authorizing", "Syncing", "Connected", "WrongPassword", "Unreachable", "Stopped", "Expired"
             </summary>
         </member>
         <member name="F:mt4_term_api.ConnectStateData.IsConnectedFieldNumber">
