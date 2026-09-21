@@ -38,7 +38,7 @@ Create your main application file and paste the following snippet:
 using mt4_term_api;
 using MetaRPC.MT4;
 
-// Account ID generation (GetId) and authentication are handled automatically
+// Session ID generation on Connect and authentication are handled automatically
 var account = new MT4Account(user, password, grpcServer, apiKey);
 await account.ConnectByServerNameAsync(serverName, "EURUSD", 30);
 var summary = await account.AccountSummaryAsync();

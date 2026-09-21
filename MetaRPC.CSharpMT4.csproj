@@ -9,6 +9,7 @@
 
   <!-- Do not compile files from the examples or tests folder in the main project -->
   <ItemGroup>
+    <Compile Remove="package\**\*.cs" />
     <Compile Remove="examples\**\*.cs" />
     <Compile Remove="tests\**\*.cs" />
     <None Remove="examples\**\*" />
@@ -36,6 +37,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="9.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="MetaRPC.MT4" Version="1.0.709" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="package\MetaRPC.MT4.csproj" />
   </ItemGroup>
 </Project>

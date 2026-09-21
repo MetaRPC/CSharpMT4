@@ -90,9 +90,9 @@ namespace MetaRPC.CSharpMT4
         public Guid Id { get; private set; } = default;
 
         /// <summary>
-        /// Gets or sets the MetaRPC API key for authentication.
+        /// Gets or sets the MetaRPC API key for authentication. Defaults to "TRIAL".
         /// </summary>
-        public string? ApiKey { get; set; }
+        public string ApiKey { get; set; } = "TRIAL";
 
         /// <summary>
         /// Computes a stable deterministic GUID based on account credentials (user + password).
@@ -179,10 +179,7 @@ public Metadata GetHeaders()
     {
         headers.Add(HeaderIdKey, Id.ToString());
     }
-    if (!string.IsNullOrEmpty(ApiKey))
-    {
-        headers.Add("apikey", ApiKey);
-    }
+    headers.Add("apikey", !string.IsNullOrWhiteSpace(ApiKey) ? ApiKey : "TRIAL");
     return headers;
 }
 
@@ -259,7 +256,7 @@ public MT4Account(ulong user, string password, string? grpcServer = null, string
     User = user;
     Password = password;
     GrpcServer = grpcServer ?? "https://mt4.mrpc.pro:443";
-    ApiKey = apiKey ?? Environment.GetEnvironmentVariable("MRPC_API_KEY");
+    ApiKey = apiKey ?? Environment.GetEnvironmentVariable("MRPC_API_KEY") ?? "TRIAL";
 
     // HTTP/2 keepalive to keep long streams healthy behind NAT/firewalls
     var handler = new SocketsHttpHandler
@@ -313,12 +310,16 @@ public async Task<Guid> GetIdAsync(CancellationToken cancellationToken = default
         {
             Id = parsed;
         }
+        else
+        {
+            Id = ComputeDeterministicTerminalId(User, Password);
+        }
     }
-    catch (RpcException)
+    catch (Exception)
     {
         Id = ComputeDeterministicTerminalId(User, Password);
     }
-    catch (Exception)
+    if (Id == default)
     {
         Id = ComputeDeterministicTerminalId(User, Password);
     }
@@ -343,12 +344,16 @@ public Guid GetId()
         {
             Id = parsed;
         }
+        else
+        {
+            Id = ComputeDeterministicTerminalId(User, Password);
+        }
     }
-    catch (RpcException)
+    catch (Exception)
     {
         Id = ComputeDeterministicTerminalId(User, Password);
     }
-    catch (Exception)
+    if (Id == default)
     {
         Id = ComputeDeterministicTerminalId(User, Password);
     }
@@ -537,7 +542,6 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         User = User,
         Password = Password,
         MtClusterName = serverName,
-        BaseChartSymbol = baseChartSymbol,
         TimeoutSeconds = (uint)timeoutSeconds,
         // If supported by proto:
         // WaitForTerminalIsAlive = waitForTerminalIsAlive

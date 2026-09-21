@@ -82,7 +82,12 @@
             Gets the unique identifier for the account instance.
             </summary>
         </member>
-        <member name="M:mt4_term_api.MT4Account.#ctor(System.UInt64,System.String,System.String,System.Guid)">
+        <member name="P:mt4_term_api.MT4Account.ApiKey">
+            <summary>
+            Gets or sets the MetaRPC API key for authentication. Defaults to "TRIAL".
+            </summary>
+        </member>
+        <member name="M:mt4_term_api.MT4Account.#ctor(System.UInt64,System.String,System.String,System.Guid,System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:mt4_term_api.MT4Account"/> class using credentials.
             </summary>
@@ -90,6 +95,12 @@
             <param name="password">The password for the user account.</param>
             <param name="grpcServer">The address of the gRPC server (optional).</param>
             <param name="id">An optional unique identifier for the account instance.</param>
+            <param name="apiKey">An optional API key for authentication (defaults to TRIAL or MRPC_API_KEY env var).</param>
+        </member>
+        <member name="M:mt4_term_api.MT4Account.#ctor(System.UInt64,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:mt4_term_api.MT4Account"/> class with API key.
+            </summary>
         </member>
         <member name="M:mt4_term_api.MT4Account.ConnectByHostPortAsync(System.String,System.Int32,System.String,System.Boolean,System.Int32,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
             <summary>
