@@ -106,7 +106,7 @@ namespace mt4_term_api {
     {
       /// <summary>
       /// Streams real-time order/trade events.
-      /// Requires 'id' header — use GetId to generate.
+      /// Requires 'id' header returned by Connect/ConnectEx.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
       /// </summary>
       /// <param name="request">The request received from the client.</param>
@@ -121,7 +121,7 @@ namespace mt4_term_api {
 
       /// <summary>
       /// Streams the tickets of currently opened orders as they change.
-      /// Requires 'id' header — use GetId to generate.
+      /// Requires 'id' header returned by Connect/ConnectEx.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
       /// </summary>
       /// <param name="request">The request received from the client.</param>
@@ -136,7 +136,7 @@ namespace mt4_term_api {
 
       /// <summary>
       /// Streams the live profit of currently opened orders.
-      /// Requires 'id' header — use GetId to generate.
+      /// Requires 'id' header returned by Connect/ConnectEx.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
       /// </summary>
       /// <param name="request">The request received from the client.</param>
@@ -151,7 +151,7 @@ namespace mt4_term_api {
 
       /// <summary>
       /// Streams real-time ticks for the given symbols.
-      /// Requires 'id' header — use GetId to generate.
+      /// Requires 'id' header returned by Connect/ConnectEx.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
       /// [DefaultValues]
       /// {
@@ -199,7 +199,7 @@ namespace mt4_term_api {
 
       /// <summary>
       /// Streams real-time order/trade events.
-      /// Requires 'id' header — use GetId to generate.
+      /// Requires 'id' header returned by Connect/ConnectEx.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -214,7 +214,7 @@ namespace mt4_term_api {
       }
       /// <summary>
       /// Streams real-time order/trade events.
-      /// Requires 'id' header — use GetId to generate.
+      /// Requires 'id' header returned by Connect/ConnectEx.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -227,7 +227,7 @@ namespace mt4_term_api {
       }
       /// <summary>
       /// Streams the tickets of currently opened orders as they change.
-      /// Requires 'id' header — use GetId to generate.
+      /// Requires 'id' header returned by Connect/ConnectEx.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -242,7 +242,7 @@ namespace mt4_term_api {
       }
       /// <summary>
       /// Streams the tickets of currently opened orders as they change.
-      /// Requires 'id' header — use GetId to generate.
+      /// Requires 'id' header returned by Connect/ConnectEx.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -255,7 +255,7 @@ namespace mt4_term_api {
       }
       /// <summary>
       /// Streams the live profit of currently opened orders.
-      /// Requires 'id' header — use GetId to generate.
+      /// Requires 'id' header returned by Connect/ConnectEx.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -270,7 +270,7 @@ namespace mt4_term_api {
       }
       /// <summary>
       /// Streams the live profit of currently opened orders.
-      /// Requires 'id' header — use GetId to generate.
+      /// Requires 'id' header returned by Connect/ConnectEx.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
       /// </summary>
       /// <param name="request">The request to send to the server.</param>
@@ -283,7 +283,7 @@ namespace mt4_term_api {
       }
       /// <summary>
       /// Streams real-time ticks for the given symbols.
-      /// Requires 'id' header — use GetId to generate.
+      /// Requires 'id' header returned by Connect/ConnectEx.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
       /// [DefaultValues]
       /// {
@@ -302,7 +302,7 @@ namespace mt4_term_api {
       }
       /// <summary>
       /// Streams real-time ticks for the given symbols.
-      /// Requires 'id' header — use GetId to generate.
+      /// Requires 'id' header returned by Connect/ConnectEx.
       /// Swagger does not support streaming — use /subscription-stream interactive viewer.
       /// [DefaultValues]
       /// {

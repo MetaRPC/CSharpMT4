@@ -81,11 +81,6 @@ namespace mt4_term_api
         /// </summary>
         public Guid Id { get; private set; } = default;
 
-        /// <summary>
-        /// Gets or sets the MetaRPC API key for authentication. Defaults to "TRIAL".
-        /// </summary>
-        public string ApiKey { get; set; } = "TRIAL";
-
         private bool Connected => !(Host is null) || !(ServerName is null);
 
         /// <summary>
@@ -95,8 +90,7 @@ namespace mt4_term_api
         /// <param name="password">The password for the user account.</param>
         /// <param name="grpcServer">The address of the gRPC server (optional).</param>
         /// <param name="id">An optional unique identifier for the account instance.</param>
-        /// <param name="apiKey">An optional API key for authentication (defaults to TRIAL or MRPC_API_KEY env var).</param>
-        public MT4Account(ulong user, string password, string? grpcServer = null, Guid id = default, string? apiKey = null)
+        public MT4Account(ulong user, string password, string? grpcServer = null, Guid id = default)
         {
             User = user;
             Password = password;
@@ -110,15 +104,6 @@ namespace mt4_term_api
             MarketInfoClient = new MarketInfo.MarketInfoClient(GrpcChannel);
 
             Id = id;
-            ApiKey = !string.IsNullOrWhiteSpace(apiKey) ? apiKey : (Environment.GetEnvironmentVariable("MRPC_API_KEY") ?? "TRIAL");
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MT4Account"/> class with API key.
-        /// </summary>
-        public MT4Account(ulong user, string password, string? grpcServer, string? apiKey)
-            : this(user, password, grpcServer, default, apiKey)
-        {
         }
 
         async Task Reconnect(DateTime? deadline, CancellationToken cancellationToken)
@@ -164,12 +149,11 @@ namespace mt4_term_api
                 TimeoutSeconds = (uint)timeoutSeconds
             };
 
-            Metadata headers = new Metadata();
+            Metadata? headers = null;
             if (Id != default)
             {
-                headers.Add("id", Id.ToString());
+                headers = new Metadata { { "id", Id.ToString() } };
             }
-            headers.Add("apikey", !string.IsNullOrWhiteSpace(ApiKey) ? ApiKey : "TRIAL");
 
             var res = await ConnectionClient.ConnectAsync(connectRequest, headers, deadline, cancellationToken);
             if (res.Error != null)
@@ -227,12 +211,11 @@ namespace mt4_term_api
                 TimeoutSeconds = (uint)timeoutSeconds
             };
 
-            Metadata headers = new Metadata();
+            Metadata? headers = null;
             if (Id != default)
             {
-                headers.Add("id", Id.ToString());
+                headers = new Metadata { { "id", Id.ToString() } };
             }
-            headers.Add("apikey", !string.IsNullOrWhiteSpace(ApiKey) ? ApiKey : "TRIAL");
 
             var res = await ConnectionClient.ConnectExAsync(connectRequest, headers, deadline, cancellationToken);
 
@@ -266,13 +249,7 @@ namespace mt4_term_api
 
         private Metadata GetHeaders()
         {
-            var headers = new Metadata();
-            if (Id != default)
-            {
-                headers.Add("id", Id.ToString());
-            }
-            headers.Add("apikey", !string.IsNullOrWhiteSpace(ApiKey) ? ApiKey : "TRIAL");
-            return headers;
+            return new Metadata { { "id", Id.ToString() } };
         }
 
         private async Task<T> ExecuteWithReconnect<T>(

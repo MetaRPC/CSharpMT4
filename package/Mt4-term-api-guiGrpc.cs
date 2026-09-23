@@ -50,35 +50,13 @@ namespace mt4_term_api {
     }
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::mt4_term_api.GuiDemoFindCompaniesRequest> __Marshaller_mt4_term_api_GuiDemoFindCompaniesRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GuiDemoFindCompaniesRequest.Parser));
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::mt4_term_api.GuiDemoFindCompaniesReply> __Marshaller_mt4_term_api_GuiDemoFindCompaniesReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GuiDemoFindCompaniesReply.Parser));
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::mt4_term_api.GuiDemoServersAndTypesRequest> __Marshaller_mt4_term_api_GuiDemoServersAndTypesRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GuiDemoServersAndTypesRequest.Parser));
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::mt4_term_api.GuiDemoServersAndTypesReply> __Marshaller_mt4_term_api_GuiDemoServersAndTypesReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GuiDemoServersAndTypesReply.Parser));
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::mt4_term_api.GuiDemoOpenAccountRequest> __Marshaller_mt4_term_api_GuiDemoOpenAccountRequest = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GuiDemoOpenAccountRequest.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::mt4_term_api.GuiDemoOpenAccountReply> __Marshaller_mt4_term_api_GuiDemoOpenAccountReply = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GuiDemoOpenAccountReply.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Marshaller<global::mt4_term_api.GuiDemoProgressEvent> __Marshaller_mt4_term_api_GuiDemoProgressEvent = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GuiDemoProgressEvent.Parser));
-
+    static readonly grpc::Marshaller<global::mt4_term_api.GuiDemoInteractiveClientMessage> __Marshaller_mt4_term_api_GuiDemoInteractiveClientMessage = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GuiDemoInteractiveClientMessage.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::mt4_term_api.GuiDemoFindCompaniesRequest, global::mt4_term_api.GuiDemoFindCompaniesReply> __Method_DemoFindCompanies = new grpc::Method<global::mt4_term_api.GuiDemoFindCompaniesRequest, global::mt4_term_api.GuiDemoFindCompaniesReply>(
-        grpc::MethodType.Unary,
-        __ServiceName,
-        "DemoFindCompanies",
-        __Marshaller_mt4_term_api_GuiDemoFindCompaniesRequest,
-        __Marshaller_mt4_term_api_GuiDemoFindCompaniesReply);
-
-    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::mt4_term_api.GuiDemoServersAndTypesRequest, global::mt4_term_api.GuiDemoServersAndTypesReply> __Method_DemoServersAndTypes = new grpc::Method<global::mt4_term_api.GuiDemoServersAndTypesRequest, global::mt4_term_api.GuiDemoServersAndTypesReply>(
-        grpc::MethodType.Unary,
-        __ServiceName,
-        "DemoServersAndTypes",
-        __Marshaller_mt4_term_api_GuiDemoServersAndTypesRequest,
-        __Marshaller_mt4_term_api_GuiDemoServersAndTypesReply);
+    static readonly grpc::Marshaller<global::mt4_term_api.GuiDemoInteractiveServerMessage> __Marshaller_mt4_term_api_GuiDemoInteractiveServerMessage = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::mt4_term_api.GuiDemoInteractiveServerMessage.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::mt4_term_api.GuiDemoOpenAccountRequest, global::mt4_term_api.GuiDemoOpenAccountReply> __Method_DemoOpenAccount = new grpc::Method<global::mt4_term_api.GuiDemoOpenAccountRequest, global::mt4_term_api.GuiDemoOpenAccountReply>(
@@ -89,12 +67,12 @@ namespace mt4_term_api {
         __Marshaller_mt4_term_api_GuiDemoOpenAccountReply);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-    static readonly grpc::Method<global::mt4_term_api.GuiDemoOpenAccountRequest, global::mt4_term_api.GuiDemoProgressEvent> __Method_DemoOpenAccountWithProgress = new grpc::Method<global::mt4_term_api.GuiDemoOpenAccountRequest, global::mt4_term_api.GuiDemoProgressEvent>(
-        grpc::MethodType.ServerStreaming,
+    static readonly grpc::Method<global::mt4_term_api.GuiDemoInteractiveClientMessage, global::mt4_term_api.GuiDemoInteractiveServerMessage> __Method_DemoOpenAccountInteractive = new grpc::Method<global::mt4_term_api.GuiDemoInteractiveClientMessage, global::mt4_term_api.GuiDemoInteractiveServerMessage>(
+        grpc::MethodType.DuplexStreaming,
         __ServiceName,
-        "DemoOpenAccountWithProgress",
-        __Marshaller_mt4_term_api_GuiDemoOpenAccountRequest,
-        __Marshaller_mt4_term_api_GuiDemoProgressEvent);
+        "DemoOpenAccountInteractive",
+        __Marshaller_mt4_term_api_GuiDemoInteractiveClientMessage,
+        __Marshaller_mt4_term_api_GuiDemoInteractiveServerMessage);
 
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
@@ -107,25 +85,13 @@ namespace mt4_term_api {
     public abstract partial class GuiBase
     {
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::mt4_term_api.GuiDemoFindCompaniesReply> DemoFindCompanies(global::mt4_term_api.GuiDemoFindCompaniesRequest request, grpc::ServerCallContext context)
-      {
-        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-      }
-
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task<global::mt4_term_api.GuiDemoServersAndTypesReply> DemoServersAndTypes(global::mt4_term_api.GuiDemoServersAndTypesRequest request, grpc::ServerCallContext context)
-      {
-        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
-      }
-
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::mt4_term_api.GuiDemoOpenAccountReply> DemoOpenAccount(global::mt4_term_api.GuiDemoOpenAccountRequest request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::System.Threading.Tasks.Task DemoOpenAccountWithProgress(global::mt4_term_api.GuiDemoOpenAccountRequest request, grpc::IServerStreamWriter<global::mt4_term_api.GuiDemoProgressEvent> responseStream, grpc::ServerCallContext context)
+      public virtual global::System.Threading.Tasks.Task DemoOpenAccountInteractive(grpc::IAsyncStreamReader<global::mt4_term_api.GuiDemoInteractiveClientMessage> requestStream, grpc::IServerStreamWriter<global::mt4_term_api.GuiDemoInteractiveServerMessage> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -160,46 +126,6 @@ namespace mt4_term_api {
       }
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::mt4_term_api.GuiDemoFindCompaniesReply DemoFindCompanies(global::mt4_term_api.GuiDemoFindCompaniesRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return DemoFindCompanies(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::mt4_term_api.GuiDemoFindCompaniesReply DemoFindCompanies(global::mt4_term_api.GuiDemoFindCompaniesRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.BlockingUnaryCall(__Method_DemoFindCompanies, null, options, request);
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.GuiDemoFindCompaniesReply> DemoFindCompaniesAsync(global::mt4_term_api.GuiDemoFindCompaniesRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return DemoFindCompaniesAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.GuiDemoFindCompaniesReply> DemoFindCompaniesAsync(global::mt4_term_api.GuiDemoFindCompaniesRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.AsyncUnaryCall(__Method_DemoFindCompanies, null, options, request);
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::mt4_term_api.GuiDemoServersAndTypesReply DemoServersAndTypes(global::mt4_term_api.GuiDemoServersAndTypesRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return DemoServersAndTypes(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual global::mt4_term_api.GuiDemoServersAndTypesReply DemoServersAndTypes(global::mt4_term_api.GuiDemoServersAndTypesRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.BlockingUnaryCall(__Method_DemoServersAndTypes, null, options, request);
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.GuiDemoServersAndTypesReply> DemoServersAndTypesAsync(global::mt4_term_api.GuiDemoServersAndTypesRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
-      {
-        return DemoServersAndTypesAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncUnaryCall<global::mt4_term_api.GuiDemoServersAndTypesReply> DemoServersAndTypesAsync(global::mt4_term_api.GuiDemoServersAndTypesRequest request, grpc::CallOptions options)
-      {
-        return CallInvoker.AsyncUnaryCall(__Method_DemoServersAndTypes, null, options, request);
-      }
-      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::mt4_term_api.GuiDemoOpenAccountReply DemoOpenAccount(global::mt4_term_api.GuiDemoOpenAccountRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return DemoOpenAccount(request, new grpc::CallOptions(headers, deadline, cancellationToken));
@@ -220,14 +146,14 @@ namespace mt4_term_api {
         return CallInvoker.AsyncUnaryCall(__Method_DemoOpenAccount, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.GuiDemoProgressEvent> DemoOpenAccountWithProgress(global::mt4_term_api.GuiDemoOpenAccountRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      public virtual grpc::AsyncDuplexStreamingCall<global::mt4_term_api.GuiDemoInteractiveClientMessage, global::mt4_term_api.GuiDemoInteractiveServerMessage> DemoOpenAccountInteractive(grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
-        return DemoOpenAccountWithProgress(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+        return DemoOpenAccountInteractive(new grpc::CallOptions(headers, deadline, cancellationToken));
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
-      public virtual grpc::AsyncServerStreamingCall<global::mt4_term_api.GuiDemoProgressEvent> DemoOpenAccountWithProgress(global::mt4_term_api.GuiDemoOpenAccountRequest request, grpc::CallOptions options)
+      public virtual grpc::AsyncDuplexStreamingCall<global::mt4_term_api.GuiDemoInteractiveClientMessage, global::mt4_term_api.GuiDemoInteractiveServerMessage> DemoOpenAccountInteractive(grpc::CallOptions options)
       {
-        return CallInvoker.AsyncServerStreamingCall(__Method_DemoOpenAccountWithProgress, null, options, request);
+        return CallInvoker.AsyncDuplexStreamingCall(__Method_DemoOpenAccountInteractive, null, options);
       }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -243,10 +169,8 @@ namespace mt4_term_api {
     public static grpc::ServerServiceDefinition BindService(GuiBase serviceImpl)
     {
       return grpc::ServerServiceDefinition.CreateBuilder()
-          .AddMethod(__Method_DemoFindCompanies, serviceImpl.DemoFindCompanies)
-          .AddMethod(__Method_DemoServersAndTypes, serviceImpl.DemoServersAndTypes)
           .AddMethod(__Method_DemoOpenAccount, serviceImpl.DemoOpenAccount)
-          .AddMethod(__Method_DemoOpenAccountWithProgress, serviceImpl.DemoOpenAccountWithProgress).Build();
+          .AddMethod(__Method_DemoOpenAccountInteractive, serviceImpl.DemoOpenAccountInteractive).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
@@ -256,10 +180,8 @@ namespace mt4_term_api {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     public static void BindService(grpc::ServiceBinderBase serviceBinder, GuiBase serviceImpl)
     {
-      serviceBinder.AddMethod(__Method_DemoFindCompanies, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.GuiDemoFindCompaniesRequest, global::mt4_term_api.GuiDemoFindCompaniesReply>(serviceImpl.DemoFindCompanies));
-      serviceBinder.AddMethod(__Method_DemoServersAndTypes, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.GuiDemoServersAndTypesRequest, global::mt4_term_api.GuiDemoServersAndTypesReply>(serviceImpl.DemoServersAndTypes));
       serviceBinder.AddMethod(__Method_DemoOpenAccount, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::mt4_term_api.GuiDemoOpenAccountRequest, global::mt4_term_api.GuiDemoOpenAccountReply>(serviceImpl.DemoOpenAccount));
-      serviceBinder.AddMethod(__Method_DemoOpenAccountWithProgress, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::mt4_term_api.GuiDemoOpenAccountRequest, global::mt4_term_api.GuiDemoProgressEvent>(serviceImpl.DemoOpenAccountWithProgress));
+      serviceBinder.AddMethod(__Method_DemoOpenAccountInteractive, serviceImpl == null ? null : new grpc::DuplexStreamingServerMethod<global::mt4_term_api.GuiDemoInteractiveClientMessage, global::mt4_term_api.GuiDemoInteractiveServerMessage>(serviceImpl.DemoOpenAccountInteractive));
     }
 
   }
