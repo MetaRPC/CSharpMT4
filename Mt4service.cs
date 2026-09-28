@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using mt4_term_api;
 using System;
 using System.Threading;
@@ -399,58 +399,87 @@ namespace MetaRPC.CSharpMT4
         /// <returns>Task that completes after the first update or cancellation.</returns>
         /// <exception cref="mt4_term_api.ApiExceptionMT4">If the stream cannot be opened.</exception>
 
-        public async Task StreamTradeUpdates(CancellationToken ct = default)
+        public async Task StreamTradeUpdates(CancellationToken ct = default, int timeoutSeconds = 3)
         {
             Box("StreamTradeUpdates()");
-            _logger.LogInformation("=== Streaming: Trades ===");
-            await foreach (var trade in _mt4.OnTradeAsync())
+            _logger.LogInformation("=== Streaming: Trades (listening up to {Sec}s) ===", timeoutSeconds);
+            using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            cts.CancelAfter(TimeSpan.FromSeconds(timeoutSeconds));
+            try
             {
-                if (ct.IsCancellationRequested) break;
-                Console.WriteLine("Trade update received.");
-                break;
+                await foreach (var trade in _mt4.OnTradeAsync(cts.Token))
+                {
+                    if (cts.Token.IsCancellationRequested) break;
+                    Console.WriteLine("Trade update received.");
+                    break;
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                _logger.LogInformation("⏹️ No trade updates received in {Sec}s (normal when no orders are active).", timeoutSeconds);
             }
         }
 
 
         /// <summary>
         /// Subscribes to profit updates for currently opened orders and prints the first update, then stops.
-        /// Wraps <see cref="MT4Account.OnOpenedOrdersProfitAsync(int)"/> with argument 1000 (library-specific).
+        /// Wraps <see cref="MT4Account.OnOpenedOrdersProfitAsync(int, CancellationToken)"/> with argument 1000 (library-specific).
         /// Honors <paramref name="ct"/> for cancellation.
         /// </summary>
         /// <param name="ct">Optional cancellation token.</param>
+        /// <param name="timeoutSeconds">Timeout in seconds.</param>
         /// <returns>Task that completes after the first update or cancellation.</returns>
         /// <exception cref="mt4_term_api.ApiExceptionMT4">If the stream cannot be opened.</exception>
 
-        public async Task StreamOpenedOrderProfits(CancellationToken ct = default)
+        public async Task StreamOpenedOrderProfits(CancellationToken ct = default, int timeoutSeconds = 3)
         {
             Box("StreamOpenedOrderProfits()");
-            _logger.LogInformation("=== Streaming: Opened Order Profits ===");
-            await foreach (var profit in _mt4.OnOpenedOrdersProfitAsync(1000))
+            _logger.LogInformation("=== Streaming: Opened Order Profits (listening up to {Sec}s) ===", timeoutSeconds);
+            using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            cts.CancelAfter(TimeSpan.FromSeconds(timeoutSeconds));
+            try
             {
-                if (ct.IsCancellationRequested) break;
-                Console.WriteLine("Profit update received.");
-                break;
+                await foreach (var profit in _mt4.OnOpenedOrdersProfitAsync(1000, cts.Token))
+                {
+                    if (cts.Token.IsCancellationRequested) break;
+                    Console.WriteLine("Profit update received.");
+                    break;
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                _logger.LogInformation("⏹️ No profit updates received in {Sec}s (normal when no orders are open).", timeoutSeconds);
             }
         }
 
 
         /// <summary>
         /// Subscribes to opened-order ticket updates and prints the first update, then stops.
-        /// Wraps <see cref="MT4Account.OnOpenedOrdersTicketsAsync(int)"/> (buffer: 1000); honors cancellation.
+        /// Wraps <see cref="MT4Account.OnOpenedOrdersTicketsAsync(int, CancellationToken)"/> (buffer: 1000); honors cancellation.
         /// </summary>
         /// <param name="ct">Optional cancellation token.</param>
+        /// <param name="timeoutSeconds">Timeout in seconds.</param>
         /// <returns>Task that completes after the first update or cancellation.</returns>
         /// <exception cref="mt4_term_api.ApiExceptionMT4">If the stream cannot be opened.</exception>
 
-        public async Task StreamOpenedOrderTickets(CancellationToken ct = default)
+        public async Task StreamOpenedOrderTickets(CancellationToken ct = default, int timeoutSeconds = 3)
         {
             Box("StreamOpenedOrderTickets()");
-            _logger.LogInformation("=== Streaming: Opened Order Tickets ===");
-            await foreach (var ticket in _mt4.OnOpenedOrdersTicketsAsync(1000))
+            _logger.LogInformation("=== Streaming: Opened Order Tickets (listening up to {Sec}s) ===", timeoutSeconds);
+            using var cts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+            cts.CancelAfter(TimeSpan.FromSeconds(timeoutSeconds));
+            try
             {
-                if (ct.IsCancellationRequested) break;
-                Console.WriteLine("Ticket update received.");
-                break;
+                await foreach (var ticket in _mt4.OnOpenedOrdersTicketsAsync(1000, cts.Token))
+                {
+                    if (cts.Token.IsCancellationRequested) break;
+                    Console.WriteLine("Ticket update received.");
+                    break;
+                }
+            }
+            catch (OperationCanceledException)
+            {
+                _logger.LogInformation("⏹️ No ticket updates received in {Sec}s (normal when no orders are open).", timeoutSeconds);
             }
         }
 

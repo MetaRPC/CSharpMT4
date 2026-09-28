@@ -31,9 +31,30 @@ static class EnvUtil
 
 class Program
 {
-    public static async Task<int> Main()
+    public static async Task<int> Main(string[] args)
     {
         Console.WriteLine("== MT4 Low-Level Full Run ==");
+
+        string? apiKeyCli = null;
+        for (int i = 0; i < args.Length; i++)
+        {
+            if (args[i] == "--api-key" && i + 1 < args.Length)
+            {
+                apiKeyCli = args[i + 1];
+                break;
+            }
+            else if (args[i].StartsWith("--api-key="))
+            {
+                apiKeyCli = args[i].Substring("--api-key=".Length);
+                break;
+            }
+        }
+        if (apiKeyCli == null && args.Length > 0 && !args[0].StartsWith("-"))
+        {
+            apiKeyCli = args[0];
+        }
+
+        var apiKey = apiKeyCli ?? EnvUtil.Env("MRPC_API_KEY", "TRIAL");
 
         // ---- ENV (simple & explicit) ----
         // Required:
@@ -49,6 +70,16 @@ class Program
         var connectTimeout = EnvUtil.EnvInt("CONNECT_TIMEOUT_SECONDS", 180);
         var warmupPollMs   = EnvUtil.EnvInt("WARMUP_POLL_MS", 1200);
         var retryAttempts  = EnvUtil.EnvInt("CONNECT_RETRIES", 5);
+        // Auto-provision demo account if user is 0 or password missing
+        if (user == 0 || string.IsNullOrWhiteSpace(password))
+        {
+            Console.WriteLine("Auto-provisioning live demo account on MetaQuotes-Demo...");
+            var (demoUser, demoPassword, demoServer) = await OpenDemoAccountAsync(serverName, apiKey);
+            user = demoUser;
+            password = demoPassword;
+            if (!string.IsNullOrEmpty(demoServer)) serverName = demoServer;
+            Console.WriteLine($"✓ Live Demo Account Provisioned: #{user} (Server: {serverName})");
+        }
 
         // Basic validation
         if (user == 0 || string.IsNullOrWhiteSpace(password))
@@ -72,11 +103,12 @@ class Program
         Console.WriteLine($"Using gRPC: {grpcServer}");
         Console.WriteLine($"ServerName: {serverName}");
         Console.WriteLine($"Timeout: {connectTimeout}s; Retries: {retryAttempts}");
+        Console.WriteLine($"ApiKey: {(apiKey == "TRIAL" ? "TRIAL" : "***")}");
 
         using var ctsAll = new CancellationTokenSource(TimeSpan.FromMinutes(6));
         Console.CancelKeyPress += (s, e) => { e.Cancel = true; ctsAll.Cancel(); };
 
-        await using var account = new MT4Account(user, password, grpcServer);
+        await using var account = new MT4Account(user, password, grpcServer, apiKey: apiKey);
 
         // ---- PHASE 1: Connect (by ServerName) with simple retries, soft-failing on "terminal not ready" ----
         var connected = await ConnectByServerNameWithRetriesAsync(
@@ -107,7 +139,15 @@ class Program
         Environment.SetEnvironmentVariable("SYMBOLS", symbolsCsv);
 
         // ---- PHASE 4: Run the low-level example suite ----
-        var rc = await MT4Account_RunAllLowLevel.RunAllAsync(account, ctsAll.Token);
+        int rc;
+        try
+        {
+            rc = await MT4Account_RunAllLowLevel.RunAllAsync(account, ctsAll.Token);
+        }
+        finally
+        {
+            await account.DisconnectAsync();
+        }
         Console.WriteLine($"RunAll finished with code {rc}.");
         return rc;
     }
@@ -250,6 +290,29 @@ class Program
             // Fallback to raw values if anything goes wrong
             return (baseSymbolRaw, symbolsCsvRaw);
         }
+    }
+
+    private static async Task<(ulong login, string password, string server)> OpenDemoAccountAsync(string server = "MetaQuotes-Demo", string apiKey = "TRIAL")
+    {
+        using var http = new System.Net.Http.HttpClient();
+        http.DefaultRequestHeaders.Add("APIKey", apiKey);
+        var url = $"https://mt4.mrpc.pro/DemoAccount/Open?server={Uri.EscapeDataString(server)}";
+        var jsonStr = await http.GetStringAsync(url);
+        using var doc = System.Text.Json.JsonDocument.Parse(jsonStr);
+        var root = doc.RootElement;
+        ulong login = 0;
+        if (root.TryGetProperty("login", out var loginElem))
+        {
+            if (loginElem.ValueKind == System.Text.Json.JsonValueKind.Number)
+                login = loginElem.GetUInt64();
+            else if (loginElem.ValueKind == System.Text.Json.JsonValueKind.String && ulong.TryParse(loginElem.GetString(), out var parsedLogin))
+                login = parsedLogin;
+        }
+        var password = root.TryGetProperty("password", out var pwdElem) ? (pwdElem.GetString() ?? "") : "";
+        var srv = root.TryGetProperty("server", out var srvElem) && !string.IsNullOrEmpty(srvElem.GetString())
+            ? srvElem.GetString()!
+            : server;
+        return (login, password, srv);
     }
 }
 

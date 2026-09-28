@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,10 +10,29 @@ using Grpc.Core;
 
 static class Program
 {
-    static async Task<int> Main()
+    static async Task<int> Main(string[] args)
     {
         // Ctrl+C → graceful cancellation
         var appToken = Shutdown.HookCtrlC();
+
+        string? apiKeyCli = null;
+        for (int i = 0; i < args.Length; i++)
+        {
+            if (args[i] == "--api-key" && i + 1 < args.Length)
+            {
+                apiKeyCli = args[i + 1];
+                break;
+            }
+            else if (args[i].StartsWith("--api-key="))
+            {
+                apiKeyCli = args[i].Substring("--api-key=".Length);
+                break;
+            }
+        }
+        if (apiKeyCli == null && args.Length > 0 && !args[0].StartsWith("-"))
+        {
+            apiKeyCli = args[0];
+        }
 
         // ---------------------------------------------------------------------
         // CONFIG
@@ -29,6 +48,33 @@ static class Program
         if (string.IsNullOrWhiteSpace(mt4.Symbol)) mt4.Symbol = "EURUSD";
         if (mt4.TimeoutSeconds <= 0) mt4.TimeoutSeconds = 60;
         if (mt4.ConnectRetries <= 0) mt4.ConnectRetries = 3;
+        if (!string.IsNullOrWhiteSpace(apiKeyCli))
+        {
+            mt4.ApiKey = apiKeyCli;
+        }
+        else
+        {
+            var envKey = Environment.GetEnvironmentVariable("MRPC_API_KEY");
+            if (!string.IsNullOrWhiteSpace(envKey))
+            {
+                mt4.ApiKey = envKey;
+            }
+            else if (string.IsNullOrWhiteSpace(mt4.ApiKey))
+            {
+                mt4.ApiKey = "TRIAL";
+            }
+        }
+
+        // Auto-provision demo account if user is 0 or password missing
+        if (mt4.User == 0 || string.IsNullOrWhiteSpace(mt4.Password))
+        {
+            Console.WriteLine("Auto-provisioning live demo account on MetaQuotes-Demo...");
+            var (demoUser, demoPassword, demoServer) = await OpenDemoAccountAsync(mt4.ServerName ?? "MetaQuotes-Demo", mt4.ApiKey ?? "TRIAL");
+            mt4.User = demoUser;
+            mt4.Password = demoPassword;
+            if (!string.IsNullOrEmpty(demoServer)) mt4.ServerName = demoServer;
+            Console.WriteLine($"✓ Live Demo Account Provisioned: #{mt4.User} (Server: {mt4.ServerName})");
+        }
 
         // Basic validation
         if (mt4.User == 0)                             { Console.Error.WriteLine("Invalid MT4Options.User"); return 2; }
@@ -36,7 +82,7 @@ static class Program
         if (string.IsNullOrWhiteSpace(mt4.ServerName)) { Console.Error.WriteLine("Invalid MT4Options.ServerName"); return 2; }
         if (string.IsNullOrWhiteSpace(mt4.Grpc))       { Console.Error.WriteLine("Invalid Grpc endpoint"); return 2; }
 
-        Console.WriteLine($"CFG → user={mt4.User}, server={mt4.ServerName}, host={(mt4.Host ?? "(null)")}:{(mt4.Port?.ToString() ?? "(null)")}, grpc={mt4.Grpc}, symbol={mt4.Symbol}, timeout={mt4.TimeoutSeconds}s, retries={mt4.ConnectRetries}");
+        Console.WriteLine($"CFG → user={mt4.User}, server={mt4.ServerName}, host={(mt4.Host ?? "(null)")}:{(mt4.Port?.ToString() ?? "(null)")}, grpc={mt4.Grpc}, symbol={mt4.Symbol}, apiKey={(mt4.ApiKey == "TRIAL" ? "TRIAL" : "***")}, timeout={mt4.TimeoutSeconds}s, retries={mt4.ConnectRetries}");
 
         // ---------------------------------------------------------------------
         // LOGGER + ACCOUNT
@@ -49,9 +95,11 @@ static class Program
         });
         var logger = loggerFactory.CreateLogger<MT4Service>();
 
-        await using var account = new MT4Account(mt4.User, mt4.Password, mt4.Grpc!);
+        await using var account = new MT4Account(mt4.User, mt4.Password, mt4.Grpc!, apiKey: mt4.ApiKey);
 
-        Box("CONNECT");
+        try
+        {
+            Box("CONNECT");
 
         // ---------------------------------------------------------------------
         // CONNECT (Host:Port → ServerName)
@@ -151,6 +199,11 @@ static class Program
         }
 
         return 0;
+    }
+    finally
+    {
+        await account.DisconnectAsync();
+    }
     }
 
     // =====================================================================
@@ -350,6 +403,29 @@ static class Program
             }
         }
         catch { /* best-effort */ }
+    }
+
+    private static async Task<(ulong login, string password, string server)> OpenDemoAccountAsync(string server = "MetaQuotes-Demo", string apiKey = "TRIAL")
+    {
+        using var http = new System.Net.Http.HttpClient();
+        http.DefaultRequestHeaders.Add("APIKey", apiKey);
+        var url = $"https://mt4.mrpc.pro/DemoAccount/Open?server={Uri.EscapeDataString(server)}";
+        var jsonStr = await http.GetStringAsync(url);
+        using var doc = System.Text.Json.JsonDocument.Parse(jsonStr);
+        var root = doc.RootElement;
+        ulong login = 0;
+        if (root.TryGetProperty("login", out var loginElem))
+        {
+            if (loginElem.ValueKind == System.Text.Json.JsonValueKind.Number)
+                login = loginElem.GetUInt64();
+            else if (loginElem.ValueKind == System.Text.Json.JsonValueKind.String && ulong.TryParse(loginElem.GetString(), out var parsedLogin))
+                login = parsedLogin;
+        }
+        var password = root.TryGetProperty("password", out var pwdElem) ? (pwdElem.GetString() ?? "") : "";
+        var srv = root.TryGetProperty("server", out var srvElem) && !string.IsNullOrEmpty(srvElem.GetString())
+            ? srvElem.GetString()!
+            : server;
+        return (login, password, srv);
     }
 
     #endregion

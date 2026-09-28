@@ -41,6 +41,7 @@ public sealed class Mt4Options
 
     public string? Grpc { get; set; }
     public string? Symbol { get; set; } = "EURUSD";
+    public string ApiKey { get; set; } = "TRIAL";
 
     // Optional fallback path (not recommended by default)
     public string? Host { get; set; }

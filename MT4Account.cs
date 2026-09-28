@@ -90,6 +90,26 @@ namespace MetaRPC.CSharpMT4
         public Guid Id { get; private set; } = default;
 
         /// <summary>
+        /// Gets the raw terminal instance GUID string returned by MT4 server.
+        /// </summary>
+        public string? TerminalInstanceGuid { get; private set; }
+
+        private static Guid ParseGuidSafe(string? guidStr)
+        {
+            if (string.IsNullOrWhiteSpace(guidStr))
+                return Guid.NewGuid();
+            if (Guid.TryParse(guidStr, out var g))
+                return g;
+            var clean = guidStr.StartsWith("mt4_live_") ? guidStr.Substring("mt4_live_".Length) :
+                        guidStr.StartsWith("mt5_live_") ? guidStr.Substring("mt5_live_".Length) : guidStr;
+            if (Guid.TryParseExact(clean, "N", out var gExact))
+                return gExact;
+            if (Guid.TryParse(clean, out var gAny))
+                return gAny;
+            return Guid.NewGuid();
+        }
+
+        /// <summary>
         /// Gets or sets the MetaRPC API key for authentication. Defaults to "TRIAL".
         /// </summary>
         public string ApiKey { get; set; } = "TRIAL";
@@ -157,6 +177,7 @@ namespace MetaRPC.CSharpMT4
 
         {
             Id = default;
+            TerminalInstanceGuid = null;
             Host = null;
             ServerName = null;
             BaseChartSymbol = null;
@@ -175,7 +196,11 @@ private void EnsureConnected()
 public Metadata GetHeaders()
 {
     var headers = new Metadata();
-    if (Id != default)
+    if (!string.IsNullOrEmpty(TerminalInstanceGuid))
+    {
+        headers.Add(HeaderIdKey, TerminalInstanceGuid);
+    }
+    else if (Id != default)
     {
         headers.Add(HeaderIdKey, Id.ToString());
     }
@@ -208,11 +233,51 @@ private static TimeSpan NextBackoff(int attempt)
 
 
 /// <summary>
+/// Gracefully disconnects from MT4 terminal and disposes underlying resources.
+/// </summary>
+public async Task DisconnectAsync()
+{
+    if (_disposed) return;
+    try
+    {
+        if (!string.IsNullOrEmpty(TerminalInstanceGuid) || Id != default)
+        {
+            var headers = GetHeaders();
+            await ConnectionClient.DisconnectAsync(new DisconnectRequest(), headers);
+        }
+    }
+    catch
+    {
+        // Disconnect failure is tolerated on cleanup
+    }
+    finally
+    {
+        Dispose();
+    }
+}
+
+/// <summary>
 /// Gracefully disconnects and disposes underlying resources. Safe to call multiple times.
 /// </summary>
 public void Disconnect()
 {
-    Dispose();
+    if (_disposed) return;
+    try
+    {
+        if (!string.IsNullOrEmpty(TerminalInstanceGuid) || Id != default)
+        {
+            var headers = GetHeaders();
+            ConnectionClient.Disconnect(new DisconnectRequest(), headers);
+        }
+    }
+    catch
+    {
+        // Disconnect failure is tolerated on cleanup
+    }
+    finally
+    {
+        Dispose();
+    }
 }
 
 /// <summary>
@@ -233,10 +298,9 @@ public void Dispose()
         // swallow dispose-time exceptions; nothing we can reasonably do here in console apps
     }
 }
-public ValueTask DisposeAsync()
+public async ValueTask DisposeAsync()
 {
-    Dispose(); // GrpcChannel doesn't need true async dispose
-    return ValueTask.CompletedTask;
+    await DisconnectAsync();
 }
 
 
@@ -468,7 +532,8 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
             Port = port;
             BaseChartSymbol = baseChartSymbol;
             ConnectTimeoutSeconds = timeoutSeconds;
-            Id = Guid.Parse(res.Data.TerminalInstanceGuid);
+            TerminalInstanceGuid = res.Data.TerminalInstanceGuid;
+            Id = ParseGuidSafe(res.Data.TerminalInstanceGuid);
 
             _lastConnectionMode = ConnectionMode.HostPort;
             _lastWaitForTerminalIsAlive = waitForTerminalIsAlive;
@@ -571,7 +636,8 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
             ServerName = serverName;
             BaseChartSymbol = baseChartSymbol;
             ConnectTimeoutSeconds = timeoutSeconds;
-            Id = Guid.Parse(res.Data.TerminalInstanceGuid);
+            TerminalInstanceGuid = res.Data.TerminalInstanceGuid;
+            Id = ParseGuidSafe(res.Data.TerminalInstanceGuid);
 
             // Save mode & flag for future reconnects
             _lastConnectionMode = ConnectionMode.ServerName;
