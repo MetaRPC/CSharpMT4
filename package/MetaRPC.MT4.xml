@@ -512,12 +512,12 @@
             <param name="cancellationToken">Optional cancellation token.</param>
             <returns><see cref="T:mt4_term_api.OrderCloseByData"/> with result details.</returns>
         </member>
-        <member name="M:mt4_term_api.MT4Account.DisconnectAsync(System.Boolean)">
+        <member name="M:mt4_term_api.MT4Account.DisconnectAsync">
             <summary>
             Gracefully disconnects from MT4 terminal and disposes underlying resources.
             </summary>
         </member>
-        <member name="M:mt4_term_api.MT4Account.Disconnect(System.Boolean)">
+        <member name="M:mt4_term_api.MT4Account.Disconnect">
             <summary>
             Synchronously disconnects and disposes underlying resources.
             </summary>
