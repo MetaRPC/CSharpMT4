@@ -1173,14 +1173,14 @@ namespace mt4_term_api
         /// <summary>
         /// Gracefully disconnects from MT4 terminal and disposes underlying resources.
         /// </summary>
-        public async Task DisconnectAsync()
+        public async Task DisconnectAsync(bool delete = false)
         {
             try
             {
                 if (!string.IsNullOrEmpty(TerminalInstanceGuid) || Id != default)
                 {
                     var headers = GetHeaders();
-                    await ConnectionClient.DisconnectAsync(new DisconnectRequest(), headers);
+                    await ConnectionClient.DisconnectAsync(new DisconnectRequest { Delete = delete }, headers);
                 }
             }
             catch
@@ -1196,14 +1196,14 @@ namespace mt4_term_api
         /// <summary>
         /// Synchronously disconnects and disposes underlying resources.
         /// </summary>
-        public void Disconnect()
+        public void Disconnect(bool delete = false)
         {
             try
             {
                 if (!string.IsNullOrEmpty(TerminalInstanceGuid) || Id != default)
                 {
                     var headers = GetHeaders();
-                    ConnectionClient.Disconnect(new DisconnectRequest(), headers);
+                    ConnectionClient.Disconnect(new DisconnectRequest { Delete = delete }, headers);
                 }
             }
             catch

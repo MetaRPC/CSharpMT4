@@ -113,84 +113,85 @@ namespace mt4_term_api {
             "Y2sYAiABKAsyIS5tdDRfdGVybV9hcGkuVGVybWluYWxIZWFsdGhDaGVjayJp",
             "ChNUZXJtaW5hbEhlYWx0aENoZWNrEhAKCGlzX2FsaXZlGAEgASgIEhQKDGFw",
             "aV9pc19hbGl2ZRgCIAEoCBIqCiJ0ZXJtaW5hbF9pc19jb25uZWN0ZWRfdG9f",
-            "bXRfc2VydmVyGAMgASgIIjMKEURpc2Nvbm5lY3RSZXF1ZXN0EhMKBnJlYXNv",
-            "bhgBIAEoCUgAiAEBQgkKB19yZWFzb24icQoPRGlzY29ubmVjdFJlcGx5EiwK",
-            "BGRhdGEYASABKAsyHC5tdDRfdGVybV9hcGkuRGlzY29ubmVjdERhdGFIABIk",
-            "CgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJvckgAQgoKCHJlc3Bv",
-            "bnNlIksKDkRpc2Nvbm5lY3REYXRhEhkKEXVuaXF1ZV9pZGVudGlmaWVyGAEg",
-            "ASgJEh4KFmZ1bGxfbGlmZV90aW1lX3NlY29uZHMYAiABKAMiLgoMR2V0SWRS",
-            "ZXF1ZXN0EgwKBHVzZXIYASABKAkSEAoIcGFzc3dvcmQYAiABKAkiZwoKR2V0",
-            "SWRSZXBseRInCgRkYXRhGAEgASgLMhcubXQ0X3Rlcm1fYXBpLkdldElkRGF0",
-            "YUgAEiQKBWVycm9yGAIgASgLMhMubXQ0X3Rlcm1fYXBpLkVycm9ySABCCgoI",
-            "cmVzcG9uc2UiFwoJR2V0SWREYXRhEgoKAmlkGAEgASgJIhUKE0Nvbm5lY3RT",
-            "dGF0ZVJlcXVlc3QidQoRQ29ubmVjdFN0YXRlUmVwbHkSLgoEZGF0YRgBIAEo",
-            "CzIeLm10NF90ZXJtX2FwaS5Db25uZWN0U3RhdGVEYXRhSAASJAoFZXJyb3IY",
-            "AiABKAsyEy5tdDRfdGVybV9hcGkuRXJyb3JIAEIKCghyZXNwb25zZSItChVP",
-            "bkNvbm5lY3RTdGF0ZVJlcXVlc3QSFAoMdGVybWluYWxfaWRzGAEgAygJIncK",
-            "E09uQ29ubmVjdFN0YXRlUmVwbHkSLgoEZGF0YRgBIAEoCzIeLm10NF90ZXJt",
-            "X2FwaS5Db25uZWN0U3RhdGVEYXRhSAASJAoFZXJyb3IYAiABKAsyEy5tdDRf",
-            "dGVybV9hcGkuRXJyb3JIAEIKCghyZXNwb25zZSLSAQoQQ29ubmVjdFN0YXRl",
-            "RGF0YRIKCgJpZBgBIAEoCRINCgVzdGF0ZRgCIAEoCRIUCgxpc19jb25uZWN0",
-            "ZWQYAyABKAgSEAoIaXNfYWxpdmUYBCABKAgSFAoMYXBpX2lzX2FsaXZlGAUg",
-            "ASgIEg4KBnNlcnZlchgGIAEoCRIPCgdhY2NvdW50GAcgASgEEhUKDWVycm9y",
-            "X21lc3NhZ2UYCCABKAkSLQoJdGltZXN0YW1wGAkgASgLMhouZ29vZ2xlLnBy",
-            "b3RvYnVmLlRpbWVzdGFtcCIZChdDb25uZWN0aW9uU3RhdHVzUmVxdWVzdCJ9",
-            "ChVDb25uZWN0aW9uU3RhdHVzUmVwbHkSMgoEZGF0YRgBIAEoCzIiLm10NF90",
-            "ZXJtX2FwaS5Db25uZWN0aW9uU3RhdHVzRGF0YUgAEiQKBWVycm9yGAIgASgL",
-            "MhMubXQ0X3Rlcm1fYXBpLkVycm9ySABCCgoIcmVzcG9uc2UipwEKFENvbm5l",
-            "Y3Rpb25TdGF0dXNEYXRhEgoKAmlkGAEgASgJEhQKDGlzX2Nvbm5lY3RlZBgC",
-            "IAEoCBIQCghpc19hbGl2ZRgDIAEoCBIUCgxhcGlfaXNfYWxpdmUYBCABKAgS",
-            "DgoGc2VydmVyGAUgASgJEg8KB2FjY291bnQYBiABKAQSFQoNZXJyb3JfbWVz",
-            "c2FnZRgHIAEoCRINCgVzdGF0ZRgIIAEoCSo5CgpQcm94eVR5cGVzEggKBE5v",
-            "bmUQABIJCgVIdHRwcxABEgoKBlNvY2tzNBACEgoKBlNvY2tzNRADKiAKDFRl",
-            "cm1pbmFsVHlwZRIHCgNNVDQQABIHCgNNVDUQATLdDAoKQ29ubmVjdGlvbhJd",
-            "CglDb25uZWN0RXgSHi5tdDRfdGVybV9hcGkuQ29ubmVjdEV4UmVxdWVzdBoc",
-            "Lm10NF90ZXJtX2FwaS5Db25uZWN0RXhSZXBseSISgtPkkwIMEgovQ29ubmVj",
-            "dEV4ElUKB0Nvbm5lY3QSHC5tdDRfdGVybV9hcGkuQ29ubmVjdFJlcXVlc3Qa",
-            "Gi5tdDRfdGVybV9hcGkuQ29ubmVjdFJlcGx5IhCC0+STAgoSCC9Db25uZWN0",
-            "EmkKDENvbm5lY3RQcm94eRIhLm10NF90ZXJtX2FwaS5Db25uZWN0UHJveHlS",
-            "ZXF1ZXN0Gh8ubXQ0X3Rlcm1fYXBpLkNvbm5lY3RQcm94eVJlcGx5IhWC0+ST",
-            "Ag8SDS9Db25uZWN0UHJveHkSaQoMQ2hlY2tDb25uZWN0EiEubXQ0X3Rlcm1f",
-            "YXBpLkNoZWNrQ29ubmVjdFJlcXVlc3QaHy5tdDRfdGVybV9hcGkuQ2hlY2tD",
-            "b25uZWN0UmVwbHkiFYLT5JMCDxINL0NoZWNrQ29ubmVjdBJpCgxDb25uZWN0",
-            "U3RhdGUSIS5tdDRfdGVybV9hcGkuQ29ubmVjdFN0YXRlUmVxdWVzdBofLm10",
-            "NF90ZXJtX2FwaS5Db25uZWN0U3RhdGVSZXBseSIVgtPkkwIPEg0vQ29ubmVj",
-            "dFN0YXRlEnMKDk9uQ29ubmVjdFN0YXRlEiMubXQ0X3Rlcm1fYXBpLk9uQ29u",
-            "bmVjdFN0YXRlUmVxdWVzdBohLm10NF90ZXJtX2FwaS5PbkNvbm5lY3RTdGF0",
-            "ZVJlcGx5IheC0+STAhESDy9PbkNvbm5lY3RTdGF0ZTABEnkKEENvbm5lY3Rp",
-            "b25TdGF0dXMSJS5tdDRfdGVybV9hcGkuQ29ubmVjdGlvblN0YXR1c1JlcXVl",
-            "c3QaIy5tdDRfdGVybV9hcGkuQ29ubmVjdGlvblN0YXR1c1JlcGx5IhmC0+ST",
-            "AhMSES9Db25uZWN0aW9uU3RhdHVzEmEKCkRpc2Nvbm5lY3QSHy5tdDRfdGVy",
-            "bV9hcGkuRGlzY29ubmVjdFJlcXVlc3QaHS5tdDRfdGVybV9hcGkuRGlzY29u",
-            "bmVjdFJlcGx5IhOC0+STAg0SCy9EaXNjb25uZWN0El0KCVJlY29ubmVjdBIe",
-            "Lm10NF90ZXJtX2FwaS5SZWNvbm5lY3RSZXF1ZXN0GhwubXQ0X3Rlcm1fYXBp",
-            "LlJlY29ubmVjdFJlcGx5IhKC0+STAgwSCi9SZWNvbm5lY3QSbAoOQ29ubmVj",
-            "dEJ5VG9rZW4SIy5tdDRfdGVybV9hcGkuQ29ubmVjdEJ5VG9rZW5SZXF1ZXN0",
-            "GhwubXQ0X3Rlcm1fYXBpLkNvbm5lY3RFeFJlcGx5IheC0+STAhESDy9Db25u",
-            "ZWN0QnlUb2tlbhKpAQocR2V0QnJva2VyU2VydmVyc0J5QnJva2VyTmFtZRIx",
-            "Lm10NF90ZXJtX2FwaS5HZXRCcm9rZXJTZXJ2ZXJzQnlCcm9rZXJOYW1lUmVx",
-            "dWVzdBovLm10NF90ZXJtX2FwaS5HZXRCcm9rZXJTZXJ2ZXJzQnlCcm9rZXJO",
-            "YW1lUmVwbHkiJYLT5JMCHxIdL0dldEJyb2tlclNlcnZlcnNCeUJyb2tlck5h",
-            "bWUSTQoFR2V0SWQSGi5tdDRfdGVybV9hcGkuR2V0SWRSZXF1ZXN0GhgubXQ0",
-            "X3Rlcm1fYXBpLkdldElkUmVwbHkiDoLT5JMCCBIGL0dldElkEmEKClNjcmVl",
-            "bnNob3QSHy5tdDRfdGVybV9hcGkuU2NyZWVuc2hvdFJlcXVlc3QaHS5tdDRf",
-            "dGVybV9hcGkuU2NyZWVuc2hvdFJlcGx5IhOC0+STAg0SCy9TY3JlZW5zaG90",
-            "EmkKDUNvbm5lY3RTdHJlYW0SHC5tdDRfdGVybV9hcGkuQ29ubmVjdFJlcXVl",
-            "c3QaIC5tdDRfdGVybV9hcGkuQ29ubmVjdFN0cmVhbUV2ZW50IhaC0+STAhAS",
-            "Di9Db25uZWN0U3RyZWFtMAESbwoPQ29ubmVjdEV4U3RyZWFtEh4ubXQ0X3Rl",
-            "cm1fYXBpLkNvbm5lY3RFeFJlcXVlc3QaIC5tdDRfdGVybV9hcGkuQ29ubmVj",
-            "dFN0cmVhbUV2ZW50IhiC0+STAhISEC9Db25uZWN0RXhTdHJlYW0wATKKAwoE",
-            "TG9ncxJaCgdKb3VybmFsEhwubXQ0X3Rlcm1fYXBpLkpvdXJuYWxSZXF1ZXN0",
-            "GhoubXQ0X3Rlcm1fYXBpLkpvdXJuYWxSZXBseSIVgtPkkwIPEg0vTG9ncy9K",
-            "b3VybmFsEmQKCU9uSm91cm5hbBIeLm10NF90ZXJtX2FwaS5PbkpvdXJuYWxS",
-            "ZXF1ZXN0GhwubXQ0X3Rlcm1fYXBpLk9uSm91cm5hbFJlcGx5IheC0+STAhES",
-            "Dy9Mb2dzL09uSm91cm5hbDABEloKB0V4cGVydHMSHC5tdDRfdGVybV9hcGku",
-            "Sm91cm5hbFJlcXVlc3QaGi5tdDRfdGVybV9hcGkuSm91cm5hbFJlcGx5IhWC",
-            "0+STAg8SDS9Mb2dzL0V4cGVydHMSZAoJT25FeHBlcnRzEh4ubXQ0X3Rlcm1f",
-            "YXBpLk9uSm91cm5hbFJlcXVlc3QaHC5tdDRfdGVybV9hcGkuT25Kb3VybmFs",
-            "UmVwbHkiF4LT5JMCERIPL0xvZ3MvT25FeHBlcnRzMAFCQloxZ2l0Lm10YXBp",
-            "LmlvL3Jvb3QvbXJwYy1wcm90by5naXQvbXQ0L2xpYnJhcmllcy9nb6oCDG10",
-            "NF90ZXJtX2FwaWIGcHJvdG8z"));
+            "bXRfc2VydmVyGAMgASgIIlMKEURpc2Nvbm5lY3RSZXF1ZXN0EhMKBnJlYXNv",
+            "bhgBIAEoCUgAiAEBEhMKBmRlbGV0ZRgCIAEoCEgBiAEBQgkKB19yZWFzb25C",
+            "CQoHX2RlbGV0ZSJxCg9EaXNjb25uZWN0UmVwbHkSLAoEZGF0YRgBIAEoCzIc",
+            "Lm10NF90ZXJtX2FwaS5EaXNjb25uZWN0RGF0YUgAEiQKBWVycm9yGAIgASgL",
+            "MhMubXQ0X3Rlcm1fYXBpLkVycm9ySABCCgoIcmVzcG9uc2UiSwoORGlzY29u",
+            "bmVjdERhdGESGQoRdW5pcXVlX2lkZW50aWZpZXIYASABKAkSHgoWZnVsbF9s",
+            "aWZlX3RpbWVfc2Vjb25kcxgCIAEoAyIuCgxHZXRJZFJlcXVlc3QSDAoEdXNl",
+            "chgBIAEoCRIQCghwYXNzd29yZBgCIAEoCSJnCgpHZXRJZFJlcGx5EicKBGRh",
+            "dGEYASABKAsyFy5tdDRfdGVybV9hcGkuR2V0SWREYXRhSAASJAoFZXJyb3IY",
+            "AiABKAsyEy5tdDRfdGVybV9hcGkuRXJyb3JIAEIKCghyZXNwb25zZSIXCglH",
+            "ZXRJZERhdGESCgoCaWQYASABKAkiFQoTQ29ubmVjdFN0YXRlUmVxdWVzdCJ1",
+            "ChFDb25uZWN0U3RhdGVSZXBseRIuCgRkYXRhGAEgASgLMh4ubXQ0X3Rlcm1f",
+            "YXBpLkNvbm5lY3RTdGF0ZURhdGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90",
+            "ZXJtX2FwaS5FcnJvckgAQgoKCHJlc3BvbnNlIi0KFU9uQ29ubmVjdFN0YXRl",
+            "UmVxdWVzdBIUCgx0ZXJtaW5hbF9pZHMYASADKAkidwoTT25Db25uZWN0U3Rh",
+            "dGVSZXBseRIuCgRkYXRhGAEgASgLMh4ubXQ0X3Rlcm1fYXBpLkNvbm5lY3RT",
+            "dGF0ZURhdGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJv",
+            "ckgAQgoKCHJlc3BvbnNlItIBChBDb25uZWN0U3RhdGVEYXRhEgoKAmlkGAEg",
+            "ASgJEg0KBXN0YXRlGAIgASgJEhQKDGlzX2Nvbm5lY3RlZBgDIAEoCBIQCghp",
+            "c19hbGl2ZRgEIAEoCBIUCgxhcGlfaXNfYWxpdmUYBSABKAgSDgoGc2VydmVy",
+            "GAYgASgJEg8KB2FjY291bnQYByABKAQSFQoNZXJyb3JfbWVzc2FnZRgIIAEo",
+            "CRItCgl0aW1lc3RhbXAYCSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0",
+            "YW1wIhkKF0Nvbm5lY3Rpb25TdGF0dXNSZXF1ZXN0In0KFUNvbm5lY3Rpb25T",
+            "dGF0dXNSZXBseRIyCgRkYXRhGAEgASgLMiIubXQ0X3Rlcm1fYXBpLkNvbm5l",
+            "Y3Rpb25TdGF0dXNEYXRhSAASJAoFZXJyb3IYAiABKAsyEy5tdDRfdGVybV9h",
+            "cGkuRXJyb3JIAEIKCghyZXNwb25zZSKnAQoUQ29ubmVjdGlvblN0YXR1c0Rh",
+            "dGESCgoCaWQYASABKAkSFAoMaXNfY29ubmVjdGVkGAIgASgIEhAKCGlzX2Fs",
+            "aXZlGAMgASgIEhQKDGFwaV9pc19hbGl2ZRgEIAEoCBIOCgZzZXJ2ZXIYBSAB",
+            "KAkSDwoHYWNjb3VudBgGIAEoBBIVCg1lcnJvcl9tZXNzYWdlGAcgASgJEg0K",
+            "BXN0YXRlGAggASgJKjkKClByb3h5VHlwZXMSCAoETm9uZRAAEgkKBUh0dHBz",
+            "EAESCgoGU29ja3M0EAISCgoGU29ja3M1EAMqIAoMVGVybWluYWxUeXBlEgcK",
+            "A01UNBAAEgcKA01UNRABMt0MCgpDb25uZWN0aW9uEl0KCUNvbm5lY3RFeBIe",
+            "Lm10NF90ZXJtX2FwaS5Db25uZWN0RXhSZXF1ZXN0GhwubXQ0X3Rlcm1fYXBp",
+            "LkNvbm5lY3RFeFJlcGx5IhKC0+STAgwSCi9Db25uZWN0RXgSVQoHQ29ubmVj",
+            "dBIcLm10NF90ZXJtX2FwaS5Db25uZWN0UmVxdWVzdBoaLm10NF90ZXJtX2Fw",
+            "aS5Db25uZWN0UmVwbHkiEILT5JMCChIIL0Nvbm5lY3QSaQoMQ29ubmVjdFBy",
+            "b3h5EiEubXQ0X3Rlcm1fYXBpLkNvbm5lY3RQcm94eVJlcXVlc3QaHy5tdDRf",
+            "dGVybV9hcGkuQ29ubmVjdFByb3h5UmVwbHkiFYLT5JMCDxINL0Nvbm5lY3RQ",
+            "cm94eRJpCgxDaGVja0Nvbm5lY3QSIS5tdDRfdGVybV9hcGkuQ2hlY2tDb25u",
+            "ZWN0UmVxdWVzdBofLm10NF90ZXJtX2FwaS5DaGVja0Nvbm5lY3RSZXBseSIV",
+            "gtPkkwIPEg0vQ2hlY2tDb25uZWN0EmkKDENvbm5lY3RTdGF0ZRIhLm10NF90",
+            "ZXJtX2FwaS5Db25uZWN0U3RhdGVSZXF1ZXN0Gh8ubXQ0X3Rlcm1fYXBpLkNv",
+            "bm5lY3RTdGF0ZVJlcGx5IhWC0+STAg8SDS9Db25uZWN0U3RhdGUScwoOT25D",
+            "b25uZWN0U3RhdGUSIy5tdDRfdGVybV9hcGkuT25Db25uZWN0U3RhdGVSZXF1",
+            "ZXN0GiEubXQ0X3Rlcm1fYXBpLk9uQ29ubmVjdFN0YXRlUmVwbHkiF4LT5JMC",
+            "ERIPL09uQ29ubmVjdFN0YXRlMAESeQoQQ29ubmVjdGlvblN0YXR1cxIlLm10",
+            "NF90ZXJtX2FwaS5Db25uZWN0aW9uU3RhdHVzUmVxdWVzdBojLm10NF90ZXJt",
+            "X2FwaS5Db25uZWN0aW9uU3RhdHVzUmVwbHkiGYLT5JMCExIRL0Nvbm5lY3Rp",
+            "b25TdGF0dXMSYQoKRGlzY29ubmVjdBIfLm10NF90ZXJtX2FwaS5EaXNjb25u",
+            "ZWN0UmVxdWVzdBodLm10NF90ZXJtX2FwaS5EaXNjb25uZWN0UmVwbHkiE4LT",
+            "5JMCDRILL0Rpc2Nvbm5lY3QSXQoJUmVjb25uZWN0Eh4ubXQ0X3Rlcm1fYXBp",
+            "LlJlY29ubmVjdFJlcXVlc3QaHC5tdDRfdGVybV9hcGkuUmVjb25uZWN0UmVw",
+            "bHkiEoLT5JMCDBIKL1JlY29ubmVjdBJsCg5Db25uZWN0QnlUb2tlbhIjLm10",
+            "NF90ZXJtX2FwaS5Db25uZWN0QnlUb2tlblJlcXVlc3QaHC5tdDRfdGVybV9h",
+            "cGkuQ29ubmVjdEV4UmVwbHkiF4LT5JMCERIPL0Nvbm5lY3RCeVRva2VuEqkB",
+            "ChxHZXRCcm9rZXJTZXJ2ZXJzQnlCcm9rZXJOYW1lEjEubXQ0X3Rlcm1fYXBp",
+            "LkdldEJyb2tlclNlcnZlcnNCeUJyb2tlck5hbWVSZXF1ZXN0Gi8ubXQ0X3Rl",
+            "cm1fYXBpLkdldEJyb2tlclNlcnZlcnNCeUJyb2tlck5hbWVSZXBseSIlgtPk",
+            "kwIfEh0vR2V0QnJva2VyU2VydmVyc0J5QnJva2VyTmFtZRJNCgVHZXRJZBIa",
+            "Lm10NF90ZXJtX2FwaS5HZXRJZFJlcXVlc3QaGC5tdDRfdGVybV9hcGkuR2V0",
+            "SWRSZXBseSIOgtPkkwIIEgYvR2V0SWQSYQoKU2NyZWVuc2hvdBIfLm10NF90",
+            "ZXJtX2FwaS5TY3JlZW5zaG90UmVxdWVzdBodLm10NF90ZXJtX2FwaS5TY3Jl",
+            "ZW5zaG90UmVwbHkiE4LT5JMCDRILL1NjcmVlbnNob3QSaQoNQ29ubmVjdFN0",
+            "cmVhbRIcLm10NF90ZXJtX2FwaS5Db25uZWN0UmVxdWVzdBogLm10NF90ZXJt",
+            "X2FwaS5Db25uZWN0U3RyZWFtRXZlbnQiFoLT5JMCEBIOL0Nvbm5lY3RTdHJl",
+            "YW0wARJvCg9Db25uZWN0RXhTdHJlYW0SHi5tdDRfdGVybV9hcGkuQ29ubmVj",
+            "dEV4UmVxdWVzdBogLm10NF90ZXJtX2FwaS5Db25uZWN0U3RyZWFtRXZlbnQi",
+            "GILT5JMCEhIQL0Nvbm5lY3RFeFN0cmVhbTABMooDCgRMb2dzEloKB0pvdXJu",
+            "YWwSHC5tdDRfdGVybV9hcGkuSm91cm5hbFJlcXVlc3QaGi5tdDRfdGVybV9h",
+            "cGkuSm91cm5hbFJlcGx5IhWC0+STAg8SDS9Mb2dzL0pvdXJuYWwSZAoJT25K",
+            "b3VybmFsEh4ubXQ0X3Rlcm1fYXBpLk9uSm91cm5hbFJlcXVlc3QaHC5tdDRf",
+            "dGVybV9hcGkuT25Kb3VybmFsUmVwbHkiF4LT5JMCERIPL0xvZ3MvT25Kb3Vy",
+            "bmFsMAESWgoHRXhwZXJ0cxIcLm10NF90ZXJtX2FwaS5Kb3VybmFsUmVxdWVz",
+            "dBoaLm10NF90ZXJtX2FwaS5Kb3VybmFsUmVwbHkiFYLT5JMCDxINL0xvZ3Mv",
+            "RXhwZXJ0cxJkCglPbkV4cGVydHMSHi5tdDRfdGVybV9hcGkuT25Kb3VybmFs",
+            "UmVxdWVzdBocLm10NF90ZXJtX2FwaS5PbkpvdXJuYWxSZXBseSIXgtPkkwIR",
+            "Eg8vTG9ncy9PbkV4cGVydHMwAUJCWjFnaXQubXRhcGkuaW8vcm9vdC9tcnBj",
+            "LXByb3RvLmdpdC9tdDQvbGlicmFyaWVzL2dvqgIMbXQ0X3Rlcm1fYXBpYgZw",
+            "cm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Api.AnnotationsReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Mt4TermApi.MrpcMt4ErrorReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::mt4_term_api.ProxyTypes), typeof(global::mt4_term_api.TerminalType), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -225,7 +226,7 @@ namespace mt4_term_api {
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.CheckConnectReply), global::mt4_term_api.CheckConnectReply.Parser, new[]{ "Data", "Error" }, new[]{ "Response" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.CheckConnectData), global::mt4_term_api.CheckConnectData.Parser, new[]{ "UniqueIdentifier", "HealthCheck" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.TerminalHealthCheck), global::mt4_term_api.TerminalHealthCheck.Parser, new[]{ "IsAlive", "ApiIsAlive", "TerminalIsConnectedToMtServer" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.DisconnectRequest), global::mt4_term_api.DisconnectRequest.Parser, new[]{ "Reason" }, new[]{ "Reason" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.DisconnectRequest), global::mt4_term_api.DisconnectRequest.Parser, new[]{ "Reason", "Delete" }, new[]{ "Reason", "Delete" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.DisconnectReply), global::mt4_term_api.DisconnectReply.Parser, new[]{ "Data", "Error" }, new[]{ "Response" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.DisconnectData), global::mt4_term_api.DisconnectData.Parser, new[]{ "UniqueIdentifier", "FullLifeTimeSeconds" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.GetIdRequest), global::mt4_term_api.GetIdRequest.Parser, new[]{ "User", "Password" }, null, null, null, null),
@@ -278,6 +279,7 @@ namespace mt4_term_api {
   /// <summary>
   /// Event message streamed during ConnectStream / ConnectExStream.
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectStreamEvent : pb::IMessage<ConnectStreamEvent>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -670,7 +672,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -726,7 +732,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -778,6 +788,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class JournalRequest : pb::IMessage<JournalRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -904,7 +915,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -919,7 +934,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -930,6 +949,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class JournalReply : pb::IMessage<JournalReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -1153,7 +1173,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -1186,7 +1210,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -1215,6 +1243,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class OnJournalRequest : pb::IMessage<OnJournalRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -1341,7 +1370,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -1356,7 +1389,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -1367,6 +1404,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class OnJournalReply : pb::IMessage<OnJournalReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -1590,7 +1628,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -1623,7 +1665,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -1652,6 +1698,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class GetTerminalJournalData : pb::IMessage<GetTerminalJournalData>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -1799,7 +1846,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -1818,7 +1869,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -1833,6 +1888,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class TerminalJournalRow : pb::IMessage<TerminalJournalRow>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -2058,7 +2114,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -2088,7 +2148,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -2114,6 +2178,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ScreenshotRequest : pb::IMessage<ScreenshotRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -2240,7 +2305,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -2255,7 +2324,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -2266,6 +2339,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ScreenshotReply : pb::IMessage<ScreenshotReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -2489,7 +2563,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -2522,7 +2600,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -2551,6 +2633,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ScreenshotData : pb::IMessage<ScreenshotData>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -2793,7 +2876,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -2824,7 +2911,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -2851,6 +2942,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class GetBrokerServersByBrokerNameRequest : pb::IMessage<GetBrokerServersByBrokerNameRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -3006,7 +3098,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -3025,7 +3121,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -3040,6 +3140,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class GetBrokerServersByBrokerNameReply : pb::IMessage<GetBrokerServersByBrokerNameReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -3263,7 +3364,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -3296,7 +3401,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -3325,6 +3434,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class GetBrokerServersByBrokerNameData : pb::IMessage<GetBrokerServersByBrokerNameData>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -3469,7 +3579,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -3488,7 +3602,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -3506,6 +3624,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static partial class Types {
+      [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
       public sealed partial class BrokerResult : pb::IMessage<BrokerResult>
       #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
           , pb::IBufferMessage
@@ -3679,7 +3798,11 @@ namespace mt4_term_api {
         #else
           uint tag;
           while ((tag = input.ReadTag()) != 0) {
-            switch(tag) {
+          if ((tag & 7) == 4) {
+            // Abort on any end group tag.
+            return;
+          }
+          switch(tag) {
               default:
                 _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
                 break;
@@ -3702,7 +3825,11 @@ namespace mt4_term_api {
         void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
           uint tag;
           while ((tag = input.ReadTag()) != 0) {
-            switch(tag) {
+          if ((tag & 7) == 4) {
+            // Abort on any end group tag.
+            return;
+          }
+          switch(tag) {
               default:
                 _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
                 break;
@@ -3721,6 +3848,7 @@ namespace mt4_term_api {
 
       }
 
+      [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
       public sealed partial class BrokerServer : pb::IMessage<BrokerServer>
       #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
           , pb::IBufferMessage
@@ -3782,11 +3910,13 @@ namespace mt4_term_api {
 
         /// <summary>Field number for the "logo_url" field.</summary>
         public const int LogoUrlFieldNumber = 2;
+        private readonly static string LogoUrlDefaultValue = "";
+
         private string logoUrl_;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
         public string LogoUrl {
-          get { return logoUrl_ ?? ""; }
+          get { return logoUrl_ ?? LogoUrlDefaultValue; }
           set {
             logoUrl_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
           }
@@ -3806,11 +3936,13 @@ namespace mt4_term_api {
 
         /// <summary>Field number for the "site" field.</summary>
         public const int SiteFieldNumber = 3;
+        private readonly static string SiteDefaultValue = "";
+
         private string site_;
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
         [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
         public string Site {
-          get { return site_ ?? ""; }
+          get { return site_ ?? SiteDefaultValue; }
           set {
             site_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
           }
@@ -3976,7 +4108,11 @@ namespace mt4_term_api {
         #else
           uint tag;
           while ((tag = input.ReadTag()) != 0) {
-            switch(tag) {
+          if ((tag & 7) == 4) {
+            // Abort on any end group tag.
+            return;
+          }
+          switch(tag) {
               default:
                 _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
                 break;
@@ -4007,7 +4143,11 @@ namespace mt4_term_api {
         void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
           uint tag;
           while ((tag = input.ReadTag()) != 0) {
-            switch(tag) {
+          if ((tag & 7) == 4) {
+            // Abort on any end group tag.
+            return;
+          }
+          switch(tag) {
               default:
                 _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
                 break;
@@ -4039,6 +4179,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectExRequest : pb::IMessage<ConnectExRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -4152,6 +4293,8 @@ namespace mt4_term_api {
 
     /// <summary>Field number for the "timeout_seconds" field.</summary>
     public const int TimeoutSecondsFieldNumber = 6;
+    private readonly static uint TimeoutSecondsDefaultValue = 0;
+
     private uint timeoutSeconds_;
     /// <summary>
     /// Time waiting for terminal being connected (default 60) [Optional]
@@ -4159,7 +4302,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint TimeoutSeconds {
-      get { if ((_hasBits0 & 1) != 0) { return timeoutSeconds_; } else { return 0; } }
+      get { if ((_hasBits0 & 1) != 0) { return timeoutSeconds_; } else { return TimeoutSecondsDefaultValue; } }
       set {
         _hasBits0 |= 1;
         timeoutSeconds_ = value;
@@ -4180,6 +4323,8 @@ namespace mt4_term_api {
 
     /// <summary>Field number for the "name" field.</summary>
     public const int NameFieldNumber = 7;
+    private readonly static string NameDefaultValue = "";
+
     private string name_;
     /// <summary>
     /// Optional terminal name or creator identifier [Optional]
@@ -4187,7 +4332,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Name {
-      get { return name_ ?? ""; }
+      get { return name_ ?? NameDefaultValue; }
       set {
         name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
@@ -4207,6 +4352,8 @@ namespace mt4_term_api {
 
     /// <summary>Field number for the "expiration" field.</summary>
     public const int ExpirationFieldNumber = 8;
+    private readonly static uint ExpirationDefaultValue = 0;
+
     private uint expiration_;
     /// <summary>
     /// Optional terminal lifetime in minutes. 0 (default) = infinite (trial max 15 min). [Optional]
@@ -4214,7 +4361,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint Expiration {
-      get { if ((_hasBits0 & 2) != 0) { return expiration_; } else { return 0; } }
+      get { if ((_hasBits0 & 2) != 0) { return expiration_; } else { return ExpirationDefaultValue; } }
       set {
         _hasBits0 |= 2;
         expiration_ = value;
@@ -4418,7 +4565,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -4461,7 +4612,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -4506,6 +4661,7 @@ namespace mt4_term_api {
   /// carries only optional wait overrides. The terminal id MUST be supplied in the
   /// grpc 'id' header (same as every other Connect*/query call).
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectByTokenRequest : pb::IMessage<ConnectByTokenRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -4555,6 +4711,8 @@ namespace mt4_term_api {
 
     /// <summary>Field number for the "timeout_seconds" field.</summary>
     public const int TimeoutSecondsFieldNumber = 2;
+    private readonly static uint TimeoutSecondsDefaultValue = 0;
+
     private uint timeoutSeconds_;
     /// <summary>
     /// override how long to wait for the terminal (default 60) [Optional]
@@ -4562,7 +4720,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint TimeoutSeconds {
-      get { if ((_hasBits0 & 1) != 0) { return timeoutSeconds_; } else { return 0; } }
+      get { if ((_hasBits0 & 1) != 0) { return timeoutSeconds_; } else { return TimeoutSecondsDefaultValue; } }
       set {
         _hasBits0 |= 1;
         timeoutSeconds_ = value;
@@ -4583,6 +4741,8 @@ namespace mt4_term_api {
 
     /// <summary>Field number for the "expiration" field.</summary>
     public const int ExpirationFieldNumber = 3;
+    private readonly static uint ExpirationDefaultValue = 0;
+
     private uint expiration_;
     /// <summary>
     /// Optional terminal lifetime in minutes. 0 (default) = infinite (trial max 15 min). [Optional]
@@ -4590,7 +4750,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint Expiration {
-      get { if ((_hasBits0 & 2) != 0) { return expiration_; } else { return 0; } }
+      get { if ((_hasBits0 & 2) != 0) { return expiration_; } else { return ExpirationDefaultValue; } }
       set {
         _hasBits0 |= 2;
         expiration_ = value;
@@ -4724,7 +4884,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -4747,7 +4911,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -4766,6 +4934,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectExReply : pb::IMessage<ConnectExReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -4989,7 +5158,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -5022,7 +5195,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -5051,6 +5228,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ReconnectRequest : pb::IMessage<ReconnectRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -5099,6 +5277,8 @@ namespace mt4_term_api {
 
     /// <summary>Field number for the "force_reconnection" field.</summary>
     public const int ForceReconnectionFieldNumber = 1;
+    private readonly static bool ForceReconnectionDefaultValue = false;
+
     private bool forceReconnection_;
     /// <summary>
     /// Recreate a terminal instance even if current instance is alive
@@ -5106,7 +5286,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public bool ForceReconnection {
-      get { if ((_hasBits0 & 1) != 0) { return forceReconnection_; } else { return false; } }
+      get { if ((_hasBits0 & 1) != 0) { return forceReconnection_; } else { return ForceReconnectionDefaultValue; } }
       set {
         _hasBits0 |= 1;
         forceReconnection_ = value;
@@ -5224,7 +5404,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -5243,7 +5427,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -5258,6 +5446,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ReconnectReply : pb::IMessage<ReconnectReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -5481,7 +5670,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -5514,7 +5707,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -5543,6 +5740,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ReconnectData : pb::IMessage<ReconnectData>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -5803,7 +6001,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -5838,7 +6040,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -5869,6 +6075,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectRequest : pb::IMessage<ConnectRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -5995,6 +6202,8 @@ namespace mt4_term_api {
 
     /// <summary>Field number for the "timeout_seconds" field.</summary>
     public const int TimeoutSecondsFieldNumber = 6;
+    private readonly static uint TimeoutSecondsDefaultValue = 0;
+
     private uint timeoutSeconds_;
     /// <summary>
     /// Time waiting for terminal being connected (default 60) [Optional]
@@ -6002,7 +6211,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint TimeoutSeconds {
-      get { if ((_hasBits0 & 1) != 0) { return timeoutSeconds_; } else { return 0; } }
+      get { if ((_hasBits0 & 1) != 0) { return timeoutSeconds_; } else { return TimeoutSecondsDefaultValue; } }
       set {
         _hasBits0 |= 1;
         timeoutSeconds_ = value;
@@ -6023,6 +6232,8 @@ namespace mt4_term_api {
 
     /// <summary>Field number for the "name" field.</summary>
     public const int NameFieldNumber = 7;
+    private readonly static string NameDefaultValue = "";
+
     private string name_;
     /// <summary>
     /// Optional terminal name or creator identifier [Optional]
@@ -6030,7 +6241,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Name {
-      get { return name_ ?? ""; }
+      get { return name_ ?? NameDefaultValue; }
       set {
         name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
@@ -6050,6 +6261,8 @@ namespace mt4_term_api {
 
     /// <summary>Field number for the "expiration" field.</summary>
     public const int ExpirationFieldNumber = 8;
+    private readonly static uint ExpirationDefaultValue = 0;
+
     private uint expiration_;
     /// <summary>
     /// Optional terminal lifetime in minutes. 0 (default) = infinite (trial max 15 min). [Optional]
@@ -6057,7 +6270,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint Expiration {
-      get { if ((_hasBits0 & 2) != 0) { return expiration_; } else { return 0; } }
+      get { if ((_hasBits0 & 2) != 0) { return expiration_; } else { return ExpirationDefaultValue; } }
       set {
         _hasBits0 |= 2;
         expiration_ = value;
@@ -6277,7 +6490,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -6324,7 +6541,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -6367,6 +6588,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ExpertAdviser : pb::IMessage<ExpertAdviser>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -6554,7 +6776,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -6577,7 +6803,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -6596,6 +6826,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectReply : pb::IMessage<ConnectReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -6819,7 +7050,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -6852,7 +7087,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -6881,6 +7120,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectData : pb::IMessage<ConnectData>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -7071,7 +7311,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -7094,7 +7338,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -7127,6 +7375,7 @@ namespace mt4_term_api {
   ///  "proxyType": "Socks5"
   /// }
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectProxyRequest : pb::IMessage<ConnectProxyRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -7333,6 +7582,8 @@ namespace mt4_term_api {
 
     /// <summary>Field number for the "timeout_seconds" field.</summary>
     public const int TimeoutSecondsFieldNumber = 11;
+    private readonly static uint TimeoutSecondsDefaultValue = 0;
+
     private uint timeoutSeconds_;
     /// <summary>
     /// Time waiting for terminal being connected (default 60) [Optional]
@@ -7340,7 +7591,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint TimeoutSeconds {
-      get { if ((_hasBits0 & 1) != 0) { return timeoutSeconds_; } else { return 0; } }
+      get { if ((_hasBits0 & 1) != 0) { return timeoutSeconds_; } else { return TimeoutSecondsDefaultValue; } }
       set {
         _hasBits0 |= 1;
         timeoutSeconds_ = value;
@@ -7361,6 +7612,8 @@ namespace mt4_term_api {
 
     /// <summary>Field number for the "name" field.</summary>
     public const int NameFieldNumber = 12;
+    private readonly static string NameDefaultValue = "";
+
     private string name_;
     /// <summary>
     /// Optional terminal name or creator identifier [Optional]
@@ -7368,7 +7621,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Name {
-      get { return name_ ?? ""; }
+      get { return name_ ?? NameDefaultValue; }
       set {
         name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
@@ -7388,6 +7641,8 @@ namespace mt4_term_api {
 
     /// <summary>Field number for the "expiration" field.</summary>
     public const int ExpirationFieldNumber = 13;
+    private readonly static uint ExpirationDefaultValue = 0;
+
     private uint expiration_;
     /// <summary>
     /// Optional terminal lifetime in minutes. 0 (default) = infinite (trial max 15 min). [Optional]
@@ -7395,7 +7650,7 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public uint Expiration {
-      get { if ((_hasBits0 & 2) != 0) { return expiration_; } else { return 0; } }
+      get { if ((_hasBits0 & 2) != 0) { return expiration_; } else { return ExpirationDefaultValue; } }
       set {
         _hasBits0 |= 2;
         expiration_ = value;
@@ -7695,7 +7950,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -7762,7 +8021,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -7825,6 +8088,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectProxyReply : pb::IMessage<ConnectProxyReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -8048,7 +8312,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -8081,7 +8349,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -8110,6 +8382,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectProxyData : pb::IMessage<ConnectProxyData>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -8300,7 +8573,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -8323,7 +8600,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -8345,6 +8626,7 @@ namespace mt4_term_api {
   /// <summary>
   /// Do not forget to add header 'mt-sticky-session-header' with a Connection unique identifier value
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class CheckConnectRequest : pb::IMessage<CheckConnectRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -8471,7 +8753,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -8486,7 +8772,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -8497,6 +8787,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class CheckConnectReply : pb::IMessage<CheckConnectReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -8720,7 +9011,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -8753,7 +9048,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -8782,6 +9081,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class CheckConnectData : pb::IMessage<CheckConnectData>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -8975,7 +9275,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -9001,7 +9305,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -9023,6 +9331,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class TerminalHealthCheck : pb::IMessage<TerminalHealthCheck>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -9239,7 +9548,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -9266,7 +9579,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -9292,6 +9609,7 @@ namespace mt4_term_api {
   /// <summary>
   /// Do not forget to add header 'mt-sticky-session-header' with a Connection unique identifier value
   /// </summary>
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class DisconnectRequest : pb::IMessage<DisconnectRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -9299,6 +9617,7 @@ namespace mt4_term_api {
   {
     private static readonly pb::MessageParser<DisconnectRequest> _parser = new pb::MessageParser<DisconnectRequest>(() => new DisconnectRequest());
     private pb::UnknownFieldSet _unknownFields;
+    private int _hasBits0;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pb::MessageParser<DisconnectRequest> Parser { get { return _parser; } }
@@ -9326,7 +9645,9 @@ namespace mt4_term_api {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public DisconnectRequest(DisconnectRequest other) : this() {
+      _hasBits0 = other._hasBits0;
       reason_ = other.reason_;
+      delete_ = other.delete_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -9338,11 +9659,13 @@ namespace mt4_term_api {
 
     /// <summary>Field number for the "reason" field.</summary>
     public const int ReasonFieldNumber = 1;
+    private readonly static string ReasonDefaultValue = "";
+
     private string reason_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public string Reason {
-      get { return reason_ ?? ""; }
+      get { return reason_ ?? ReasonDefaultValue; }
       set {
         reason_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
@@ -9358,6 +9681,33 @@ namespace mt4_term_api {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public void ClearReason() {
       reason_ = null;
+    }
+
+    /// <summary>Field number for the "delete" field.</summary>
+    public const int DeleteFieldNumber = 2;
+    private readonly static bool DeleteDefaultValue = false;
+
+    private bool delete_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Delete {
+      get { if ((_hasBits0 & 1) != 0) { return delete_; } else { return DeleteDefaultValue; } }
+      set {
+        _hasBits0 |= 1;
+        delete_ = value;
+      }
+    }
+    /// <summary>Gets whether the "delete" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasDelete {
+      get { return (_hasBits0 & 1) != 0; }
+    }
+    /// <summary>Clears the value of the "delete" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearDelete() {
+      _hasBits0 &= ~1;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9376,6 +9726,7 @@ namespace mt4_term_api {
         return true;
       }
       if (Reason != other.Reason) return false;
+      if (Delete != other.Delete) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -9384,6 +9735,7 @@ namespace mt4_term_api {
     public override int GetHashCode() {
       int hash = 1;
       if (HasReason) hash ^= Reason.GetHashCode();
+      if (HasDelete) hash ^= Delete.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -9406,6 +9758,10 @@ namespace mt4_term_api {
         output.WriteRawTag(10);
         output.WriteString(Reason);
       }
+      if (HasDelete) {
+        output.WriteRawTag(16);
+        output.WriteBool(Delete);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -9420,6 +9776,10 @@ namespace mt4_term_api {
         output.WriteRawTag(10);
         output.WriteString(Reason);
       }
+      if (HasDelete) {
+        output.WriteRawTag(16);
+        output.WriteBool(Delete);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -9432,6 +9792,9 @@ namespace mt4_term_api {
       int size = 0;
       if (HasReason) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Reason);
+      }
+      if (HasDelete) {
+        size += 1 + 1;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -9448,6 +9811,9 @@ namespace mt4_term_api {
       if (other.HasReason) {
         Reason = other.Reason;
       }
+      if (other.HasDelete) {
+        Delete = other.Delete;
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -9459,12 +9825,20 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
             Reason = input.ReadString();
+            break;
+          }
+          case 16: {
+            Delete = input.ReadBool();
             break;
           }
         }
@@ -9478,12 +9852,20 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
             Reason = input.ReadString();
+            break;
+          }
+          case 16: {
+            Delete = input.ReadBool();
             break;
           }
         }
@@ -9493,6 +9875,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class DisconnectReply : pb::IMessage<DisconnectReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -9716,7 +10099,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -9749,7 +10136,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -9778,6 +10169,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class DisconnectData : pb::IMessage<DisconnectData>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -9965,7 +10357,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -9988,7 +10384,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -10007,6 +10407,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class GetIdRequest : pb::IMessage<GetIdRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -10197,7 +10598,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -10220,7 +10625,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -10239,6 +10648,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class GetIdReply : pb::IMessage<GetIdReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -10462,7 +10872,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -10495,7 +10909,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -10524,6 +10942,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class GetIdData : pb::IMessage<GetIdData>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -10682,7 +11101,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -10701,7 +11124,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -10716,6 +11143,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectStateRequest : pb::IMessage<ConnectStateRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -10842,7 +11270,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -10857,7 +11289,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -10868,6 +11304,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectStateReply : pb::IMessage<ConnectStateReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -11091,7 +11528,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -11124,7 +11565,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -11153,6 +11598,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class OnConnectStateRequest : pb::IMessage<OnConnectStateRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -11297,7 +11743,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -11316,7 +11766,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -11331,6 +11785,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class OnConnectStateReply : pb::IMessage<OnConnectStateReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -11554,7 +12009,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -11587,7 +12046,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -11616,6 +12079,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectStateData : pb::IMessage<ConnectStateData>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -12009,7 +12473,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -12063,7 +12531,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -12113,6 +12585,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectionStatusRequest : pb::IMessage<ConnectionStatusRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -12239,7 +12712,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -12254,7 +12731,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -12265,6 +12746,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectionStatusReply : pb::IMessage<ConnectionStatusReply>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -12488,7 +12970,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -12521,7 +13007,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
@@ -12550,6 +13040,7 @@ namespace mt4_term_api {
 
   }
 
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ConnectionStatusData : pb::IMessage<ConnectionStatusData>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -12908,7 +13399,11 @@ namespace mt4_term_api {
     #else
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
@@ -12955,7 +13450,11 @@ namespace mt4_term_api {
     void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
-        switch(tag) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;

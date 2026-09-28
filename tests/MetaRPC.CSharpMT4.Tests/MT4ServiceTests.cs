@@ -49,4 +49,22 @@ public class MT4ServiceTests
         Assert.NotNull(reply.Data);
         Assert.Equal("68c935ee-a2b1-4f3e-bb36-3982845cfa85", reply.Data.Id);
     }
+
+    [Fact]
+    public void TestDisconnectRequest_ProtoSerialization()
+    {
+        var req = new mt4_term_api.DisconnectRequest();
+        Assert.False(req.Delete);
+        Assert.False(req.HasDelete);
+
+        var reqWithDelete = new mt4_term_api.DisconnectRequest { Reason = "UnitTests", Delete = true };
+        Assert.True(reqWithDelete.Delete);
+        Assert.True(reqWithDelete.HasDelete);
+        Assert.Equal("UnitTests", reqWithDelete.Reason);
+
+        var bytes = Google.Protobuf.MessageExtensions.ToByteArray(reqWithDelete);
+        var parsed = mt4_term_api.DisconnectRequest.Parser.ParseFrom(bytes);
+        Assert.True(parsed.Delete);
+        Assert.Equal("UnitTests", parsed.Reason);
+    }
 }

@@ -235,7 +235,7 @@ private static TimeSpan NextBackoff(int attempt)
 /// <summary>
 /// Gracefully disconnects from MT4 terminal and disposes underlying resources.
 /// </summary>
-public async Task DisconnectAsync()
+public async Task DisconnectAsync(bool delete = false)
 {
     if (_disposed) return;
     try
@@ -243,7 +243,7 @@ public async Task DisconnectAsync()
         if (!string.IsNullOrEmpty(TerminalInstanceGuid) || Id != default)
         {
             var headers = GetHeaders();
-            await ConnectionClient.DisconnectAsync(new DisconnectRequest(), headers);
+            await ConnectionClient.DisconnectAsync(new DisconnectRequest { Delete = delete }, headers);
         }
     }
     catch
@@ -259,7 +259,7 @@ public async Task DisconnectAsync()
 /// <summary>
 /// Gracefully disconnects and disposes underlying resources. Safe to call multiple times.
 /// </summary>
-public void Disconnect()
+public void Disconnect(bool delete = false)
 {
     if (_disposed) return;
     try
@@ -267,7 +267,7 @@ public void Disconnect()
         if (!string.IsNullOrEmpty(TerminalInstanceGuid) || Id != default)
         {
             var headers = GetHeaders();
-            ConnectionClient.Disconnect(new DisconnectRequest(), headers);
+            ConnectionClient.Disconnect(new DisconnectRequest { Delete = delete }, headers);
         }
     }
     catch
