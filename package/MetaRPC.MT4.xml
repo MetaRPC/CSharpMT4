@@ -92,7 +92,13 @@
             Gets or sets the MetaRPC API key for authentication. Defaults to "TRIAL".
             </summary>
         </member>
-        <member name="M:mt4_term_api.MT4Account.#ctor(System.UInt64,System.String,System.String,System.Guid,System.String)">
+        <member name="P:mt4_term_api.MT4Account.Name">
+            <summary>
+            Gets or sets the optional terminal name or creator identifier sent with every connect request.
+            It labels the terminal instance on the server (for example with the name of the application using it).
+            </summary>
+        </member>
+        <member name="M:mt4_term_api.MT4Account.#ctor(System.UInt64,System.String,System.String,System.Guid,System.String,System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:mt4_term_api.MT4Account"/> class using credentials.
             </summary>
@@ -101,13 +107,14 @@
             <param name="grpcServer">The address of the gRPC server (optional).</param>
             <param name="id">An optional unique identifier for the account instance.</param>
             <param name="apiKey">An optional API key for authentication (defaults to TRIAL or MRPC_API_KEY env var).</param>
+            <param name="name">An optional terminal name or creator identifier, sent with every connect request.</param>
         </member>
         <member name="M:mt4_term_api.MT4Account.#ctor(System.UInt64,System.String,System.String,System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:mt4_term_api.MT4Account"/> class with API key.
             </summary>
         </member>
-        <member name="M:mt4_term_api.MT4Account.ConnectByHostPortAsync(System.String,System.Int32,System.String,System.Boolean,System.Int32,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+        <member name="M:mt4_term_api.MT4Account.ConnectByHostPortAsync(System.String,System.Int32,System.String,System.Boolean,System.Int32,System.Nullable{System.DateTime},System.Threading.CancellationToken,System.String)">
             <summary>
             Connects to the MT4 terminal using credentials provided in the constructor.
             </summary>
@@ -116,6 +123,9 @@
             <param name="baseChartSymbol">The base chart symbol to use (e.g., "EURUSD").</param>
             <param name="waitForTerminalIsAlive">Whether to wait for terminal readiness before returning.</param>
             <param name="timeoutSeconds">How long to wait for terminal readiness before timing out.</param>
+            <param name="deadline">Optional gRPC deadline for the operation.</param>
+            <param name="cancellationToken">Optional cancellation token.</param>
+            <param name="name">Optional terminal name or creator identifier. When given it replaces <see cref="P:mt4_term_api.MT4Account.Name"/> for this and later connects.</param>
             <returns>A task representing the asynchronous connection operation.</returns>
             <exception cref="T:mt4_term_api.ApiExceptionMT4">Thrown if the server returns an error response.</exception>
             <exception cref="T:Grpc.Core.RpcException">Thrown if the gRPC connection fails.</exception>
@@ -130,7 +140,7 @@
             <param name="waitForTerminalIsAlive">Wait for terminal readiness flag.</param>
             <param name="timeoutSeconds">Timeout duration in seconds.</param>
         </member>
-        <member name="M:mt4_term_api.MT4Account.ConnectByServerNameAsync(System.String,System.String,System.Boolean,System.Int32,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+        <member name="M:mt4_term_api.MT4Account.ConnectByServerNameAsync(System.String,System.String,System.Boolean,System.Int32,System.Nullable{System.DateTime},System.Threading.CancellationToken,System.String)">
             <summary>
             Connects to the MT4 terminal using credentials provided in the constructor.
             </summary>
@@ -138,6 +148,9 @@
             <param name="baseChartSymbol">The base chart symbol to use (e.g., "EURUSD").</param>
             <param name="waitForTerminalIsAlive">Whether to wait for terminal readiness before returning.</param>
             <param name="timeoutSeconds">How long to wait for terminal readiness before timing out.</param>
+            <param name="deadline">Optional gRPC deadline for the operation.</param>
+            <param name="cancellationToken">Optional cancellation token.</param>
+            <param name="name">Optional terminal name or creator identifier. When given it replaces <see cref="P:mt4_term_api.MT4Account.Name"/> for this and later connects.</param>
             <returns>A task representing the asynchronous connection operation.</returns>
             <exception cref="T:mt4_term_api.ApiExceptionMT4">Thrown if the server returns an error response.</exception>
             <exception cref="T:Grpc.Core.RpcException">Thrown if the gRPC connection fails.</exception>
