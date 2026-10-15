@@ -146,6 +146,12 @@ namespace mt4_term_api {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
+      /// <summary>
+      /// DEPRECATED: use QuoteHistory.Bars (mt4-term-api-quote-history.proto): paged, bounded, oldest first.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::mt4_term_api.QuoteHistoryReply> QuoteHistory(global::mt4_term_api.QuoteHistoryRequest request, grpc::ServerCallContext context)
       {
@@ -310,21 +316,49 @@ namespace mt4_term_api {
       {
         return CallInvoker.AsyncUnaryCall(__Method_Symbols, null, options, request);
       }
+      /// <summary>
+      /// DEPRECATED: use QuoteHistory.Bars (mt4-term-api-quote-history.proto): paged, bounded, oldest first.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::mt4_term_api.QuoteHistoryReply QuoteHistory(global::mt4_term_api.QuoteHistoryRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return QuoteHistory(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// DEPRECATED: use QuoteHistory.Bars (mt4-term-api-quote-history.proto): paged, bounded, oldest first.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::mt4_term_api.QuoteHistoryReply QuoteHistory(global::mt4_term_api.QuoteHistoryRequest request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_QuoteHistory, null, options, request);
       }
+      /// <summary>
+      /// DEPRECATED: use QuoteHistory.Bars (mt4-term-api-quote-history.proto): paged, bounded, oldest first.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncUnaryCall<global::mt4_term_api.QuoteHistoryReply> QuoteHistoryAsync(global::mt4_term_api.QuoteHistoryRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return QuoteHistoryAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// DEPRECATED: use QuoteHistory.Bars (mt4-term-api-quote-history.proto): paged, bounded, oldest first.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncUnaryCall<global::mt4_term_api.QuoteHistoryReply> QuoteHistoryAsync(global::mt4_term_api.QuoteHistoryRequest request, grpc::CallOptions options)
       {

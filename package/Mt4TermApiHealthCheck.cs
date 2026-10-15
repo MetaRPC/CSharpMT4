@@ -25,20 +25,21 @@ namespace mt4_term_api {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Ch9tdDQtdGVybS1hcGktaGVhbHRoLWNoZWNrLnByb3RvEgxtdDRfdGVybV9h",
-            "cGkiFAoSSGVhbHRoQ2hlY2tSZXF1ZXN0IjwKEEhlYWx0aENoZWNrUmVwbHkS",
-            "EQoJY29ubmVjdGVkGAEgASgIEhUKDXNlcnZlclRpbWVNc2MYAiABKAMiFgoU",
-            "Q2xvc2VUZXJtaW5hbFJlcXVlc3QiFAoSQ2xvc2VUZXJtaW5hbFJlcGx5MrcB",
-            "Cg1IZWFsdGhTZXJ2aWNlEk8KC0hlYWx0aENoZWNrEiAubXQ0X3Rlcm1fYXBp",
-            "LkhlYWx0aENoZWNrUmVxdWVzdBoeLm10NF90ZXJtX2FwaS5IZWFsdGhDaGVj",
-            "a1JlcGx5ElUKDUNsb3NlVGVybWluYWwSIi5tdDRfdGVybV9hcGkuQ2xvc2VU",
-            "ZXJtaW5hbFJlcXVlc3QaIC5tdDRfdGVybV9hcGkuQ2xvc2VUZXJtaW5hbFJl",
-            "cGx5QkJaMWdpdC5tdGFwaS5pby9yb290L21ycGMtcHJvdG8uZ2l0L210NC9s",
-            "aWJyYXJpZXMvZ2+qAgxtdDRfdGVybV9hcGliBnByb3RvMw=="));
+            "cGkiFAoSSGVhbHRoQ2hlY2tSZXF1ZXN0IlYKEEhlYWx0aENoZWNrUmVwbHkS",
+            "EQoJY29ubmVjdGVkGAEgASgIEhUKDXNlcnZlclRpbWVNc2MYAiABKAMSGAoQ",
+            "c2VydmVyVGltZU1zY1V0YxgDIAEoAyIWChRDbG9zZVRlcm1pbmFsUmVxdWVz",
+            "dCIUChJDbG9zZVRlcm1pbmFsUmVwbHkytwEKDUhlYWx0aFNlcnZpY2USTwoL",
+            "SGVhbHRoQ2hlY2sSIC5tdDRfdGVybV9hcGkuSGVhbHRoQ2hlY2tSZXF1ZXN0",
+            "Gh4ubXQ0X3Rlcm1fYXBpLkhlYWx0aENoZWNrUmVwbHkSVQoNQ2xvc2VUZXJt",
+            "aW5hbBIiLm10NF90ZXJtX2FwaS5DbG9zZVRlcm1pbmFsUmVxdWVzdBogLm10",
+            "NF90ZXJtX2FwaS5DbG9zZVRlcm1pbmFsUmVwbHlCQloxZ2l0Lm10YXBpLmlv",
+            "L3Jvb3QvbXJwYy1wcm90by5naXQvbXQ0L2xpYnJhcmllcy9nb6oCDG10NF90",
+            "ZXJtX2FwaWIGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.HealthCheckRequest), global::mt4_term_api.HealthCheckRequest.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.HealthCheckReply), global::mt4_term_api.HealthCheckReply.Parser, new[]{ "Connected", "ServerTimeMsc" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.HealthCheckReply), global::mt4_term_api.HealthCheckReply.Parser, new[]{ "Connected", "ServerTimeMsc", "ServerTimeMscUtc" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.CloseTerminalRequest), global::mt4_term_api.CloseTerminalRequest.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.CloseTerminalReply), global::mt4_term_api.CloseTerminalReply.Parser, null, null, null, null, null)
           }));
@@ -235,6 +236,7 @@ namespace mt4_term_api {
     public HealthCheckReply(HealthCheckReply other) : this() {
       connected_ = other.connected_;
       serverTimeMsc_ = other.serverTimeMsc_;
+      serverTimeMscUtc_ = other.serverTimeMscUtc_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -268,6 +270,21 @@ namespace mt4_term_api {
       }
     }
 
+    /// <summary>Field number for the "serverTimeMscUtc" field.</summary>
+    public const int ServerTimeMscUtcFieldNumber = 3;
+    private long serverTimeMscUtc_;
+    /// <summary>
+    /// serverTimeMsc in UTC (the same moment; serverTimeMsc is in the broker server's time zone).
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long ServerTimeMscUtc {
+      get { return serverTimeMscUtc_; }
+      set {
+        serverTimeMscUtc_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -285,6 +302,7 @@ namespace mt4_term_api {
       }
       if (Connected != other.Connected) return false;
       if (ServerTimeMsc != other.ServerTimeMsc) return false;
+      if (ServerTimeMscUtc != other.ServerTimeMscUtc) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -294,6 +312,7 @@ namespace mt4_term_api {
       int hash = 1;
       if (Connected != false) hash ^= Connected.GetHashCode();
       if (ServerTimeMsc != 0L) hash ^= ServerTimeMsc.GetHashCode();
+      if (ServerTimeMscUtc != 0L) hash ^= ServerTimeMscUtc.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -320,6 +339,10 @@ namespace mt4_term_api {
         output.WriteRawTag(16);
         output.WriteInt64(ServerTimeMsc);
       }
+      if (ServerTimeMscUtc != 0L) {
+        output.WriteRawTag(24);
+        output.WriteInt64(ServerTimeMscUtc);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -338,6 +361,10 @@ namespace mt4_term_api {
         output.WriteRawTag(16);
         output.WriteInt64(ServerTimeMsc);
       }
+      if (ServerTimeMscUtc != 0L) {
+        output.WriteRawTag(24);
+        output.WriteInt64(ServerTimeMscUtc);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -353,6 +380,9 @@ namespace mt4_term_api {
       }
       if (ServerTimeMsc != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(ServerTimeMsc);
+      }
+      if (ServerTimeMscUtc != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(ServerTimeMscUtc);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -371,6 +401,9 @@ namespace mt4_term_api {
       }
       if (other.ServerTimeMsc != 0L) {
         ServerTimeMsc = other.ServerTimeMsc;
+      }
+      if (other.ServerTimeMscUtc != 0L) {
+        ServerTimeMscUtc = other.ServerTimeMscUtc;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -395,6 +428,10 @@ namespace mt4_term_api {
             ServerTimeMsc = input.ReadInt64();
             break;
           }
+          case 24: {
+            ServerTimeMscUtc = input.ReadInt64();
+            break;
+          }
         }
       }
     #endif
@@ -416,6 +453,10 @@ namespace mt4_term_api {
           }
           case 16: {
             ServerTimeMsc = input.ReadInt64();
+            break;
+          }
+          case 24: {
+            ServerTimeMscUtc = input.ReadInt64();
             break;
           }
         }

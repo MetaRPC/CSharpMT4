@@ -31,68 +31,74 @@ namespace mt4_term_api {
             "KAUSIgoab3Bwb3NpdGVfdGlja2V0X2Nsb3NpbmdfYnkYAiABKAUidQoRT3Jk",
             "ZXJDbG9zZUJ5UmVwbHkSLgoEZGF0YRgBIAEoCzIeLm10NF90ZXJtX2FwaS5P",
             "cmRlckNsb3NlQnlEYXRhSAASJAoFZXJyb3IYAiABKAsyEy5tdDRfdGVybV9h",
-            "cGkuRXJyb3JIAEIKCghyZXNwb25zZSJnChBPcmRlckNsb3NlQnlEYXRhEhMK",
-            "C2Nsb3NlX3ByaWNlGAEgASgBEg4KBnByb2ZpdBgCIAEoARIuCgpjbG9zZV90",
-            "aW1lGAMgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCKQAwoQT3Jk",
-            "ZXJTZW5kUmVxdWVzdBIOCgZzeW1ib2wYASABKAkSPAoOb3BlcmF0aW9uX3R5",
-            "cGUYAiABKA4yJC5tdDRfdGVybV9hcGkuT3JkZXJTZW5kT3BlcmF0aW9uVHlw",
-            "ZRIOCgZ2b2x1bWUYAyABKAESEgoFcHJpY2UYBCABKAFIAIgBARIVCghzbGlw",
-            "cGFnZRgFIAEoBUgBiAEBEhUKCHN0b3Bsb3NzGAYgASgBSAKIAQESFwoKdGFr",
-            "ZXByb2ZpdBgHIAEoAUgDiAEBEhQKB2NvbW1lbnQYCCABKAlIBIgBARIZCgxt",
-            "YWdpY19udW1iZXIYCSABKAVIBYgBARIzCgpleHBpcmF0aW9uGAogASgLMhou",
-            "Z29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgGiAEBQggKBl9wcmljZUILCglf",
-            "c2xpcHBhZ2VCCwoJX3N0b3Bsb3NzQg0KC190YWtlcHJvZml0QgoKCF9jb21t",
-            "ZW50Qg8KDV9tYWdpY19udW1iZXJCDQoLX2V4cGlyYXRpb24ibwoOT3JkZXJT",
-            "ZW5kUmVwbHkSKwoEZGF0YRgBIAEoCzIbLm10NF90ZXJtX2FwaS5PcmRlclNl",
-            "bmREYXRhSAASJAoFZXJyb3IYAiABKAsyEy5tdDRfdGVybV9hcGkuRXJyb3JI",
-            "AEIKCghyZXNwb25zZSJtCg1PcmRlclNlbmREYXRhEg4KBnRpY2tldBgBIAEo",
-            "BRIOCgZ2b2x1bWUYAiABKAESDQoFcHJpY2UYAyABKAESLQoJb3Blbl90aW1l",
-            "GAQgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcCL8AQoST3JkZXJN",
-            "b2RpZnlSZXF1ZXN0EhQKDG9yZGVyX3RpY2tldBgBIAEoBRIWCgluZXdfcHJp",
-            "Y2UYAiABKAFIAIgBARIaCg1uZXdfc3RvcF9sb3NzGAMgASgBSAGIAQESHAoP",
-            "bmV3X3Rha2VfcHJvZml0GAQgASgBSAKIAQESNwoObmV3X2V4cGlyYXRpb24Y",
-            "BSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSAOIAQFCDAoKX25l",
-            "d19wcmljZUIQCg5fbmV3X3N0b3BfbG9zc0ISChBfbmV3X3Rha2VfcHJvZml0",
-            "QhEKD19uZXdfZXhwaXJhdGlvbiJzChBPcmRlck1vZGlmeVJlcGx5Ei0KBGRh",
-            "dGEYASABKAsyHS5tdDRfdGVybV9hcGkuT3JkZXJNb2RpZnlEYXRhSAASJAoF",
-            "ZXJyb3IYAiABKAsyEy5tdDRfdGVybV9hcGkuRXJyb3JIAEIKCghyZXNwb25z",
-            "ZSItCg9PcmRlck1vZGlmeURhdGESGgoSb3JkZXJfd2FzX21vZGlmaWVkGAEg",
-            "ASgIIp0BChdPcmRlckNsb3NlRGVsZXRlUmVxdWVzdBIUCgxvcmRlcl90aWNr",
-            "ZXQYASABKAUSEQoEbG90cxgCIAEoAUgAiAEBEhoKDWNsb3NpbmdfcHJpY2UY",
-            "AyABKAFIAYgBARIVCghzbGlwcGFnZRgEIAEoBUgCiAEBQgcKBV9sb3RzQhAK",
-            "Dl9jbG9zaW5nX3ByaWNlQgsKCV9zbGlwcGFnZSJ9ChVPcmRlckNsb3NlRGVs",
-            "ZXRlUmVwbHkSMgoEZGF0YRgBIAEoCzIiLm10NF90ZXJtX2FwaS5PcmRlckNs",
-            "b3NlRGVsZXRlRGF0YUgAEiQKBWVycm9yGAIgASgLMhMubXQ0X3Rlcm1fYXBp",
-            "LkVycm9ySABCCgoIcmVzcG9uc2UihgEKFE9yZGVyQ2xvc2VEZWxldGVEYXRh",
-            "EjAKBG1vZGUYASABKA4yIi5tdDRfdGVybV9hcGkuT3JkZXJDbG9zZURlbGV0",
-            "ZU1vZGUSIgoVaGlzdG9yeV9vcmRlcl9jb21tZW50GAIgASgJSACIAQFCGAoW",
-            "X2hpc3Rvcnlfb3JkZXJfY29tbWVudCqHAQoWT3JkZXJTZW5kT3BlcmF0aW9u",
-            "VHlwZRINCglPQ19PUF9CVVkQABIOCgpPQ19PUF9TRUxMEAESEgoOT0NfT1Bf",
-            "QlVZTElNSVQQAhITCg9PQ19PUF9TRUxMTElNSVQQAxIRCg1PQ19PUF9CVVlT",
-            "VE9QEAQSEgoOT0NfT1BfU0VMTFNUT1AQBSpDChRPcmRlckNsb3NlRGVsZXRl",
-            "TW9kZRIUChBPQ0RfTUFSS0VUX09SREVSEAASFQoRT0NEX1BFTkRJTkdfT1JE",
-            "RVIQATK7AwoNVHJhZGluZ0hlbHBlchJdCglPcmRlclNlbmQSHi5tdDRfdGVy",
-            "bV9hcGkuT3JkZXJTZW5kUmVxdWVzdBocLm10NF90ZXJtX2FwaS5PcmRlclNl",
-            "bmRSZXBseSISgtPkkwIMEgovT3JkZXJTZW5kEmUKC09yZGVyTW9kaWZ5EiAu",
-            "bXQ0X3Rlcm1fYXBpLk9yZGVyTW9kaWZ5UmVxdWVzdBoeLm10NF90ZXJtX2Fw",
-            "aS5PcmRlck1vZGlmeVJlcGx5IhSC0+STAg4SDC9PcmRlck1vZGlmeRJ5ChBP",
-            "cmRlckNsb3NlRGVsZXRlEiUubXQ0X3Rlcm1fYXBpLk9yZGVyQ2xvc2VEZWxl",
-            "dGVSZXF1ZXN0GiMubXQ0X3Rlcm1fYXBpLk9yZGVyQ2xvc2VEZWxldGVSZXBs",
-            "eSIZgtPkkwITEhEvT3JkZXJDbG9zZURlbGV0ZRJpCgxPcmRlckNsb3NlQnkS",
-            "IS5tdDRfdGVybV9hcGkuT3JkZXJDbG9zZUJ5UmVxdWVzdBofLm10NF90ZXJt",
-            "X2FwaS5PcmRlckNsb3NlQnlSZXBseSIVgtPkkwIPEg0vT3JkZXJDbG9zZUJ5",
-            "QkJaMWdpdC5tdGFwaS5pby9yb290L21ycGMtcHJvdG8uZ2l0L210NC9saWJy",
-            "YXJpZXMvZ2+qAgxtdDRfdGVybV9hcGliBnByb3RvMw=="));
+            "cGkuRXJyb3JIAEIKCghyZXNwb25zZSKbAQoQT3JkZXJDbG9zZUJ5RGF0YRIT",
+            "CgtjbG9zZV9wcmljZRgBIAEoARIOCgZwcm9maXQYAiABKAESLgoKY2xvc2Vf",
+            "dGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASMgoOY2xv",
+            "c2VfdGltZV91dGMYBCABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1w",
+            "ItwDChBPcmRlclNlbmRSZXF1ZXN0Eg4KBnN5bWJvbBgBIAEoCRI8Cg5vcGVy",
+            "YXRpb25fdHlwZRgCIAEoDjIkLm10NF90ZXJtX2FwaS5PcmRlclNlbmRPcGVy",
+            "YXRpb25UeXBlEg4KBnZvbHVtZRgDIAEoARISCgVwcmljZRgEIAEoAUgAiAEB",
+            "EhUKCHNsaXBwYWdlGAUgASgFSAGIAQESFQoIc3RvcGxvc3MYBiABKAFIAogB",
+            "ARIXCgp0YWtlcHJvZml0GAcgASgBSAOIAQESFAoHY29tbWVudBgIIAEoCUgE",
+            "iAEBEhkKDG1hZ2ljX251bWJlchgJIAEoBUgFiAEBEjMKCmV4cGlyYXRpb24Y",
+            "CiABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wSAaIAQESNwoOZXhw",
+            "aXJhdGlvbl91dGMYCyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1w",
+            "SAeIAQFCCAoGX3ByaWNlQgsKCV9zbGlwcGFnZUILCglfc3RvcGxvc3NCDQoL",
+            "X3Rha2Vwcm9maXRCCgoIX2NvbW1lbnRCDwoNX21hZ2ljX251bWJlckINCgtf",
+            "ZXhwaXJhdGlvbkIRCg9fZXhwaXJhdGlvbl91dGMibwoOT3JkZXJTZW5kUmVw",
+            "bHkSKwoEZGF0YRgBIAEoCzIbLm10NF90ZXJtX2FwaS5PcmRlclNlbmREYXRh",
+            "SAASJAoFZXJyb3IYAiABKAsyEy5tdDRfdGVybV9hcGkuRXJyb3JIAEIKCghy",
+            "ZXNwb25zZSKgAQoNT3JkZXJTZW5kRGF0YRIOCgZ0aWNrZXQYASABKAUSDgoG",
+            "dm9sdW1lGAIgASgBEg0KBXByaWNlGAMgASgBEi0KCW9wZW5fdGltZRgEIAEo",
+            "CzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASMQoNb3Blbl90aW1lX3V0",
+            "YxgFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAi0AIKEk9yZGVy",
+            "TW9kaWZ5UmVxdWVzdBIUCgxvcmRlcl90aWNrZXQYASABKAUSFgoJbmV3X3By",
+            "aWNlGAIgASgBSACIAQESGgoNbmV3X3N0b3BfbG9zcxgDIAEoAUgBiAEBEhwK",
+            "D25ld190YWtlX3Byb2ZpdBgEIAEoAUgCiAEBEjcKDm5ld19leHBpcmF0aW9u",
+            "GAUgASgLMhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcEgDiAEBEjsKEm5l",
+            "d19leHBpcmF0aW9uX3V0YxgGIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1l",
+            "c3RhbXBIBIgBAUIMCgpfbmV3X3ByaWNlQhAKDl9uZXdfc3RvcF9sb3NzQhIK",
+            "EF9uZXdfdGFrZV9wcm9maXRCEQoPX25ld19leHBpcmF0aW9uQhUKE19uZXdf",
+            "ZXhwaXJhdGlvbl91dGMicwoQT3JkZXJNb2RpZnlSZXBseRItCgRkYXRhGAEg",
+            "ASgLMh0ubXQ0X3Rlcm1fYXBpLk9yZGVyTW9kaWZ5RGF0YUgAEiQKBWVycm9y",
+            "GAIgASgLMhMubXQ0X3Rlcm1fYXBpLkVycm9ySABCCgoIcmVzcG9uc2UiLQoP",
+            "T3JkZXJNb2RpZnlEYXRhEhoKEm9yZGVyX3dhc19tb2RpZmllZBgBIAEoCCKd",
+            "AQoXT3JkZXJDbG9zZURlbGV0ZVJlcXVlc3QSFAoMb3JkZXJfdGlja2V0GAEg",
+            "ASgFEhEKBGxvdHMYAiABKAFIAIgBARIaCg1jbG9zaW5nX3ByaWNlGAMgASgB",
+            "SAGIAQESFQoIc2xpcHBhZ2UYBCABKAVIAogBAUIHCgVfbG90c0IQCg5fY2xv",
+            "c2luZ19wcmljZUILCglfc2xpcHBhZ2UifQoVT3JkZXJDbG9zZURlbGV0ZVJl",
+            "cGx5EjIKBGRhdGEYASABKAsyIi5tdDRfdGVybV9hcGkuT3JkZXJDbG9zZURl",
+            "bGV0ZURhdGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJv",
+            "ckgAQgoKCHJlc3BvbnNlIoYBChRPcmRlckNsb3NlRGVsZXRlRGF0YRIwCgRt",
+            "b2RlGAEgASgOMiIubXQ0X3Rlcm1fYXBpLk9yZGVyQ2xvc2VEZWxldGVNb2Rl",
+            "EiIKFWhpc3Rvcnlfb3JkZXJfY29tbWVudBgCIAEoCUgAiAEBQhgKFl9oaXN0",
+            "b3J5X29yZGVyX2NvbW1lbnQqhwEKFk9yZGVyU2VuZE9wZXJhdGlvblR5cGUS",
+            "DQoJT0NfT1BfQlVZEAASDgoKT0NfT1BfU0VMTBABEhIKDk9DX09QX0JVWUxJ",
+            "TUlUEAISEwoPT0NfT1BfU0VMTExJTUlUEAMSEQoNT0NfT1BfQlVZU1RPUBAE",
+            "EhIKDk9DX09QX1NFTExTVE9QEAUqQwoUT3JkZXJDbG9zZURlbGV0ZU1vZGUS",
+            "FAoQT0NEX01BUktFVF9PUkRFUhAAEhUKEU9DRF9QRU5ESU5HX09SREVSEAEy",
+            "uwMKDVRyYWRpbmdIZWxwZXISXQoJT3JkZXJTZW5kEh4ubXQ0X3Rlcm1fYXBp",
+            "Lk9yZGVyU2VuZFJlcXVlc3QaHC5tdDRfdGVybV9hcGkuT3JkZXJTZW5kUmVw",
+            "bHkiEoLT5JMCDBIKL09yZGVyU2VuZBJlCgtPcmRlck1vZGlmeRIgLm10NF90",
+            "ZXJtX2FwaS5PcmRlck1vZGlmeVJlcXVlc3QaHi5tdDRfdGVybV9hcGkuT3Jk",
+            "ZXJNb2RpZnlSZXBseSIUgtPkkwIOEgwvT3JkZXJNb2RpZnkSeQoQT3JkZXJD",
+            "bG9zZURlbGV0ZRIlLm10NF90ZXJtX2FwaS5PcmRlckNsb3NlRGVsZXRlUmVx",
+            "dWVzdBojLm10NF90ZXJtX2FwaS5PcmRlckNsb3NlRGVsZXRlUmVwbHkiGYLT",
+            "5JMCExIRL09yZGVyQ2xvc2VEZWxldGUSaQoMT3JkZXJDbG9zZUJ5EiEubXQ0",
+            "X3Rlcm1fYXBpLk9yZGVyQ2xvc2VCeVJlcXVlc3QaHy5tdDRfdGVybV9hcGku",
+            "T3JkZXJDbG9zZUJ5UmVwbHkiFYLT5JMCDxINL09yZGVyQ2xvc2VCeUJCWjFn",
+            "aXQubXRhcGkuaW8vcm9vdC9tcnBjLXByb3RvLmdpdC9tdDQvbGlicmFyaWVz",
+            "L2dvqgIMbXQ0X3Rlcm1fYXBpYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Google.Api.AnnotationsReflection.Descriptor, global::Mt4TermApi.MrpcMt4ErrorReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::mt4_term_api.OrderSendOperationType), typeof(global::mt4_term_api.OrderCloseDeleteMode), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderCloseByRequest), global::mt4_term_api.OrderCloseByRequest.Parser, new[]{ "TicketToClose", "OppositeTicketClosingBy" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderCloseByReply), global::mt4_term_api.OrderCloseByReply.Parser, new[]{ "Data", "Error" }, new[]{ "Response" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderCloseByData), global::mt4_term_api.OrderCloseByData.Parser, new[]{ "ClosePrice", "Profit", "CloseTime" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderSendRequest), global::mt4_term_api.OrderSendRequest.Parser, new[]{ "Symbol", "OperationType", "Volume", "Price", "Slippage", "Stoploss", "Takeprofit", "Comment", "MagicNumber", "Expiration" }, new[]{ "Price", "Slippage", "Stoploss", "Takeprofit", "Comment", "MagicNumber", "Expiration" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderCloseByData), global::mt4_term_api.OrderCloseByData.Parser, new[]{ "ClosePrice", "Profit", "CloseTime", "CloseTimeUtc" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderSendRequest), global::mt4_term_api.OrderSendRequest.Parser, new[]{ "Symbol", "OperationType", "Volume", "Price", "Slippage", "Stoploss", "Takeprofit", "Comment", "MagicNumber", "Expiration", "ExpirationUtc" }, new[]{ "Price", "Slippage", "Stoploss", "Takeprofit", "Comment", "MagicNumber", "Expiration", "ExpirationUtc" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderSendReply), global::mt4_term_api.OrderSendReply.Parser, new[]{ "Data", "Error" }, new[]{ "Response" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderSendData), global::mt4_term_api.OrderSendData.Parser, new[]{ "Ticket", "Volume", "Price", "OpenTime" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderModifyRequest), global::mt4_term_api.OrderModifyRequest.Parser, new[]{ "OrderTicket", "NewPrice", "NewStopLoss", "NewTakeProfit", "NewExpiration" }, new[]{ "NewPrice", "NewStopLoss", "NewTakeProfit", "NewExpiration" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderSendData), global::mt4_term_api.OrderSendData.Parser, new[]{ "Ticket", "Volume", "Price", "OpenTime", "OpenTimeUtc" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderModifyRequest), global::mt4_term_api.OrderModifyRequest.Parser, new[]{ "OrderTicket", "NewPrice", "NewStopLoss", "NewTakeProfit", "NewExpiration", "NewExpirationUtc" }, new[]{ "NewPrice", "NewStopLoss", "NewTakeProfit", "NewExpiration", "NewExpirationUtc" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderModifyReply), global::mt4_term_api.OrderModifyReply.Parser, new[]{ "Data", "Error" }, new[]{ "Response" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderModifyData), global::mt4_term_api.OrderModifyData.Parser, new[]{ "OrderWasModified" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OrderCloseDeleteRequest), global::mt4_term_api.OrderCloseDeleteRequest.Parser, new[]{ "OrderTicket", "Lots", "ClosingPrice", "Slippage" }, new[]{ "Lots", "ClosingPrice", "Slippage" }, null, null, null),
@@ -687,6 +693,7 @@ namespace mt4_term_api {
       closePrice_ = other.closePrice_;
       profit_ = other.profit_;
       closeTime_ = other.closeTime_ != null ? other.closeTime_.Clone() : null;
+      closeTimeUtc_ = other.closeTimeUtc_ != null ? other.closeTimeUtc_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -723,12 +730,32 @@ namespace mt4_term_api {
     /// <summary>Field number for the "close_time" field.</summary>
     public const int CloseTimeFieldNumber = 3;
     private global::Google.Protobuf.WellKnownTypes.Timestamp closeTime_;
+    /// <summary>
+    /// Close time of the orders (broker server time).
+    /// With UTC time the call is refused before the orders are closed when the offset cannot be determined (ACCOUNT_NOT_CONNECTED /
+    /// SERVER_TIMEZONE_UNDETERMINED).
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Google.Protobuf.WellKnownTypes.Timestamp CloseTime {
       get { return closeTime_; }
       set {
         closeTime_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "close_time_utc" field.</summary>
+    public const int CloseTimeUtcFieldNumber = 4;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp closeTimeUtc_;
+    /// <summary>
+    /// close_time in UTC (the same moment; close_time is in the broker server's time zone).
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Google.Protobuf.WellKnownTypes.Timestamp CloseTimeUtc {
+      get { return closeTimeUtc_; }
+      set {
+        closeTimeUtc_ = value;
       }
     }
 
@@ -750,6 +777,7 @@ namespace mt4_term_api {
       if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(ClosePrice, other.ClosePrice)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(Profit, other.Profit)) return false;
       if (!object.Equals(CloseTime, other.CloseTime)) return false;
+      if (!object.Equals(CloseTimeUtc, other.CloseTimeUtc)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -760,6 +788,7 @@ namespace mt4_term_api {
       if (ClosePrice != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(ClosePrice);
       if (Profit != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(Profit);
       if (closeTime_ != null) hash ^= CloseTime.GetHashCode();
+      if (closeTimeUtc_ != null) hash ^= CloseTimeUtc.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -790,6 +819,10 @@ namespace mt4_term_api {
         output.WriteRawTag(26);
         output.WriteMessage(CloseTime);
       }
+      if (closeTimeUtc_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(CloseTimeUtc);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -812,6 +845,10 @@ namespace mt4_term_api {
         output.WriteRawTag(26);
         output.WriteMessage(CloseTime);
       }
+      if (closeTimeUtc_ != null) {
+        output.WriteRawTag(34);
+        output.WriteMessage(CloseTimeUtc);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -830,6 +867,9 @@ namespace mt4_term_api {
       }
       if (closeTime_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(CloseTime);
+      }
+      if (closeTimeUtc_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(CloseTimeUtc);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -854,6 +894,12 @@ namespace mt4_term_api {
           CloseTime = new global::Google.Protobuf.WellKnownTypes.Timestamp();
         }
         CloseTime.MergeFrom(other.CloseTime);
+      }
+      if (other.closeTimeUtc_ != null) {
+        if (closeTimeUtc_ == null) {
+          CloseTimeUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        CloseTimeUtc.MergeFrom(other.CloseTimeUtc);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -885,6 +931,13 @@ namespace mt4_term_api {
             input.ReadMessage(CloseTime);
             break;
           }
+          case 34: {
+            if (closeTimeUtc_ == null) {
+              CloseTimeUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(CloseTimeUtc);
+            break;
+          }
         }
       }
     #endif
@@ -913,6 +966,13 @@ namespace mt4_term_api {
               CloseTime = new global::Google.Protobuf.WellKnownTypes.Timestamp();
             }
             input.ReadMessage(CloseTime);
+            break;
+          }
+          case 34: {
+            if (closeTimeUtc_ == null) {
+              CloseTimeUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(CloseTimeUtc);
             break;
           }
         }
@@ -968,6 +1028,7 @@ namespace mt4_term_api {
       comment_ = other.comment_;
       magicNumber_ = other.magicNumber_;
       expiration_ = other.expiration_ != null ? other.expiration_.Clone() : null;
+      expirationUtc_ = other.expirationUtc_ != null ? other.expirationUtc_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1204,6 +1265,21 @@ namespace mt4_term_api {
       }
     }
 
+    /// <summary>Field number for the "expiration_utc" field.</summary>
+    public const int ExpirationUtcFieldNumber = 11;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp expirationUtc_;
+    /// <summary>
+    /// expiration in UTC: send either expiration or expiration_utc, not both.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Google.Protobuf.WellKnownTypes.Timestamp ExpirationUtc {
+      get { return expirationUtc_; }
+      set {
+        expirationUtc_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -1229,6 +1305,7 @@ namespace mt4_term_api {
       if (Comment != other.Comment) return false;
       if (MagicNumber != other.MagicNumber) return false;
       if (!object.Equals(Expiration, other.Expiration)) return false;
+      if (!object.Equals(ExpirationUtc, other.ExpirationUtc)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1246,6 +1323,7 @@ namespace mt4_term_api {
       if (HasComment) hash ^= Comment.GetHashCode();
       if (HasMagicNumber) hash ^= MagicNumber.GetHashCode();
       if (expiration_ != null) hash ^= Expiration.GetHashCode();
+      if (expirationUtc_ != null) hash ^= ExpirationUtc.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1304,6 +1382,10 @@ namespace mt4_term_api {
         output.WriteRawTag(82);
         output.WriteMessage(Expiration);
       }
+      if (expirationUtc_ != null) {
+        output.WriteRawTag(90);
+        output.WriteMessage(ExpirationUtc);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -1354,6 +1436,10 @@ namespace mt4_term_api {
         output.WriteRawTag(82);
         output.WriteMessage(Expiration);
       }
+      if (expirationUtc_ != null) {
+        output.WriteRawTag(90);
+        output.WriteMessage(ExpirationUtc);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -1393,6 +1479,9 @@ namespace mt4_term_api {
       }
       if (expiration_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(Expiration);
+      }
+      if (expirationUtc_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(ExpirationUtc);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1438,6 +1527,12 @@ namespace mt4_term_api {
           Expiration = new global::Google.Protobuf.WellKnownTypes.Timestamp();
         }
         Expiration.MergeFrom(other.Expiration);
+      }
+      if (other.expirationUtc_ != null) {
+        if (expirationUtc_ == null) {
+          ExpirationUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        ExpirationUtc.MergeFrom(other.ExpirationUtc);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1497,6 +1592,13 @@ namespace mt4_term_api {
             input.ReadMessage(Expiration);
             break;
           }
+          case 90: {
+            if (expirationUtc_ == null) {
+              ExpirationUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(ExpirationUtc);
+            break;
+          }
         }
       }
     #endif
@@ -1553,6 +1655,13 @@ namespace mt4_term_api {
               Expiration = new global::Google.Protobuf.WellKnownTypes.Timestamp();
             }
             input.ReadMessage(Expiration);
+            break;
+          }
+          case 90: {
+            if (expirationUtc_ == null) {
+              ExpirationUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(ExpirationUtc);
             break;
           }
         }
@@ -1885,6 +1994,7 @@ namespace mt4_term_api {
       volume_ = other.volume_;
       price_ = other.price_;
       openTime_ = other.openTime_ != null ? other.openTime_.Clone() : null;
+      openTimeUtc_ = other.openTimeUtc_ != null ? other.openTimeUtc_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1933,12 +2043,32 @@ namespace mt4_term_api {
     /// <summary>Field number for the "open_time" field.</summary>
     public const int OpenTimeFieldNumber = 4;
     private global::Google.Protobuf.WellKnownTypes.Timestamp openTime_;
+    /// <summary>
+    /// Open time of the order (broker server time).
+    /// With UTC time the call is refused before the order is sent when the offset cannot be determined (ACCOUNT_NOT_CONNECTED /
+    /// SERVER_TIMEZONE_UNDETERMINED), so an executed order always has a reply in the same time zone as its request.
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Google.Protobuf.WellKnownTypes.Timestamp OpenTime {
       get { return openTime_; }
       set {
         openTime_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "open_time_utc" field.</summary>
+    public const int OpenTimeUtcFieldNumber = 5;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp openTimeUtc_;
+    /// <summary>
+    /// open_time in UTC (the same moment; open_time is in the broker server's time zone).
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Google.Protobuf.WellKnownTypes.Timestamp OpenTimeUtc {
+      get { return openTimeUtc_; }
+      set {
+        openTimeUtc_ = value;
       }
     }
 
@@ -1961,6 +2091,7 @@ namespace mt4_term_api {
       if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(Volume, other.Volume)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(Price, other.Price)) return false;
       if (!object.Equals(OpenTime, other.OpenTime)) return false;
+      if (!object.Equals(OpenTimeUtc, other.OpenTimeUtc)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1972,6 +2103,7 @@ namespace mt4_term_api {
       if (Volume != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(Volume);
       if (Price != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(Price);
       if (openTime_ != null) hash ^= OpenTime.GetHashCode();
+      if (openTimeUtc_ != null) hash ^= OpenTimeUtc.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2006,6 +2138,10 @@ namespace mt4_term_api {
         output.WriteRawTag(34);
         output.WriteMessage(OpenTime);
       }
+      if (openTimeUtc_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(OpenTimeUtc);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2032,6 +2168,10 @@ namespace mt4_term_api {
         output.WriteRawTag(34);
         output.WriteMessage(OpenTime);
       }
+      if (openTimeUtc_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(OpenTimeUtc);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -2053,6 +2193,9 @@ namespace mt4_term_api {
       }
       if (openTime_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(OpenTime);
+      }
+      if (openTimeUtc_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(OpenTimeUtc);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2080,6 +2223,12 @@ namespace mt4_term_api {
           OpenTime = new global::Google.Protobuf.WellKnownTypes.Timestamp();
         }
         OpenTime.MergeFrom(other.OpenTime);
+      }
+      if (other.openTimeUtc_ != null) {
+        if (openTimeUtc_ == null) {
+          OpenTimeUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        OpenTimeUtc.MergeFrom(other.OpenTimeUtc);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2115,6 +2264,13 @@ namespace mt4_term_api {
             input.ReadMessage(OpenTime);
             break;
           }
+          case 42: {
+            if (openTimeUtc_ == null) {
+              OpenTimeUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(OpenTimeUtc);
+            break;
+          }
         }
       }
     #endif
@@ -2147,6 +2303,13 @@ namespace mt4_term_api {
               OpenTime = new global::Google.Protobuf.WellKnownTypes.Timestamp();
             }
             input.ReadMessage(OpenTime);
+            break;
+          }
+          case 42: {
+            if (openTimeUtc_ == null) {
+              OpenTimeUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(OpenTimeUtc);
             break;
           }
         }
@@ -2197,6 +2360,7 @@ namespace mt4_term_api {
       newStopLoss_ = other.newStopLoss_;
       newTakeProfit_ = other.newTakeProfit_;
       newExpiration_ = other.newExpiration_ != null ? other.newExpiration_.Clone() : null;
+      newExpirationUtc_ = other.newExpirationUtc_ != null ? other.newExpirationUtc_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2296,12 +2460,30 @@ namespace mt4_term_api {
     /// <summary>Field number for the "new_expiration" field.</summary>
     public const int NewExpirationFieldNumber = 5;
     private global::Google.Protobuf.WellKnownTypes.Timestamp newExpiration_;
+    /// <summary>
+    /// New expiration of a pending order (broker server time). Unset = the expiration is not changed.
+    /// </summary>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public global::Google.Protobuf.WellKnownTypes.Timestamp NewExpiration {
       get { return newExpiration_; }
       set {
         newExpiration_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "new_expiration_utc" field.</summary>
+    public const int NewExpirationUtcFieldNumber = 6;
+    private global::Google.Protobuf.WellKnownTypes.Timestamp newExpirationUtc_;
+    /// <summary>
+    /// new_expiration in UTC: send either new_expiration or new_expiration_utc, not both.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::Google.Protobuf.WellKnownTypes.Timestamp NewExpirationUtc {
+      get { return newExpirationUtc_; }
+      set {
+        newExpirationUtc_ = value;
       }
     }
 
@@ -2325,6 +2507,7 @@ namespace mt4_term_api {
       if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(NewStopLoss, other.NewStopLoss)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(NewTakeProfit, other.NewTakeProfit)) return false;
       if (!object.Equals(NewExpiration, other.NewExpiration)) return false;
+      if (!object.Equals(NewExpirationUtc, other.NewExpirationUtc)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -2337,6 +2520,7 @@ namespace mt4_term_api {
       if (HasNewStopLoss) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(NewStopLoss);
       if (HasNewTakeProfit) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(NewTakeProfit);
       if (newExpiration_ != null) hash ^= NewExpiration.GetHashCode();
+      if (newExpirationUtc_ != null) hash ^= NewExpirationUtc.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -2375,6 +2559,10 @@ namespace mt4_term_api {
         output.WriteRawTag(42);
         output.WriteMessage(NewExpiration);
       }
+      if (newExpirationUtc_ != null) {
+        output.WriteRawTag(50);
+        output.WriteMessage(NewExpirationUtc);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -2405,6 +2593,10 @@ namespace mt4_term_api {
         output.WriteRawTag(42);
         output.WriteMessage(NewExpiration);
       }
+      if (newExpirationUtc_ != null) {
+        output.WriteRawTag(50);
+        output.WriteMessage(NewExpirationUtc);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -2429,6 +2621,9 @@ namespace mt4_term_api {
       }
       if (newExpiration_ != null) {
         size += 1 + pb::CodedOutputStream.ComputeMessageSize(NewExpiration);
+      }
+      if (newExpirationUtc_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(NewExpirationUtc);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -2459,6 +2654,12 @@ namespace mt4_term_api {
           NewExpiration = new global::Google.Protobuf.WellKnownTypes.Timestamp();
         }
         NewExpiration.MergeFrom(other.NewExpiration);
+      }
+      if (other.newExpirationUtc_ != null) {
+        if (newExpirationUtc_ == null) {
+          NewExpirationUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+        }
+        NewExpirationUtc.MergeFrom(other.NewExpirationUtc);
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2498,6 +2699,13 @@ namespace mt4_term_api {
             input.ReadMessage(NewExpiration);
             break;
           }
+          case 50: {
+            if (newExpirationUtc_ == null) {
+              NewExpirationUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(NewExpirationUtc);
+            break;
+          }
         }
       }
     #endif
@@ -2534,6 +2742,13 @@ namespace mt4_term_api {
               NewExpiration = new global::Google.Protobuf.WellKnownTypes.Timestamp();
             }
             input.ReadMessage(NewExpiration);
+            break;
+          }
+          case 50: {
+            if (newExpirationUtc_ == null) {
+              NewExpirationUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
+            }
+            input.ReadMessage(NewExpirationUtc);
             break;
           }
         }

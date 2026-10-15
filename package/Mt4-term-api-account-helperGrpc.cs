@@ -188,6 +188,13 @@ namespace mt4_term_api {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
 
+      /// <summary>
+      /// Tick value as array. Name the symbols (symbolNames); with no names the reply covers the
+      /// symbols currently in Market Watch, never the whole server list.
+      /// </summary>
+      /// <param name="request">The request received from the client.</param>
+      /// <param name="context">The context of the server-side call handler being invoked.</param>
+      /// <returns>The response to send back to the client (wrapped by a task).</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::mt4_term_api.TickValueWithSizeReply> TickValueWithSize(global::mt4_term_api.TickValueWithSizeRequest request, grpc::ServerCallContext context)
       {
@@ -463,21 +470,53 @@ namespace mt4_term_api {
       {
         return CallInvoker.AsyncUnaryCall(__Method_SymbolParamsMany, null, options, request);
       }
+      /// <summary>
+      /// Tick value as array. Name the symbols (symbolNames); with no names the reply covers the
+      /// symbols currently in Market Watch, never the whole server list.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The response received from the server.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::mt4_term_api.TickValueWithSizeReply TickValueWithSize(global::mt4_term_api.TickValueWithSizeRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return TickValueWithSize(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// Tick value as array. Name the symbols (symbolNames); with no names the reply covers the
+      /// symbols currently in Market Watch, never the whole server list.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The response received from the server.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::mt4_term_api.TickValueWithSizeReply TickValueWithSize(global::mt4_term_api.TickValueWithSizeRequest request, grpc::CallOptions options)
       {
         return CallInvoker.BlockingUnaryCall(__Method_TickValueWithSize, null, options, request);
       }
+      /// <summary>
+      /// Tick value as array. Name the symbols (symbolNames); with no names the reply covers the
+      /// symbols currently in Market Watch, never the whole server list.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+      /// <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+      /// <param name="cancellationToken">An optional token for canceling the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncUnaryCall<global::mt4_term_api.TickValueWithSizeReply> TickValueWithSizeAsync(global::mt4_term_api.TickValueWithSizeRequest request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return TickValueWithSizeAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
       }
+      /// <summary>
+      /// Tick value as array. Name the symbols (symbolNames); with no names the reply covers the
+      /// symbols currently in Market Watch, never the whole server list.
+      /// </summary>
+      /// <param name="request">The request to send to the server.</param>
+      /// <param name="options">The options for the call.</param>
+      /// <returns>The call object.</returns>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual grpc::AsyncUnaryCall<global::mt4_term_api.TickValueWithSizeReply> TickValueWithSizeAsync(global::mt4_term_api.TickValueWithSizeRequest request, grpc::CallOptions options)
       {

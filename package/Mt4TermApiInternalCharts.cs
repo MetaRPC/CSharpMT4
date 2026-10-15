@@ -37,22 +37,22 @@ namespace mt4_term_api {
             "Lm10NF90ZXJtX2FwaS5DaGFydFRlbXBsYXRlTW9kZSIrCg5DaGFydE9wZW5S",
             "ZXBseRIZChFjaGFydF90ZXJtaW5hbF9pZBgBIAEoAyIuChFDaGFydENsb3Nl",
             "UmVxdWVzdBIZChFjaGFydF90ZXJtaW5hbF9pZBgBIAEoAyIRCg9DaGFydENs",
-            "b3NlUmVwbHkqbQoRQ2hhcnRUZW1wbGF0ZU1vZGUSDAoIT05fVFJBREUQABIc",
+            "b3NlUmVwbHkqeQoRQ2hhcnRUZW1wbGF0ZU1vZGUSDAoIT05fVFJBREUQABIc",
             "ChhPTl9PUEVORURfT1JERVJTX1RJQ0tFVFMQARITCg9PTl9PUkRFUl9QUk9G",
-            "SVQQAhIXChNPTl9TWU1CT0xfSU5GT19USUNLEAMy8wMKDkludGVybmFsQ2hh",
-            "cnRzEkkKCUNoYXJ0T3BlbhIeLm10NF90ZXJtX2FwaS5DaGFydE9wZW5SZXF1",
-            "ZXN0GhwubXQ0X3Rlcm1fYXBpLkNoYXJ0T3BlblJlcGx5EkwKCkNoYXJ0Q2xv",
-            "c2USHy5tdDRfdGVybV9hcGkuQ2hhcnRDbG9zZVJlcXVlc3QaHS5tdDRfdGVy",
-            "bV9hcGkuQ2hhcnRDbG9zZVJlcGx5ElsKD0N1c3RvbUNoYXJ0T3BlbhIkLm10",
-            "NF90ZXJtX2FwaS5DdXN0b21DaGFydE9wZW5SZXF1ZXN0GiIubXQ0X3Rlcm1f",
-            "YXBpLkN1c3RvbUNoYXJ0T3BlblJlcGx5EnMKF0N1c3RvbUNoYXJ0U2F2ZVRl",
-            "bXBsYXRlEiwubXQ0X3Rlcm1fYXBpLkN1c3RvbUNoYXJ0U2F2ZVRlbXBsYXRl",
-            "UmVxdWVzdBoqLm10NF90ZXJtX2FwaS5DdXN0b21DaGFydFNhdmVUZW1wbGF0",
-            "ZVJlcGx5EnYKGEN1c3RvbUNoYXJ0QXBwbHlUZW1wbGF0ZRItLm10NF90ZXJt",
-            "X2FwaS5DdXN0b21DaGFydEFwcGx5VGVtcGxhdGVSZXF1ZXN0GisubXQ0X3Rl",
-            "cm1fYXBpLkN1c3RvbUNoYXJ0QXBwbHlUZW1wbGF0ZVJlcGx5QkJaMWdpdC5t",
-            "dGFwaS5pby9yb290L21ycGMtcHJvdG8uZ2l0L210NC9saWJyYXJpZXMvZ2+q",
-            "AgxtdDRfdGVybV9hcGliBnByb3RvMw=="));
+            "SVQQAhIXChNPTl9TWU1CT0xfSU5GT19USUNLEAMSCgoGRVZFTlRTEAQy8wMK",
+            "DkludGVybmFsQ2hhcnRzEkkKCUNoYXJ0T3BlbhIeLm10NF90ZXJtX2FwaS5D",
+            "aGFydE9wZW5SZXF1ZXN0GhwubXQ0X3Rlcm1fYXBpLkNoYXJ0T3BlblJlcGx5",
+            "EkwKCkNoYXJ0Q2xvc2USHy5tdDRfdGVybV9hcGkuQ2hhcnRDbG9zZVJlcXVl",
+            "c3QaHS5tdDRfdGVybV9hcGkuQ2hhcnRDbG9zZVJlcGx5ElsKD0N1c3RvbUNo",
+            "YXJ0T3BlbhIkLm10NF90ZXJtX2FwaS5DdXN0b21DaGFydE9wZW5SZXF1ZXN0",
+            "GiIubXQ0X3Rlcm1fYXBpLkN1c3RvbUNoYXJ0T3BlblJlcGx5EnMKF0N1c3Rv",
+            "bUNoYXJ0U2F2ZVRlbXBsYXRlEiwubXQ0X3Rlcm1fYXBpLkN1c3RvbUNoYXJ0",
+            "U2F2ZVRlbXBsYXRlUmVxdWVzdBoqLm10NF90ZXJtX2FwaS5DdXN0b21DaGFy",
+            "dFNhdmVUZW1wbGF0ZVJlcGx5EnYKGEN1c3RvbUNoYXJ0QXBwbHlUZW1wbGF0",
+            "ZRItLm10NF90ZXJtX2FwaS5DdXN0b21DaGFydEFwcGx5VGVtcGxhdGVSZXF1",
+            "ZXN0GisubXQ0X3Rlcm1fYXBpLkN1c3RvbUNoYXJ0QXBwbHlUZW1wbGF0ZVJl",
+            "cGx5QkJaMWdpdC5tdGFwaS5pby9yb290L21ycGMtcHJvdG8uZ2l0L210NC9s",
+            "aWJyYXJpZXMvZ2+qAgxtdDRfdGVybV9hcGliBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::mt4_term_api.ChartTemplateMode), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -77,6 +77,10 @@ namespace mt4_term_api {
     [pbr::OriginalName("ON_OPENED_ORDERS_TICKETS")] OnOpenedOrdersTickets = 1,
     [pbr::OriginalName("ON_ORDER_PROFIT")] OnOrderProfit = 2,
     [pbr::OriginalName("ON_SYMBOL_INFO_TICK")] OnSymbolInfoTick = 3,
+    /// <summary>
+    /// every trade stream of the terminal on one chart (mt4-chart-events)
+    /// </summary>
+    [pbr::OriginalName("EVENTS")] Events = 4,
   }
 
   #endregion
