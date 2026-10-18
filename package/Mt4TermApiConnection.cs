@@ -7121,9 +7121,9 @@ namespace mt4_term_api {
   ///  "password": "1nJeS+Ae",
   ///  "host": "95.217.147.61",
   ///  "port": "443",
-  ///  "proxyUser": "ProxyUser123",
-  ///  "proxyPassword": "qwerty123",
-  ///  "proxyHost": "65.108.126.217",
+  ///  "proxyUser": "proxy-user",
+  ///  "proxyPassword": "proxy-password",
+  ///  "proxyHost": "proxy.example.com",
   ///  "proxyPort": "1080",
   ///  "proxyType": "Socks5"
   /// }
