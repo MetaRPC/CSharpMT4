@@ -87,12 +87,6 @@
             Gets the raw terminal instance GUID string returned by MT4 server.
             </summary>
         </member>
-        <member name="P:mt4_term_api.MT4Account.TerminalName">
-            <summary>
-            Alias of <see cref="P:mt4_term_api.MT4Account.Name"/>: the optional terminal label sent as ConnectExRequest.name (visible in GET /Accounts).
-            Set via the constructor or ConnectByServerNameAsync(name:).
-            </summary>
-        </member>
         <member name="P:mt4_term_api.MT4Account.ApiKey">
             <summary>
             Gets or sets the MetaRPC API key for authentication. Defaults to "TRIAL".
@@ -156,12 +150,12 @@
             <param name="timeoutSeconds">How long to wait for terminal readiness before timing out.</param>
             <param name="deadline">Optional gRPC deadline for the operation.</param>
             <param name="cancellationToken">Optional cancellation token.</param>
-            <param name="name">Optional terminal name or creator identifier (visible in GET /Accounts). When given it replaces <see cref="P:mt4_term_api.MT4Account.Name"/> for this and later connects.</param>
+            <param name="name">Optional terminal name or creator identifier. When given it replaces <see cref="P:mt4_term_api.MT4Account.Name"/> for this and later connects.</param>
             <returns>A task representing the asynchronous connection operation.</returns>
             <exception cref="T:mt4_term_api.ApiExceptionMT4">Thrown if the server returns an error response.</exception>
             <exception cref="T:Grpc.Core.RpcException">Thrown if the gRPC connection fails.</exception>
         </member>
-        <member name="M:mt4_term_api.MT4Account.ConnectByServerName(System.String,System.String,System.Boolean,System.Int32,System.String)">
+        <member name="M:mt4_term_api.MT4Account.ConnectByServerName(System.String,System.String,System.Boolean,System.Int32)">
             <summary>
             Synchronously connects to the MT4 terminal.
             </summary>
@@ -169,7 +163,6 @@
             <param name="baseChartSymbol">Chart symbol to initialize the session.</param>
             <param name="waitForTerminalIsAlive">Wait for terminal readiness flag.</param>
             <param name="timeoutSeconds">Timeout duration in seconds.</param>
-            <param name="name">Optional terminal label sent as ConnectExRequest.name.</param>
         </member>
         <member name="M:mt4_term_api.MT4Account.ExecuteStreamWithReconnect``3(``0,System.Func{``0,Grpc.Core.Metadata,System.Threading.CancellationToken,Grpc.Core.AsyncServerStreamingCall{``1}},System.Func{``1,Mt4TermApi.Error},System.Func{``1,``2},System.Threading.CancellationToken)">
             <summary>
@@ -433,22 +426,6 @@
             <param name="deadline">Optional deadline for the request.</param>
             <param name="cancellationToken">Optional cancellation token.</param>
             <returns>A <see cref="T:mt4_term_api.SymbolsData"/> object.</returns>
-        </member>
-        <member name="M:mt4_term_api.MT4Account.SymbolSelectAsync(System.String,System.Boolean,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
-            <summary>
-            Adds (select=true) or removes (select=false) a symbol in the terminal's Market Watch.
-            A symbol must be selected before Quote/QuoteHistory/OnSymbolTick/OrderSend work reliably for it.
-            </summary>
-            <param name="symbol">Symbol name, e.g. "EURUSD".</param>
-            <param name="select">true to add to Market Watch, false to hide.</param>
-            <param name="deadline">Optional gRPC deadline.</param>
-            <param name="cancellationToken">Optional cancellation token.</param>
-            <returns><see cref="T:mt4_term_api.SymbolSelectData"/> with <c>Success</c>.</returns>
-        </member>
-        <member name="M:mt4_term_api.MT4Account.SymbolSelect(System.String,System.Boolean,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
-            <summary>
-            Synchronously adds or removes a symbol in Market Watch. See <see cref="M:mt4_term_api.MT4Account.SymbolSelectAsync(System.String,System.Boolean,System.Nullable{System.DateTime},System.Threading.CancellationToken)"/>.
-            </summary>
         </member>
         <member name="M:mt4_term_api.MT4Account.QuoteHistoryAsync(System.String,mt4_term_api.ENUM_QUOTE_HISTORY_TIMEFRAME,System.DateTime,System.DateTime,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
             <summary>
@@ -997,43 +974,6 @@
             <param name="serviceImpl">An object implementing the server-side handling logic.</param>
         </member>
         <member name="M:mt4_term_api.Accounts.BindService(Grpc.Core.ServiceBinderBase,mt4_term_api.Accounts.AccountsBase)">
-            <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
-            Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
-            <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
-            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
-        </member>
-        <member name="P:mt4_term_api.Charts.Descriptor">
-            <summary>Service descriptor</summary>
-        </member>
-        <member name="T:mt4_term_api.Charts.ChartsBase">
-            <summary>Base class for server-side implementations of Charts</summary>
-        </member>
-        <member name="T:mt4_term_api.Charts.ChartsClient">
-            <summary>Client for Charts</summary>
-        </member>
-        <member name="M:mt4_term_api.Charts.ChartsClient.#ctor(Grpc.Core.ChannelBase)">
-            <summary>Creates a new client for Charts</summary>
-            <param name="channel">The channel to use to make remote calls.</param>
-        </member>
-        <member name="M:mt4_term_api.Charts.ChartsClient.#ctor(Grpc.Core.CallInvoker)">
-            <summary>Creates a new client for Charts that uses a custom <c>CallInvoker</c>.</summary>
-            <param name="callInvoker">The callInvoker to use to make remote calls.</param>
-        </member>
-        <member name="M:mt4_term_api.Charts.ChartsClient.#ctor">
-            <summary>Protected parameterless constructor to allow creation of test doubles.</summary>
-        </member>
-        <member name="M:mt4_term_api.Charts.ChartsClient.#ctor(Grpc.Core.ClientBase.ClientBaseConfiguration)">
-            <summary>Protected constructor to allow creation of configured clients.</summary>
-            <param name="configuration">The client configuration.</param>
-        </member>
-        <member name="M:mt4_term_api.Charts.ChartsClient.NewInstance(Grpc.Core.ClientBase.ClientBaseConfiguration)">
-            <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
-        </member>
-        <member name="M:mt4_term_api.Charts.BindService(mt4_term_api.Charts.ChartsBase)">
-            <summary>Creates service definition that can be registered with a server</summary>
-            <param name="serviceImpl">An object implementing the server-side handling logic.</param>
-        </member>
-        <member name="M:mt4_term_api.Charts.BindService(Grpc.Core.ServiceBinderBase,mt4_term_api.Charts.ChartsBase)">
             <summary>Register service method with a service binder with or without implementation. Useful when customizing the service binding logic.
             Note: this method is part of an experimental API that can change or be removed without any prior notice.</summary>
             <param name="serviceBinder">Service methods will be bound by calling <c>AddMethod</c> on this object.</param>
@@ -2107,9 +2047,31 @@
         <member name="T:mt4_term_api.DemoAccount.DemoAccountBase">
             <summary>Base class for server-side implementations of DemoAccount</summary>
         </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountBase.FindCompanies(mt4_term_api.GuiDemoFindCompaniesRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Search for broker companies by name (reads the wizard's broker ListView).
+            [DefaultValues]
+            { "searchText": "MetaQuotes" }
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountBase.ServersAndAccountTypes(mt4_term_api.GuiDemoServersAndTypesRequest,Grpc.Core.ServerCallContext)">
+            <summary>
+            Get available servers and account types for a company.
+            [DefaultValues]
+            { "companyName": "MetaQuotes Ltd." }
+            </summary>
+            <param name="request">The request received from the client.</param>
+            <param name="context">The context of the server-side call handler being invoked.</param>
+            <returns>The response to send back to the client (wrapped by a task).</returns>
+        </member>
         <member name="M:mt4_term_api.DemoAccount.DemoAccountBase.OpenDemoAccount(mt4_term_api.GuiDemoOpenAccountRequest,Grpc.Core.ServerCallContext)">
             <summary>
-            Open a demo account. Full wizard flow: search -> select -> fill form -> register.
+            Open a demo account. The wire protocol is tried first; when the trade server does not
+            accept it, the terminal's "Open an Account" wizard is driven instead, bounded by
+            timeoutSeconds (default 90). debugLog names the path that produced the account.
             [DefaultValues]
             { "company": "MetaQuotes Ltd.", "firstName": "Test", "lastName": "User",
               "email": "test@test.com", "phone": "+1234567890", "timeoutSeconds": "60" }
@@ -2146,9 +2108,99 @@
             <summary>Protected constructor to allow creation of configured clients.</summary>
             <param name="configuration">The client configuration.</param>
         </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.FindCompanies(mt4_term_api.GuiDemoFindCompaniesRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Search for broker companies by name (reads the wizard's broker ListView).
+            [DefaultValues]
+            { "searchText": "MetaQuotes" }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.FindCompanies(mt4_term_api.GuiDemoFindCompaniesRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Search for broker companies by name (reads the wizard's broker ListView).
+            [DefaultValues]
+            { "searchText": "MetaQuotes" }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.FindCompaniesAsync(mt4_term_api.GuiDemoFindCompaniesRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Search for broker companies by name (reads the wizard's broker ListView).
+            [DefaultValues]
+            { "searchText": "MetaQuotes" }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.FindCompaniesAsync(mt4_term_api.GuiDemoFindCompaniesRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Search for broker companies by name (reads the wizard's broker ListView).
+            [DefaultValues]
+            { "searchText": "MetaQuotes" }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.ServersAndAccountTypes(mt4_term_api.GuiDemoServersAndTypesRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Get available servers and account types for a company.
+            [DefaultValues]
+            { "companyName": "MetaQuotes Ltd." }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.ServersAndAccountTypes(mt4_term_api.GuiDemoServersAndTypesRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Get available servers and account types for a company.
+            [DefaultValues]
+            { "companyName": "MetaQuotes Ltd." }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The response received from the server.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.ServersAndAccountTypesAsync(mt4_term_api.GuiDemoServersAndTypesRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Get available servers and account types for a company.
+            [DefaultValues]
+            { "companyName": "MetaQuotes Ltd." }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="headers">The initial metadata to send with the call. This parameter is optional.</param>
+            <param name="deadline">An optional deadline for the call. The call will be cancelled if deadline is hit.</param>
+            <param name="cancellationToken">An optional token for canceling the call.</param>
+            <returns>The call object.</returns>
+        </member>
+        <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.ServersAndAccountTypesAsync(mt4_term_api.GuiDemoServersAndTypesRequest,Grpc.Core.CallOptions)">
+            <summary>
+            Get available servers and account types for a company.
+            [DefaultValues]
+            { "companyName": "MetaQuotes Ltd." }
+            </summary>
+            <param name="request">The request to send to the server.</param>
+            <param name="options">The options for the call.</param>
+            <returns>The call object.</returns>
+        </member>
         <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.OpenDemoAccount(mt4_term_api.GuiDemoOpenAccountRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
             <summary>
-            Open a demo account. Full wizard flow: search -> select -> fill form -> register.
+            Open a demo account. The wire protocol is tried first; when the trade server does not
+            accept it, the terminal's "Open an Account" wizard is driven instead, bounded by
+            timeoutSeconds (default 90). debugLog names the path that produced the account.
             [DefaultValues]
             { "company": "MetaQuotes Ltd.", "firstName": "Test", "lastName": "User",
               "email": "test@test.com", "phone": "+1234567890", "timeoutSeconds": "60" }
@@ -2161,7 +2213,9 @@
         </member>
         <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.OpenDemoAccount(mt4_term_api.GuiDemoOpenAccountRequest,Grpc.Core.CallOptions)">
             <summary>
-            Open a demo account. Full wizard flow: search -> select -> fill form -> register.
+            Open a demo account. The wire protocol is tried first; when the trade server does not
+            accept it, the terminal's "Open an Account" wizard is driven instead, bounded by
+            timeoutSeconds (default 90). debugLog names the path that produced the account.
             [DefaultValues]
             { "company": "MetaQuotes Ltd.", "firstName": "Test", "lastName": "User",
               "email": "test@test.com", "phone": "+1234567890", "timeoutSeconds": "60" }
@@ -2172,7 +2226,9 @@
         </member>
         <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.OpenDemoAccountAsync(mt4_term_api.GuiDemoOpenAccountRequest,Grpc.Core.Metadata,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
             <summary>
-            Open a demo account. Full wizard flow: search -> select -> fill form -> register.
+            Open a demo account. The wire protocol is tried first; when the trade server does not
+            accept it, the terminal's "Open an Account" wizard is driven instead, bounded by
+            timeoutSeconds (default 90). debugLog names the path that produced the account.
             [DefaultValues]
             { "company": "MetaQuotes Ltd.", "firstName": "Test", "lastName": "User",
               "email": "test@test.com", "phone": "+1234567890", "timeoutSeconds": "60" }
@@ -2185,7 +2241,9 @@
         </member>
         <member name="M:mt4_term_api.DemoAccount.DemoAccountClient.OpenDemoAccountAsync(mt4_term_api.GuiDemoOpenAccountRequest,Grpc.Core.CallOptions)">
             <summary>
-            Open a demo account. Full wizard flow: search -> select -> fill form -> register.
+            Open a demo account. The wire protocol is tried first; when the trade server does not
+            accept it, the terminal's "Open an Account" wizard is driven instead, bounded by
+            timeoutSeconds (default 90). debugLog names the path that produced the account.
             [DefaultValues]
             { "company": "MetaQuotes Ltd.", "firstName": "Test", "lastName": "User",
               "email": "test@test.com", "phone": "+1234567890", "timeoutSeconds": "60" }
@@ -3468,6 +3526,21 @@
         <member name="P:mt4_term_api.Mt4TermApiAccountHelperReflection.Descriptor">
             <summary>File descriptor for mt4-term-api-account-helper.proto</summary>
         </member>
+        <member name="T:mt4_term_api.EnumAccountMarginMode">
+            <summary>
+            Margin calculation mode of the account. MT4 accounts are always hedging; the other values exist for parity with MT5.
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.OpenedOrderType.OoOpBalance">
+            <summary>
+            OrdersHistory only: account operations of the history (MT4 records types 6 and 7). The amount is in profit, the text in comment.
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.OpenedOrderType.OoOpCredit">
+            <summary>
+            Credit given or taken
+            </summary>
+        </member>
         <member name="F:mt4_term_api.SP_ENUM_SYMBOL_TRADE_MODE.SymbolTradeModeDisabled">
             <summary>
             Trade is disabled for the symbol
@@ -3611,6 +3684,55 @@
         </member>
         <member name="M:mt4_term_api.AccountSummaryData.ClearServerUtcOffsetSeconds">
             <summary>Clears the value of the "server_utc_offset_seconds" field</summary>
+        </member>
+        <member name="F:mt4_term_api.AccountSummaryData.AccountMarginFieldNumber">
+            <summary>Field number for the "account_margin" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.AccountSummaryData.AccountMargin">
+            <summary>
+            Money state and permissions, read by the terminal in the same AccountSummary round trip (no separate AccountInfoDouble /
+            AccountInfoInteger calls needed). All are 0/false while the account is not connected. One AccountSummary call is one counted read.
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.AccountSummaryData.AccountMarginFreeFieldNumber">
+            <summary>Field number for the "account_margin_free" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.AccountSummaryData.AccountMarginFree">
+            <summary>
+            Free margin for new positions (ACCOUNT_MARGIN_FREE), account currency.
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.AccountSummaryData.AccountMarginLevelFieldNumber">
+            <summary>Field number for the "account_margin_level" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.AccountSummaryData.AccountMarginLevel">
+            <summary>
+            Margin level in percent, equity / margin * 100 (ACCOUNT_MARGIN_LEVEL); 0 when no margin is used.
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.AccountSummaryData.AccountMarginModeFieldNumber">
+            <summary>Field number for the "account_margin_mode" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.AccountSummaryData.AccountMarginMode">
+            <summary>
+            Always hedging on MT4 (several positions per symbol); present for parity with MT5.
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.AccountSummaryData.AccountTradeAllowedFieldNumber">
+            <summary>Field number for the "account_trade_allowed" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.AccountSummaryData.AccountTradeAllowed">
+            <summary>
+            The account may trade (ACCOUNT_TRADE_ALLOWED); is_investor is its negation.
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.AccountSummaryData.AccountTradeExpertFieldNumber">
+            <summary>Field number for the "account_trade_expert" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.AccountSummaryData.AccountTradeExpert">
+            <summary>
+            Automated (Expert Advisor / API) trading is allowed for the account (ACCOUNT_TRADE_EXPERT).
+            </summary>
         </member>
         <member name="F:mt4_term_api.OpenedOrdersRequest.SortTypeFieldNumber">
             <summary>Field number for the "sort_type" field.</summary>
@@ -4424,360 +4546,6 @@
             When the terminal is set to expire (UTC; a platform time, not a broker time). Unset when no expiry is recorded for the
             account, which is the case for every account today.
             </summary>
-        </member>
-        <member name="T:mt4_term_api.Mt4TermApiChartsReflection">
-            <summary>Holder for reflection information generated from mt4-term-api-charts.proto</summary>
-        </member>
-        <member name="P:mt4_term_api.Mt4TermApiChartsReflection.Descriptor">
-            <summary>File descriptor for mt4-term-api-charts.proto</summary>
-        </member>
-        <member name="F:mt4_term_api.GetEaParamsRequest.EaFileNameFieldNumber">
-            <summary>Field number for the "ea_file_name" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.GetEaParamsReply.DataFieldNumber">
-            <summary>Field number for the "data" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.GetEaParamsReply.ErrorFieldNumber">
-            <summary>Field number for the "error" field.</summary>
-        </member>
-        <member name="T:mt4_term_api.GetEaParamsReply.ResponseOneofCase">
-            <summary>Enum of possible cases for the "response" oneof.</summary>
-        </member>
-        <member name="F:mt4_term_api.GetEaParamsData.EaNameFieldNumber">
-            <summary>Field number for the "ea_name" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.GetEaParamsData.EaFoundFieldNumber">
-            <summary>Field number for the "ea_found" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.GetEaParamsData.EaHasParamsFieldNumber">
-            <summary>Field number for the "ea_has_params" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.GetEaParamsData.ParametersFieldNumber">
-            <summary>Field number for the "parameters" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.EaParam.NameFieldNumber">
-            <summary>Field number for the "name" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.EaParam.TypeFieldNumber">
-            <summary>Field number for the "type" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaRequest.SymbolNameFieldNumber">
-            <summary>Field number for the "symbol_name" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaRequest.EaFileNameFieldNumber">
-            <summary>Field number for the "ea_file_name" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaRequest.ChartPeriodFieldNumber">
-            <summary>Field number for the "chart_period" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaRequest.EaParametersFieldNumber">
-            <summary>Field number for the "ea_parameters" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaParameter.IndexFieldNumber">
-            <summary>Field number for the "index" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaParameter.TypeFieldNumber">
-            <summary>Field number for the "type" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaParameter.IntParamValueFieldNumber">
-            <summary>Field number for the "int_param_value" field.</summary>
-        </member>
-        <member name="P:mt4_term_api.OpenTerminalChartWithEaParameter.HasIntParamValue">
-            <summary>Gets whether the "int_param_value" field is set</summary>
-        </member>
-        <member name="M:mt4_term_api.OpenTerminalChartWithEaParameter.ClearIntParamValue">
-            <summary>Clears the value of the "int_param_value" field</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaParameter.LongParamValueFieldNumber">
-            <summary>Field number for the "long_param_value" field.</summary>
-        </member>
-        <member name="P:mt4_term_api.OpenTerminalChartWithEaParameter.HasLongParamValue">
-            <summary>Gets whether the "long_param_value" field is set</summary>
-        </member>
-        <member name="M:mt4_term_api.OpenTerminalChartWithEaParameter.ClearLongParamValue">
-            <summary>Clears the value of the "long_param_value" field</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaParameter.BoolParamValueFieldNumber">
-            <summary>Field number for the "bool_param_value" field.</summary>
-        </member>
-        <member name="P:mt4_term_api.OpenTerminalChartWithEaParameter.HasBoolParamValue">
-            <summary>Gets whether the "bool_param_value" field is set</summary>
-        </member>
-        <member name="M:mt4_term_api.OpenTerminalChartWithEaParameter.ClearBoolParamValue">
-            <summary>Clears the value of the "bool_param_value" field</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaParameter.StringParamValueFieldNumber">
-            <summary>Field number for the "string_param_value" field.</summary>
-        </member>
-        <member name="P:mt4_term_api.OpenTerminalChartWithEaParameter.HasStringParamValue">
-            <summary>Gets whether the "string_param_value" field is set</summary>
-        </member>
-        <member name="M:mt4_term_api.OpenTerminalChartWithEaParameter.ClearStringParamValue">
-            <summary>Clears the value of the "string_param_value" field</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaParameter.DoubleParamValueFieldNumber">
-            <summary>Field number for the "double_param_value" field.</summary>
-        </member>
-        <member name="P:mt4_term_api.OpenTerminalChartWithEaParameter.HasDoubleParamValue">
-            <summary>Gets whether the "double_param_value" field is set</summary>
-        </member>
-        <member name="M:mt4_term_api.OpenTerminalChartWithEaParameter.ClearDoubleParamValue">
-            <summary>Clears the value of the "double_param_value" field</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaParameter.NameFieldNumber">
-            <summary>Field number for the "name" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaReply.DataFieldNumber">
-            <summary>Field number for the "data" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaReply.ErrorFieldNumber">
-            <summary>Field number for the "error" field.</summary>
-        </member>
-        <member name="T:mt4_term_api.OpenTerminalChartWithEaReply.ResponseOneofCase">
-            <summary>Enum of possible cases for the "response" oneof.</summary>
-        </member>
-        <member name="F:mt4_term_api.OpenTerminalChartWithEaData.ChartIdFieldNumber">
-            <summary>Field number for the "chart_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaRequest.SessionIdFieldNumber">
-            <summary>Field number for the "session_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaRequest.EaFileNameFieldNumber">
-            <summary>Field number for the "ea_file_name" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaRequest.SymbolNameFieldNumber">
-            <summary>Field number for the "symbol_name" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaRequest.ChartPeriodFieldNumber">
-            <summary>Field number for the "chart_period" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaRequest.EaParametersFieldNumber">
-            <summary>Field number for the "ea_parameters" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaRequest.EaFileContentFieldNumber">
-            <summary>Field number for the "ea_file_content" field.</summary>
-        </member>
-        <member name="P:mt4_term_api.AttachEaRequest.HasEaFileContent">
-            <summary>Gets whether the "ea_file_content" field is set</summary>
-        </member>
-        <member name="M:mt4_term_api.AttachEaRequest.ClearEaFileContent">
-            <summary>Clears the value of the "ea_file_content" field</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaRequest.MaxCpuPercentFieldNumber">
-            <summary>Field number for the "max_cpu_percent" field.</summary>
-        </member>
-        <member name="P:mt4_term_api.AttachEaRequest.HasMaxCpuPercent">
-            <summary>Gets whether the "max_cpu_percent" field is set</summary>
-        </member>
-        <member name="M:mt4_term_api.AttachEaRequest.ClearMaxCpuPercent">
-            <summary>Clears the value of the "max_cpu_percent" field</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaRequest.MaxRamBytesFieldNumber">
-            <summary>Field number for the "max_ram_bytes" field.</summary>
-        </member>
-        <member name="P:mt4_term_api.AttachEaRequest.HasMaxRamBytes">
-            <summary>Gets whether the "max_ram_bytes" field is set</summary>
-        </member>
-        <member name="M:mt4_term_api.AttachEaRequest.ClearMaxRamBytes">
-            <summary>Clears the value of the "max_ram_bytes" field</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaReply.DataFieldNumber">
-            <summary>Field number for the "data" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaReply.ErrorFieldNumber">
-            <summary>Field number for the "error" field.</summary>
-        </member>
-        <member name="T:mt4_term_api.AttachEaReply.ResponseOneofCase">
-            <summary>Enum of possible cases for the "response" oneof.</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaData.EaIdFieldNumber">
-            <summary>Field number for the "ea_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaData.EaTerminalIdFieldNumber">
-            <summary>Field number for the "ea_terminal_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaData.ParentSessionIdFieldNumber">
-            <summary>Field number for the "parent_session_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaData.EaNameFieldNumber">
-            <summary>Field number for the "ea_name" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaData.StateFieldNumber">
-            <summary>Field number for the "state" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.AttachEaData.ProcessIdFieldNumber">
-            <summary>Field number for the "process_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.GetRunningEasRequest.SessionIdFieldNumber">
-            <summary>Field number for the "session_id" field.</summary>
-        </member>
-        <member name="P:mt4_term_api.GetRunningEasRequest.HasSessionId">
-            <summary>Gets whether the "session_id" field is set</summary>
-        </member>
-        <member name="M:mt4_term_api.GetRunningEasRequest.ClearSessionId">
-            <summary>Clears the value of the "session_id" field</summary>
-        </member>
-        <member name="F:mt4_term_api.GetRunningEasRequest.EaIdFieldNumber">
-            <summary>Field number for the "ea_id" field.</summary>
-        </member>
-        <member name="P:mt4_term_api.GetRunningEasRequest.HasEaId">
-            <summary>Gets whether the "ea_id" field is set</summary>
-        </member>
-        <member name="M:mt4_term_api.GetRunningEasRequest.ClearEaId">
-            <summary>Clears the value of the "ea_id" field</summary>
-        </member>
-        <member name="F:mt4_term_api.GetRunningEasReply.DataFieldNumber">
-            <summary>Field number for the "data" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.GetRunningEasReply.ErrorFieldNumber">
-            <summary>Field number for the "error" field.</summary>
-        </member>
-        <member name="T:mt4_term_api.GetRunningEasReply.ResponseOneofCase">
-            <summary>Enum of possible cases for the "response" oneof.</summary>
-        </member>
-        <member name="F:mt4_term_api.GetRunningEasData.EasFieldNumber">
-            <summary>Field number for the "eas" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.EaIdFieldNumber">
-            <summary>Field number for the "ea_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.EaNameFieldNumber">
-            <summary>Field number for the "ea_name" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.ParentSessionIdFieldNumber">
-            <summary>Field number for the "parent_session_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.EaTerminalIdFieldNumber">
-            <summary>Field number for the "ea_terminal_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.ProcessIdFieldNumber">
-            <summary>Field number for the "process_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.SymbolFieldNumber">
-            <summary>Field number for the "symbol" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.PeriodFieldNumber">
-            <summary>Field number for the "period" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.StateFieldNumber">
-            <summary>Field number for the "state" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.StartedAtFieldNumber">
-            <summary>Field number for the "started_at" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.EaCpuPercentFieldNumber">
-            <summary>Field number for the "ea_cpu_percent" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.RefCpuPercentFieldNumber">
-            <summary>Field number for the "ref_cpu_percent" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.CpuRatioFieldNumber">
-            <summary>Field number for the "cpu_ratio" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.EaRamBytesFieldNumber">
-            <summary>Field number for the "ea_ram_bytes" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.RefRamBytesFieldNumber">
-            <summary>Field number for the "ref_ram_bytes" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.RamRatioFieldNumber">
-            <summary>Field number for the "ram_ratio" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.ResourceMultiplierFieldNumber">
-            <summary>Field number for the "resource_multiplier" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.MeteredHoursFieldNumber">
-            <summary>Field number for the "metered_hours" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.ChargedAmountFieldNumber">
-            <summary>Field number for the "charged_amount" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.RunningEaInfo.StoppedAtFieldNumber">
-            <summary>Field number for the "stopped_at" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.GetEaLogsRequest.EaIdFieldNumber">
-            <summary>Field number for the "ea_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.GetEaLogsRequest.LogTypeFieldNumber">
-            <summary>Field number for the "log_type" field.</summary>
-        </member>
-        <member name="P:mt4_term_api.GetEaLogsRequest.HasLogType">
-            <summary>Gets whether the "log_type" field is set</summary>
-        </member>
-        <member name="M:mt4_term_api.GetEaLogsRequest.ClearLogType">
-            <summary>Clears the value of the "log_type" field</summary>
-        </member>
-        <member name="F:mt4_term_api.GetEaLogsReply.DataFieldNumber">
-            <summary>Field number for the "data" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.GetEaLogsReply.ErrorFieldNumber">
-            <summary>Field number for the "error" field.</summary>
-        </member>
-        <member name="T:mt4_term_api.GetEaLogsReply.ResponseOneofCase">
-            <summary>Enum of possible cases for the "response" oneof.</summary>
-        </member>
-        <member name="F:mt4_term_api.GetEaLogsData.RowsFieldNumber">
-            <summary>Field number for the "rows" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.EaLogRow.TimeFieldNumber">
-            <summary>Field number for the "time" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.EaLogRow.SourceFieldNumber">
-            <summary>Field number for the "source" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.EaLogRow.MessageFieldNumber">
-            <summary>Field number for the "message" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.StopEaRequest.EaIdFieldNumber">
-            <summary>Field number for the "ea_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.StopEaRequest.ReasonFieldNumber">
-            <summary>Field number for the "reason" field.</summary>
-        </member>
-        <member name="P:mt4_term_api.StopEaRequest.HasReason">
-            <summary>Gets whether the "reason" field is set</summary>
-        </member>
-        <member name="M:mt4_term_api.StopEaRequest.ClearReason">
-            <summary>Clears the value of the "reason" field</summary>
-        </member>
-        <member name="F:mt4_term_api.StopEaReply.DataFieldNumber">
-            <summary>Field number for the "data" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.StopEaReply.ErrorFieldNumber">
-            <summary>Field number for the "error" field.</summary>
-        </member>
-        <member name="T:mt4_term_api.StopEaReply.ResponseOneofCase">
-            <summary>Enum of possible cases for the "response" oneof.</summary>
-        </member>
-        <member name="F:mt4_term_api.StopEaData.SuccessFieldNumber">
-            <summary>Field number for the "success" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.StopEaData.EaIdFieldNumber">
-            <summary>Field number for the "ea_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.StopEaData.MessageFieldNumber">
-            <summary>Field number for the "message" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.StartEaRequest.EaIdFieldNumber">
-            <summary>Field number for the "ea_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.StartEaReply.DataFieldNumber">
-            <summary>Field number for the "data" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.StartEaReply.ErrorFieldNumber">
-            <summary>Field number for the "error" field.</summary>
-        </member>
-        <member name="T:mt4_term_api.StartEaReply.ResponseOneofCase">
-            <summary>Enum of possible cases for the "response" oneof.</summary>
-        </member>
-        <member name="F:mt4_term_api.StartEaData.SuccessFieldNumber">
-            <summary>Field number for the "success" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.StartEaData.EaIdFieldNumber">
-            <summary>Field number for the "ea_id" field.</summary>
-        </member>
-        <member name="F:mt4_term_api.StartEaData.MessageFieldNumber">
-            <summary>Field number for the "message" field.</summary>
         </member>
         <member name="T:mt4_term_api.Mt4TermApiConnectionReflection">
             <summary>Holder for reflection information generated from mt4-term-api-connection.proto</summary>
@@ -5644,6 +5412,56 @@
         </member>
         <member name="P:mt4_term_api.Mt4TermApiGuiReflection.Descriptor">
             <summary>File descriptor for mt4-term-api-gui.proto</summary>
+        </member>
+        <member name="T:mt4_term_api.GuiDemoFindCompaniesRequest">
+            <summary>
+            Field numbers match mt4-term-native/Protos (the terminal side).
+            </summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoFindCompaniesRequest.SearchTextFieldNumber">
+            <summary>Field number for the "search_text" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoFindCompaniesRequest.TimeoutSecondsFieldNumber">
+            <summary>Field number for the "timeout_seconds" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoFindCompaniesReply.ResultCodeFieldNumber">
+            <summary>Field number for the "result_code" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoFindCompaniesReply.CompaniesFieldNumber">
+            <summary>Field number for the "companies" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoFindCompaniesReply.DebugLogFieldNumber">
+            <summary>Field number for the "debug_log" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoCompany.NameFieldNumber">
+            <summary>Field number for the "name" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoCompany.ShortNameFieldNumber">
+            <summary>Field number for the "short_name" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesRequest.CompanyNameFieldNumber">
+            <summary>Field number for the "company_name" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesRequest.TimeoutSecondsFieldNumber">
+            <summary>Field number for the "timeout_seconds" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesReply.ResultCodeFieldNumber">
+            <summary>Field number for the "result_code" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesReply.ServersFieldNumber">
+            <summary>Field number for the "servers" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesReply.AccountTypesFieldNumber">
+            <summary>Field number for the "account_types" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesReply.DepositsFieldNumber">
+            <summary>Field number for the "deposits" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesReply.LeveragesFieldNumber">
+            <summary>Field number for the "leverages" field.</summary>
+        </member>
+        <member name="F:mt4_term_api.GuiDemoServersAndTypesReply.DebugLogFieldNumber">
+            <summary>Field number for the "debug_log" field.</summary>
         </member>
         <member name="F:mt4_term_api.GuiDemoOpenAccountRequest.CompanyFieldNumber">
             <summary>Field number for the "company" field.</summary>

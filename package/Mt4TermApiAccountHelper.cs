@@ -30,7 +30,7 @@ namespace mt4_term_api {
             "FwoVQWNjb3VudFN1bW1hcnlSZXF1ZXN0InkKE0FjY291bnRTdW1tYXJ5UmVw",
             "bHkSMAoEZGF0YRgBIAEoCzIgLm10NF90ZXJtX2FwaS5BY2NvdW50U3VtbWFy",
             "eURhdGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJvckgA",
-            "QgoKCHJlc3BvbnNlIokEChJBY2NvdW50U3VtbWFyeURhdGESFQoNYWNjb3Vu",
+            "QgoKCHJlc3BvbnNlItsFChJBY2NvdW50U3VtbWFyeURhdGESFQoNYWNjb3Vu",
             "dF9sb2dpbhgBIAEoAxIXCg9hY2NvdW50X2JhbGFuY2UYAiABKAESFgoOYWNj",
             "b3VudF9lcXVpdHkYAyABKAESGQoRYWNjb3VudF91c2VyX25hbWUYBCABKAkS",
             "GAoQYWNjb3VudF9sZXZlcmFnZRgFIAEoAxI+ChJhY2NvdW50X3RyYWRlX21v",
@@ -41,166 +41,175 @@ namespace mt4_term_api {
             "Z2xlLnByb3RvYnVmLlRpbWVzdGFtcBIWCg5hY2NvdW50X2NyZWRpdBgKIAEo",
             "ARITCgtpc19pbnZlc3RvchgLIAEoCBIlCh11dGNfc2VydmVyX3RpbWVfc2hp",
             "ZnRfbWludXRlcxgMIAEoBRImChlzZXJ2ZXJfdXRjX29mZnNldF9zZWNvbmRz",
-            "GA4gASgFSACIAQFCHAoaX3NlcnZlcl91dGNfb2Zmc2V0X3NlY29uZHMiTwoT",
-            "T3BlbmVkT3JkZXJzUmVxdWVzdBI4Cglzb3J0X3R5cGUYASABKA4yJS5tdDRf",
-            "dGVybV9hcGkuRW51bU9wZW5lZE9yZGVyU29ydFR5cGUidQoRT3BlbmVkT3Jk",
-            "ZXJzUmVwbHkSLgoEZGF0YRgBIAEoCzIeLm10NF90ZXJtX2FwaS5PcGVuZWRP",
-            "cmRlcnNEYXRhSAASJAoFZXJyb3IYAiABKAsyEy5tdDRfdGVybV9hcGkuRXJy",
-            "b3JIAEIKCghyZXNwb25zZSJGChBPcGVuZWRPcmRlcnNEYXRhEjIKC29yZGVy",
-            "X2luZm9zGAEgAygLMh0ubXQ0X3Rlcm1fYXBpLk9wZW5lZE9yZGVySW5mbyKZ",
-            "BAoPT3BlbmVkT3JkZXJJbmZvEg8KB2NvbW1lbnQYASABKAkSEQoJY29tbWlz",
-            "aW9uGAIgASgBEjMKD2V4cGlyYXRpb25fdGltZRgDIAEoCzIaLmdvb2dsZS5w",
-            "cm90b2J1Zi5UaW1lc3RhbXASNwoTZXhwaXJhdGlvbl90aW1lX3V0YxgSIAEo",
-            "CzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASDAoEbG90cxgEIAEoARIU",
-            "CgxtYWdpY19udW1iZXIYBSABKAUSEgoKb3Blbl9wcmljZRgGIAEoARIOCgZw",
-            "cm9maXQYByABKAESEQoJc3RvcF9sb3NzGAggASgBEgwKBHN3YXAYCSABKAES",
-            "DgoGc3ltYm9sGAogASgJEhMKC3Rha2VfcHJvZml0GAsgASgBEg4KBnRpY2tl",
-            "dBgMIAEoBRIWCg5wb3NpdGlvbl9pbmRleBgNIAEoBRIxCgpvcmRlcl90eXBl",
-            "GA4gASgOMh0ubXQ0X3Rlcm1fYXBpLk9wZW5lZE9yZGVyVHlwZRISCgpzb3J0",
-            "X2luZGV4GA8gASgFEi0KCW9wZW5fdGltZRgQIAEoCzIaLmdvb2dsZS5wcm90",
-            "b2J1Zi5UaW1lc3RhbXASMQoNb3Blbl90aW1lX3V0YxgTIAEoCzIaLmdvb2ds",
-            "ZS5wcm90b2J1Zi5UaW1lc3RhbXASFQoNYWNjb3VudF9sb2dpbhgRIAEoAyIc",
-            "ChpPcGVuZWRPcmRlcnNUaWNrZXRzUmVxdWVzdCKDAQoYT3BlbmVkT3JkZXJz",
-            "VGlja2V0c1JlcGx5EjUKBGRhdGEYASABKAsyJS5tdDRfdGVybV9hcGkuT3Bl",
-            "bmVkT3JkZXJzVGlja2V0c0RhdGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90",
-            "ZXJtX2FwaS5FcnJvckgAQgoKCHJlc3BvbnNlIioKF09wZW5lZE9yZGVyc1Rp",
-            "Y2tldHNEYXRhEg8KB3RpY2tldHMYASADKAUidwoST3JkZXJzSGlzdG9yeVJl",
-            "cGx5Ei8KBGRhdGEYASABKAsyHy5tdDRfdGVybV9hcGkuT3JkZXJzSGlzdG9y",
-            "eURhdGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJvckgA",
-            "QgoKCHJlc3BvbnNlInYKEU9yZGVyc0hpc3RvcnlEYXRhEjMKC29yZGVyc19p",
-            "bmZvGAEgAygLMh4ubXQ0X3Rlcm1fYXBpLkhpc3RvcnlPcmRlckluZm8SEwoL",
-            "dG90YWxfY291bnQYAiABKAUSFwoPbmV4dF9wYWdlX3Rva2VuGAMgASgJIpMF",
-            "ChBIaXN0b3J5T3JkZXJJbmZvEg8KB2NvbW1lbnQYASABKAkSEQoJY29tbWlz",
-            "aW9uGAIgASgBEjMKD2V4cGlyYXRpb25fdGltZRgDIAEoCzIaLmdvb2dsZS5w",
-            "cm90b2J1Zi5UaW1lc3RhbXASNwoTZXhwaXJhdGlvbl90aW1lX3V0YxgUIAEo",
-            "CzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASDAoEbG90cxgEIAEoARIU",
-            "CgxtYWdpY19udW1iZXIYBSABKAUSEgoKb3Blbl9wcmljZRgGIAEoARIOCgZw",
-            "cm9maXQYByABKAESEQoJc3RvcF9sb3NzGAggASgBEgwKBHN3YXAYCSABKAES",
-            "DgoGc3ltYm9sGAogASgJEhMKC3Rha2VfcHJvZml0GAsgASgBEg4KBnRpY2tl",
-            "dBgMIAEoBRIWCg5wb3NpdGlvbl9pbmRleBgNIAEoBRIxCgpvcmRlcl90eXBl",
-            "GA4gASgOMh0ubXQ0X3Rlcm1fYXBpLk9wZW5lZE9yZGVyVHlwZRISCgpzb3J0",
-            "X2luZGV4GA8gASgFEi0KCW9wZW5fdGltZRgQIAEoCzIaLmdvb2dsZS5wcm90",
-            "b2J1Zi5UaW1lc3RhbXASMQoNb3Blbl90aW1lX3V0YxgVIAEoCzIaLmdvb2ds",
-            "ZS5wcm90b2J1Zi5UaW1lc3RhbXASLgoKY2xvc2VfdGltZRgRIAEoCzIaLmdv",
-            "b2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASMgoOY2xvc2VfdGltZV91dGMYFiAB",
-            "KAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEhMKC2Nsb3NlX3ByaWNl",
-            "GBIgASgBEhUKDWFjY291bnRfbG9naW4YEyABKAMi8AMKFE9yZGVyc0hpc3Rv",
-            "cnlSZXF1ZXN0Ej8KD2lucHV0X3NvcnRfbW9kZRgBIAEoDjImLm10NF90ZXJt",
-            "X2FwaS5FbnVtT3JkZXJIaXN0b3J5U29ydFR5cGUSMwoKaW5wdXRfZnJvbRgC",
-            "IAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIAIgBARI3Cg5pbnB1",
-            "dF9mcm9tX3V0YxgIIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBI",
-            "AYgBARIxCghpbnB1dF90bxgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1l",
-            "c3RhbXBIAogBARI1CgxpbnB1dF90b191dGMYCSABKAsyGi5nb29nbGUucHJv",
-            "dG9idWYuVGltZXN0YW1wSAOIAQESGAoLcGFnZV9udW1iZXIYBCABKAVIBIgB",
-            "ARIbCg5pdGVtc19wZXJfcGFnZRgFIAEoBUgFiAEBEhIKCnBhZ2VfdG9rZW4Y",
-            "BiABKAkSEQoJcGFnZV9zaXplGAcgASgFQg0KC19pbnB1dF9mcm9tQhEKD19p",
-            "bnB1dF9mcm9tX3V0Y0ILCglfaW5wdXRfdG9CDwoNX2lucHV0X3RvX3V0Y0IO",
-            "CgxfcGFnZV9udW1iZXJCEQoPX2l0ZW1zX3Blcl9wYWdlIkMKF1N5bWJvbFBh",
-            "cmFtc01hbnlSZXF1ZXN0EhgKC3N5bWJvbF9uYW1lGAEgASgJSACIAQFCDgoM",
-            "X3N5bWJvbF9uYW1lIn0KFVN5bWJvbFBhcmFtc01hbnlSZXBseRIyCgRkYXRh",
-            "GAEgASgLMiIubXQ0X3Rlcm1fYXBpLlN5bWJvbFBhcmFtc01hbnlEYXRhSAAS",
-            "JAoFZXJyb3IYAiABKAsyEy5tdDRfdGVybV9hcGkuRXJyb3JIAEIKCghyZXNw",
-            "b25zZSJQChRTeW1ib2xQYXJhbXNNYW55RGF0YRI4CgxzeW1ib2xfaW5mb3MY",
-            "ASADKAsyIi5tdDRfdGVybV9hcGkuU3ltYm9sUGFyYW1zTWFueUluZm8i8Q0K",
-            "FFN5bWJvbFBhcmFtc01hbnlJbmZvEhMKC2lzX3NlbGVjdGVkGAEgASgIEg8K",
-            "B3Zpc2libGUYAiABKAgSFQoNc2Vzc2lvbl9kZWFscxgDIAEoAxIaChJzZXNz",
-            "aW9uX2J1eV9vcmRlcnMYBCABKAMSGwoTc2Vzc2lvbl9zZWxsX29yZGVycxgF",
-            "IAEoAxIOCgZ2b2x1bWUYBiABKAMSEwoLdm9sdW1lX2hpZ2gYByABKAMSEQoJ",
-            "Vm9sdW1lTG93GAggASgDEgwKBFRpbWUYCSABKAMSDwoHVGltZVV0YxhEIAEo",
-            "AxIOCgZEaWdpdHMYCiABKAUSEwoLU3ByZWFkRmxvYXQYCyABKAgSFgoOVGlj",
-            "a3NCb29rRGVwdGgYDCABKAUSPAoNVHJhZGVDYWxjTW9kZRgNIAEoDjIlLm10",
-            "NF90ZXJtX2FwaS5TUF9FTlVNX1RSQURFX0NBTENfTU9ERRI6CglUcmFkZU1v",
-            "ZGUYDiABKA4yJy5tdDRfdGVybV9hcGkuU1BfRU5VTV9TWU1CT0xfVFJBREVf",
-            "TU9ERRItCglTdGFydFRpbWUYDyABKAsyGi5nb29nbGUucHJvdG9idWYuVGlt",
-            "ZXN0YW1wEjAKDFN0YXJ0VGltZVV0YxhFIAEoCzIaLmdvb2dsZS5wcm90b2J1",
-            "Zi5UaW1lc3RhbXASMgoORXhwaXJhdGlvblRpbWUYECABKAsyGi5nb29nbGUu",
-            "cHJvdG9idWYuVGltZXN0YW1wEjUKEUV4cGlyYXRpb25UaW1lVXRjGEYgASgL",
-            "MhouZ29vZ2xlLnByb3RvYnVmLlRpbWVzdGFtcBIXCg9UcmFkZVN0b3BzTGV2",
-            "ZWwYESABKAUSGAoQVHJhZGVGcmVlemVMZXZlbBgSIAEoBRJCCgxUcmFkZUV4",
-            "ZU1vZGUYEyABKA4yLC5tdDRfdGVybV9hcGkuU1BfRU5VTV9TWU1CT0xfVFJB",
-            "REVfRVhFQ1VUSU9OEhAKCFN3YXBNb2RlGBQgASgFEhkKEVN3YXBSb2xsb3Zl",
-            "cjNEYXlzGBUgASgFEg8KB1RoZUxhc3QYFiABKAESEAoITGFzdEhpZ2gYFyAB",
-            "KAESDwoHTGFzdExvdxgYIAEoARINCgVQb2ludBgZIAEoARIWCg5UcmFkZVRp",
-            "Y2tWYWx1ZRgaIAEoARIcChRUcmFkZVRpY2tWYWx1ZVByb2ZpdBgbIAEoARIa",
-            "ChJUcmFkZVRpY2tWYWx1ZUxvc3MYHCABKAESFQoNVHJhZGVUaWNrU2l6ZRgd",
-            "IAEoARIZChFUcmFkZUNvbnRyYWN0U2l6ZRgeIAEoARIRCglWb2x1bWVNaW4Y",
-            "HyABKAESEQoJVm9sdW1lTWF4GCAgASgBEhIKClZvbHVtZVN0ZXAYISABKAES",
-            "EwoLVm9sdW1lTGltaXQYIiABKAESEAoIU3dhcExvbmcYIyABKAESEQoJU3dh",
-            "cFNob3J0GCQgASgBEhUKDU1hcmdpbkluaXRpYWwYJSABKAESGQoRTWFyZ2lu",
-            "TWFpbnRlbmFuY2UYJiABKAESEgoKTWFyZ2luTG9uZxgnIAEoARITCgtNYXJn",
-            "aW5TaG9ydBgoIAEoARITCgtNYXJnaW5MaW1pdBgpIAEoARISCgpNYXJnaW5T",
-            "dG9wGCogASgBEhcKD01hcmdpblN0b3BMaW1pdBgrIAEoARIVCg1TZXNzaW9u",
-            "Vm9sdW1lGCwgASgBEhcKD1Nlc3Npb25UdXJub3ZlchgtIAEoARIXCg9TZXNz",
-            "aW9uSW50ZXJlc3QYLiABKAESHgoWU2Vzc2lvbkJ1eU9yZGVyc1ZvbHVtZRgv",
-            "IAEoARIfChdTZXNzaW9uU2VsbE9yZGVyc1ZvbHVtZRgwIAEoARITCgtTZXNz",
-            "aW9uT3BlbhgxIAEoARIUCgxTZXNzaW9uQ2xvc2UYMiABKAESEQoJU2Vzc2lv",
-            "bkFXGDMgASgBEh4KFlNlc3Npb25QcmljZVNldHRsZW1lbnQYNCABKAESHAoU",
-            "U2Vzc2lvblByaWNlTGltaXRNaW4YNSABKAESHAoUU2Vzc2lvblByaWNlTGlt",
-            "aXRNYXgYNiABKAESCwoDQmlkGDcgASgBEg8KB0JpZEhpZ2gYOCABKAESDgoG",
-            "QmlkTG93GDkgASgBEg8KB0Fza0hpZ2gYOiABKAESDgoGQXNrTG93GDsgASgB",
-            "EhQKDEN1cnJlbmN5QmFzZRg8IAEoCRIWCg5DdXJyZW5jeVByb2ZpdBg9IAEo",
-            "CRIWCg5DdXJyZW5jeU1hcmdpbhg+IAEoCRIMCgRCYW5rGD8gASgJEhYKDlN5",
-            "bURlc2NyaXB0aW9uGEAgASgJEgwKBElzaW4YQSABKAkSDAoEUGF0aBhCIAEo",
-            "CRISCgpTeW1ib2xOYW1lGEMgASgJIjAKGFRpY2tWYWx1ZVdpdGhTaXplUmVx",
-            "dWVzdBIUCgxzeW1ib2xfbmFtZXMYASADKAkifwoWVGlja1ZhbHVlV2l0aFNp",
-            "emVSZXBseRIzCgRkYXRhGAEgASgLMiMubXQ0X3Rlcm1fYXBpLlRpY2tWYWx1",
-            "ZVdpdGhTaXplRGF0YUgAEiQKBWVycm9yGAIgASgLMhMubXQ0X3Rlcm1fYXBp",
-            "LkVycm9ySABCCgoIcmVzcG9uc2UiUQoVVGlja1ZhbHVlV2l0aFNpemVEYXRh",
-            "EjgKBWluZm9zGAEgAygLMikubXQ0X3Rlcm1fYXBpLlN5bWJvbFRpY2tWYWx1",
-            "ZVdpdGhTaXplSW5mbyKKAQobU3ltYm9sVGlja1ZhbHVlV2l0aFNpemVJbmZv",
-            "Eg0KBWluZGV4GAEgASgFEhIKCnN5bWJvbE5hbWUYAiABKAkSFgoOVHJhZGVU",
-            "aWNrVmFsdWUYAyABKAESFQoNVHJhZGVUaWNrU2l6ZRgEIAEoARIZChFUcmFk",
-            "ZUNvbnRyYWN0U2l6ZRgFIAEoASpwChRFbnVtQWNjb3VudFRyYWRlTW9kZRIb",
-            "ChdBQ0NPVU5UX1RSQURFX01PREVfREVNTxAAEh4KGkFDQ09VTlRfVFJBREVf",
-            "TU9ERV9DT05URVNUEAESGwoXQUNDT1VOVF9UUkFERV9NT0RFX1JFQUwQAiqT",
-            "AQoXRW51bU9wZW5lZE9yZGVyU29ydFR5cGUSGQoVU09SVF9CWV9PUEVOX1RJ",
-            "TUVfQVNDEAASGgoWU09SVF9CWV9PUEVOX1RJTUVfREVTQxABEh8KG1NPUlRf",
-            "QllfT1JERVJfVElDS0VUX0lEX0FTQxACEiAKHFNPUlRfQllfT1JERVJfVElD",
-            "S0VUX0lEX0RFU0MQAyqAAQoPT3BlbmVkT3JkZXJUeXBlEg0KCU9PX09QX0JV",
-            "WRAAEg4KCk9PX09QX1NFTEwQARISCg5PT19PUF9CVVlMSU1JVBACEhMKD09P",
-            "X09QX1NFTExMSU1JVBADEhEKDU9PX09QX0JVWVNUT1AQBBISCg5PT19PUF9T",
-            "RUxMU1RPUBAFKv0BChhFbnVtT3JkZXJIaXN0b3J5U29ydFR5cGUSIQodSElT",
-            "VE9SWV9TT1JUX0JZX09QRU5fVElNRV9BU0MQABIiCh5ISVNUT1JZX1NPUlRf",
-            "QllfT1BFTl9USU1FX0RFU0MQARIiCh5ISVNUT1JZX1NPUlRfQllfQ0xPU0Vf",
-            "VElNRV9BU0MQAhIjCh9ISVNUT1JZX1NPUlRfQllfQ0xPU0VfVElNRV9ERVND",
-            "EAMSJwojSElTVE9SWV9TT1JUX0JZX09SREVSX1RJQ0tFVF9JRF9BU0MQBBIo",
-            "CiRISVNUT1JZX1NPUlRfQllfT1JERVJfVElDS0VUX0lEX0RFU0MQBSq5AQoZ",
-            "U1BfRU5VTV9TWU1CT0xfVFJBREVfTU9ERRIeChpTWU1CT0xfVFJBREVfTU9E",
-            "RV9ESVNBQkxFRBAAEh4KGlNZTUJPTF9UUkFERV9NT0RFX0xPTkdPTkxZEAES",
-            "HwobU1lNQk9MX1RSQURFX01PREVfU0hPUlRPTkxZEAISHwobU1lNQk9MX1RS",
-            "QURFX01PREVfQ0xPU0VPTkxZEAMSGgoWU1lNQk9MX1RSQURFX01PREVfRlVM",
-            "TBAEKrABCh5TUF9FTlVNX1NZTUJPTF9UUkFERV9FWEVDVVRJT04SIgoeU1lN",
-            "Qk9MX1RSQURFX0VYRUNVVElPTl9SRVFVRVNUEAASIgoeU1lNQk9MX1RSQURF",
-            "X0VYRUNVVElPTl9JTlNUQU5UEAESIQodU1lNQk9MX1RSQURFX0VYRUNVVElP",
-            "Tl9NQVJLRVQQAhIjCh9TWU1CT0xfVFJBREVfRVhFQ1VUSU9OX0VYQ0hBTkdF",
-            "EAMqlwEKF1NQX0VOVU1fVFJBREVfQ0FMQ19NT0RFEigKJFNZTUJPTF9UUkFE",
-            "RV9NQVJHSU5FX0NBTENfTU9ERV9GT1JFWBAAEioKJlNZTUJPTF9UUkFERV9N",
-            "QVJHSU5FX0NBTENfTU9ERV9GVVRVUkVTEAESJgoiU1lNQk9MX1RSQURFX01B",
-            "UkdJTkVfQ0FMQ19NT0RFX0NGRBACMt4FCg1BY2NvdW50SGVscGVyEnEKDkFj",
-            "Y291bnRTdW1tYXJ5EiMubXQ0X3Rlcm1fYXBpLkFjY291bnRTdW1tYXJ5UmVx",
-            "dWVzdBohLm10NF90ZXJtX2FwaS5BY2NvdW50U3VtbWFyeVJlcGx5IheC0+ST",
-            "AhESDy9BY2NvdW50U3VtbWFyeRJpCgxPcGVuZWRPcmRlcnMSIS5tdDRfdGVy",
-            "bV9hcGkuT3BlbmVkT3JkZXJzUmVxdWVzdBofLm10NF90ZXJtX2FwaS5PcGVu",
-            "ZWRPcmRlcnNSZXBseSIVgtPkkwIPEg0vT3BlbmVkT3JkZXJzEoUBChNPcGVu",
-            "ZWRPcmRlcnNUaWNrZXRzEigubXQ0X3Rlcm1fYXBpLk9wZW5lZE9yZGVyc1Rp",
-            "Y2tldHNSZXF1ZXN0GiYubXQ0X3Rlcm1fYXBpLk9wZW5lZE9yZGVyc1RpY2tl",
-            "dHNSZXBseSIcgtPkkwIWEhQvT3BlbmVkT3JkZXJzVGlja2V0cxJtCg1PcmRl",
-            "cnNIaXN0b3J5EiIubXQ0X3Rlcm1fYXBpLk9yZGVyc0hpc3RvcnlSZXF1ZXN0",
-            "GiAubXQ0X3Rlcm1fYXBpLk9yZGVyc0hpc3RvcnlSZXBseSIWgtPkkwIQEg4v",
-            "T3JkZXJzSGlzdG9yeRJ5ChBTeW1ib2xQYXJhbXNNYW55EiUubXQ0X3Rlcm1f",
-            "YXBpLlN5bWJvbFBhcmFtc01hbnlSZXF1ZXN0GiMubXQ0X3Rlcm1fYXBpLlN5",
-            "bWJvbFBhcmFtc01hbnlSZXBseSIZgtPkkwITEhEvU3ltYm9sUGFyYW1zTWFu",
-            "eRJ9ChFUaWNrVmFsdWVXaXRoU2l6ZRImLm10NF90ZXJtX2FwaS5UaWNrVmFs",
-            "dWVXaXRoU2l6ZVJlcXVlc3QaJC5tdDRfdGVybV9hcGkuVGlja1ZhbHVlV2l0",
-            "aFNpemVSZXBseSIagtPkkwIUEhIvVGlja1ZhbHVlV2l0aFNpemVCQloxZ2l0",
-            "Lm10YXBpLmlvL3Jvb3QvbXJwYy1wcm90by5naXQvbXQ0L2xpYnJhcmllcy9n",
-            "b6oCDG10NF90ZXJtX2FwaWIGcHJvdG8z"));
+            "GA4gASgFSACIAQESFgoOYWNjb3VudF9tYXJnaW4YDSABKAESGwoTYWNjb3Vu",
+            "dF9tYXJnaW5fZnJlZRgQIAEoARIcChRhY2NvdW50X21hcmdpbl9sZXZlbBgR",
+            "IAEoARJAChNhY2NvdW50X21hcmdpbl9tb2RlGBIgASgOMiMubXQ0X3Rlcm1f",
+            "YXBpLkVudW1BY2NvdW50TWFyZ2luTW9kZRIdChVhY2NvdW50X3RyYWRlX2Fs",
+            "bG93ZWQYEyABKAgSHAoUYWNjb3VudF90cmFkZV9leHBlcnQYFCABKAhCHAoa",
+            "X3NlcnZlcl91dGNfb2Zmc2V0X3NlY29uZHMiTwoTT3BlbmVkT3JkZXJzUmVx",
+            "dWVzdBI4Cglzb3J0X3R5cGUYASABKA4yJS5tdDRfdGVybV9hcGkuRW51bU9w",
+            "ZW5lZE9yZGVyU29ydFR5cGUidQoRT3BlbmVkT3JkZXJzUmVwbHkSLgoEZGF0",
+            "YRgBIAEoCzIeLm10NF90ZXJtX2FwaS5PcGVuZWRPcmRlcnNEYXRhSAASJAoF",
+            "ZXJyb3IYAiABKAsyEy5tdDRfdGVybV9hcGkuRXJyb3JIAEIKCghyZXNwb25z",
+            "ZSJGChBPcGVuZWRPcmRlcnNEYXRhEjIKC29yZGVyX2luZm9zGAEgAygLMh0u",
+            "bXQ0X3Rlcm1fYXBpLk9wZW5lZE9yZGVySW5mbyKZBAoPT3BlbmVkT3JkZXJJ",
+            "bmZvEg8KB2NvbW1lbnQYASABKAkSEQoJY29tbWlzaW9uGAIgASgBEjMKD2V4",
+            "cGlyYXRpb25fdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3Rh",
+            "bXASNwoTZXhwaXJhdGlvbl90aW1lX3V0YxgSIAEoCzIaLmdvb2dsZS5wcm90",
+            "b2J1Zi5UaW1lc3RhbXASDAoEbG90cxgEIAEoARIUCgxtYWdpY19udW1iZXIY",
+            "BSABKAUSEgoKb3Blbl9wcmljZRgGIAEoARIOCgZwcm9maXQYByABKAESEQoJ",
+            "c3RvcF9sb3NzGAggASgBEgwKBHN3YXAYCSABKAESDgoGc3ltYm9sGAogASgJ",
+            "EhMKC3Rha2VfcHJvZml0GAsgASgBEg4KBnRpY2tldBgMIAEoBRIWCg5wb3Np",
+            "dGlvbl9pbmRleBgNIAEoBRIxCgpvcmRlcl90eXBlGA4gASgOMh0ubXQ0X3Rl",
+            "cm1fYXBpLk9wZW5lZE9yZGVyVHlwZRISCgpzb3J0X2luZGV4GA8gASgFEi0K",
+            "CW9wZW5fdGltZRgQIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAS",
+            "MQoNb3Blbl90aW1lX3V0YxgTIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1l",
+            "c3RhbXASFQoNYWNjb3VudF9sb2dpbhgRIAEoAyIcChpPcGVuZWRPcmRlcnNU",
+            "aWNrZXRzUmVxdWVzdCKDAQoYT3BlbmVkT3JkZXJzVGlja2V0c1JlcGx5EjUK",
+            "BGRhdGEYASABKAsyJS5tdDRfdGVybV9hcGkuT3BlbmVkT3JkZXJzVGlja2V0",
+            "c0RhdGFIABIkCgVlcnJvchgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJvckgA",
+            "QgoKCHJlc3BvbnNlIioKF09wZW5lZE9yZGVyc1RpY2tldHNEYXRhEg8KB3Rp",
+            "Y2tldHMYASADKAUidwoST3JkZXJzSGlzdG9yeVJlcGx5Ei8KBGRhdGEYASAB",
+            "KAsyHy5tdDRfdGVybV9hcGkuT3JkZXJzSGlzdG9yeURhdGFIABIkCgVlcnJv",
+            "chgCIAEoCzITLm10NF90ZXJtX2FwaS5FcnJvckgAQgoKCHJlc3BvbnNlInYK",
+            "EU9yZGVyc0hpc3RvcnlEYXRhEjMKC29yZGVyc19pbmZvGAEgAygLMh4ubXQ0",
+            "X3Rlcm1fYXBpLkhpc3RvcnlPcmRlckluZm8SEwoLdG90YWxfY291bnQYAiAB",
+            "KAUSFwoPbmV4dF9wYWdlX3Rva2VuGAMgASgJIpMFChBIaXN0b3J5T3JkZXJJ",
+            "bmZvEg8KB2NvbW1lbnQYASABKAkSEQoJY29tbWlzaW9uGAIgASgBEjMKD2V4",
+            "cGlyYXRpb25fdGltZRgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3Rh",
+            "bXASNwoTZXhwaXJhdGlvbl90aW1lX3V0YxgUIAEoCzIaLmdvb2dsZS5wcm90",
+            "b2J1Zi5UaW1lc3RhbXASDAoEbG90cxgEIAEoARIUCgxtYWdpY19udW1iZXIY",
+            "BSABKAUSEgoKb3Blbl9wcmljZRgGIAEoARIOCgZwcm9maXQYByABKAESEQoJ",
+            "c3RvcF9sb3NzGAggASgBEgwKBHN3YXAYCSABKAESDgoGc3ltYm9sGAogASgJ",
+            "EhMKC3Rha2VfcHJvZml0GAsgASgBEg4KBnRpY2tldBgMIAEoBRIWCg5wb3Np",
+            "dGlvbl9pbmRleBgNIAEoBRIxCgpvcmRlcl90eXBlGA4gASgOMh0ubXQ0X3Rl",
+            "cm1fYXBpLk9wZW5lZE9yZGVyVHlwZRISCgpzb3J0X2luZGV4GA8gASgFEi0K",
+            "CW9wZW5fdGltZRgQIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXAS",
+            "MQoNb3Blbl90aW1lX3V0YxgVIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1l",
+            "c3RhbXASLgoKY2xvc2VfdGltZRgRIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5U",
+            "aW1lc3RhbXASMgoOY2xvc2VfdGltZV91dGMYFiABKAsyGi5nb29nbGUucHJv",
+            "dG9idWYuVGltZXN0YW1wEhMKC2Nsb3NlX3ByaWNlGBIgASgBEhUKDWFjY291",
+            "bnRfbG9naW4YEyABKAMi8AMKFE9yZGVyc0hpc3RvcnlSZXF1ZXN0Ej8KD2lu",
+            "cHV0X3NvcnRfbW9kZRgBIAEoDjImLm10NF90ZXJtX2FwaS5FbnVtT3JkZXJI",
+            "aXN0b3J5U29ydFR5cGUSMwoKaW5wdXRfZnJvbRgCIAEoCzIaLmdvb2dsZS5w",
+            "cm90b2J1Zi5UaW1lc3RhbXBIAIgBARI3Cg5pbnB1dF9mcm9tX3V0YxgIIAEo",
+            "CzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIAYgBARIxCghpbnB1dF90",
+            "bxgDIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXBIAogBARI1Cgxp",
+            "bnB1dF90b191dGMYCSABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1w",
+            "SAOIAQESGAoLcGFnZV9udW1iZXIYBCABKAVIBIgBARIbCg5pdGVtc19wZXJf",
+            "cGFnZRgFIAEoBUgFiAEBEhIKCnBhZ2VfdG9rZW4YBiABKAkSEQoJcGFnZV9z",
+            "aXplGAcgASgFQg0KC19pbnB1dF9mcm9tQhEKD19pbnB1dF9mcm9tX3V0Y0IL",
+            "CglfaW5wdXRfdG9CDwoNX2lucHV0X3RvX3V0Y0IOCgxfcGFnZV9udW1iZXJC",
+            "EQoPX2l0ZW1zX3Blcl9wYWdlIkMKF1N5bWJvbFBhcmFtc01hbnlSZXF1ZXN0",
+            "EhgKC3N5bWJvbF9uYW1lGAEgASgJSACIAQFCDgoMX3N5bWJvbF9uYW1lIn0K",
+            "FVN5bWJvbFBhcmFtc01hbnlSZXBseRIyCgRkYXRhGAEgASgLMiIubXQ0X3Rl",
+            "cm1fYXBpLlN5bWJvbFBhcmFtc01hbnlEYXRhSAASJAoFZXJyb3IYAiABKAsy",
+            "Ey5tdDRfdGVybV9hcGkuRXJyb3JIAEIKCghyZXNwb25zZSJQChRTeW1ib2xQ",
+            "YXJhbXNNYW55RGF0YRI4CgxzeW1ib2xfaW5mb3MYASADKAsyIi5tdDRfdGVy",
+            "bV9hcGkuU3ltYm9sUGFyYW1zTWFueUluZm8i8Q0KFFN5bWJvbFBhcmFtc01h",
+            "bnlJbmZvEhMKC2lzX3NlbGVjdGVkGAEgASgIEg8KB3Zpc2libGUYAiABKAgS",
+            "FQoNc2Vzc2lvbl9kZWFscxgDIAEoAxIaChJzZXNzaW9uX2J1eV9vcmRlcnMY",
+            "BCABKAMSGwoTc2Vzc2lvbl9zZWxsX29yZGVycxgFIAEoAxIOCgZ2b2x1bWUY",
+            "BiABKAMSEwoLdm9sdW1lX2hpZ2gYByABKAMSEQoJVm9sdW1lTG93GAggASgD",
+            "EgwKBFRpbWUYCSABKAMSDwoHVGltZVV0YxhEIAEoAxIOCgZEaWdpdHMYCiAB",
+            "KAUSEwoLU3ByZWFkRmxvYXQYCyABKAgSFgoOVGlja3NCb29rRGVwdGgYDCAB",
+            "KAUSPAoNVHJhZGVDYWxjTW9kZRgNIAEoDjIlLm10NF90ZXJtX2FwaS5TUF9F",
+            "TlVNX1RSQURFX0NBTENfTU9ERRI6CglUcmFkZU1vZGUYDiABKA4yJy5tdDRf",
+            "dGVybV9hcGkuU1BfRU5VTV9TWU1CT0xfVFJBREVfTU9ERRItCglTdGFydFRp",
+            "bWUYDyABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0YW1wEjAKDFN0YXJ0",
+            "VGltZVV0YxhFIAEoCzIaLmdvb2dsZS5wcm90b2J1Zi5UaW1lc3RhbXASMgoO",
+            "RXhwaXJhdGlvblRpbWUYECABKAsyGi5nb29nbGUucHJvdG9idWYuVGltZXN0",
+            "YW1wEjUKEUV4cGlyYXRpb25UaW1lVXRjGEYgASgLMhouZ29vZ2xlLnByb3Rv",
+            "YnVmLlRpbWVzdGFtcBIXCg9UcmFkZVN0b3BzTGV2ZWwYESABKAUSGAoQVHJh",
+            "ZGVGcmVlemVMZXZlbBgSIAEoBRJCCgxUcmFkZUV4ZU1vZGUYEyABKA4yLC5t",
+            "dDRfdGVybV9hcGkuU1BfRU5VTV9TWU1CT0xfVFJBREVfRVhFQ1VUSU9OEhAK",
+            "CFN3YXBNb2RlGBQgASgFEhkKEVN3YXBSb2xsb3ZlcjNEYXlzGBUgASgFEg8K",
+            "B1RoZUxhc3QYFiABKAESEAoITGFzdEhpZ2gYFyABKAESDwoHTGFzdExvdxgY",
+            "IAEoARINCgVQb2ludBgZIAEoARIWCg5UcmFkZVRpY2tWYWx1ZRgaIAEoARIc",
+            "ChRUcmFkZVRpY2tWYWx1ZVByb2ZpdBgbIAEoARIaChJUcmFkZVRpY2tWYWx1",
+            "ZUxvc3MYHCABKAESFQoNVHJhZGVUaWNrU2l6ZRgdIAEoARIZChFUcmFkZUNv",
+            "bnRyYWN0U2l6ZRgeIAEoARIRCglWb2x1bWVNaW4YHyABKAESEQoJVm9sdW1l",
+            "TWF4GCAgASgBEhIKClZvbHVtZVN0ZXAYISABKAESEwoLVm9sdW1lTGltaXQY",
+            "IiABKAESEAoIU3dhcExvbmcYIyABKAESEQoJU3dhcFNob3J0GCQgASgBEhUK",
+            "DU1hcmdpbkluaXRpYWwYJSABKAESGQoRTWFyZ2luTWFpbnRlbmFuY2UYJiAB",
+            "KAESEgoKTWFyZ2luTG9uZxgnIAEoARITCgtNYXJnaW5TaG9ydBgoIAEoARIT",
+            "CgtNYXJnaW5MaW1pdBgpIAEoARISCgpNYXJnaW5TdG9wGCogASgBEhcKD01h",
+            "cmdpblN0b3BMaW1pdBgrIAEoARIVCg1TZXNzaW9uVm9sdW1lGCwgASgBEhcK",
+            "D1Nlc3Npb25UdXJub3ZlchgtIAEoARIXCg9TZXNzaW9uSW50ZXJlc3QYLiAB",
+            "KAESHgoWU2Vzc2lvbkJ1eU9yZGVyc1ZvbHVtZRgvIAEoARIfChdTZXNzaW9u",
+            "U2VsbE9yZGVyc1ZvbHVtZRgwIAEoARITCgtTZXNzaW9uT3BlbhgxIAEoARIU",
+            "CgxTZXNzaW9uQ2xvc2UYMiABKAESEQoJU2Vzc2lvbkFXGDMgASgBEh4KFlNl",
+            "c3Npb25QcmljZVNldHRsZW1lbnQYNCABKAESHAoUU2Vzc2lvblByaWNlTGlt",
+            "aXRNaW4YNSABKAESHAoUU2Vzc2lvblByaWNlTGltaXRNYXgYNiABKAESCwoD",
+            "QmlkGDcgASgBEg8KB0JpZEhpZ2gYOCABKAESDgoGQmlkTG93GDkgASgBEg8K",
+            "B0Fza0hpZ2gYOiABKAESDgoGQXNrTG93GDsgASgBEhQKDEN1cnJlbmN5QmFz",
+            "ZRg8IAEoCRIWCg5DdXJyZW5jeVByb2ZpdBg9IAEoCRIWCg5DdXJyZW5jeU1h",
+            "cmdpbhg+IAEoCRIMCgRCYW5rGD8gASgJEhYKDlN5bURlc2NyaXB0aW9uGEAg",
+            "ASgJEgwKBElzaW4YQSABKAkSDAoEUGF0aBhCIAEoCRISCgpTeW1ib2xOYW1l",
+            "GEMgASgJIjAKGFRpY2tWYWx1ZVdpdGhTaXplUmVxdWVzdBIUCgxzeW1ib2xf",
+            "bmFtZXMYASADKAkifwoWVGlja1ZhbHVlV2l0aFNpemVSZXBseRIzCgRkYXRh",
+            "GAEgASgLMiMubXQ0X3Rlcm1fYXBpLlRpY2tWYWx1ZVdpdGhTaXplRGF0YUgA",
+            "EiQKBWVycm9yGAIgASgLMhMubXQ0X3Rlcm1fYXBpLkVycm9ySABCCgoIcmVz",
+            "cG9uc2UiUQoVVGlja1ZhbHVlV2l0aFNpemVEYXRhEjgKBWluZm9zGAEgAygL",
+            "MikubXQ0X3Rlcm1fYXBpLlN5bWJvbFRpY2tWYWx1ZVdpdGhTaXplSW5mbyKK",
+            "AQobU3ltYm9sVGlja1ZhbHVlV2l0aFNpemVJbmZvEg0KBWluZGV4GAEgASgF",
+            "EhIKCnN5bWJvbE5hbWUYAiABKAkSFgoOVHJhZGVUaWNrVmFsdWUYAyABKAES",
+            "FQoNVHJhZGVUaWNrU2l6ZRgEIAEoARIZChFUcmFkZUNvbnRyYWN0U2l6ZRgF",
+            "IAEoASqJAQoVRW51bUFjY291bnRNYXJnaW5Nb2RlEiYKIkFDQ09VTlRfTUFS",
+            "R0lOX01PREVfUkVUQUlMX05FVFRJTkcQABIgChxBQ0NPVU5UX01BUkdJTl9N",
+            "T0RFX0VYQ0hBTkdFEAESJgoiQUNDT1VOVF9NQVJHSU5fTU9ERV9SRVRBSUxf",
+            "SEVER0lORxACKnAKFEVudW1BY2NvdW50VHJhZGVNb2RlEhsKF0FDQ09VTlRf",
+            "VFJBREVfTU9ERV9ERU1PEAASHgoaQUNDT1VOVF9UUkFERV9NT0RFX0NPTlRF",
+            "U1QQARIbChdBQ0NPVU5UX1RSQURFX01PREVfUkVBTBACKpMBChdFbnVtT3Bl",
+            "bmVkT3JkZXJTb3J0VHlwZRIZChVTT1JUX0JZX09QRU5fVElNRV9BU0MQABIa",
+            "ChZTT1JUX0JZX09QRU5fVElNRV9ERVNDEAESHwobU09SVF9CWV9PUkRFUl9U",
+            "SUNLRVRfSURfQVNDEAISIAocU09SVF9CWV9PUkRFUl9USUNLRVRfSURfREVT",
+            "QxADKqUBCg9PcGVuZWRPcmRlclR5cGUSDQoJT09fT1BfQlVZEAASDgoKT09f",
+            "T1BfU0VMTBABEhIKDk9PX09QX0JVWUxJTUlUEAISEwoPT09fT1BfU0VMTExJ",
+            "TUlUEAMSEQoNT09fT1BfQlVZU1RPUBAEEhIKDk9PX09QX1NFTExTVE9QEAUS",
+            "EQoNT09fT1BfQkFMQU5DRRAGEhAKDE9PX09QX0NSRURJVBAHKv0BChhFbnVt",
+            "T3JkZXJIaXN0b3J5U29ydFR5cGUSIQodSElTVE9SWV9TT1JUX0JZX09QRU5f",
+            "VElNRV9BU0MQABIiCh5ISVNUT1JZX1NPUlRfQllfT1BFTl9USU1FX0RFU0MQ",
+            "ARIiCh5ISVNUT1JZX1NPUlRfQllfQ0xPU0VfVElNRV9BU0MQAhIjCh9ISVNU",
+            "T1JZX1NPUlRfQllfQ0xPU0VfVElNRV9ERVNDEAMSJwojSElTVE9SWV9TT1JU",
+            "X0JZX09SREVSX1RJQ0tFVF9JRF9BU0MQBBIoCiRISVNUT1JZX1NPUlRfQllf",
+            "T1JERVJfVElDS0VUX0lEX0RFU0MQBSq5AQoZU1BfRU5VTV9TWU1CT0xfVFJB",
+            "REVfTU9ERRIeChpTWU1CT0xfVFJBREVfTU9ERV9ESVNBQkxFRBAAEh4KGlNZ",
+            "TUJPTF9UUkFERV9NT0RFX0xPTkdPTkxZEAESHwobU1lNQk9MX1RSQURFX01P",
+            "REVfU0hPUlRPTkxZEAISHwobU1lNQk9MX1RSQURFX01PREVfQ0xPU0VPTkxZ",
+            "EAMSGgoWU1lNQk9MX1RSQURFX01PREVfRlVMTBAEKrABCh5TUF9FTlVNX1NZ",
+            "TUJPTF9UUkFERV9FWEVDVVRJT04SIgoeU1lNQk9MX1RSQURFX0VYRUNVVElP",
+            "Tl9SRVFVRVNUEAASIgoeU1lNQk9MX1RSQURFX0VYRUNVVElPTl9JTlNUQU5U",
+            "EAESIQodU1lNQk9MX1RSQURFX0VYRUNVVElPTl9NQVJLRVQQAhIjCh9TWU1C",
+            "T0xfVFJBREVfRVhFQ1VUSU9OX0VYQ0hBTkdFEAMqlwEKF1NQX0VOVU1fVFJB",
+            "REVfQ0FMQ19NT0RFEigKJFNZTUJPTF9UUkFERV9NQVJHSU5FX0NBTENfTU9E",
+            "RV9GT1JFWBAAEioKJlNZTUJPTF9UUkFERV9NQVJHSU5FX0NBTENfTU9ERV9G",
+            "VVRVUkVTEAESJgoiU1lNQk9MX1RSQURFX01BUkdJTkVfQ0FMQ19NT0RFX0NG",
+            "RBACMt4FCg1BY2NvdW50SGVscGVyEnEKDkFjY291bnRTdW1tYXJ5EiMubXQ0",
+            "X3Rlcm1fYXBpLkFjY291bnRTdW1tYXJ5UmVxdWVzdBohLm10NF90ZXJtX2Fw",
+            "aS5BY2NvdW50U3VtbWFyeVJlcGx5IheC0+STAhESDy9BY2NvdW50U3VtbWFy",
+            "eRJpCgxPcGVuZWRPcmRlcnMSIS5tdDRfdGVybV9hcGkuT3BlbmVkT3JkZXJz",
+            "UmVxdWVzdBofLm10NF90ZXJtX2FwaS5PcGVuZWRPcmRlcnNSZXBseSIVgtPk",
+            "kwIPEg0vT3BlbmVkT3JkZXJzEoUBChNPcGVuZWRPcmRlcnNUaWNrZXRzEigu",
+            "bXQ0X3Rlcm1fYXBpLk9wZW5lZE9yZGVyc1RpY2tldHNSZXF1ZXN0GiYubXQ0",
+            "X3Rlcm1fYXBpLk9wZW5lZE9yZGVyc1RpY2tldHNSZXBseSIcgtPkkwIWEhQv",
+            "T3BlbmVkT3JkZXJzVGlja2V0cxJtCg1PcmRlcnNIaXN0b3J5EiIubXQ0X3Rl",
+            "cm1fYXBpLk9yZGVyc0hpc3RvcnlSZXF1ZXN0GiAubXQ0X3Rlcm1fYXBpLk9y",
+            "ZGVyc0hpc3RvcnlSZXBseSIWgtPkkwIQEg4vT3JkZXJzSGlzdG9yeRJ5ChBT",
+            "eW1ib2xQYXJhbXNNYW55EiUubXQ0X3Rlcm1fYXBpLlN5bWJvbFBhcmFtc01h",
+            "bnlSZXF1ZXN0GiMubXQ0X3Rlcm1fYXBpLlN5bWJvbFBhcmFtc01hbnlSZXBs",
+            "eSIZgtPkkwITEhEvU3ltYm9sUGFyYW1zTWFueRJ9ChFUaWNrVmFsdWVXaXRo",
+            "U2l6ZRImLm10NF90ZXJtX2FwaS5UaWNrVmFsdWVXaXRoU2l6ZVJlcXVlc3Qa",
+            "JC5tdDRfdGVybV9hcGkuVGlja1ZhbHVlV2l0aFNpemVSZXBseSIagtPkkwIU",
+            "EhIvVGlja1ZhbHVlV2l0aFNpemVCQloxZ2l0Lm10YXBpLmlvL3Jvb3QvbXJw",
+            "Yy1wcm90by5naXQvbXQ0L2xpYnJhcmllcy9nb6oCDG10NF90ZXJtX2FwaWIG",
+            "cHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, global::Google.Api.AnnotationsReflection.Descriptor, global::Mt4TermApi.MrpcMt4ErrorReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::mt4_term_api.EnumAccountTradeMode), typeof(global::mt4_term_api.EnumOpenedOrderSortType), typeof(global::mt4_term_api.OpenedOrderType), typeof(global::mt4_term_api.EnumOrderHistorySortType), typeof(global::mt4_term_api.SP_ENUM_SYMBOL_TRADE_MODE), typeof(global::mt4_term_api.SP_ENUM_SYMBOL_TRADE_EXECUTION), typeof(global::mt4_term_api.SP_ENUM_TRADE_CALC_MODE), }, null, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::mt4_term_api.EnumAccountMarginMode), typeof(global::mt4_term_api.EnumAccountTradeMode), typeof(global::mt4_term_api.EnumOpenedOrderSortType), typeof(global::mt4_term_api.OpenedOrderType), typeof(global::mt4_term_api.EnumOrderHistorySortType), typeof(global::mt4_term_api.SP_ENUM_SYMBOL_TRADE_MODE), typeof(global::mt4_term_api.SP_ENUM_SYMBOL_TRADE_EXECUTION), typeof(global::mt4_term_api.SP_ENUM_TRADE_CALC_MODE), }, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.AccountSummaryRequest), global::mt4_term_api.AccountSummaryRequest.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.AccountSummaryReply), global::mt4_term_api.AccountSummaryReply.Parser, new[]{ "Data", "Error" }, new[]{ "Response" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.AccountSummaryData), global::mt4_term_api.AccountSummaryData.Parser, new[]{ "AccountLogin", "AccountBalance", "AccountEquity", "AccountUserName", "AccountLeverage", "AccountTradeMode", "AccountCompanyName", "AccountCurrency", "ServerTime", "ServerTimeUtc", "AccountCredit", "IsInvestor", "UtcServerTimeShiftMinutes", "ServerUtcOffsetSeconds" }, new[]{ "ServerUtcOffsetSeconds" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.AccountSummaryData), global::mt4_term_api.AccountSummaryData.Parser, new[]{ "AccountLogin", "AccountBalance", "AccountEquity", "AccountUserName", "AccountLeverage", "AccountTradeMode", "AccountCompanyName", "AccountCurrency", "ServerTime", "ServerTimeUtc", "AccountCredit", "IsInvestor", "UtcServerTimeShiftMinutes", "ServerUtcOffsetSeconds", "AccountMargin", "AccountMarginFree", "AccountMarginLevel", "AccountMarginMode", "AccountTradeAllowed", "AccountTradeExpert" }, new[]{ "ServerUtcOffsetSeconds" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OpenedOrdersRequest), global::mt4_term_api.OpenedOrdersRequest.Parser, new[]{ "SortType" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OpenedOrdersReply), global::mt4_term_api.OpenedOrdersReply.Parser, new[]{ "Data", "Error" }, new[]{ "Response" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::mt4_term_api.OpenedOrdersData), global::mt4_term_api.OpenedOrdersData.Parser, new[]{ "OrderInfos" }, null, null, null, null),
@@ -226,6 +235,15 @@ namespace mt4_term_api {
 
   }
   #region Enums
+  /// <summary>
+  /// Margin calculation mode of the account. MT4 accounts are always hedging; the other values exist for parity with MT5.
+  /// </summary>
+  public enum EnumAccountMarginMode {
+    [pbr::OriginalName("ACCOUNT_MARGIN_MODE_RETAIL_NETTING")] AccountMarginModeRetailNetting = 0,
+    [pbr::OriginalName("ACCOUNT_MARGIN_MODE_EXCHANGE")] AccountMarginModeExchange = 1,
+    [pbr::OriginalName("ACCOUNT_MARGIN_MODE_RETAIL_HEDGING")] AccountMarginModeRetailHedging = 2,
+  }
+
   public enum EnumAccountTradeMode {
     [pbr::OriginalName("ACCOUNT_TRADE_MODE_DEMO")] AccountTradeModeDemo = 0,
     [pbr::OriginalName("ACCOUNT_TRADE_MODE_CONTEST")] AccountTradeModeContest = 1,
@@ -246,6 +264,14 @@ namespace mt4_term_api {
     [pbr::OriginalName("OO_OP_SELLLIMIT")] OoOpSelllimit = 3,
     [pbr::OriginalName("OO_OP_BUYSTOP")] OoOpBuystop = 4,
     [pbr::OriginalName("OO_OP_SELLSTOP")] OoOpSellstop = 5,
+    /// <summary>
+    /// OrdersHistory only: account operations of the history (MT4 records types 6 and 7). The amount is in profit, the text in comment.
+    /// </summary>
+    [pbr::OriginalName("OO_OP_BALANCE")] OoOpBalance = 6,
+    /// <summary>
+    /// Credit given or taken
+    /// </summary>
+    [pbr::OriginalName("OO_OP_CREDIT")] OoOpCredit = 7,
   }
 
   public enum EnumOrderHistorySortType {
@@ -804,6 +830,12 @@ namespace mt4_term_api {
       isInvestor_ = other.isInvestor_;
       utcServerTimeShiftMinutes_ = other.utcServerTimeShiftMinutes_;
       serverUtcOffsetSeconds_ = other.serverUtcOffsetSeconds_;
+      accountMargin_ = other.accountMargin_;
+      accountMarginFree_ = other.accountMarginFree_;
+      accountMarginLevel_ = other.accountMarginLevel_;
+      accountMarginMode_ = other.accountMarginMode_;
+      accountTradeAllowed_ = other.accountTradeAllowed_;
+      accountTradeExpert_ = other.accountTradeExpert_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1013,6 +1045,97 @@ namespace mt4_term_api {
       _hasBits0 &= ~1;
     }
 
+    /// <summary>Field number for the "account_margin" field.</summary>
+    public const int AccountMarginFieldNumber = 13;
+    private double accountMargin_;
+    /// <summary>
+    /// Money state and permissions, read by the terminal in the same AccountSummary round trip (no separate AccountInfoDouble /
+    /// AccountInfoInteger calls needed). All are 0/false while the account is not connected. One AccountSummary call is one counted read.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public double AccountMargin {
+      get { return accountMargin_; }
+      set {
+        accountMargin_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "account_margin_free" field.</summary>
+    public const int AccountMarginFreeFieldNumber = 16;
+    private double accountMarginFree_;
+    /// <summary>
+    /// Free margin for new positions (ACCOUNT_MARGIN_FREE), account currency.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public double AccountMarginFree {
+      get { return accountMarginFree_; }
+      set {
+        accountMarginFree_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "account_margin_level" field.</summary>
+    public const int AccountMarginLevelFieldNumber = 17;
+    private double accountMarginLevel_;
+    /// <summary>
+    /// Margin level in percent, equity / margin * 100 (ACCOUNT_MARGIN_LEVEL); 0 when no margin is used.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public double AccountMarginLevel {
+      get { return accountMarginLevel_; }
+      set {
+        accountMarginLevel_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "account_margin_mode" field.</summary>
+    public const int AccountMarginModeFieldNumber = 18;
+    private global::mt4_term_api.EnumAccountMarginMode accountMarginMode_ = global::mt4_term_api.EnumAccountMarginMode.AccountMarginModeRetailNetting;
+    /// <summary>
+    /// Always hedging on MT4 (several positions per symbol); present for parity with MT5.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::mt4_term_api.EnumAccountMarginMode AccountMarginMode {
+      get { return accountMarginMode_; }
+      set {
+        accountMarginMode_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "account_trade_allowed" field.</summary>
+    public const int AccountTradeAllowedFieldNumber = 19;
+    private bool accountTradeAllowed_;
+    /// <summary>
+    /// The account may trade (ACCOUNT_TRADE_ALLOWED); is_investor is its negation.
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool AccountTradeAllowed {
+      get { return accountTradeAllowed_; }
+      set {
+        accountTradeAllowed_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "account_trade_expert" field.</summary>
+    public const int AccountTradeExpertFieldNumber = 20;
+    private bool accountTradeExpert_;
+    /// <summary>
+    /// Automated (Expert Advisor / API) trading is allowed for the account (ACCOUNT_TRADE_EXPERT).
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool AccountTradeExpert {
+      get { return accountTradeExpert_; }
+      set {
+        accountTradeExpert_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -1042,6 +1165,12 @@ namespace mt4_term_api {
       if (IsInvestor != other.IsInvestor) return false;
       if (UtcServerTimeShiftMinutes != other.UtcServerTimeShiftMinutes) return false;
       if (ServerUtcOffsetSeconds != other.ServerUtcOffsetSeconds) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(AccountMargin, other.AccountMargin)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(AccountMarginFree, other.AccountMarginFree)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(AccountMarginLevel, other.AccountMarginLevel)) return false;
+      if (AccountMarginMode != other.AccountMarginMode) return false;
+      if (AccountTradeAllowed != other.AccountTradeAllowed) return false;
+      if (AccountTradeExpert != other.AccountTradeExpert) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1063,6 +1192,12 @@ namespace mt4_term_api {
       if (IsInvestor != false) hash ^= IsInvestor.GetHashCode();
       if (UtcServerTimeShiftMinutes != 0) hash ^= UtcServerTimeShiftMinutes.GetHashCode();
       if (HasServerUtcOffsetSeconds) hash ^= ServerUtcOffsetSeconds.GetHashCode();
+      if (AccountMargin != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(AccountMargin);
+      if (AccountMarginFree != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(AccountMarginFree);
+      if (AccountMarginLevel != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(AccountMarginLevel);
+      if (AccountMarginMode != global::mt4_term_api.EnumAccountMarginMode.AccountMarginModeRetailNetting) hash ^= AccountMarginMode.GetHashCode();
+      if (AccountTradeAllowed != false) hash ^= AccountTradeAllowed.GetHashCode();
+      if (AccountTradeExpert != false) hash ^= AccountTradeExpert.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1129,6 +1264,10 @@ namespace mt4_term_api {
         output.WriteRawTag(96);
         output.WriteInt32(UtcServerTimeShiftMinutes);
       }
+      if (AccountMargin != 0D) {
+        output.WriteRawTag(105);
+        output.WriteDouble(AccountMargin);
+      }
       if (HasServerUtcOffsetSeconds) {
         output.WriteRawTag(112);
         output.WriteInt32(ServerUtcOffsetSeconds);
@@ -1136,6 +1275,26 @@ namespace mt4_term_api {
       if (serverTimeUtc_ != null) {
         output.WriteRawTag(122);
         output.WriteMessage(ServerTimeUtc);
+      }
+      if (AccountMarginFree != 0D) {
+        output.WriteRawTag(129, 1);
+        output.WriteDouble(AccountMarginFree);
+      }
+      if (AccountMarginLevel != 0D) {
+        output.WriteRawTag(137, 1);
+        output.WriteDouble(AccountMarginLevel);
+      }
+      if (AccountMarginMode != global::mt4_term_api.EnumAccountMarginMode.AccountMarginModeRetailNetting) {
+        output.WriteRawTag(144, 1);
+        output.WriteEnum((int) AccountMarginMode);
+      }
+      if (AccountTradeAllowed != false) {
+        output.WriteRawTag(152, 1);
+        output.WriteBool(AccountTradeAllowed);
+      }
+      if (AccountTradeExpert != false) {
+        output.WriteRawTag(160, 1);
+        output.WriteBool(AccountTradeExpert);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1195,6 +1354,10 @@ namespace mt4_term_api {
         output.WriteRawTag(96);
         output.WriteInt32(UtcServerTimeShiftMinutes);
       }
+      if (AccountMargin != 0D) {
+        output.WriteRawTag(105);
+        output.WriteDouble(AccountMargin);
+      }
       if (HasServerUtcOffsetSeconds) {
         output.WriteRawTag(112);
         output.WriteInt32(ServerUtcOffsetSeconds);
@@ -1202,6 +1365,26 @@ namespace mt4_term_api {
       if (serverTimeUtc_ != null) {
         output.WriteRawTag(122);
         output.WriteMessage(ServerTimeUtc);
+      }
+      if (AccountMarginFree != 0D) {
+        output.WriteRawTag(129, 1);
+        output.WriteDouble(AccountMarginFree);
+      }
+      if (AccountMarginLevel != 0D) {
+        output.WriteRawTag(137, 1);
+        output.WriteDouble(AccountMarginLevel);
+      }
+      if (AccountMarginMode != global::mt4_term_api.EnumAccountMarginMode.AccountMarginModeRetailNetting) {
+        output.WriteRawTag(144, 1);
+        output.WriteEnum((int) AccountMarginMode);
+      }
+      if (AccountTradeAllowed != false) {
+        output.WriteRawTag(152, 1);
+        output.WriteBool(AccountTradeAllowed);
+      }
+      if (AccountTradeExpert != false) {
+        output.WriteRawTag(160, 1);
+        output.WriteBool(AccountTradeExpert);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -1254,6 +1437,24 @@ namespace mt4_term_api {
       }
       if (HasServerUtcOffsetSeconds) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(ServerUtcOffsetSeconds);
+      }
+      if (AccountMargin != 0D) {
+        size += 1 + 8;
+      }
+      if (AccountMarginFree != 0D) {
+        size += 2 + 8;
+      }
+      if (AccountMarginLevel != 0D) {
+        size += 2 + 8;
+      }
+      if (AccountMarginMode != global::mt4_term_api.EnumAccountMarginMode.AccountMarginModeRetailNetting) {
+        size += 2 + pb::CodedOutputStream.ComputeEnumSize((int) AccountMarginMode);
+      }
+      if (AccountTradeAllowed != false) {
+        size += 2 + 1;
+      }
+      if (AccountTradeExpert != false) {
+        size += 2 + 1;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1314,6 +1515,24 @@ namespace mt4_term_api {
       }
       if (other.HasServerUtcOffsetSeconds) {
         ServerUtcOffsetSeconds = other.ServerUtcOffsetSeconds;
+      }
+      if (other.AccountMargin != 0D) {
+        AccountMargin = other.AccountMargin;
+      }
+      if (other.AccountMarginFree != 0D) {
+        AccountMarginFree = other.AccountMarginFree;
+      }
+      if (other.AccountMarginLevel != 0D) {
+        AccountMarginLevel = other.AccountMarginLevel;
+      }
+      if (other.AccountMarginMode != global::mt4_term_api.EnumAccountMarginMode.AccountMarginModeRetailNetting) {
+        AccountMarginMode = other.AccountMarginMode;
+      }
+      if (other.AccountTradeAllowed != false) {
+        AccountTradeAllowed = other.AccountTradeAllowed;
+      }
+      if (other.AccountTradeExpert != false) {
+        AccountTradeExpert = other.AccountTradeExpert;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1381,6 +1600,10 @@ namespace mt4_term_api {
             UtcServerTimeShiftMinutes = input.ReadInt32();
             break;
           }
+          case 105: {
+            AccountMargin = input.ReadDouble();
+            break;
+          }
           case 112: {
             ServerUtcOffsetSeconds = input.ReadInt32();
             break;
@@ -1390,6 +1613,26 @@ namespace mt4_term_api {
               ServerTimeUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
             }
             input.ReadMessage(ServerTimeUtc);
+            break;
+          }
+          case 129: {
+            AccountMarginFree = input.ReadDouble();
+            break;
+          }
+          case 137: {
+            AccountMarginLevel = input.ReadDouble();
+            break;
+          }
+          case 144: {
+            AccountMarginMode = (global::mt4_term_api.EnumAccountMarginMode) input.ReadEnum();
+            break;
+          }
+          case 152: {
+            AccountTradeAllowed = input.ReadBool();
+            break;
+          }
+          case 160: {
+            AccountTradeExpert = input.ReadBool();
             break;
           }
         }
@@ -1458,6 +1701,10 @@ namespace mt4_term_api {
             UtcServerTimeShiftMinutes = input.ReadInt32();
             break;
           }
+          case 105: {
+            AccountMargin = input.ReadDouble();
+            break;
+          }
           case 112: {
             ServerUtcOffsetSeconds = input.ReadInt32();
             break;
@@ -1467,6 +1714,26 @@ namespace mt4_term_api {
               ServerTimeUtc = new global::Google.Protobuf.WellKnownTypes.Timestamp();
             }
             input.ReadMessage(ServerTimeUtc);
+            break;
+          }
+          case 129: {
+            AccountMarginFree = input.ReadDouble();
+            break;
+          }
+          case 137: {
+            AccountMarginLevel = input.ReadDouble();
+            break;
+          }
+          case 144: {
+            AccountMarginMode = (global::mt4_term_api.EnumAccountMarginMode) input.ReadEnum();
+            break;
+          }
+          case 152: {
+            AccountTradeAllowed = input.ReadBool();
+            break;
+          }
+          case 160: {
+            AccountTradeExpert = input.ReadBool();
             break;
           }
         }
