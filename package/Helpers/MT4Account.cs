@@ -1,4 +1,4 @@
-using Grpc.Core;
+﻿using Grpc.Core;
 using Grpc.Net.Client;
 using System;
 using System.Collections.Generic;
@@ -85,6 +85,11 @@ namespace mt4_term_api
         /// Gets the raw terminal instance GUID string returned by MT4 server.
         /// </summary>
         public string? TerminalInstanceGuid { get; private set; }
+
+        /// <summary>
+        /// Optional terminal label sent as ConnectExRequest.name (visible in GET /Accounts). Set via the constructor or ConnectByServerNameAsync(name:).
+        /// </summary>
+        public string? TerminalName { get; set; }
 
         private static Guid ParseGuidSafe(string? guidStr)
         {
@@ -227,6 +232,9 @@ namespace mt4_term_api
         /// <param name="baseChartSymbol">The base chart symbol to use (e.g., "EURUSD").</param>
         /// <param name="waitForTerminalIsAlive">Whether to wait for terminal readiness before returning.</param>
         /// <param name="timeoutSeconds">How long to wait for terminal readiness before timing out.</param>
+        /// <param name="deadline">Optional gRPC deadline for the ConnectEx call.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <param name="name">Optional terminal label sent as ConnectExRequest.name (visible in GET /Accounts).</param>
         /// <returns>A task representing the asynchronous connection operation.</returns>
         /// <exception cref="ApiExceptionMT4">Thrown if the server returns an error response.</exception>
         /// <exception cref="Grpc.Core.RpcException">Thrown if the gRPC connection fails.</exception>
@@ -236,7 +244,8 @@ namespace mt4_term_api
             bool waitForTerminalIsAlive = true,
             int timeoutSeconds = 30,
             DateTime? deadline = null,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? name = null)
         {
             // MT4 ConnectExRequest has base_chart_symbol but no
             // terminal_readiness_waiting_timeout_seconds — map the timeout to timeout_seconds.
@@ -247,6 +256,10 @@ namespace mt4_term_api
                 MtClusterName = serverName,
                 TimeoutSeconds = (uint)timeoutSeconds
             };
+            // Optional human-readable terminal label (shown by GET /Accounts). Fleet runners pass the strategy id.
+            if (!string.IsNullOrEmpty(name ?? TerminalName))
+                connectRequest.Name = name ?? TerminalName;
+            TerminalName = name ?? TerminalName;
 
             Metadata headers = new Metadata();
             if (!string.IsNullOrEmpty(TerminalInstanceGuid))
@@ -277,13 +290,15 @@ namespace mt4_term_api
         /// <param name="baseChartSymbol">Chart symbol to initialize the session.</param>
         /// <param name="waitForTerminalIsAlive">Wait for terminal readiness flag.</param>
         /// <param name="timeoutSeconds">Timeout duration in seconds.</param>
+        /// <param name="name">Optional terminal label sent as ConnectExRequest.name.</param>
         public void ConnectByServerName(
             string serverName,
             string baseChartSymbol = "EURUSD",
             bool waitForTerminalIsAlive = true,
-            int timeoutSeconds = 30)
+            int timeoutSeconds = 30,
+            string? name = null)
         {
-            ConnectByServerNameAsync(serverName, baseChartSymbol, waitForTerminalIsAlive, timeoutSeconds).GetAwaiter().GetResult();
+            ConnectByServerNameAsync(serverName, baseChartSymbol, waitForTerminalIsAlive, timeoutSeconds, name: name).GetAwaiter().GetResult();
         }
 
         //
@@ -960,6 +975,45 @@ namespace mt4_term_api
             CancellationToken cancellationToken = default)
         {
             return SymbolsAsync(deadline, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Adds (select=true) or removes (select=false) a symbol in the terminal's Market Watch.
+        /// A symbol must be selected before Quote/QuoteHistory/OnSymbolTick/OrderSend work reliably for it.
+        /// </summary>
+        /// <param name="symbol">Symbol name, e.g. "EURUSD".</param>
+        /// <param name="select">true to add to Market Watch, false to hide.</param>
+        /// <param name="deadline">Optional gRPC deadline.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns><see cref="SymbolSelectData"/> with <c>Success</c>.</returns>
+        public async Task<SymbolSelectData> SymbolSelectAsync(
+            string symbol,
+            bool select = true,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var request = new SymbolSelectRequest { Symbol = symbol, Select = select };
+
+            var res = await ExecuteWithReconnect(
+                headers => MarketInfoClient.SymbolSelect(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == SymbolSelectReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
+
+            return res.Data;
+        }
+
+        /// <summary>
+        /// Synchronously adds or removes a symbol in Market Watch. See <see cref="SymbolSelectAsync"/>.
+        /// </summary>
+        public SymbolSelectData SymbolSelect(
+            string symbol,
+            bool select = true,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            return SymbolSelectAsync(symbol, select, deadline, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>
