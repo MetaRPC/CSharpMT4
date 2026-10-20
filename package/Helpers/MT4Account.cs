@@ -1,4 +1,4 @@
-﻿using Grpc.Core;
+using Grpc.Core;
 using Grpc.Net.Client;
 using System;
 using System.Collections.Generic;
@@ -87,9 +87,10 @@ namespace mt4_term_api
         public string? TerminalInstanceGuid { get; private set; }
 
         /// <summary>
-        /// Optional terminal label sent as ConnectExRequest.name (visible in GET /Accounts). Set via the constructor or ConnectByServerNameAsync(name:).
+        /// Alias of <see cref="Name"/>: the optional terminal label sent as ConnectExRequest.name (visible in GET /Accounts).
+        /// Set via the constructor or ConnectByServerNameAsync(name:).
         /// </summary>
-        public string? TerminalName { get; set; }
+        public string? TerminalName { get => Name; set => Name = value; }
 
         private static Guid ParseGuidSafe(string? guidStr)
         {
@@ -111,6 +112,12 @@ namespace mt4_term_api
         /// </summary>
         public string ApiKey { get; set; } = "TRIAL";
 
+        /// <summary>
+        /// Gets or sets the optional terminal name or creator identifier sent with every connect request.
+        /// It labels the terminal instance on the server (for example with the name of the application using it).
+        /// </summary>
+        public string? Name { get; set; }
+
         private bool Connected => !(Host is null) || !(ServerName is null);
 
         /// <summary>
@@ -121,8 +128,10 @@ namespace mt4_term_api
         /// <param name="grpcServer">The address of the gRPC server (optional).</param>
         /// <param name="id">An optional unique identifier for the account instance.</param>
         /// <param name="apiKey">An optional API key for authentication (defaults to TRIAL or MRPC_API_KEY env var).</param>
-        public MT4Account(ulong user, string password, string? grpcServer = null, Guid id = default, string? apiKey = null)
+        /// <param name="name">An optional terminal name or creator identifier, sent with every connect request.</param>
+        public MT4Account(ulong user, string password, string? grpcServer = null, Guid id = default, string? apiKey = null, string? name = null)
         {
+            Name = name;
             User = user;
             Password = password;
             GrpcServer = grpcServer ?? "https://mt4.mrpc.pro:443";
@@ -164,6 +173,9 @@ namespace mt4_term_api
         /// <param name="baseChartSymbol">The base chart symbol to use (e.g., "EURUSD").</param>
         /// <param name="waitForTerminalIsAlive">Whether to wait for terminal readiness before returning.</param>
         /// <param name="timeoutSeconds">How long to wait for terminal readiness before timing out.</param>
+        /// <param name="deadline">Optional gRPC deadline for the operation.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <param name="name">Optional terminal name or creator identifier. When given it replaces <see cref="Name"/> for this and later connects.</param>
         /// <returns>A task representing the asynchronous connection operation.</returns>
         /// <exception cref="ApiExceptionMT4">Thrown if the server returns an error response.</exception>
         /// <exception cref="Grpc.Core.RpcException">Thrown if the gRPC connection fails.</exception>
@@ -174,8 +186,10 @@ namespace mt4_term_api
             bool waitForTerminalIsAlive = true,
             int timeoutSeconds = 30,
             DateTime? deadline = null,
-            CancellationToken cancellationToken = default)
+            CancellationToken cancellationToken = default,
+            string? name = null)
         {
+            if (!string.IsNullOrWhiteSpace(name)) Name = name;
 
             // NOTE: the MT4 ConnectRequest proto has no base_chart_symbol /
             // wait_for_terminal_is_alive / terminal_readiness_waiting_timeout_seconds
@@ -188,6 +202,7 @@ namespace mt4_term_api
                 Port = port,
                 TimeoutSeconds = (uint)timeoutSeconds
             };
+            if (!string.IsNullOrWhiteSpace(Name)) connectRequest.Name = Name;
 
             Metadata headers = new Metadata();
             if (Id != default)
@@ -232,9 +247,9 @@ namespace mt4_term_api
         /// <param name="baseChartSymbol">The base chart symbol to use (e.g., "EURUSD").</param>
         /// <param name="waitForTerminalIsAlive">Whether to wait for terminal readiness before returning.</param>
         /// <param name="timeoutSeconds">How long to wait for terminal readiness before timing out.</param>
-        /// <param name="deadline">Optional gRPC deadline for the ConnectEx call.</param>
+        /// <param name="deadline">Optional gRPC deadline for the operation.</param>
         /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <param name="name">Optional terminal label sent as ConnectExRequest.name (visible in GET /Accounts).</param>
+        /// <param name="name">Optional terminal name or creator identifier (visible in GET /Accounts). When given it replaces <see cref="Name"/> for this and later connects.</param>
         /// <returns>A task representing the asynchronous connection operation.</returns>
         /// <exception cref="ApiExceptionMT4">Thrown if the server returns an error response.</exception>
         /// <exception cref="Grpc.Core.RpcException">Thrown if the gRPC connection fails.</exception>
@@ -247,6 +262,7 @@ namespace mt4_term_api
             CancellationToken cancellationToken = default,
             string? name = null)
         {
+            if (!string.IsNullOrWhiteSpace(name)) Name = name;
             // MT4 ConnectExRequest has base_chart_symbol but no
             // terminal_readiness_waiting_timeout_seconds — map the timeout to timeout_seconds.
             var connectRequest = new ConnectExRequest
@@ -257,9 +273,7 @@ namespace mt4_term_api
                 TimeoutSeconds = (uint)timeoutSeconds
             };
             // Optional human-readable terminal label (shown by GET /Accounts). Fleet runners pass the strategy id.
-            if (!string.IsNullOrEmpty(name ?? TerminalName))
-                connectRequest.Name = name ?? TerminalName;
-            TerminalName = name ?? TerminalName;
+            if (!string.IsNullOrWhiteSpace(Name)) connectRequest.Name = Name;
 
             Metadata headers = new Metadata();
             if (!string.IsNullOrEmpty(TerminalInstanceGuid))
@@ -1227,14 +1241,14 @@ namespace mt4_term_api
         /// <summary>
         /// Gracefully disconnects from MT4 terminal and disposes underlying resources.
         /// </summary>
-        public async Task DisconnectAsync(bool delete = false)
+        public async Task DisconnectAsync()
         {
             try
             {
                 if (!string.IsNullOrEmpty(TerminalInstanceGuid) || Id != default)
                 {
                     var headers = GetHeaders();
-                    await ConnectionClient.DisconnectAsync(new DisconnectRequest { Delete = delete }, headers);
+                    await ConnectionClient.DisconnectAsync(new DisconnectRequest(), headers);
                 }
             }
             catch
@@ -1250,14 +1264,14 @@ namespace mt4_term_api
         /// <summary>
         /// Synchronously disconnects and disposes underlying resources.
         /// </summary>
-        public void Disconnect(bool delete = false)
+        public void Disconnect()
         {
             try
             {
                 if (!string.IsNullOrEmpty(TerminalInstanceGuid) || Id != default)
                 {
                     var headers = GetHeaders();
-                    ConnectionClient.Disconnect(new DisconnectRequest { Delete = delete }, headers);
+                    ConnectionClient.Disconnect(new DisconnectRequest(), headers);
                 }
             }
             catch
