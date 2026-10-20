@@ -87,6 +87,11 @@
             Gets the raw terminal instance GUID string returned by MT4 server.
             </summary>
         </member>
+        <member name="P:mt4_term_api.MT4Account.TerminalName">
+            <summary>
+            Optional terminal label sent as ConnectExRequest.name (visible in GET /Accounts). Set via the constructor or ConnectByServerNameAsync(name:).
+            </summary>
+        </member>
         <member name="P:mt4_term_api.MT4Account.ApiKey">
             <summary>
             Gets or sets the MetaRPC API key for authentication. Defaults to "TRIAL".
@@ -130,7 +135,7 @@
             <param name="waitForTerminalIsAlive">Wait for terminal readiness flag.</param>
             <param name="timeoutSeconds">Timeout duration in seconds.</param>
         </member>
-        <member name="M:mt4_term_api.MT4Account.ConnectByServerNameAsync(System.String,System.String,System.Boolean,System.Int32,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+        <member name="M:mt4_term_api.MT4Account.ConnectByServerNameAsync(System.String,System.String,System.Boolean,System.Int32,System.Nullable{System.DateTime},System.Threading.CancellationToken,System.String)">
             <summary>
             Connects to the MT4 terminal using credentials provided in the constructor.
             </summary>
@@ -138,11 +143,14 @@
             <param name="baseChartSymbol">The base chart symbol to use (e.g., "EURUSD").</param>
             <param name="waitForTerminalIsAlive">Whether to wait for terminal readiness before returning.</param>
             <param name="timeoutSeconds">How long to wait for terminal readiness before timing out.</param>
+            <param name="deadline">Optional gRPC deadline for the ConnectEx call.</param>
+            <param name="cancellationToken">Optional cancellation token.</param>
+            <param name="name">Optional terminal label sent as ConnectExRequest.name (visible in GET /Accounts).</param>
             <returns>A task representing the asynchronous connection operation.</returns>
             <exception cref="T:mt4_term_api.ApiExceptionMT4">Thrown if the server returns an error response.</exception>
             <exception cref="T:Grpc.Core.RpcException">Thrown if the gRPC connection fails.</exception>
         </member>
-        <member name="M:mt4_term_api.MT4Account.ConnectByServerName(System.String,System.String,System.Boolean,System.Int32)">
+        <member name="M:mt4_term_api.MT4Account.ConnectByServerName(System.String,System.String,System.Boolean,System.Int32,System.String)">
             <summary>
             Synchronously connects to the MT4 terminal.
             </summary>
@@ -150,6 +158,7 @@
             <param name="baseChartSymbol">Chart symbol to initialize the session.</param>
             <param name="waitForTerminalIsAlive">Wait for terminal readiness flag.</param>
             <param name="timeoutSeconds">Timeout duration in seconds.</param>
+            <param name="name">Optional terminal label sent as ConnectExRequest.name.</param>
         </member>
         <member name="M:mt4_term_api.MT4Account.ExecuteStreamWithReconnect``3(``0,System.Func{``0,Grpc.Core.Metadata,System.Threading.CancellationToken,Grpc.Core.AsyncServerStreamingCall{``1}},System.Func{``1,Mt4TermApi.Error},System.Func{``1,``2},System.Threading.CancellationToken)">
             <summary>
@@ -413,6 +422,22 @@
             <param name="deadline">Optional deadline for the request.</param>
             <param name="cancellationToken">Optional cancellation token.</param>
             <returns>A <see cref="T:mt4_term_api.SymbolsData"/> object.</returns>
+        </member>
+        <member name="M:mt4_term_api.MT4Account.SymbolSelectAsync(System.String,System.Boolean,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Adds (select=true) or removes (select=false) a symbol in the terminal's Market Watch.
+            A symbol must be selected before Quote/QuoteHistory/OnSymbolTick/OrderSend work reliably for it.
+            </summary>
+            <param name="symbol">Symbol name, e.g. "EURUSD".</param>
+            <param name="select">true to add to Market Watch, false to hide.</param>
+            <param name="deadline">Optional gRPC deadline.</param>
+            <param name="cancellationToken">Optional cancellation token.</param>
+            <returns><see cref="T:mt4_term_api.SymbolSelectData"/> with <c>Success</c>.</returns>
+        </member>
+        <member name="M:mt4_term_api.MT4Account.SymbolSelect(System.String,System.Boolean,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
+            <summary>
+            Synchronously adds or removes a symbol in Market Watch. See <see cref="M:mt4_term_api.MT4Account.SymbolSelectAsync(System.String,System.Boolean,System.Nullable{System.DateTime},System.Threading.CancellationToken)"/>.
+            </summary>
         </member>
         <member name="M:mt4_term_api.MT4Account.QuoteHistoryAsync(System.String,mt4_term_api.ENUM_QUOTE_HISTORY_TIMEFRAME,System.DateTime,System.DateTime,System.Nullable{System.DateTime},System.Threading.CancellationToken)">
             <summary>
