@@ -4747,6 +4747,15 @@
             account, which is the case for every account today.
             </summary>
         </member>
+        <member name="F:mt4_term_api.AccountsListItem.DedicatedIpFieldNumber">
+            <summary>Field number for the "dedicated_ip" field.</summary>
+        </member>
+        <member name="P:mt4_term_api.AccountsListItem.DedicatedIp">
+            <summary>
+            The dedicated (reserved) egress IP assigned to this terminal (the dedicated-IP add-on), to whitelist with the broker;
+            empty when the terminal has no dedicated IP.
+            </summary>
+        </member>
         <member name="T:mt4_term_api.Mt4TermApiConnectionReflection">
             <summary>Holder for reflection information generated from mt4-term-api-connection.proto</summary>
         </member>
@@ -10189,6 +10198,38 @@
         </member>
         <member name="M:mrpc_admin.TerminalInfo.ClearStartupTime">
             <summary>Clears the value of the "startup_time" field</summary>
+        </member>
+        <member name="F:mrpc_admin.TerminalInfo.BrokerDisconnectedSinceUtcFieldNumber">
+            <summary>Field number for the "broker_disconnected_since_utc" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.TerminalInfo.BrokerDisconnectedSinceUtc">
+            <summary>
+            the terminal answers but is not connected to its broker since then
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.TerminalInfo.TradeFailuresRecentFieldNumber">
+            <summary>Field number for the "trade_failures_recent" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.TerminalInfo.TradeFailuresRecent">
+            <summary>
+            trades that failed for the connection/worker reasons within the last 5 minutes
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.TerminalInfo.TradeFailuresTotalFieldNumber">
+            <summary>Field number for the "trade_failures_total" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.TerminalInfo.TradeFailuresTotal">
+            <summary>
+            the same since this copy started
+            </summary>
+        </member>
+        <member name="F:mrpc_admin.TerminalInfo.LastTradeFailureFieldNumber">
+            <summary>Field number for the "last_trade_failure" field.</summary>
+        </member>
+        <member name="P:mrpc_admin.TerminalInfo.LastTradeFailure">
+            <summary>
+            the last one: "&lt;code> &lt;method> &lt;utc>"
+            </summary>
         </member>
         <member name="F:mrpc_admin.ActiveTerminalsReply.PodFieldNumber">
             <summary>Field number for the "pod" field.</summary>
