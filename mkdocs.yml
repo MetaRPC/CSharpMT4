@@ -90,10 +90,14 @@ nav:
     - Sync vs Async: All_Guides/SYNC_VS_ASYNC.md
 
   - API Reference:
-    - MT4Account API: API_Reference/MT4Account.md
-    - MT4Service API: API_Reference/MT4Service.md
-    - MT4Sugar API: API_Reference/MT4Sugar.md
+    - MT4Account: API_Reference/MT4Account.md
+    - MT4Service: API_Reference/MT4Service.md
+    - MT4Sugar: API_Reference/MT4Sugar.md
 
   - Strategies:
-    - Master Overview: Strategies/Strategies.Master.Overview.md
-    - Presets: Strategies/Presets/AdaptiveMarketModePreset.md
+    - Overview: Strategies/Strategies.Master.Overview.md
+    - Scalp: Strategies/Orchestrators/Scalp.md
+    - Trailing Stop: Strategies/Orchestrators/Trailing.md
+    - Grid: Strategies/Orchestrators/Grid.md
+    - Breakout: Strategies/Orchestrators/Breakout.md
+    - Adaptive Preset: Strategies/Presets/AdaptiveMode.md

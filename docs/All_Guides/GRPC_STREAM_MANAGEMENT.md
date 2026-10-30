@@ -1,1251 +1,460 @@
-# gRPC Streaming and Subscription Management Guide
+# 📡 gRPC Streaming & Subscription Management
 
-> **Complete guide** to working with real-time subscriptions in PyMT4
+> **Complete guide** to real-time subscriptions in the **C# MT4 SDK** — how to open a stream, how to stop it cleanly, and how the built-in reconnect loop keeps it alive.
 
 This document covers:
 
-- ✅ **How to subscribe properly** to market data streams
-- ✅ **How to stop subscriptions** without resource leaks
-- ✅ **Common patterns** from simple to advanced
-- ✅ **Architecture** and built-in safety mechanisms
+- ✅ **How to subscribe** to real-time market/account data
+- ✅ **How to stop** a stream without leaking connections
+- ✅ **Patterns** from a 10-second sample to a long-running background service
+- ✅ **Architecture** — the reconnect loop and its safety guarantees
 - ✅ **Troubleshooting** and best practices
 
 ---
 
 ## Table of Contents
 
-1. [Quick Start - Simple Subscription](#quick-start---simple-subscription)
+1. [Quick Start](#quick-start)
 2. [Available Streaming Methods](#available-streaming-methods)
-3. [Complete Patterns (Simple → Advanced)](#complete-patterns-simple--advanced)
-4. [Problem: Why Streams Need Management](#problem-why-streams-need-management)
-5. [Solutions and Best Practices](#solutions-and-best-practices)
-6. [Advanced Examples with Enums](#advanced-examples-with-enums)
-7. [Multiple Concurrent Streams](#multiple-concurrent-streams)
-8. [Architecture and Safety](#architecture-notes)
-9. [Troubleshooting](#troubleshooting-and-async-task-leaks)
+3. [How Stopping Works in C#](#how-stopping-works-in-c)
+4. [Patterns (simple → advanced)](#patterns-simple-advanced)
+5. [Common Mistakes](#common-mistakes)
+6. [Streaming with Enums](#streaming-with-enums)
+7. [Architecture & Safety](#architecture-safety)
+8. [Troubleshooting](#troubleshooting)
 
 ---
 
-## Quick Start - Simple Subscription
+## Quick Start
 
-### 1️⃣ Simplest Pattern (Auto-timeout)
+Every streaming method returns an **`IAsyncEnumerable<T>`**. You consume it with **`await foreach`**, and you stop it with a **`CancellationToken`**. That is the whole model.
 
-**Use asyncio.wait_for** - automatically stops after time expires:
+```csharp
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
-```python
-import asyncio
-from MetaRpcMT4 import MT4Account
+// acc is a connected MT4Account (see Getting Started for how to connect).
+// Stream EURUSD ticks for 10 seconds, then stop automatically.
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
 
-async def main():
-    # Setup connection
-    account = MT4Account(
-        user=12345,
-        password="password",
-        grpc_server="mt4.mrpc.pro:443"
-    )
-    await account.connect_by_server_name(
-        server_name="YourBroker-Demo",
-        base_chart_symbol="EURUSD"
-    )
+try
+{
+    await foreach (var data in acc.OnSymbolTickAsync(new[] { "EURUSD" }, cts.Token))
+    {
+        var t = data.SymbolTick;
+        Console.WriteLine($"{t.Symbol}  Bid={t.Bid}  Ask={t.Ask}  @ {t.Time}");
+    }
+}
+catch (OperationCanceledException)
+{
+    // Expected when the token fires — the stream was asked to stop.
+}
 
-    # ✅ Stream for 10 seconds - stops automatically!
-    try:
-        async def process_ticks():
-            tick_count = 0
-            async for tick_data in account.on_symbol_tick(symbols=["EURUSD", "GBPUSD"]):
-                tick_count += 1
-                tick = tick_data.symbol_tick
-                print(f"[{tick_count}] {tick.symbol}: Bid={tick.bid:.5f}, Ask={tick.ask:.5f}")
-
-                if tick_count >= 10:
-                    break
-
-        await asyncio.wait_for(process_ticks(), timeout=10.0)
-        print("Stream finished")
-
-    finally:
-        try:
-            await account.channel.close()
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
-
-asyncio.run(main())
+Console.WriteLine("Stream finished.");
 ```
 
-**When to use:** Quick examples, testing, short monitoring sessions
+**What happens here**
 
----
+- `CancellationTokenSource(TimeSpan)` cancels itself after 10 s (same as calling `CancelAfter`).
+- When the token fires, the stream ends and `await foreach` throws `OperationCanceledException`, which we swallow.
+- `using` disposes the `CancellationTokenSource`; leaving the `foreach` disposes the underlying gRPC call. **No channel to close per stream** — the connection belongs to the account.
 
-### 2️⃣ Manual Control Pattern
-
-**For full control** - you decide when to stop:
-
-```python
-async def main():
-    account = MT4Account(
-        user=12345,
-        password="password",
-        grpc_server="mt4.mrpc.pro:443"
-    )
-    await account.connect_by_server_name(
-        server_name="YourBroker-Demo",
-        base_chart_symbol="EURUSD"
-    )
-
-    # ✅ Create cancellation event
-    cancel_event = asyncio.Event()
-
-    async def monitor_prices():
-        async for tick_data in account.on_symbol_tick(
-            symbols=["EURUSD"],
-            cancellation_event=cancel_event
-        ):
-            tick = tick_data.symbol_tick
-            print(f"Price: {tick.bid:.5f}")
-
-    # Start monitoring in background
-    monitor_task = asyncio.create_task(monitor_prices())
-
-    # ... do other work ...
-
-    # Stop when needed
-    await asyncio.sleep(5)
-    cancel_event.set()  # Signal stream to stop
-    await asyncio.sleep(0.5)  # Give stream time to cleanup
-
-    try:
-        await account.channel.close()
-    except Exception as e:
-        print(f"⚠️  Disconnect warning: {e}")
-
-asyncio.run(main())
-```
-
-**When to use:** Long-term monitoring, background services, production applications
+> 🟢 **When to use:** quick tests, short monitoring windows, examples.
 
 ---
 
 ## Available Streaming Methods
 
-### MT4Account (Low-level Streams)
+All of these return `IAsyncEnumerable<T>` and are driven by a `CancellationToken`.
 
-All streaming methods return **async generators** that yield data objects.
+### On `MT4Account` (low-level)
 
-| Method | Description | Returns (async generator) |
-|--------|-------------|---------------------------|
-| `on_symbol_tick()` | Real-time price ticks for symbols | `OnSymbolTickData` |
-| `on_trade()` | Trade events (orders executed, modified, etc.) | `OnTradeData` |
-| `on_position_profit()` | Position P&L updates | `OnPositionProfitData` |
-| `on_positions_and_pending_orders_tickets()` | Order/position tickets | `OnPositionsAndPendingOrdersTicketsData` |
-| `on_trade_transaction()` | Low-level trade transaction events | `OnTradeTransactionData` |
+| Method | Yields | What it pushes |
+| ------ | ------ | -------------- |
+| `OnSymbolTickAsync(IEnumerable<string> symbols, ct)` | `OnSymbolTickData` | A message on every tick of the subscribed symbol(s) — `.SymbolTick` has `Symbol`, `Bid`, `Ask`, `Time`. |
+| `OnTradeAsync(ct)` | `OnTradeData` | Order create / modify / close events on the account. |
+| `OnOpenedOrdersProfitAsync(int intervalMs, ct)` | `OnOpenedOrdersProfitData` | Live P/L snapshot every `intervalMs` — `.OpenedOrdersWithProfitUpdated`, `.AccountInfo?.Equity`. |
+| `OnOpenedOrdersTicketsAsync(int intervalMs, ct)` | `OnOpenedOrdersTicketsData` | The set of open tickets every `intervalMs` — `.PositionTickets` (lighter than the profit stream). |
+| `OnConnectStateAsync(ct)` | `ConnectStateData` | Terminal link state — fires when the connection drops or returns. |
 
-**All support `cancellation_event` parameter for graceful stopping!**
+### On `MT4Service` (typed facade)
 
-**Documentation:**
-- [Streaming Methods Overview](../API_Reference/MT4Account.md)
-- [on_symbol_tick](../API_Reference/MT4Account.md)
-- [on_trade](../API_Reference/MT4Account.md)
+`MT4Service` re-exposes the **same five methods** with the same signatures (`intervalMs` defaults to `1000`), so you can stream straight from the service you already use for everything else.
 
-**Examples:**
+It also adds two **sugar** readers for the two most common streams:
 
-- `examples/1_lowlevel/03_streaming_methods.py` - Low-level streaming examples
+| Method | Yields | Notes |
+| ------ | ------ | ----- |
+| `ReadTicks(string symbol, ct)` | `OnSymbolTickData` | Single-symbol tick reader — thin wrapper over `OnSymbolTickAsync`. |
+| `ReadTrades(ct)` | `OnTradeData` | Trade-event reader — thin wrapper over `OnTradeAsync`. |
 
-- `examples/2_service/05_service_streaming.py` - Mid-level streaming examples
+**Live examples in the repo:**
+
+- [`examples/LowLevel/3_Streaming.cs`](https://github.com/MetaRPC/CSharpMT4/blob/main/examples/LowLevel/3_Streaming.cs) — all five low-level streams, each sampled ~3 s.
+- [`examples/Services/4_ServiceExamples.cs`](https://github.com/MetaRPC/CSharpMT4/blob/main/examples/Services/4_ServiceExamples.cs) — the *Subscriptions* section streams the same five from `MT4Service`.
+- [`examples/Sugar/5_SugarScenario.cs`](https://github.com/MetaRPC/CSharpMT4/blob/main/examples/Sugar/5_SugarScenario.cs) — `ReadTicks` / `ReadTrades` inside the ASSESS step.
 
 ---
 
-## Complete Patterns (Simple → Advanced)
+## How Stopping Works in C#
 
-### Pattern 1: Quick Example (5-10 seconds)
+There are **two** ways a stream ends, and they are not the same:
 
-```python
-import asyncio
-from MetaRpcMT4 import MT4Account
+### 1. `break` out of the `await foreach` — clean, but only between items
 
-async def quick_stream_example():
-    account = MT4Account(
-        user=12345,
-        password="password",
-        grpc_server="mt4.mrpc.pro:443"
-    )
-    await account.connect_by_server_name(
-        server_name="YourBroker-Demo",
-        base_chart_symbol="EURUSD"
-    )
+When you `break` (or `return`, or throw) out of an `await foreach`, the compiler disposes the async enumerator. That runs the stream's internal `finally`, which disposes the gRPC call — so there is **no orphaned background loop** (unlike some other runtimes, C# iterators stop when iteration stops).
 
-    try:
-        # ✅ Auto-timeout - perfect for testing
-        async def process():
-            count = 0
-            async for tick_data in account.on_symbol_tick(symbols=["EURUSD"]):
-                tick = tick_data.symbol_tick
-                count += 1
-                print(f"Tick #{count}: {tick.bid:.5f}")
-
-                if count >= 5:
-                    break
-
-        await asyncio.wait_for(process(), timeout=10.0)
-
-    finally:
-        try:
-            await account.channel.close()
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
-
-asyncio.run(quick_stream_example())
-# Stops after 5 ticks or 10 seconds automatically ✅
+```csharp
+int n = 0;
+await foreach (var data in acc.OnSymbolTickAsync(new[] { "EURUSD" }, ct))
+{
+    if (++n >= 10) break;   // clean: the enumerator is disposed, the call is released
+    Console.WriteLine(data.SymbolTick.Bid);
+}
 ```
 
----
+⚠️ **The catch:** `break` can only run *after* an item is delivered. If the market goes quiet, the loop is parked inside `MoveNext` waiting for the next message and your `break` never gets a turn. For a stream that may idle, use a token.
 
-### Pattern 2: Event-limited Streaming
+### 2. Cancel the `CancellationToken` — prompt, works even when idle
 
-```python
-async def event_limited_streaming():
-    account = MT4Account(
-        user=12345,
-        password="password",
-        grpc_server="mt4.mrpc.pro:443"
-    )
-    await account.connect_by_server_name(
-        server_name="YourBroker-Demo",
-        base_chart_symbol="EURUSD"
-    )
+Cancelling the token unblocks the pending `MoveNext` immediately, so the stream stops **now**, whether or not another message ever arrives. This is why every example drives streams with a token.
 
-    cancel_event = asyncio.Event()
-    max_events = 100
-    count = 0
+```csharp
+using var cts = new CancellationTokenSource();
+cts.CancelAfter(TimeSpan.FromSeconds(30));   // or cts.Cancel() from elsewhere
 
-    try:
-        async for tick_data in account.on_symbol_tick(
-            symbols=["EURUSD"],
-            cancellation_event=cancel_event
-        ):
-            count += 1
-            tick = tick_data.symbol_tick
-            print(f"[{count}] {tick.symbol}: {tick.bid:.5f}")
+try
+{
+    await foreach (var data in acc.OnSymbolTickAsync(new[] { "EURUSD" }, cts.Token))
+        Console.WriteLine(data.SymbolTick.Bid);
+}
+catch (OperationCanceledException) { /* expected on cancel */ }
+```
 
-            if count >= max_events:
-                print(f"Max events ({max_events}) reached - stopping")
-                cancel_event.set()
-                break
+> 🔑 **Rule of thumb:** use a **token** to bound *when* a stream stops; use `break` to stop on a *data condition*. They compose — see the patterns below.
 
-    finally:
-        await asyncio.sleep(0.5)  # Wait for graceful cleanup
-        try:
-            await account.channel.close()
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
+### The reusable sampling helper
 
-asyncio.run(event_limited_streaming())
+The examples factor this into one small helper you can copy. It opens a stream, prints up to `maxItems`, and auto-stops after `seconds` — using a **linked** token so an outer cancellation still propagates:
+
+```csharp
+static async Task Sample<T>(
+    Func<CancellationToken, IAsyncEnumerable<T>> make,
+    CancellationToken outer,
+    Action<int, T> print,
+    int seconds = 3,
+    int maxItems = 3)
+{
+    using var cts = CancellationTokenSource.CreateLinkedTokenSource(outer);
+    cts.CancelAfter(TimeSpan.FromSeconds(seconds));
+
+    int n = 0;
+    try
+    {
+        await foreach (var x in make(cts.Token))
+        {
+            print(++n, x);
+            if (n >= maxItems) break;
+        }
+    }
+    catch (OperationCanceledException) { }   // timeout/cancel is expected
+    Console.WriteLine($"  ({n} event(s))");
+}
+
+// Usage:
+await Sample(c => acc.OnSymbolTickAsync(new[] { "EURUSD" }, c), ct,
+             (i, d) => Console.WriteLine($"tick #{i}: {d.SymbolTick.Bid}"));
 ```
 
 ---
 
-### Pattern 3: Condition-based Stop
+## Patterns (simple → advanced)
 
-```python
-async def condition_based_stop():
-    account = MT4Account(
-        user=12345,
-        password="password",
-        grpc_server="mt4.mrpc.pro:443"
-    )
-    await account.connect_by_server_name(
-        server_name="YourBroker-Demo",
-        base_chart_symbol="EURUSD"
-    )
+### Pattern 1 — Timeout window
 
-    cancel_event = asyncio.Event()
+Stop after a fixed time. Simplest possible bound.
 
-    try:
-        # ✅ Stop when specific condition is met
-        async for tick_data in account.on_symbol_tick(
-            symbols=["EURUSD"],
-            cancellation_event=cancel_event
-        ):
-            tick = tick_data.symbol_tick
-            print(f"Price: {tick.bid:.5f}")
+```csharp
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+try
+{
+    await foreach (var d in svc.OnSymbolTickAsync(new[] { "EURUSD" }, cts.Token))
+        Console.WriteLine(d.SymbolTick.Bid);
+}
+catch (OperationCanceledException) { }
+```
 
-            # Stop if price crosses threshold
-            if tick.bid > 1.10000:
-                print("Target price reached!")
-                cancel_event.set()
-                break
+### Pattern 2 — Event-limited
 
-    finally:
-        await asyncio.sleep(0.5)
-        try:
-            await account.channel.close()
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
+Stop after N messages (token still there as a safety net in case the market is quiet).
 
-asyncio.run(condition_based_stop())
+```csharp
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(60));
+int count = 0;
+try
+{
+    await foreach (var d in svc.OnSymbolTickAsync(new[] { "EURUSD" }, cts.Token))
+    {
+        Console.WriteLine($"[{++count}] {d.SymbolTick.Symbol} {d.SymbolTick.Bid}");
+        if (count >= 100) break;
+    }
+}
+catch (OperationCanceledException) { }
+```
+
+### Pattern 3 — Condition-based stop
+
+Stop when the data meets a condition.
+
+```csharp
+using var cts = new CancellationTokenSource();
+try
+{
+    await foreach (var d in svc.OnSymbolTickAsync(new[] { "EURUSD" }, cts.Token))
+    {
+        var bid = d.SymbolTick.Bid;
+        Console.WriteLine($"Price: {bid}");
+        if (bid > 1.10000) { Console.WriteLine("Target reached!"); break; }
+    }
+}
+catch (OperationCanceledException) { }
+```
+
+### Pattern 4 — Background service with manual control
+
+Run a stream on its own `Task` and stop it on demand from elsewhere. The `CancellationTokenSource` is the off-switch.
+
+```csharp
+public sealed class PriceMonitor
+{
+    private readonly MT4Service _svc;
+    private readonly CancellationTokenSource _cts = new();
+    private Task? _task;
+
+    public PriceMonitor(MT4Service svc) => _svc = svc;
+
+    public void Start(string[] symbols) => _task = Task.Run(() => LoopAsync(symbols));
+
+    private async Task LoopAsync(string[] symbols)
+    {
+        try
+        {
+            await foreach (var d in _svc.OnSymbolTickAsync(symbols, _cts.Token))
+                Console.WriteLine($"{d.SymbolTick.Symbol}: {d.SymbolTick.Bid} / {d.SymbolTick.Ask}");
+        }
+        catch (OperationCanceledException) { }   // normal shutdown
+    }
+
+    public async Task StopAsync()
+    {
+        _cts.Cancel();                 // signal the stream to stop
+        if (_task != null) await _task; // wait for the loop to unwind
+        _cts.Dispose();
+    }
+}
+
+// Usage:
+var monitor = new PriceMonitor(svc);
+monitor.Start(new[] { "EURUSD", "GBPUSD" });
+await Task.Delay(TimeSpan.FromSeconds(30));
+await monitor.StopAsync();
+```
+
+### Pattern 5 — Multiple concurrent streams
+
+Run several streams at once and stop **all** of them with a **single** token. Give each its own `try/catch` so one failing stream doesn't tear down the others, and await them together.
+
+```csharp
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30)); // stops all after 30 s
+
+async Task Ticks()
+{
+    try { await foreach (var d in svc.OnSymbolTickAsync(new[] { "EURUSD" }, cts.Token))
+              Console.WriteLine($"[TICK] {d.SymbolTick.Bid}"); }
+    catch (OperationCanceledException) { }
+}
+
+async Task Trades()
+{
+    try { await foreach (var d in svc.OnTradeAsync(cts.Token))
+              Console.WriteLine($"[TRADE] {d}"); }
+    catch (OperationCanceledException) { }
+}
+
+async Task Profits()
+{
+    try { await foreach (var d in svc.OnOpenedOrdersProfitAsync(2000, cts.Token))
+              Console.WriteLine($"[PROFIT] {d.OpenedOrdersWithProfitUpdated.Count} order(s), equity={d.AccountInfo?.Equity}"); }
+    catch (OperationCanceledException) { }
+}
+
+await Task.WhenAll(Ticks(), Trades(), Profits());
+Console.WriteLine("All streams stopped.");
 ```
 
 ---
 
-### Pattern 4: Background Service with Manual Control
+## Common Mistakes
 
-```python
-class PriceMonitor:
-    def __init__(self, account: MT4Account):
-        self.account = account
-        self.cancel_event = asyncio.Event()
-        self.task = None
+### ❌ Mistake 1 — Streaming without a token
 
-    async def start(self, symbols: list[str]):
-        """Start monitoring in background"""
-        self.task = asyncio.create_task(self._monitor_prices(symbols))
-
-    async def _monitor_prices(self, symbols: list[str]):
-        """Internal monitoring loop"""
-        async for tick_data in self.account.on_symbol_tick(
-            symbols=symbols,
-            cancellation_event=self.cancel_event
-        ):
-            tick = tick_data.symbol_tick
-            self._process_tick(tick)
-
-    def _process_tick(self, tick):
-        """Process each tick"""
-        print(f"{tick.symbol}: {tick.bid:.5f} / {tick.ask:.5f}")
-        # Your logic here...
-
-    async def stop(self):
-        """Stop monitoring gracefully"""
-        self.cancel_event.set()
-
-        if self.task:
-            await asyncio.sleep(0.5)  # Give time to cleanup
-            await self.task
-
-# Usage:
-async def main():
-    account = MT4Account(
-        user=12345,
-        password="password",
-        grpc_server="mt4.mrpc.pro:443"
-    )
-    await account.connect_by_server_name(
-        server_name="YourBroker-Demo",
-        base_chart_symbol="EURUSD"
-    )
-
-    monitor = PriceMonitor(account)
-    await monitor.start(["EURUSD", "GBPUSD"])
-
-    print("Monitoring... Press Ctrl+C to stop")
-    await asyncio.sleep(30)  # Monitor for 30 seconds
-
-    await monitor.stop()
-    try:
-        await account.channel.close()
-    except Exception as e:
-        print(f"⚠️  Disconnect warning: {e}")
-
-asyncio.run(main())
+```csharp
+// If the market goes quiet, there is no way to stop this loop promptly.
+await foreach (var d in acc.OnSymbolTickAsync(new[] { "EURUSD" }))
+{
+    if (count >= 10) break;   // only runs when the NEXT tick arrives
+}
 ```
+
+✅ **Fix:** pass a token so you can stop even when no item is pending.
+
+```csharp
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+await foreach (var d in acc.OnSymbolTickAsync(new[] { "EURUSD" }, cts.Token)) { /* ... */ }
+```
+
+### ❌ Mistake 2 — Letting `OperationCanceledException` escape
+
+Cancelling a stream throws `OperationCanceledException` (or `TaskCanceledException`). That is **normal**; don't let it crash your app.
+
+```csharp
+try { await foreach (var d in svc.OnTradeAsync(cts.Token)) { /* ... */ } }
+catch (OperationCanceledException) { /* expected on stop */ }
+```
+
+### ❌ Mistake 3 — One `CancellationTokenSource` reused after cancel
+
+A `CancellationTokenSource` is **single-use**: once cancelled, every token from it is already cancelled. To start a new stream, create a **new** source.
+
+```csharp
+// ❌ cts was cancelled earlier → this stream ends immediately
+await foreach (var d in svc.OnSymbolTickAsync(new[] { "EURUSD" }, cts.Token)) { }
+
+// ✅ fresh source per run
+using var cts2 = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+await foreach (var d in svc.OnSymbolTickAsync(new[] { "EURUSD" }, cts2.Token)) { }
+```
+
+### ❌ Mistake 4 — Heavy work inside the loop body
+
+The loop body runs on the consuming task; slow work there backs up the stream. Hand off heavy processing (queue it, or `Task.Run` the CPU-bound part) and keep the loop tight.
 
 ---
 
-## Problem: Why Streams Need Management
+## Streaming with Enums
 
-When working with gRPC streaming in PyMT4, understanding the stream lifecycle is critical:
+Some stream payloads carry MT4 enum fields you can filter on. The two that matter for subscriptions:
 
-**Stream subscriptions** (`on_symbol_tick`, `on_trade`, etc.) are **active async tasks with network connections** that continue running until explicitly stopped.
+| Enum | Where it appears |
+| ---- | ---------------- |
+| `MT4_SUB_ENUM_EVENT_GROUP_TYPE` | `OnTradeData.Type` / `OnOpenedOrdersProfitData.Type` — which kind of event this message represents. |
+| `SUB_ORDER_OPERATION_TYPE` | `OnOpenedOrdersProfitOrderInfo.Type` — the operation type of each order in a profit snapshot. |
+
+Example — react only to a specific trade-event group:
+
+```csharp
+using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+try
+{
+    await foreach (var ev in svc.OnTradeAsync(cts.Token))
+    {
+        // ev.Type is an MT4_SUB_ENUM_EVENT_GROUP_TYPE value — switch on it to route events.
+        Console.WriteLine($"event group: {ev.Type}");
+    }
+}
+catch (OperationCanceledException) { }
+```
+
+> See [ENUMs Reference → Streaming](ENUMS_USAGE_REFERENCE.md) for the full list of streaming enums and their members.
 
 ---
 
-## Problem Explanation
+## Architecture & Safety
 
-### What Happens Without Proper Cleanup
+### One mechanism behind every stream
 
-```python
-# ❌ BAD: Stream continues running forever
-async def bad_example():
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
+All five low-level streams funnel through a single private helper on `MT4Account`:
 
-    count = 0
-    async for tick_data in account.on_symbol_tick(symbols=["EURUSD"]):
-        count += 1
-        print(f"Tick: {tick_data.symbol_tick.bid:.5f}")
-
-        if count >= 10:
-            break  # ❌ PROBLEM: Stream still running in background!
-                   # ❌ PROBLEM: gRPC connection not closed!
-
-    # ❌ Stream continues consuming resources
-    # ❌ Network connection stays open
-    # ❌ Memory gradually accumulates
+```
+OnSymbolTickAsync / OnTradeAsync / OnOpenedOrdersProfitAsync / ...
+        │
+        ▼
+ExecuteStreamWithReconnect<TRequest, TReply, TData>   (the reconnect loop)
+        │
+        ▼
+gRPC server-streaming call  ──►  Network  ──►  MT4 terminal
 ```
 
-**Result:**
+Because every stream shares this helper, **the lifecycle rules are identical** for all of them: the same cancellation behavior, the same reconnect behavior, the same cleanup.
 
-- Background async task continues consuming resources
-- MT4 terminal continues sending updates
-- **Async task leak** - tasks accumulate in event loop
-- Network connection stays open
-- Multiple abandoned streams = **serious resource leak**
+### What the reconnect loop guarantees
+
+`ExecuteStreamWithReconnect` runs roughly:
+
+```csharp
+while (!ct.IsCancellationRequested)          // token is the only way out
+{
+    AsyncServerStreamingCall<TReply>? call = null;
+    try
+    {
+        call = streamInvoker(request, headers, ct);
+        while (await call.ResponseStream.MoveNext(ct))
+            yield return data;               // hand each message to your foreach
+    }
+    catch (RpcException ex) when (transient)  // Unavailable / DeadlineExceeded / Internal
+    {
+        needReconnect = true;                 // drop out, reconnect, open a NEW stream
+    }
+    finally
+    {
+        call?.Dispose();                      // ✅ the current call is ALWAYS released
+    }
+
+    if (needReconnect) { await Reconnect(); } // transparent to your loop
+    else break;
+}
+```
+
+✅ **What it does for you**
+
+- **Auto-reconnect** on transient transport errors (`Unavailable`, `DeadlineExceeded`, `Internal`) and on reconnectable API errors — your `await foreach` keeps delivering across a blip, up to a restart cap.
+- **Always disposes** the current gRPC call in `finally`, so a dropped or finished stream never leaks.
+- **Clean completion** — cancellation-by-token, server-sent `Cancelled`, and end-of-stream (EOF) all end the enumeration gracefully (`yield break`).
+
+⚠️ **What you must do**
+
+- **Provide and control a `CancellationToken`.** The loop exits only when the token is cancelled (or the server finalizes the stream). Without cancellation a healthy stream runs indefinitely — which is correct for a long-running service, but means *you* own the off-switch.
+- **Expect `OperationCanceledException`** when you cancel, and catch it.
+- A **non-transient** API error surfaces as `ApiExceptionMT4` out of the `await foreach` — handle it like any other call's error (see [Return Codes](RETURN_CODES_REFERENCE.md)).
+
+### Connection vs. stream
+
+A stream does **not** own the connection. You connect once (e.g. via `ConnectionHelper`/`MT4Account`), open and close as many streams as you like over that connection, and disconnect once at the end. There is no per-stream `channel.close()`.
 
 ---
 
-## Solutions and Best Practices
-
-## Solution 1: Always Use cancellation_event ✅
-
-### Pattern 1: Create cancellation_event early
-
-```python
-async def proper_cancellation():
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    # ✅ CRITICAL: Create cancellation event
-    cancel_event = asyncio.Event()
-
-    try:
-        async for tick_data in account.on_symbol_tick(
-            symbols=["EURUSD"],
-            cancellation_event=cancel_event  # ✅ Pass to stream
-        ):
-            tick = tick_data.symbol_tick
-            print(f"Price: {tick.bid:.5f}")
-
-            if some_condition:
-                cancel_event.set()  # ✅ CORRECT: Signal to stop
-                break
-
-    finally:
-        # ✅ CRITICAL: Give stream time to cleanup
-        await asyncio.sleep(0.5)
-        try:
-            await account.channel.close()
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
-
-asyncio.run(proper_cancellation())
-```
-
-### Pattern 2: Timeout with asyncio.wait_for
-
-```python
-async def timeout_pattern():
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    cancel_event = asyncio.Event()
-
-    try:
-        async def stream_with_limit():
-            async for tick_data in account.on_symbol_tick(
-                symbols=["EURUSD"],
-                cancellation_event=cancel_event
-            ):
-                print(f"Price: {tick_data.symbol_tick.bid:.5f}")
-
-        # ✅ Automatically stops after 30 seconds
-        await asyncio.wait_for(stream_with_limit(), timeout=30.0)
-
-    except asyncio.TimeoutError:
-        print("Stream reached timeout")
-        cancel_event.set()
-
-    finally:
-        await asyncio.sleep(0.5)
-        try:
-            await account.channel.close()
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
-
-asyncio.run(timeout_pattern())
-```
-
----
-
-## Solution 2: Always Cleanup in finally Block ✅
-
-**CRITICAL:** Always close channel and wait for stream cleanup
-
-### ✅ CORRECT - Proper Cleanup
-
-```python
-async def proper_cleanup():
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    cancel_event = asyncio.Event()
-
-    try:
-        async for tick_data in account.on_symbol_tick(
-            symbols=["EURUSD"],
-            cancellation_event=cancel_event
-        ):
-            # Process data...
-            pass
-
-    finally:
-        # ✅ CRITICAL: Proper cleanup sequence
-        # Step 1: Signal all streams to stop
-        cancel_event.set()
-
-        # Step 2: Wait for graceful cleanup (0.5-1.0 seconds)
-        await asyncio.sleep(0.5)
-
-        # Step 3: Close gRPC channel
-        try:
-            await account.channel.close()
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
-
-asyncio.run(proper_cleanup())
-```
-
----
-
-## Common Streaming Mistakes
-
-### ❌ Mistake 1: No Cancellation Event
-
-```python
-# ❌ WRONG: No way to stop stream gracefully
-async def bad():
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    async for tick_data in account.on_symbol_tick(symbols=["EURUSD"]):
-        print(tick_data.symbol_tick.bid)
-        # If you want to stop - YOU CAN'T stop gracefully!
-```
-
-**Fix:**
-```python
-# ✅ CORRECT: Can stop gracefully anytime
-async def good():
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    cancel_event = asyncio.Event()
-
-    async for tick_data in account.on_symbol_tick(
-        symbols=["EURUSD"],
-        cancellation_event=cancel_event
-    ):
-        print(tick_data.symbol_tick.bid)
-        # Now can call cancel_event.set() to stop
-```
-
----
-
-### ❌ Mistake 2: Break Without Cleanup
-
-```python
-# ❌ WRONG: Break doesn't cleanup resources
-async def bad():
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    async for tick_data in account.on_symbol_tick(symbols=["EURUSD"]):
-        if some_condition:
-            break  # ❌ Stream still running!
-
-    # ❌ No cleanup - resources leak!
-```
-
-**Fix:**
-```python
-# ✅ CORRECT: Proper cleanup in finally
-async def good():
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    cancel_event = asyncio.Event()
-
-    try:
-        async for tick_data in account.on_symbol_tick(
-            symbols=["EURUSD"],
-            cancellation_event=cancel_event
-        ):
-            if some_condition:
-                cancel_event.set()
-                break
-
-    finally:
-        await asyncio.sleep(0.5)  # ✅ Cleanup time
-        try:
-            await account.channel.close()
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
-```
-
----
-
-### ❌ Mistake 3: No Channel Close
-
-```python
-# ❌ WRONG: Channel never closed
-async def bad():
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    cancel_event = asyncio.Event()
-
-    async for tick_data in account.on_symbol_tick(
-        symbols=["EURUSD"],
-        cancellation_event=cancel_event
-    ):
-        # Process...
-        pass
-
-    # ❌ Forgot to close channel - connection leak!
-```
-
-**Fix:**
-```python
-# ✅ CORRECT: Always close in finally
-async def good():
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    cancel_event = asyncio.Event()
-
-    try:
-        async for tick_data in account.on_symbol_tick(
-            symbols=["EURUSD"],
-            cancellation_event=cancel_event
-        ):
-            # Process...
-            pass
-
-    finally:
-        cancel_event.set()
-        await asyncio.sleep(0.5)
-        await account.channel.close()  # ✅ CRITICAL: Always close
-```
-
----
-
-## Advanced Examples with Enums
-
-### Example 1: Filter Trade Events by Type
-
-```python
-import asyncio
-from MetaRpcMT4 import MT4Account
-import MetaRpcMT4.mt5_term_api_subscriptions_pb2 as sub_pb2
-
-async def filter_trade_events():
-    """
-    Monitor trade events and filter by type using protobuf enums.
-    Shows how to work with SUB_ENUM_TRADE_TRANSACTION_TYPE.
-    """
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    cancel_event = asyncio.Event()
-
-    # ✅ Using protobuf enums for filtering
-    ORDER_ADD = sub_pb2.SUB_TRADE_TRANSACTION_ORDER_ADD
-    ORDER_DELETE = sub_pb2.SUB_TRADE_TRANSACTION_ORDER_DELETE
-    DEAL_ADD = sub_pb2.SUB_TRADE_TRANSACTION_DEAL_ADD
-
-    try:
-        print("Monitoring trade transactions (filtered by type)...")
-
-        async for tx_data in account.on_trade_transaction(cancellation_event=cancel_event):
-            if tx_data.trade_transaction:
-                tx = tx_data.trade_transaction
-
-                # ✅ Filter by transaction type using enums
-                if tx.type == ORDER_ADD:
-                    print(f"[NEW ORDER] Ticket={tx.order_ticket}, Symbol={tx.symbol}, "
-                          f"Price={tx.price:.5f}, Volume={tx.volume:.2f}")
-
-                elif tx.type == ORDER_DELETE:
-                    print(f"[ORDER DELETED] Ticket={tx.order_ticket}")
-
-                elif tx.type == DEAL_ADD:
-                    print(f"[NEW DEAL] Deal={tx.deal_ticket}, Order={tx.order_ticket}, "
-                          f"Symbol={tx.symbol}, Price={tx.price:.5f}")
-
-    finally:
-        cancel_event.set()
-        await asyncio.sleep(0.5)
-        try:
-            await account.channel.close()
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
-
-asyncio.run(filter_trade_events())
-```
-
----
-
-### Example 2: Sort and Filter Positions by Profit
-
-```python
-import asyncio
-from MetaRpcMT4 import MT4Account
-
-async def sort_positions_by_profit():
-    """
-    Monitor position profits and sort by P&L.
-    Shows advanced data processing with streaming.
-    """
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    cancel_event = asyncio.Event()
-
-    try:
-        print("Monitoring positions (sorted by profit)...")
-        print("-" * 60)
-
-        async for profit_data in account.on_position_profit(
-            interval_ms=1000,
-            ignore_empty=True,
-            cancellation_event=cancel_event
-        ):
-            # ✅ Collect all updated positions
-            positions = list(profit_data.updated_positions)
-
-            if not positions:
-                continue
-
-            # ✅ Sort by profit (descending - winners first)
-            positions_sorted = sorted(positions, key=lambda p: p.profit, reverse=True)
-
-            print(f"\n[UPDATE] Total positions: {len(positions_sorted)}")
-            print(f"{'Symbol':<10} {'Ticket':<10} {'Profit':<12} {'Status':<10}")
-            print("-" * 60)
-
-            # ✅ Show top 5 winners and top 5 losers
-            for pos in positions_sorted[:5]:  # Top 5 winners
-                status = "✅ PROFIT" if pos.profit > 0 else "❌ LOSS"
-                print(f"{pos.position_symbol:<10} {pos.ticket:<10} {pos.profit:>10.2f}  {status:<10}")
-
-            if len(positions_sorted) > 10:
-                print("   ... middle positions omitted ...")
-
-            for pos in positions_sorted[-5:]:  # Top 5 losers
-                status = "✅ PROFIT" if pos.profit > 0 else "❌ LOSS"
-                print(f"{pos.position_symbol:<10} {pos.ticket:<10} {pos.profit:>10.2f}  {status:<10}")
-
-            # ✅ Calculate statistics
-            total_profit = sum(p.profit for p in positions_sorted)
-            winners = sum(1 for p in positions_sorted if p.profit > 0)
-            losers = sum(1 for p in positions_sorted if p.profit < 0)
-
-            print("-" * 60)
-            print(f"Total P&L: {total_profit:+.2f} | Winners: {winners} | Losers: {losers}")
-
-    finally:
-        cancel_event.set()
-        await asyncio.sleep(0.5)
-        try:
-            await account.channel.close()
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
-
-asyncio.run(sort_positions_by_profit())
-```
-
----
-
-### Example 3: Filter Orders by State and Type
-
-```python
-import asyncio
-from MetaRpcMT4 import MT4Account
-import MetaRpcMT4.mt5_term_api_subscriptions_pb2 as sub_pb2
-
-async def filter_orders_by_state():
-    """
-    Monitor trade events and filter orders by state and type.
-    Shows complex filtering using multiple enums.
-    """
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    cancel_event = asyncio.Event()
-
-    # ✅ Define enum values for filtering
-    ORDER_STATE_PLACED = sub_pb2.SUB_ORDER_STATE_PLACED
-    ORDER_STATE_FILLED = sub_pb2.SUB_ORDER_STATE_FILLED
-    ORDER_STATE_CANCELED = sub_pb2.SUB_ORDER_STATE_CANCELED
-
-    ORDER_TYPE_BUY_LIMIT = sub_pb2.SUB_ORDER_TYPE_BUY_LIMIT
-    ORDER_TYPE_SELL_LIMIT = sub_pb2.SUB_ORDER_TYPE_SELL_LIMIT
-
-    try:
-        print("Monitoring pending orders (filtered by state)...")
-        print("-" * 70)
-
-        async for trade_data in account.on_trade(cancellation_event=cancel_event):
-            event = trade_data.event_data
-
-            # ✅ Process new orders - filter pending limit orders only
-            for order in event.new_orders:
-                if order.order_type in [ORDER_TYPE_BUY_LIMIT, ORDER_TYPE_SELL_LIMIT]:
-                    order_type_str = "BUY LIMIT" if order.order_type == ORDER_TYPE_BUY_LIMIT else "SELL LIMIT"
-                    print(f"[NEW PENDING] {order_type_str} #{order.ticket}: "
-                          f"{order.symbol} @ {order.price_open:.5f} "
-                          f"Vol={order.volume_initial:.2f} SL={order.stop_loss:.5f}")
-
-            # ✅ Process state changed orders - show only filled or cancelled
-            for state_change in event.state_changed_orders:
-                current = state_change.current_order
-                previous = state_change.previous_order
-
-                if current.state == ORDER_STATE_FILLED:
-                    print(f"[FILLED] Order #{current.ticket} was filled: "
-                          f"{current.symbol} @ {current.price_current:.5f}")
-
-                elif current.state == ORDER_STATE_CANCELED:
-                    print(f"[CANCELED] Order #{current.ticket} was cancelled: "
-                          f"{current.symbol}")
-
-    finally:
-        cancel_event.set()
-        await asyncio.sleep(0.5)
-        try:
-            await account.channel.close()
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
-
-asyncio.run(filter_orders_by_state())
-```
-
----
-
-### Example 4: Multi-Symbol Tick Aggregation with Sorting
-
-```python
-import asyncio
-from collections import defaultdict
-from datetime import datetime
-from MetaRpcMT4 import MT4Account
-
-async def aggregate_and_sort_ticks():
-    """
-    Aggregate ticks from multiple symbols and sort by spread.
-    Shows advanced data processing with multiple symbols.
-    """
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    cancel_event = asyncio.Event()
-
-    # ✅ Track latest tick for each symbol
-    latest_ticks = {}
-    tick_counts = defaultdict(int)
-
-    symbols = ["EURUSD", "GBPUSD", "USDJPY", "AUDUSD", "USDCAD"]
-
-    try:
-        print(f"Monitoring {len(symbols)} symbols, sorting by spread...")
-        print("-" * 80)
-
-        update_interval = 5  # Print sorted results every 5 ticks
-        total_ticks = 0
-
-        async for tick_data in account.on_symbol_tick(
-            symbols=symbols,
-            cancellation_event=cancel_event
-        ):
-            tick = tick_data.symbol_tick
-
-            # ✅ Update latest tick for symbol
-            latest_ticks[tick.symbol] = tick
-            tick_counts[tick.symbol] += 1
-            total_ticks += 1
-
-            # ✅ Every N ticks, show sorted summary
-            if total_ticks % update_interval == 0:
-                print(f"\n[{datetime.now().strftime('%H:%M:%S')}] Tick Summary (sorted by spread):")
-                print("-" * 80)
-                print(f"{'Rank':<6} {'Symbol':<10} {'Bid':<12} {'Ask':<12} {'Spread':<10} {'Ticks':<8}")
-                print("-" * 80)
-
-                # ✅ Calculate spreads and sort
-                symbol_spreads = []
-                for symbol, tick in latest_ticks.items():
-                    spread = tick.ask - tick.bid
-                    symbol_spreads.append((symbol, tick, spread))
-
-                # Sort by spread (ascending - tightest first)
-                symbol_spreads.sort(key=lambda x: x[2])
-
-                # ✅ Display sorted results
-                for rank, (symbol, tick, spread) in enumerate(symbol_spreads, 1):
-                    spread_pips = spread * 10000  # For 4-digit pairs
-                    print(f"{rank:<6} {symbol:<10} {tick.bid:<12.5f} {tick.ask:<12.5f} "
-                          f"{spread_pips:<10.1f} {tick_counts[symbol]:<8}")
-
-                print("-" * 80)
-                print(f"Total ticks received: {total_ticks}")
-
-    finally:
-        cancel_event.set()
-        await asyncio.sleep(0.5)
-        try:
-            await account.channel.close()
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
-
-asyncio.run(aggregate_and_sort_ticks())
-```
-
----
-
-## Multiple Concurrent Streams
-
-### Example: Run Multiple Streams Simultaneously
-
-```python
-import asyncio
-from MetaRpcMT4 import MT4Account
-
-async def multiple_concurrent_streams():
-    """
-    Run multiple streaming methods concurrently.
-    Shows proper management of multiple streams.
-    """
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    # ✅ Single cancellation event for ALL streams
-    cancel_event = asyncio.Event()
-
-    async def stream_ticks():
-        """Monitor tick data"""
-        try:
-            async for tick_data in account.on_symbol_tick(
-                symbols=["EURUSD"],
-                cancellation_event=cancel_event
-            ):
-                tick = tick_data.symbol_tick
-                print(f"[TICK] {tick.symbol}: {tick.bid:.5f}")
-        except Exception as e:
-            print(f"[TICK ERROR] {e}")
-
-    async def stream_trades():
-        """Monitor trade events"""
-        try:
-            async for trade_data in account.on_trade(cancellation_event=cancel_event):
-                print(f"[TRADE] Event received: {trade_data.type}")
-        except Exception as e:
-            print(f"[TRADE ERROR] {e}")
-
-    async def stream_profits():
-        """Monitor position profits"""
-        try:
-            async for profit_data in account.on_position_profit(
-                interval_ms=2000,
-                ignore_empty=True,
-                cancellation_event=cancel_event
-            ):
-                total_positions = len(profit_data.updated_positions)
-                print(f"[PROFIT] {total_positions} positions updated")
-        except Exception as e:
-            print(f"[PROFIT ERROR] {e}")
-
-    async def auto_stop(duration: float):
-        """Auto-stop after duration"""
-        await asyncio.sleep(duration)
-        print(f"\n[STOP] Auto-stopping after {duration} seconds...")
-        cancel_event.set()
-
-    try:
-        print("Starting multiple concurrent streams...")
-        print("-" * 60)
-
-        # ✅ Run all streams concurrently
-        await asyncio.gather(
-            stream_ticks(),
-            stream_trades(),
-            stream_profits(),
-            auto_stop(30.0)  # Stop all after 30 seconds
-        )
-
-    finally:
-        # ✅ Ensure cancellation event is set
-        cancel_event.set()
-
-        # ✅ Wait for all streams to cleanup
-        await asyncio.sleep(0.5)
-
-        # ✅ Close channel
-        try:
-            await account.channel.close()
-            print("[DONE] All streams stopped gracefully")
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
-
-asyncio.run(multiple_concurrent_streams())
-```
-
----
-
-## Architecture Notes
-
-### How Python Streaming Works in MT4Account
-
-**🔑 Critical Understanding:**
-
-**ALL streaming methods** (`on_symbol_tick`, `on_trade`, `on_position_profit`, `on_trade_transaction`, `on_positions_and_pending_orders_tickets`) internally use the **same hidden mechanism**: `execute_stream_with_reconnect`.
-
-This is why:
-- The while loop behavior applies to **ALL** streaming operations
-- The `cancellation_event` mechanism is required for **ALL** streaming methods
-- Resource cleanup rules are **identical** for all streaming operations
-
-**Users don't see this directly** - when you call `account.on_symbol_tick()`, internally it calls `execute_stream_with_reconnect` which contains the infinite reconnection loop.
-
-**Data flow:**
-
-```
-User code (async for loop)
-    ↓
-Async generator (yields data)
-    ↓
-execute_stream_with_reconnect (background async task)
-    ↓
-gRPC ClientStream
-    ↓
-Network (to MT4 terminal)
-```
-
-**Cancellation propagation:**
-```
-User code → cancellation_event → async generator → gRPC call → Network
-```
-
-**When you set cancellation_event:**
-
-1. User calls `cancel_event.set()` in their code
-2. While loop checks condition on next iteration:
-   ```python
-   while cancellation_event is None or not cancellation_event.is_set():
-   # After .set() → both conditions False → loop STOPS
-   ```
-3. Current iteration finishes (async for yields last data)
-4. `finally` block executes → `stream.cancel()` closes gRPC stream ✅
-5. Loop breaks (no new streams created)
-6. Network connection closes
-7. Resources freed ✅
-
-**Key insight:** The while loop checks `cancellation_event.is_set()` **on each iteration**. Calling `.set()` makes the loop exit after current stream finishes.
-
-### MT4Account Cleanup Mechanism
-
-⚠️ **Important:** This mechanism is **internal to ALL streaming methods**. When you call any streaming method (`on_symbol_tick`, `on_trade`, etc.), you're actually using `execute_stream_with_reconnect` behind the scenes.
-
-The `execute_stream_with_reconnect` method has built-in reconnection logic with automatic stream cleanup:
-
-```python
-# In MT4Account (real structure)
-async def execute_stream_with_reconnect(..., cancellation_event):
-    # ⚠️ CRITICAL: Infinite reconnection loop
-    while cancellation_event is None or not cancellation_event.is_set():
-        reconnect_required = False
-        stream = None
-
-        try:
-            stream = stream_invoker(request, headers)
-            async for response in stream:
-                # Yield data to user
-                yield data
-
-        except grpc.aio.AioRpcError as ex:
-            if ex.code() == grpc.StatusCode.UNAVAILABLE:
-                reconnect_required = True  # Network error → try reconnect
-            else:
-                raise
-
-        finally:
-            if stream:
-                stream.cancel()  # ✅ ALWAYS closes current gRPC stream
-
-        # Reconnection logic
-        if reconnect_required:
-            await asyncio.sleep(0.5)
-            await self.reconnect()
-            # ⚠️ Loop continues → creates NEW stream
-        else:
-            break  # Exit only here
-```
-
-**What this means:**
-
-✅ **What it DOES do:**
-- Closes current gRPC stream automatically (in `finally` block)
-- Handles network errors with automatic reconnection
-- Cleans up resources for each individual stream
-
-⚠️ **What it DOESN'T do:**
-- **Stop the reconnection loop** without `cancellation_event`
-- **Prevent new streams** from being created
-
-**Critical understanding:**
-
-```python
-# ❌ WITHOUT cancellation_event:
-async for tick in account.on_symbol_tick(["EURUSD"]):  # No cancellation_event!
-    if count >= 10:
-        break  # User breaks → current stream closes ✅
-                # BUT while loop continues → creates NEW stream ❌
-                # → LEAK: orphaned stream keeps running
-
-# ✅ WITH cancellation_event:
-cancel_event = asyncio.Event()
-async for tick in account.on_symbol_tick(["EURUSD"], cancellation_event=cancel_event):
-    if count >= 10:
-        cancel_event.set()  # Stops while loop ✅
-        break               # Current stream closes ✅
-                            # → CLEAN: no new streams created
-```
-
-**Bottom line:**
-- ✅ `stream.cancel()` cleans up **current** stream
-- ❌ **Only** `cancellation_event.set()` stops the **reconnection while loop**
-- 🔑 **How it works**: `while cancellation_event is None or not cancellation_event.is_set()` checks on each iteration
-- 🔴 **Without cancellation_event** → while condition is always True → loop runs forever → **LEAK**
-- 🔴 **With cancellation_event but no .set()** → while condition stays True → loop runs forever → **LEAK**
-- ✅ **With cancellation_event.set()** → while condition becomes False → loop stops → **CLEAN**
-- ✅ **You MUST close channel** to free gRPC connection
-
----
-
-## Recommendations
-
-### ✅ DO:
-
-1. **Always use `cancellation_event`** with streaming methods
-2. **Always call `cancel_event.set()`** before exiting
-3. **Always use `try/finally` blocks** for cleanup
-4. **Always wait 0.5-1.0 seconds** after setting cancellation_event
-5. **Always close channel** in finally block: `await account.channel.close()`
-6. **Use `asyncio.wait_for()`** for automatic timeouts
-7. **Use `asyncio.gather()`** to run multiple streams concurrently
-
-### ❌ DON'T:
-
-1. **Never start streaming without cancellation_event**
-2. **Never break from loop without setting cancellation_event**
-3. **Never forget finally block** with cleanup code
-4. **Never skip waiting period** after cancellation
-5. **Never leave channel open** after streaming
-6. **Never ignore exceptions** from streams
-
----
-
-## Troubleshooting and Async Task Leaks
-
-### Checking for Task Leaks
-
-```python
-import asyncio
-
-async def check_task_leaks():
-    # Before streaming
-    before = len(asyncio.all_tasks())
-    print(f"Tasks before: {before}")
-
-    # Your streaming code here...
-    account = MT4Account(user=12345, password="password", grpc_server="mt4.mrpc.pro:443")
-    await account.connect_by_server_name(server_name="YourBroker-Demo", base_chart_symbol="EURUSD")
-
-    cancel_event = asyncio.Event()
-
-    try:
-        count = 0
-        async for tick_data in account.on_symbol_tick(
-            symbols=["EURUSD"],
-            cancellation_event=cancel_event
-        ):
-            count += 1
-            if count >= 5:
-                break
-
-    finally:
-        cancel_event.set()
-        await asyncio.sleep(0.5)
-        try:
-            await account.channel.close()
-        except Exception as e:
-            print(f"⚠️  Disconnect warning: {e}")
-
-    # After streaming (wait a bit for cleanup)
-    await asyncio.sleep(1.0)
-    after = len(asyncio.all_tasks())
-    print(f"Tasks after: {after}")
-    print(f"Leaked tasks: {after - before}")
-    # Should be 0-1 if properly cleaned up
-
-asyncio.run(check_task_leaks())
-```
-
-### Debugging Pending Tasks
-
-```python
-import asyncio
-
-async def debug_pending_tasks():
-    # Get all tasks
-    tasks = asyncio.all_tasks()
-
-    print(f"Total pending tasks: {len(tasks)}")
-    print("-" * 60)
-
-    for i, task in enumerate(tasks, 1):
-        print(f"Task {i}: {task.get_name()}")
-        print(f"  Coro: {task.get_coro()}")
-        print(f"  Done: {task.done()}")
-        if not task.done():
-            print(f"  ⚠️  STILL RUNNING!")
-        print()
-```
-
-### Common Leak Patterns
-
-1. **Not using cancellation_event:**
-   ```python
-   # ❌ Leak: stream never stops
-   async for data in account.on_symbol_tick(symbols=["EURUSD"]):
-       # Forgot cancellation_event parameter
-       pass
-   ```
-
-2. **Not setting cancellation_event:**
-   ```python
-   # ❌ Leak: stream keeps running after break
-   cancel_event = asyncio.Event()
-   async for data in account.on_symbol_tick(symbols=["EURUSD"], cancellation_event=cancel_event):
-       if condition:
-           break  # Forgot cancel_event.set()
-   ```
-
-3. **Not closing channel:**
-   ```python
-   # ❌ Leak: connection stays open
-   cancel_event.set()
-   await asyncio.sleep(0.5)
-   # Forgot await account.channel.close()
-   ```
+## Troubleshooting
+
+| Symptom | Likely cause | Fix |
+| ------- | ------------ | --- |
+| Stream never stops on `break` | Market is quiet; loop is parked in `MoveNext` | Drive it with a `CancellationToken` (`CancelAfter` / `Cancel`). |
+| `OperationCanceledException` crashes the app | Not caught around the `await foreach` | Wrap the loop in `try { } catch (OperationCanceledException) { }`. |
+| New stream ends immediately | Reusing an already-cancelled `CancellationTokenSource` | Create a **new** `CancellationTokenSource` per run. |
+| Stream keeps dropping and reopening | Transient transport errors being auto-retried | Usually fine (that's the reconnect loop). If persistent, check network / server endpoint in config. |
+| `ApiExceptionMT4` out of the loop | Server sent a non-transient, non-final error | Inspect the error code; see [Return Codes](RETURN_CODES_REFERENCE.md). |
+| Lagging / backed-up stream | Heavy work in the loop body | Keep the body tight; offload processing. |
 
 ---
 
 ## See Also
 
-* **[Streaming Methods Overview](../API_Reference/MT4Account.md)** - Complete streaming methods documentation
-* **[on_symbol_tick](../API_Reference/MT4Account.md)** - Tick streaming reference
-* **[on_trade](../API_Reference/MT4Account.md)** - Trade events reference
-* **[Python asyncio documentation](https://docs.python.org/3/library/asyncio.html)** - Official asyncio guide
-* **[gRPC Python](https://grpc.io/docs/languages/python/)** - Official gRPC Python guide
+- **[MT4Account — API Reference](../MT5Account/MT4Account.Master.Overview.md)** — low-level streaming methods.
+- **[MT4Service — API Reference](../MT4Service/MT4Service.Overview.md)** — the typed streaming facade.
+- **[MT4Sugar — API Reference](../MT4Sugar/MT4Sugar.Overview.md)** — `ReadTicks` / `ReadTrades`.
+- **[ENUMs Reference](ENUMS_USAGE_REFERENCE.md)** — streaming enums.
+- **[Return Codes](RETURN_CODES_REFERENCE.md)** — handling `ApiExceptionMT4` from a stream.
 
 ---
 
-**Remember:** Streams are powerful tools for real-time market data, but they require proper lifecycle management. Master cancellation_event, always cleanup in finally blocks, and your streaming code will be robust and leak-free. Happy streaming! 🚀
+**Remember:** streams are `IAsyncEnumerable<T>` you read with `await foreach`; a `CancellationToken` is your off-switch; the SDK reconnects and disposes for you. Own the token, catch the cancel, and your streaming code stays leak-free. 🚀

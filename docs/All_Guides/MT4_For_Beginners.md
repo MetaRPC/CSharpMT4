@@ -1,400 +1,180 @@
-# MT4 for Beginners: Your First Steps in Trading
+# 🧭 MT4 for Beginners: Your First Steps
 
-Welcome! This guide is designed for complete beginners who have never worked with MetaTrader 4 or trading. We'll walk you through everything you need to know to get started.
+Welcome! This guide is for complete beginners — never touched MetaTrader 4 or trading before. It explains what MT4 is, how to create a free **demo account** in the terminal, and where to go next to drive it from **C#** with CSharpMT4.
 
 ---
 
-## What is MetaTrader 4 (MT4)?
+## 🖥️ What is MetaTrader 4 (MT4)?
 
-**MetaTrader 4** is a powerful trading platform used by millions of traders worldwide. It allows you to:
+**MetaTrader 4** is a trading platform used by millions of traders worldwide. With it you can:
 
-- Trade forex, stocks, commodities, and cryptocurrencies
+- Trade forex, metals, commodities and more
 - Analyze markets with charts and indicators
-- Execute automated trading strategies
-- Monitor your positions in real-time
+- Run automated trading strategies
+- Monitor your positions in real time
 
-Think of MT4 as your "cockpit" for accessing financial markets. PyMT4 allows you to programmatically control this cockpit using Python.
+Think of MT4 as the **cockpit** for the markets. **CSharpMT4** lets you drive that cockpit programmatically from C# over gRPC — reading prices, placing orders, streaming ticks — without clicking around the terminal by hand.
 
 ---
 
-## Demo vs Live Account: Start Safely
+## 🛡️ Demo vs Live: start safely
 
 ### Why start with a demo account?
 
-A **demo account** is a risk-free practice account with virtual money. We **strongly recommend** starting with demo for several reasons:
+A **demo account** is a risk-free practice account funded with virtual money. Start here — always:
 
-- ✅ **Zero risk** - practice with virtual funds (typically $10,000 - $100,000)
-- ✅ **Real market conditions** - live prices and market behavior
-- ✅ **Learn the platform** - understand how MT4 works before risking real money
-- ✅ **Test your code** - perfect for developing and testing your PyMT4 applications
+- ✅ **Zero risk** — virtual funds (typically $10,000–$100,000)
+- ✅ **Real market conditions** — live prices and behavior
+- ✅ **Learn the platform** — before any real money is involved
+- ✅ **Perfect for testing** — develop and run your CSharpMT4 code against it
 
-### Live Account
+### Live account
 
-A **live account** uses your real money. Only move to live trading when you:
-
-- Understand how MT4 works
-- Have thoroughly tested your strategies on demo
-- Are aware of the risks involved
+A **live account** uses real money. Only move to live once you understand MT4, have tested your strategy thoroughly on demo, and accept the risks.
 
 ---
 
-## Quick Start: Creating a Demo Account
+## 🚀 Creating a demo account in MT4
 
-The fastest way to get started is to create a demo account directly through the MT4 terminal application.
+You need an account (login, password, server) for the SDK to connect to. Here's the full walk-through in the terminal.
 
-### Step 1️⃣: Download and Install MT4 Terminal
+### Step 1️⃣ — Download & install MT4
 
-1. Visit the official MetaTrader website: [https://www.metatrader5.com/en/download](https://www.metatrader5.com/en/download)
+Get the terminal from your broker, or the MetaTrader site: [https://www.metatrader4.com/en/download](https://www.metatrader4.com/en/download). Install it for your OS.
 
-2. Download the version for your operating system (Windows/Mac/Linux)
+### Step 2️⃣ — Find the Navigator panel
 
-3. Install the application
-
----
-
-### Step 2️⃣: Launch MT4 and Locate the Navigator Panel
-
-When you open the MetaTrader 4 application, you'll typically see a popup window offering to:
-
-- Register for the MQL community
-
-- Open a new account or log into an existing one
-
-If this popup doesn't appear automatically, you need to find the **Navigator** panel.
+On launch, MT4 often shows an "open an account" popup. If not, find the **Navigator** panel (left side, below **Market Watch**).
 
 ![Navigator Panel Location](../Guide_Images/1.%20NAV.png)
 
+Inside Navigator you'll see **Accounts**, Indicators, Expert Advisors, and more.
 
-**Finding the Navigator Panel:**
+### Step 3️⃣ — Open a new demo account
 
-The **Navigator** panel is usually located on the **left side** of the screen, below the **Market Watch** panel.
+In **Navigator**, **right-click** on **Accounts** → **"Open an account"**. This opens the broker-server search.
 
-**Inside the Navigator panel** you'll see several sections:
-- Accounts
-- Subscriptions
-- Indicators
-- Expert Advisors
-- And others
+### Step 4️⃣ — Select the demo server
 
----
-
-### Step 3️⃣: Opening a New Demo Account
-
-1. In the **Navigator** panel, find the **Accounts** section
-2. **Right-click** on "Accounts"
-3. Select **"Open an account"** from the context menu
-
-This will open the broker server search panel.
-
----
-
-### Step 4️⃣: Select MetaQuotes Demo Server
-
-In the broker search window, you'll see a list of available MT4 servers.
-
-**For your first demo account, we'll use the simplest option:**
-
-- Look for **"MetaQuotes-Demo"** or **"MetaQuotes Ltd"** in the list
-- This is the standard demo server provided by MetaTrader developers
-- If you don't see it immediately, use the search field at the top to find it
-
-**Select the MetaQuotes server** and click **Next**.
+Find **"MetaQuotes-Demo"** (the standard demo server) in the list — use the search box if needed — select it and click **Next**.
 
 ![MetaQuotes Server Selection](../Guide_Images/2.%20META.png)
 
----
-
-### Step 5️⃣: Account Type Selection
-
-On the next screen, you'll have options:
-
-- **Open a new demo account** (top option)
-- Log into an existing account (demo or live)
-
-**Select "Open a new demo account"** and click **Next**.
+### Step 5️⃣ — Choose "Open a new demo account"
 
 ![Open New Demo Account](../Guide_Images/3.%20OPEN.png)
 
+### Step 6️⃣ — Fill in your details
 
----
-
-### Step 6️⃣: Fill in Your Personal Information
-
-Now you'll see a form requesting your details:
-
-- **Name**: Your first name
-- **Last Name**: Your last name
-- **Email**: Your email address
-- **Phone**: Optional (can skip for demo)
-- **Account Type**: Choose your preferred account settings
-- **Deposit**: Virtual amount (e.g., $10,000)
-- **Leverage**: 1:100 is a good starting point
-- **Currency**: USD, EUR, etc.
-
-**Check the box** to agree to the terms and conditions, then click **Next**.
+Name, email, account type, deposit (e.g. $10,000), leverage (1:100 is fine), currency. Accept the terms and click **Next**.
 
 ![Personal Information Form](../Guide_Images/4.%20creator.png)
 
----
+### Step 7️⃣ — Save your credentials
 
-### Step 7️⃣: Save Your Account Credentials
+MT4 shows your **Login**, **Password**, **Investor Password** and **Server** (e.g. `MetaQuotes-Demo`).
 
-MT4 will now create your demo account and display your credentials:
-
-**Important credentials displayed:**
-
-- **Login**: Your account number (e.g., 591129415)
-- **Password**: Your master password for trading
-- **Investor Password**: Read-only password (for monitoring)
-- **Server**: Server name (e.g., "MetaQuotes-Demo")
-
-**⚠️ CRITICALLY IMPORTANT**: **Save these credentials immediately!** You'll need them for:
-- Logging back into MT4
-- Configuring PyMT4 in `examples/0_common/settings.json`
-
-Click **Finish** to complete account creation.
+> ⚠️ **Save these immediately** — you'll need the login, password and server name for the config below.
 
 ![Account Credentials](../Guide_Images/5.%20OKK.png)
 
 ---
 
-### Step 8️⃣: Configure PyMT4 with Your Credentials
+## ⚙️ Connect CSharpMT4 to your demo account
 
-Now that you have an MT4 demo account, you need to configure PyMT4 to connect to it.
-
-1. Open your PyMT4 project
-2. Navigate to **`examples/0_common/settings.json`**
-3. Fill in the credentials you just saved:
-
+Put the credentials MT4 gave you into the `MT4Options` section of `appsettings.json`:
 
 ```json
 {
-  "user": 591129415,
-  "password": "YourPasswordHere",
-  "host": "mt4.mrpc.pro",
-  "port": 443,
-  "grpc_server": "mt4.mrpc.pro:443",
-  "mt_cluster": "MetaQuotes-Demo",
-  "test_symbol": "EURUSD",
-  "test_volume": 0.01
+  "MT4Options": {
+    "User": 591129415,
+    "Password": "YourPasswordHere",
+    "ServerName": "MetaQuotes-Demo",
+    "Grpc": "https://mt4.mrpc.pro:443",
+    "ApiKey": "<your API key>",
+    "Symbol": "EURUSD"
+  }
 }
 ```
 
-**Important notes:**
+- **User** — your login number.
+- **Password** — your master password.
+- **ServerName** — the exact server name from MT4 (e.g. `MetaQuotes-Demo`).
+- **Grpc** — the MetaRPC endpoint (leave as is for production).
+- **ApiKey** — your key from [https://mrpc.pro/my](https://mrpc.pro/my).
 
-- **user**: Replace with your login number
-- **password**: Replace with your password
-- **mt_cluster**: Use the exact server name from MT4 (e.g., "MetaQuotes-Demo")
-- **host, port, grpc_server**: Provided by MetaRPC team (leave as is)
+Full precedence rules (env → appsettings → defaults) and API-key details are in **[Getting Started → Configuration](GETTING_STARTED.md#configuration-provide-your-connection-data)**.
 
----
-
-### Step 9️⃣: Verify MT4 Connection
-
-Back in the MT4 terminal:
-
-1. MT4 should automatically log you into your new demo account
-2. Check the **bottom right corner** of the terminal window - you should see:
-   - **Green connection indicator** (means connected to server)
-   - **Your account balance** (e.g., $10,000)
-
-**You're now ready to test!**
+Then run `dotnet run` — the console prints the resolved config and a `CONNECT` box. A successful connect means you're ready to go.
 
 ---
 
-### Step 🔟: Start Testing PyMT4
+## 🧩 MT4 password types
 
-With your MT4 demo account created and `settings.json` configured, you can start running examples:
+MT4 gives you **two** passwords:
 
-```bash
-# Navigate to the examples folder
-cd examples
+### Master password
 
-# Run your first example
-python main.py 1
+- **Full access** — open/close trades, change settings.
+- The one you created during registration.
+- **This is the password CSharpMT4 uses** to trade.
 
-# Or run interactively
-python main.py
-```
+### Investor password
 
-When trading operations occur, your demo account balance will increase or decrease accordingly. **Experiment freely** - it's virtual money, so there's no risk!
-
-All trades executed by PyMT4 will appear in your MT4 terminal in real-time.
+- **View-only** — see trades, balance and history, but **cannot trade**.
+- Useful for sharing performance or read-only monitoring tools.
+- Set it in MT4 via **Tools → Options → Server → Change** (Investor Password).
 
 ---
 
-## 🧩 Understanding MT4 Password Types
+## 🏦 Choosing a broker (optional)
 
-MT4 uses **two types of passwords** for security and flexibility:
+The MetaQuotes demo server is perfect for practice. For live trading later you might pick a specific broker for better conditions or regional support.
 
-### Master Password (Main Password)
+> **Not financial advice.** Always do your own research.
 
-- **Full access** to your trading account
-- Can open/close trades, deposit/withdraw funds, change settings
-- **This is the password you created** during account registration
-- Use this password for:
-  - Trading (including PyMT4 applications)
-  - Changing account settings
-  - Withdrawing funds (live accounts)
+Popular MT4 brokers: IC Markets, Pepperstone, OANDA, XM, RoboForex, FxPro.
 
-### Investor Password (Read-Only Password)
+What to look for:
 
-- **View-only access** to your account
-- Can see trades, balance, history - **but cannot trade**
-- Useful for:
-  - Sharing your trading performance with others (investors, friends)
-  - Monitoring your account without risk
-  - Audit and analytics tools
-
-**How to get your investor password:**
-
-1. In MT4, go to **Tools → Options**
-2. Select the **Server** tab
-3. Click **Change** next to "Investor Password"
-4. Set a new investor password
+- ✅ **Regulation** — FCA, ASIC, CySEC, etc.
+- ✅ **MT4 support** — make sure they actually offer **MT4** (not only MT5).
+- ✅ **Demo account** — free (note: demo accounts often expire after ~30 days of inactivity).
+- ✅ **Good spreads** — lower spreads = lower cost.
+- ✅ **Responsive support** — in your language.
 
 ---
 
-## Choosing a Broker (Optional)
+## ➡️ What's next?
 
-While you can use the MetaQuotes demo server for practice, you may want to choose a specific broker for:
+### 1. Connect CSharpMT4
 
-- Live trading later
-- Better demo conditions (spreads, instruments)
-- Specific regional support
+Follow the main setup guide to install, configure and run:
 
-### Popular MT4 Brokers:
+👉 **[Getting Started](GETTING_STARTED.md)** · **[Your First Project (10 min)](Your_First_Project.md)**
 
-**Note**: This is not financial advice. Always do your own research before choosing a broker.
+### 2. Learn the three layers
 
-- **IC Markets** - Popular for forex and low spreads
-- **Pepperstone** - Well-regulated, beginner-friendly
-- **OANDA** - Strong reputation, accepts US clients
-- **XM** - Easy account opening, many account types
-- **RoboForex** - Good for automated trading
-- **FxPro** - Excellent demo trading conditions (used in PyMT4 examples)
+CSharpMT4 is built in **three levels**, low to high — pick where to start:
 
-### What to look for:
-
-- ✅ **Regulation** - Check if regulated by FCA, ASIC, CySEC, etc.
-
-- ✅ **MT4 Support** - Make sure they offer MT4 (not just MT4).
-
-- ✅ **Demo Account** - Free demo without expiration (though demo accounts typically last 30 days, then become inactive).
-
-- ✅ **Good Spreads** - Lower spreads = lower trading costs.
-
-- ✅ **Customer Support** - Responsive support in your language.
+- **Level 1 — [MT4Account](../API_Reference/MT4Account.md)**: direct low-level gRPC calls. Maximum control; everything else is built on it.
+- **Level 2 — [MT4Service](../API_Reference/MT4Service.md)**: typed wrappers over MT4Account. Clean signatures, ready data. Best for most scenarios.
+- **Level 3 — [MT4Sugar](../API_Reference/MT4Sugar.md)**: convenience helpers (risk sizing, normalization, batch actions). Most beginner-friendly.
 
 ---
 
-
----
-
-## What's Next?
-
-Now that you have a demo account and understand the basics, you're ready for:
-
-### 1. Setting Up PyMT4
-
-Follow our main getting started guide to connect PyMT4 to your MT4 account:
-
-👉 **[Getting Started with PyMT4](GETTING_STARTED.md)**
-
-### 2. Understanding API Architecture
-
-PyMT4 is built in **three levels**, from low-level to high-level. You can choose where to start depending on your needs:
-
-#### Level 1: MT4Account (Low-Level gRPC Foundation)
-👉 **[MT4Account Overview](../API_Reference/MT4Account.md)**
-
-- **Direct gRPC calls** to MT4 terminal
-- **Foundation of everything** - all other levels use this internally
-- Maximum control and flexibility
-- Best for: Advanced users who need fine-grained control
-
-#### Level 2: MT4Service (Convenient Wrappers)
-👉 **[MT4Service Overview](../API_Reference/MT4Service.md)**
-
-- **Wrapper methods** over MT4Account gRPC calls
-- Simplified error handling and response parsing
-- Easier to work with than raw gRPC
-- Best for: Most common trading scenarios
-
-#### Level 3: MT4Sugar (High-Level Helpers)
-👉 **[MT4Sugar API Overview](../API_Reference/MT4Sugar.md)**
-
-- **Syntactic sugar** and convenience methods
-- Chainable operations, smart defaults
-- Most intuitive and beginner-friendly
-- Best for: Rapid prototyping and simple strategies
-
----
-
-## Important Reminders
+## ⚠️ Important reminders
 
 ### 🛡️ Security
+- **Never share your master password.** Use the investor password for monitoring tools.
+- Keep credentials safe (a password manager helps). Don't commit real credentials to source control.
 
-- **Never share your master password** with anyone
-- Use investor password for monitoring/analytics tools
-- Keep your credentials safe (use password managers)
-
-### 📊 Risk Management
-
-- Demo accounts are **risk-free**, but form good habits:
-  - Always use Stop Loss
-  - Don't risk more than 1-2% per trade
-  - Understand position sizing calculations
+### 📊 Risk management
+- Demo is risk-free, but build good habits: always use a stop-loss, don't risk more than 1–2% per trade, understand position sizing.
 
 ### 🧪 Testing
-
-- Test all your PyMT4 code **on demo first**
-- Verify strategies over weeks/months, not days
-- Paper trading (demo) doesn't guarantee live results
-
-### 📚 Education
-
-- Trading has a steep learning curve
-- Focus on learning, not earning
-- Consider courses, books, and communities
+- Test all your code **on demo first**. Verify strategies over weeks, not days. Demo results don't guarantee live results.
 
 ---
 
-## Useful Python Commands
-
-### Installation
-
-```bash
-# Install PyMT4 package with all dependencies
-pip install MetaRpcMT4
-```
-
-### Running Examples
-
-```bash
-# Navigate to examples folder first
-cd examples
-
-# Option 1: Run specific example by number
-python main.py 1
-
-# Option 2: Interactive menu
-python main.py
-
-# Option 3: Run example file directly
-python 1_lowlevel/01_general_operations.py
-python 3_sugar/06_sugar_basics.py
-```
-
-### Checking Environment
-
-```bash
-# Verify Python version (requires 3.8+)
-python --version
-```
-
----
-
-**Ready to start coding?** Head over to [Getting Started](GETTING_STARTED.md) to connect PyMT4 to your MT4 account!
-
-**Good luck with your trading journey! 🚀**
+**Ready to code?** Head to **[Getting Started](GETTING_STARTED.md)** and connect CSharpMT4 to your account. Good luck! 🚀

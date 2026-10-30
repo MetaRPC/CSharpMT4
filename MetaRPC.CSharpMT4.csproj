@@ -4,13 +4,13 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591;CS0436</NoWarn>
   </PropertyGroup>
 
   <!-- Do not compile files from the examples or tests folder in the main project -->
   <ItemGroup>
     <Compile Remove="package\**\*.cs" />
-    <Compile Remove="examples\**\*.cs" />
     <Compile Remove="tests\**\*.cs" />
     <None Remove="examples\**\*" />
     <None Remove="tests\**\*" />
