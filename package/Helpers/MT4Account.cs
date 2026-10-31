@@ -1,21 +1,14 @@
-﻿using Grpc.Core;
+using Grpc.Core;
 using Grpc.Net.Client;
-using mt4_term_api;
 using System;
-using System.Linq;
-using System.Net.Http;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
 using static mt4_term_api.Connection;
 using static mt4_term_api.MarketInfo;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 
-
-
-namespace MetaRPC.CSharpMT4
+namespace mt4_term_api
 {
     public class MT4Account
     {
@@ -32,23 +25,22 @@ namespace MetaRPC.CSharpMT4
         /// <summary>
         /// Gets the MT4 server host.
         /// </summary>
-        public string? Host { get; private set; }
+        public string Host { get; internal set; }
 
         /// <summary>
         /// Gets the the MT4 server port.
         /// </summary>
-        public int Port { get; private set; }
+        public int Port { get; internal set; }
 
         /// <summary>
         /// Gets the the MT4 server port.
         /// </summary>
-        public string? ServerName { get; private set; }
-       
-       /// <summary>Base chart symbol used on connect (null until connected or after Dispose()).</summary>
-        public string? BaseChartSymbol { get; private set; }
-
-        /// <summary>Terminal readiness timeout (seconds).</summary>
-        public int ConnectTimeoutSeconds { get; private set; }
+        public string ServerName { get; internal set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public string BaseChartSymbol { get; private set; }
+        public int ConnectTimeoutSeconds { get; set; }
 
         /// <summary>
         /// Gets the gRPC server address used to connect.
@@ -115,194 +107,12 @@ namespace MetaRPC.CSharpMT4
         public string ApiKey { get; set; } = "TRIAL";
 
         /// <summary>
-        /// Computes a stable deterministic GUID based on account credentials (user + password).
-        /// Matches the server's GetId algorithm.
+        /// Gets or sets the optional terminal name or creator identifier sent with every connect request.
+        /// It labels the terminal instance on the server (for example with the name of the application using it).
         /// </summary>
-        public static Guid ComputeDeterministicTerminalId(ulong user, string password)
-        {
-            using var sha256 = System.Security.Cryptography.SHA256.Create();
-            var hash = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes($"{user}:{password}"));
-            var guidBytes = new byte[16];
-            Array.Copy(hash, guidBytes, 16);
-            return new Guid(guidBytes);
-        }
-        
-        // How we were connected last time
-        private enum ConnectionMode { None, HostPort, ServerName }
-        private ConnectionMode _lastConnectionMode = ConnectionMode.None;
+        public string? Name { get; set; }
 
-        // Keep the last "WaitForTerminalIsAlive" flag to reuse on reconnect
-        private bool _lastWaitForTerminalIsAlive = true;
-
-        // put this near other fields in MT4Account
-        private const string HeaderIdKey = "id";
-
-        public bool IsConnected => !_disposed && (Host != null || ServerName != null);
-
-        
-        // Max restarts for streaming calls before we give up
-        private const int DefaultMaxStreamRestarts = 8;
-
-        private bool _disposed;
-
-        private readonly SemaphoreSlim _reconnectGate = new(1, 1);
-     
-        // Default per-RPC timeout if caller doesn't provide a deadline
-        public TimeSpan DefaultRpcTimeout { get; set; } = TimeSpan.FromSeconds(8);
-        
-     // Treat some server "errors" as normal stream finalization
-        private static bool IsStreamFinalizationError(Mt4TermApi.Error? e)
-    => e != null && (
-           e.ErrorCode == "ON_SUBSCRIPTION_EA_DEINITIALIZATION_START_WATCHING_MULTI_CHARTS_COUNT_ZERO"
-           
-       );
-
-        // Default per-RPC timeouts
-        public TimeSpan TradeRpcTimeout { get; set; } = TimeSpan.FromSeconds(5); // trading calls
-
-
-// Resolve effective deadline: use caller's value or our default
-        private DateTime? ResolveDeadline(DateTime? deadline)
-    => deadline ?? DateTime.UtcNow.Add(DefaultRpcTimeout);
-
-// 2) with a customfallback (for shopping RPC)
-        private DateTime? ResolveDeadline(DateTime? deadline, TimeSpan fallback)
-    => deadline ?? DateTime.UtcNow.Add(fallback);
-        
-
-        // Reset connection-related state so any RPCs will fail fast via EnsureConnected()
-        
-        
-        private void ResetState()
-
-        {
-            Id = default;
-            TerminalInstanceGuid = null;
-            Host = null;
-            ServerName = null;
-            BaseChartSymbol = null;
-            ConnectTimeoutSeconds = 0;
-            _lastConnectionMode = ConnectionMode.None;
-            _lastWaitForTerminalIsAlive = true;
-        }
-
-
-private void EnsureConnected()
-{
-    if (!IsConnected)
-        throw new ConnectExceptionMT4("Not connected: Call Connect* first.");
-}
-
-public Metadata GetHeaders()
-{
-    var headers = new Metadata();
-    if (!string.IsNullOrEmpty(TerminalInstanceGuid))
-    {
-        headers.Add(HeaderIdKey, TerminalInstanceGuid);
-    }
-    else if (Id != default)
-    {
-        headers.Add(HeaderIdKey, Id.ToString());
-    }
-    headers.Add("apikey", !string.IsNullOrWhiteSpace(ApiKey) ? ApiKey : "TRIAL");
-    return headers;
-}
-
-// Retry/backoff settings for unary RPC calls
-private static readonly TimeSpan BaseBackoff = TimeSpan.FromMilliseconds(250);
-private static readonly TimeSpan MaxBackoff  = TimeSpan.FromSeconds(5);
-private const int DefaultMaxAttempts = 8;
-
-// Decide whether an API error is reconnectable (terminal lost, etc.)
-private static bool IsReconnectableError(Mt4TermApi.Error? e)
-    => e != null && (e.ErrorCode == "TERMINAL_INSTANCE_NOT_FOUND"
-                     || e.ErrorCode == "TERMINAL_REGISTRY_TERMINAL_NOT_FOUND");
-
-// Exponential backoff with jitter
-// after (thread-safe on .NET 6+)
-private static TimeSpan NextBackoff(int attempt)
-{
-    var target = Math.Min(
-        BaseBackoff.TotalMilliseconds * Math.Pow(2, attempt),
-        MaxBackoff.TotalMilliseconds
-    );
-    var jitter = new Random().Next(-150, 150); // ±150ms
-    var ms = Math.Max(100, target + jitter);
-    return TimeSpan.FromMilliseconds(ms);
-}
-
-
-/// <summary>
-/// Gracefully disconnects from MT4 terminal and disposes underlying resources.
-/// </summary>
-public async Task DisconnectAsync(bool delete = false)
-{
-    if (_disposed) return;
-    try
-    {
-        if (!string.IsNullOrEmpty(TerminalInstanceGuid) || Id != default)
-        {
-            var headers = GetHeaders();
-            await ConnectionClient.DisconnectAsync(new DisconnectRequest { Delete = delete }, headers);
-        }
-    }
-    catch
-    {
-        // Disconnect failure is tolerated on cleanup
-    }
-    finally
-    {
-        Dispose();
-    }
-}
-
-/// <summary>
-/// Gracefully disconnects and disposes underlying resources. Safe to call multiple times.
-/// </summary>
-public void Disconnect(bool delete = false)
-{
-    if (_disposed) return;
-    try
-    {
-        if (!string.IsNullOrEmpty(TerminalInstanceGuid) || Id != default)
-        {
-            var headers = GetHeaders();
-            ConnectionClient.Disconnect(new DisconnectRequest { Delete = delete }, headers);
-        }
-    }
-    catch
-    {
-        // Disconnect failure is tolerated on cleanup
-    }
-    finally
-    {
-        Dispose();
-    }
-}
-
-/// <summary>
-/// Dispose pattern (sync). GrpcChannel supports IDisposable; disposing it will close sockets.
-/// </summary>
-public void Dispose()
-{
-    if (_disposed) return;
-    _disposed = true;
-
-    try
-    {
-        // Dispose the channel to release HTTP/2 connections and sockets
-        GrpcChannel?.Dispose();
-    }
-    catch
-    {
-        // swallow dispose-time exceptions; nothing we can reasonably do here in console apps
-    }
-}
-public async ValueTask DisposeAsync()
-{
-    await DisconnectAsync();
-}
-
+        private bool Connected => !(Host is null) || !(ServerName is null);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MT4Account"/> class using credentials.
@@ -311,170 +121,43 @@ public async ValueTask DisposeAsync()
         /// <param name="password">The password for the user account.</param>
         /// <param name="grpcServer">The address of the gRPC server (optional).</param>
         /// <param name="id">An optional unique identifier for the account instance.</param>
-        
-       private readonly Microsoft.Extensions.Logging.ILogger<MT4Account>? _logger;
-
-public MT4Account(ulong user, string password, string? grpcServer = null, string? apiKey = null, Guid id = default,
-                  ILogger<MT4Account>? logger = null)
-{
-    User = user;
-    Password = password;
-    GrpcServer = grpcServer ?? "https://mt4.mrpc.pro:443";
-    ApiKey = apiKey ?? Environment.GetEnvironmentVariable("MRPC_API_KEY") ?? "TRIAL";
-
-#if NET8_0_OR_GREATER
-    // HTTP/2 keepalive to keep long streams healthy behind NAT/firewalls.
-    // SocketsHttpHandler is net-core only, so this path is compiled only for net8.0+.
-    var handler = new System.Net.Http.SocketsHttpHandler
-    {
-        KeepAlivePingDelay = TimeSpan.FromSeconds(30),
-        KeepAlivePingTimeout = TimeSpan.FromSeconds(10),
-        EnableMultipleHttp2Connections = true,
-        PooledConnectionIdleTimeout = TimeSpan.FromMinutes(2),
-    };
-    GrpcChannel = GrpcChannel.ForAddress(
-        GrpcServer,
-        new GrpcChannelOptions { HttpHandler = handler }
-    );
-#else
-    // netstandard2.1: no SocketsHttpHandler available; use the default handler (as the MT5 SDK does).
-    GrpcChannel = GrpcChannel.ForAddress(GrpcServer);
-#endif
-
-    ConnectionClient   = new Connection.ConnectionClient(GrpcChannel);
-    SubscriptionClient = new SubscriptionService.SubscriptionServiceClient(GrpcChannel);
-    AccountClient      = new AccountHelper.AccountHelperClient(GrpcChannel);
-    TradeClient        = new TradingHelper.TradingHelperClient(GrpcChannel);
-    MarketInfoClient   = new MarketInfo.MarketInfoClient(GrpcChannel);
-
-    Id = (id != default) ? id : GetId();
-    _logger = logger ?? NullLogger<MT4Account>.Instance;
-}
-
-public MT4Account(ulong user, string password, string? apiKey)
-    : this(user, password, null, apiKey, default, null)
-{
-}
-
-public MT4Account(ulong user, string password, string? grpcServer, Guid id, ILogger<MT4Account>? logger = null)
-    : this(user, password, grpcServer, null, id, logger)
-{
-}
-
-public async Task<Guid> GetIdAsync(CancellationToken cancellationToken = default)
-{
-    var request = new GetIdRequest
-    {
-        User = User.ToString(),
-        Password = Password
-    };
-    try
-    {
-        var reply = await ConnectionClient.GetIdAsync(request, GetHeaders(), null, cancellationToken);
-        if (reply.Error != null)
+        /// <param name="apiKey">An optional API key for authentication (defaults to TRIAL or MRPC_API_KEY env var).</param>
+        /// <param name="name">An optional terminal name or creator identifier, sent with every connect request.</param>
+        public MT4Account(ulong user, string password, string? grpcServer = null, Guid id = default, string? apiKey = null, string? name = null)
         {
-            throw new ApiExceptionMT4(reply.Error);
-        }
-        if (reply.Data?.Id != null && Guid.TryParse(reply.Data.Id, out var parsed))
-        {
-            Id = parsed;
-        }
-        else
-        {
-            Id = ComputeDeterministicTerminalId(User, Password);
-        }
-    }
-    catch (Exception)
-    {
-        Id = ComputeDeterministicTerminalId(User, Password);
-    }
-    if (Id == default)
-    {
-        Id = ComputeDeterministicTerminalId(User, Password);
-    }
-    return Id;
-}
+            Name = name;
+            User = user;
+            Password = password;
+            GrpcServer = grpcServer ?? "https://mt4.mrpc.pro:443";
+            GrpcChannel = GrpcChannel.ForAddress(GrpcServer);
 
-public Guid GetId()
-{
-    var request = new GetIdRequest
-    {
-        User = User.ToString(),
-        Password = Password
-    };
-    try
-    {
-        var reply = ConnectionClient.GetId(request, GetHeaders());
-        if (reply.Error != null)
-        {
-            throw new ApiExceptionMT4(reply.Error);
+            ConnectionClient = new Connection.ConnectionClient(GrpcChannel);
+            SubscriptionClient = new SubscriptionService.SubscriptionServiceClient(GrpcChannel);
+            AccountClient = new AccountHelper.AccountHelperClient(GrpcChannel);
+            TradeClient = new TradingHelper.TradingHelperClient(GrpcChannel);
+            MarketInfoClient = new MarketInfo.MarketInfoClient(GrpcChannel);
+
+            Id = id;
+            ApiKey = !string.IsNullOrWhiteSpace(apiKey) ? apiKey : (Environment.GetEnvironmentVariable("MRPC_API_KEY") ?? "TRIAL");
         }
-        if (reply.Data?.Id != null && Guid.TryParse(reply.Data.Id, out var parsed))
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MT4Account"/> class with API key.
+        /// </summary>
+        public MT4Account(ulong user, string password, string? grpcServer, string? apiKey)
+            : this(user, password, grpcServer, default, apiKey)
         {
-            Id = parsed;
         }
-        else
+
+        async Task Reconnect(DateTime? deadline, CancellationToken cancellationToken)
         {
-            Id = ComputeDeterministicTerminalId(User, Password);
+            if (ServerName == null)
+                await ConnectByHostPortAsync(Host, Port, BaseChartSymbol, true, ConnectTimeoutSeconds, deadline, cancellationToken);
+            else
+                await ConnectByServerNameAsync(ServerName, BaseChartSymbol, true, ConnectTimeoutSeconds, deadline, cancellationToken);
         }
-    }
-    catch (Exception)
-    {
-        Id = ComputeDeterministicTerminalId(User, Password);
-    }
-    if (Id == default)
-    {
-        Id = ComputeDeterministicTerminalId(User, Password);
-    }
-    return Id;
-}
-        
 
-      // Reconnect using the last-known mode/params, but serialize attempts
-private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
-{
-    await _reconnectGate.WaitAsync(ct).ConfigureAwait(false);
-    try
-    {
-        if (_lastConnectionMode == ConnectionMode.None)
-            throw new ConnectExceptionMT4("Cannot reconnect: no previous connection parameters are available.");
-
-        switch (_lastConnectionMode)
-        {
-            case ConnectionMode.ServerName:
-                if (string.IsNullOrWhiteSpace(ServerName))
-                    throw new ConnectExceptionMT4("Cannot reconnect via server name: ServerName is empty.");
-
-                await ConnectByServerNameAsync(
-                    serverName: ServerName!,
-                    baseChartSymbol: BaseChartSymbol ?? "EURUSD",
-                    waitForTerminalIsAlive: _lastWaitForTerminalIsAlive,
-                    timeoutSeconds: ConnectTimeoutSeconds > 0 ? ConnectTimeoutSeconds : 30,
-                    deadline: deadline,
-                    cancellationToken: ct
-                ).ConfigureAwait(false);
-                break;
-
-            case ConnectionMode.HostPort:
-                if (string.IsNullOrWhiteSpace(Host) || Port <= 0)
-                    throw new ConnectExceptionMT4("Cannot reconnect via host/port: Host or Port is invalid.");
-
-                await ConnectByHostPortAsync(
-                    host: Host!, port: Port,
-                    baseChartSymbol: BaseChartSymbol ?? "EURUSD",
-                    waitForTerminalIsAlive: _lastWaitForTerminalIsAlive,
-                    timeoutSeconds: ConnectTimeoutSeconds > 0 ? ConnectTimeoutSeconds : 30,
-                    deadline: deadline,
-                    cancellationToken: ct
-                ).ConfigureAwait(false);
-                break;
-        }
-    }
-    finally
-    {
-        _reconnectGate.Release();
-    }
-}
+        // Connect methods
 
         /// <summary>
         /// Connects to the MT4 terminal using credentials provided in the constructor.
@@ -484,87 +167,54 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         /// <param name="baseChartSymbol">The base chart symbol to use (e.g., "EURUSD").</param>
         /// <param name="waitForTerminalIsAlive">Whether to wait for terminal readiness before returning.</param>
         /// <param name="timeoutSeconds">How long to wait for terminal readiness before timing out.</param>
+        /// <param name="deadline">Optional gRPC deadline for the operation.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <param name="name">Optional terminal name or creator identifier. When given it replaces <see cref="Name"/> for this and later connects.</param>
         /// <returns>A task representing the asynchronous connection operation.</returns>
         /// <exception cref="ApiExceptionMT4">Thrown if the server returns an error response.</exception>
         /// <exception cref="Grpc.Core.RpcException">Thrown if the gRPC connection fails.</exception>
         public async Task ConnectByHostPortAsync(
-    string host,
-    int port = 443,
-    string baseChartSymbol = "EURUSD",
-    bool waitForTerminalIsAlive = true,
-    int timeoutSeconds = 30,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    if (string.IsNullOrWhiteSpace(host))
-        throw new ArgumentException("Host must be provided.", nameof(host));
-    if (port <= 0)
-        throw new ArgumentOutOfRangeException(nameof(port), "Port must be > 0.");
-    if (timeoutSeconds <= 0)
-        throw new ArgumentOutOfRangeException(nameof(timeoutSeconds), "timeoutSeconds must be > 0.");
-
-    var connectRequest = new ConnectRequest
-    {
-        User = User,
-        Password = Password,
-        Host = host,
-        Port = port,
-        TimeoutSeconds = (uint)timeoutSeconds
-    };
-
-    Metadata headers = GetHeaders();
-
-    RpcException? lastRpcEx = null;
-
-    for (int attempt = 0; attempt < DefaultMaxAttempts && !cancellationToken.IsCancellationRequested; attempt++)
-    {
-        var callDeadline = deadline ?? DateTime.UtcNow.AddSeconds(Math.Max(timeoutSeconds, 5) + 20);
-
-        try
+            string host,
+            int port = 443,
+            string baseChartSymbol = "EURUSD",
+            bool waitForTerminalIsAlive = true,
+            int timeoutSeconds = 30,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default,
+            string? name = null)
         {
-            _logger?.LogInformation(
-                "Connect attempt {Attempt}/{Max} to {Grpc} host={Host}:{Port} (deadline={Deadline:o})",
-                attempt + 1, DefaultMaxAttempts, GrpcServer, host, port, callDeadline);
+            if (!string.IsNullOrWhiteSpace(name)) Name = name;
 
-            var res = await ConnectionClient
-                .ConnectAsync(connectRequest, headers, callDeadline, cancellationToken)
-                .ConfigureAwait(false);
+            // NOTE: the MT4 ConnectRequest proto has no base_chart_symbol /
+            // wait_for_terminal_is_alive / terminal_readiness_waiting_timeout_seconds
+            // (those are MT5-only). Only the connection timeout maps to a real field.
+            var connectRequest = new ConnectRequest
+            {
+                User = User,
+                Password = Password,
+                Host = host,
+                Port = port,
+                TimeoutSeconds = (uint)timeoutSeconds
+            };
+            if (!string.IsNullOrWhiteSpace(Name)) connectRequest.Name = Name;
 
+            Metadata headers = new Metadata();
+            if (Id != default)
+            {
+                headers.Add("id", Id.ToString());
+            }
+            headers.Add("apikey", !string.IsNullOrWhiteSpace(ApiKey) ? ApiKey : "TRIAL");
+
+            var res = await ConnectionClient.ConnectAsync(connectRequest, headers, deadline, cancellationToken);
             if (res.Error != null)
                 throw new ApiExceptionMT4(res.Error);
-
             Host = host;
             Port = port;
             BaseChartSymbol = baseChartSymbol;
             ConnectTimeoutSeconds = timeoutSeconds;
             TerminalInstanceGuid = res.Data.TerminalInstanceGuid;
             Id = ParseGuidSafe(res.Data.TerminalInstanceGuid);
-
-            _lastConnectionMode = ConnectionMode.HostPort;
-            _lastWaitForTerminalIsAlive = waitForTerminalIsAlive;
-
-            _logger?.LogInformation("Connected. TerminalInstanceGuid={Id}", Id);
-            return;
         }
-        catch (RpcException ex) when (
-            ex.StatusCode == StatusCode.Unavailable ||
-            ex.StatusCode == StatusCode.DeadlineExceeded ||
-            ex.StatusCode == StatusCode.Internal)
-        {
-            lastRpcEx = ex;
-            _logger?.LogWarning("Connect transport error: {Status}. Retrying...", ex.StatusCode);
-            await Task.Delay(NextBackoff(attempt), cancellationToken).ConfigureAwait(false);
-        }
-    }
-
-    if (cancellationToken.IsCancellationRequested)
-        throw new OperationCanceledException("ConnectByHostPortAsync canceled by caller.", cancellationToken);
-
-    throw new TimeoutException(
-        $"ConnectByHostPortAsync retry limit exceeded ({DefaultMaxAttempts} attempts). " +
-        (lastRpcEx != null ? $"Last gRPC status={lastRpcEx.StatusCode}." : "No transport error captured."));
-}
-
 
         /// <summary>
         /// Synchronously connects to the MT4 terminal.
@@ -591,85 +241,54 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         /// <param name="baseChartSymbol">The base chart symbol to use (e.g., "EURUSD").</param>
         /// <param name="waitForTerminalIsAlive">Whether to wait for terminal readiness before returning.</param>
         /// <param name="timeoutSeconds">How long to wait for terminal readiness before timing out.</param>
+        /// <param name="deadline">Optional gRPC deadline for the operation.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <param name="name">Optional terminal name or creator identifier. When given it replaces <see cref="Name"/> for this and later connects.</param>
         /// <returns>A task representing the asynchronous connection operation.</returns>
         /// <exception cref="ApiExceptionMT4">Thrown if the server returns an error response.</exception>
         /// <exception cref="Grpc.Core.RpcException">Thrown if the gRPC connection fails.</exception>
-       public async Task ConnectByServerNameAsync(
-    string serverName,
-    string baseChartSymbol = "EURUSD",
-    bool waitForTerminalIsAlive = true,
-    int timeoutSeconds = 30,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    if (string.IsNullOrWhiteSpace(serverName))
-        throw new ArgumentException("Server name must be provided.", nameof(serverName));
-    if (timeoutSeconds <= 0)
-        throw new ArgumentOutOfRangeException(nameof(timeoutSeconds), "timeoutSeconds must be > 0.");
-
-    var connectRequest = new ConnectExRequest
-    {
-        User = User,
-        Password = Password,
-        MtClusterName = serverName,
-        TimeoutSeconds = (uint)timeoutSeconds,
-        // If supported by proto:
-        // WaitForTerminalIsAlive = waitForTerminalIsAlive
-    };
-
-    Metadata headers = GetHeaders();
-
-    RpcException? lastRpcEx = null;
-
-    for (int attempt = 0; attempt < DefaultMaxAttempts && !cancellationToken.IsCancellationRequested; attempt++)
-    {
-        var callDeadline = deadline ?? DateTime.UtcNow.AddSeconds(Math.Max(timeoutSeconds, 5) + 20);
-
-        try
+        public async Task ConnectByServerNameAsync(
+            string serverName,
+            string baseChartSymbol = "EURUSD",
+            bool waitForTerminalIsAlive = true,
+            int timeoutSeconds = 30,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default,
+            string? name = null)
         {
-            _logger?.LogInformation(
-                "ConnectEx attempt {Attempt}/{Max} to {Grpc} serverName={Server} (deadline={Deadline:o})",
-                attempt + 1, DefaultMaxAttempts, GrpcServer, serverName, callDeadline);
+            if (!string.IsNullOrWhiteSpace(name)) Name = name;
+            // MT4 ConnectExRequest has base_chart_symbol but no
+            // terminal_readiness_waiting_timeout_seconds — map the timeout to timeout_seconds.
+            var connectRequest = new ConnectExRequest
+            {
+                User = User,
+                Password = Password,
+                MtClusterName = serverName,
+                TimeoutSeconds = (uint)timeoutSeconds
+            };
+            if (!string.IsNullOrWhiteSpace(Name)) connectRequest.Name = Name;
 
-            var res = await ConnectionClient
-                .ConnectExAsync(connectRequest, headers, callDeadline, cancellationToken)
-                .ConfigureAwait(false);
+            Metadata headers = new Metadata();
+            if (!string.IsNullOrEmpty(TerminalInstanceGuid))
+            {
+                headers.Add("id", TerminalInstanceGuid);
+            }
+            else if (Id != default)
+            {
+                headers.Add("id", Id.ToString());
+            }
+            headers.Add("apikey", !string.IsNullOrWhiteSpace(ApiKey) ? ApiKey : "TRIAL");
+
+            var res = await ConnectionClient.ConnectExAsync(connectRequest, headers, deadline, cancellationToken);
 
             if (res.Error != null)
                 throw new ApiExceptionMT4(res.Error);
-
             ServerName = serverName;
             BaseChartSymbol = baseChartSymbol;
             ConnectTimeoutSeconds = timeoutSeconds;
             TerminalInstanceGuid = res.Data.TerminalInstanceGuid;
             Id = ParseGuidSafe(res.Data.TerminalInstanceGuid);
-
-            // Save mode & flag for future reconnects
-            _lastConnectionMode = ConnectionMode.ServerName;
-            _lastWaitForTerminalIsAlive = waitForTerminalIsAlive;
-
-            _logger?.LogInformation("Connected. TerminalInstanceGuid={Id}", Id);
-            return;
         }
-        catch (RpcException ex) when (
-            ex.StatusCode == StatusCode.Unavailable ||
-            ex.StatusCode == StatusCode.DeadlineExceeded ||
-            ex.StatusCode == StatusCode.Internal)
-        {
-            lastRpcEx = ex;
-            _logger?.LogWarning("ConnectEx transport error: {Status}. Retrying...", ex.StatusCode);
-            await Task.Delay(NextBackoff(attempt), cancellationToken).ConfigureAwait(false);
-        }
-    }
-
-    if (cancellationToken.IsCancellationRequested)
-        throw new OperationCanceledException("ConnectByServerNameAsync canceled by caller.", cancellationToken);
-
-    throw new TimeoutException(
-        $"ConnectByServerNameAsync retry limit exceeded ({DefaultMaxAttempts} attempts). " +
-        (lastRpcEx != null ? $"Last gRPC status={lastRpcEx.StatusCode}." : "No transport error captured."));
-}
-
 
         /// <summary>
         /// Synchronously connects to the MT4 terminal.
@@ -687,139 +306,62 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
             ConnectByServerNameAsync(serverName, baseChartSymbol, waitForTerminalIsAlive, timeoutSeconds).GetAwaiter().GetResult();
         }
 
+        //
+        // Account helper methods --------------------------------------------------------------------------------------------------------
+        //
 
-        // Unary invoker with reconnect + bounded retries + backoff
-private async Task<T> ExecuteWithReconnect<T>(
-    Func<Metadata, T> grpcCall,
-    Func<T, Mt4TermApi.Error?> errorSelector,
-    DateTime? deadline,
-    CancellationToken ct,
-    int maxAttempts = DefaultMaxAttempts)
-{
-    EnsureConnected(); // do not even try without a valid Id
-
-    RpcException? lastRpcEx = null;
-
-    for (int attempt = 0; attempt < maxAttempts && !ct.IsCancellationRequested; attempt++)
-    {
-        try
+        private Metadata GetHeaders()
         {
-            // 1) Do the call
-            var res = grpcCall(GetHeaders());
-
-            // 2) Inspect server-side error in reply envelope
-            var err = errorSelector(res);
-            if (err != null)
+            var headers = new Metadata();
+            if (!string.IsNullOrEmpty(TerminalInstanceGuid))
             {
-                if (IsReconnectableError(err))
+                headers.Add("id", TerminalInstanceGuid);
+            }
+            else if (Id != default)
+            {
+                headers.Add("id", Id.ToString());
+            }
+            headers.Add("apikey", !string.IsNullOrWhiteSpace(ApiKey) ? ApiKey : "TRIAL");
+            return headers;
+        }
+
+        private async Task<T> ExecuteWithReconnect<T>(
+            Func<Metadata, T> grpcCall,
+            Func<T, Mt4TermApi.Error?> errorSelector,
+            DateTime? deadline,
+            CancellationToken cancellationToken)
+        {
+            while (!cancellationToken.IsCancellationRequested)
+            {
+                var headers = GetHeaders();
+                T res;
+
+                try
                 {
-                    // Reconnect and retry with backoff
-                    await ReconnectAsync(deadline, ct).ConfigureAwait(false);
+                    res = grpcCall(headers);
+                }
+                catch (RpcException ex) when (ex.StatusCode == StatusCode.Unavailable)
+                {
+                    await Task.Delay(500, cancellationToken);
+                    continue; // In future, you might call Reconnect() here
+                }
 
-_logger?.LogWarning("Unary retry {Attempt}/{Max}. Status={Status}. Backoff={Backoff}ms",
-    attempt + 1,
-    maxAttempts,
-    lastRpcEx?.StatusCode.ToString() ?? "API_ERROR",
-    (int)NextBackoff(attempt).TotalMilliseconds);
+                var error = errorSelector(res);
 
-
-                    await Task.Delay(NextBackoff(attempt), ct).ConfigureAwait(false);
+                if (error?.ErrorCode == "TERMINAL_INSTANCE_NOT_FOUND")
+                {
+                    await Task.Delay(500, cancellationToken);
                     continue;
                 }
 
-                // Non-retryable API error: surface immediately
-                throw new ApiExceptionMT4(err);
+                if (error != null)
+                    throw new ApiExceptionMT4(error);
+
+                return res;
             }
 
-if (lastRpcEx != null)
-    _logger?.LogInformation("Unary succeeded after {Attempts} attempt(s).", attempt + 1);
-
-                    // Success
-                    return res;
+            throw new OperationCanceledException("Operation canceled by user.");
         }
-        catch (RpcException ex) when (
-            ex.StatusCode == StatusCode.Unavailable ||
-            ex.StatusCode == StatusCode.DeadlineExceeded ||
-            ex.StatusCode == StatusCode.Internal // often transient in gRPC transports
-        )
-        {
-            lastRpcEx = ex;
-
-            // Attempt to reconnect and retry with backoff
-            await ReconnectAsync(deadline, ct).ConfigureAwait(false);
-            await Task.Delay(NextBackoff(attempt), ct).ConfigureAwait(false);
-            continue;
-        }
-    }
-
-    // If we fell out of the loop: either canceled or ran out of attempts
-    if (ct.IsCancellationRequested)
-        throw new OperationCanceledException("Operation canceled by user.", ct);
-
-    throw new TimeoutException(
-        $"RPC retry limit exceeded (attempts={maxAttempts}). " +
-        (lastRpcEx != null ? $"Last gRPC status={lastRpcEx.StatusCode}." : "No transport error captured.")
-    );
-}
-
-// Async unary invoker with reconnect, bounded retries, and backoff
-private async Task<T> ExecuteWithReconnectAsync<T>(
-    Func<Metadata, Task<T>> grpcCall,
-    Func<T, Mt4TermApi.Error?> errorSelector,
-    DateTime? deadline,
-    CancellationToken ct,
-    int maxAttempts = DefaultMaxAttempts)
-{
-    EnsureConnected();
-
-    RpcException? lastRpcEx = null;
-
-    for (int attempt = 0; attempt < maxAttempts && !ct.IsCancellationRequested; attempt++)
-    {
-        try
-        {
-            // 1) Await the actual gRPC unary response
-            var res = await grpcCall(GetHeaders()).ConfigureAwait(false);
-
-            // 2) Check envelope error from server
-            var err = errorSelector(res);
-            if (err != null)
-            {
-                if (IsReconnectableError(err))
-                {
-                    await ReconnectAsync(deadline, ct).ConfigureAwait(false);
-                    await Task.Delay(NextBackoff(attempt), ct).ConfigureAwait(false);
-                    continue;
-                }
-
-                throw new ApiExceptionMT4(err);
-            }
-
-            if (attempt > 0)
-                _logger?.LogInformation("Unary succeeded after {Attempts} attempt(s).", attempt + 1);
-
-            return res; // success
-        }
-        catch (RpcException ex) when (
-            ex.StatusCode == StatusCode.Unavailable ||
-            ex.StatusCode == StatusCode.DeadlineExceeded ||
-            ex.StatusCode == StatusCode.Internal)
-        {
-            lastRpcEx = ex;
-            await ReconnectAsync(deadline, ct).ConfigureAwait(false);
-            await Task.Delay(NextBackoff(attempt), ct).ConfigureAwait(false);
-        }
-    }
-
-    if (ct.IsCancellationRequested)
-        throw new OperationCanceledException("Operation canceled by user.", ct);
-
-    throw new TimeoutException(
-        $"RPC retry limit exceeded (attempts={maxAttempts}). " +
-        (lastRpcEx != null ? $"Last gRPC status={lastRpcEx.StatusCode}." : "No transport error captured.")
-    );
-}
-
 
         /// <summary>
         /// Executes a gRPC server-streaming call with automatic reconnection logic on recoverable errors.
@@ -848,120 +390,197 @@ private async Task<T> ExecuteWithReconnectAsync<T>(
         /// <exception cref="ConnectExceptionMT4">Thrown if reconnection logic fails due to missing account context.</exception>
         /// <exception cref="ApiExceptionMT4">Thrown when the stream response contains a known API error.</exception>
         /// <exception cref="Grpc.Core.RpcException">Thrown if a non-recoverable gRPC error occurs.</exception>
-        // Streaming invoker with reconnect, bounded restarts, and backoff
-        // Treat some server "errors" as normal stream finalization
-
-private async IAsyncEnumerable<TData> ExecuteStreamWithReconnect<TRequest, TReply, TData>(
-    TRequest request,
-    Func<TRequest, Metadata, CancellationToken, AsyncServerStreamingCall<TReply>> streamInvoker,
-    Func<TReply, Mt4TermApi.Error?> getError,
-    Func<TReply, TData?> getData,  
-    [EnumeratorCancellation] CancellationToken ct = default,
-    int maxRestarts = DefaultMaxStreamRestarts)
-    where TData : class            
-{
-    EnsureConnected();
-
-    int restart = 0;
-
-    while (!ct.IsCancellationRequested)
-    {
-        bool needReconnect = false;
-        AsyncServerStreamingCall<TReply>? call = null;
-
-        try
+        private async IAsyncEnumerable<TData> ExecuteStreamWithReconnect<TRequest, TReply, TData>(
+        TRequest request,
+        Func<TRequest, Metadata, CancellationToken, AsyncServerStreamingCall<TReply>> streamInvoker,
+        Func<TReply, Mt4TermApi.Error?> getError,
+        Func<TReply, TData> getData,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            call = streamInvoker(request, GetHeaders(), ct);
-            var response = call.ResponseStream;
-
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
-                bool moved;
+                var reconnectRequired = false;
+
+                AsyncServerStreamingCall<TReply>? stream = null;
                 try
                 {
-                    moved = await response.MoveNext(ct).ConfigureAwait(false);
-                }
-                
-                catch (RpcException ex) when (ex.StatusCode == StatusCode.Cancelled && ct.IsCancellationRequested)
-                {
-                    _logger?.LogInformation("Stream completed. Reason=Cancelled(by token)");
-                    yield break;
-                }
-                // Temporary transport problems — let's try to reconnect
-                catch (RpcException ex) when (
-                    ex.StatusCode == StatusCode.Unavailable ||
-                    ex.StatusCode == StatusCode.DeadlineExceeded ||
-                    ex.StatusCode == StatusCode.Internal)
-                {
-                    needReconnect = true;
-                    break;
-                }
-                // The server sent Cancelled without our cancellation — we consider it a normal termination.
-                catch (RpcException ex) when (ex.StatusCode == StatusCode.Cancelled)
-                {
-                    _logger?.LogInformation("Stream cancelled (Status=Cancelled). Treating as completion.");
-                    yield break;
-                }
+                    stream = streamInvoker(request, GetHeaders(), cancellationToken);
+                    var responseStream = stream.ResponseStream;
 
-                if (!moved)
-                {
-                    _logger?.LogInformation("Stream completed. Reason=EOF");
-                    yield break;
-                }
-
-                var reply = response.Current;
-                var err = getError(reply);
-
-                if (err != null)
-                {
-                    if (IsReconnectableError(err))
+                    while (true)
                     {
-                        needReconnect = true;
-                        break;
-                    }
+                        TReply reply;
 
-                    if (IsStreamFinalizationError(err))
-                    {
-                        _logger?.LogInformation("Stream finalized by server: {Code}", err.ErrorCode);
-                        yield break;
-                    }
+                        try
+                        {
+                            if (!await responseStream.MoveNext(cancellationToken))
+                                break; // Stream ended naturally
 
-                    throw new ApiExceptionMT4(err);
+                            reply = responseStream.Current;
+                        }
+                        catch (RpcException ex) when (ex.StatusCode == StatusCode.Unavailable) // || ex.StatusCode == StatusCode.Internal
+                        {
+                            reconnectRequired = true;
+                            break; // Trigger reconnect
+                        }
+
+                        var error = getError(reply);
+                        if (error?.ErrorCode == "TERMINAL_INSTANCE_NOT_FOUND")
+                        {
+                            reconnectRequired = true;
+                            break; // Trigger reconnect
+                        }
+                        else if (error?.ErrorCode == "TERMINAL_REGISTRY_TERMINAL_NOT_FOUND")
+                        {
+                            reconnectRequired = true;
+                            break; // Trigger reconnect
+                        }
+
+                        if (error != null)
+                            throw new ApiExceptionMT4(error);
+
+                        var data = getData(reply);
+                        if (data != null)
+                            yield return data; // Real-time yield outside try-catch
+                    }
+                }
+                finally
+                {
+                    stream?.Dispose();
                 }
 
-                var data = getData(reply); 
-                if (data != null)          
-                    yield return data;
+                if (reconnectRequired)
+                {
+                    await Task.Delay(500, cancellationToken);
+                    await Reconnect(null, cancellationToken);
+                }
+                else
+                {
+                    break; // Exit loop normally
+                }
             }
         }
-        finally
+
+
+        /// <summary>
+        /// Subscribes to real-time tick data for specified symbols.
+        /// </summary>
+        /// <param name="symbols">The symbol names to subscribe to.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>Async stream of tick data responses.</returns>
+        /// <exception cref="ConnectExceptionMT4">Thrown if the account is not connected.</exception>
+        /// <exception cref="Grpc.Core.RpcException">If the stream fails.</exception>
+        /// <exception cref="ApiExceptionMT4">Thrown if an error is received from the stream.</exception>
+        public async IAsyncEnumerable<OnSymbolTickData> OnSymbolTickAsync(
+            IEnumerable<string> symbols,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            call?.Dispose();
+            if (Id == default)
+                throw new ConnectExceptionMT4("Please call Connect method firstly");
+
+            var request = new OnSymbolTickRequest();
+            request.SymbolNames.AddRange(symbols);
+
+            await foreach (var data in ExecuteStreamWithReconnect<OnSymbolTickRequest, OnSymbolTickReply, OnSymbolTickData>(
+                request,
+                (req, headers, ct) => SubscriptionClient.OnSymbolTick(req, headers, cancellationToken: ct),
+                reply => reply.ResponseCase == OnSymbolTickReply.ResponseOneofCase.Error ? reply.Error : null,
+                reply => reply.ResponseCase == OnSymbolTickReply.ResponseOneofCase.Data ? reply.Data : null,
+                cancellationToken))
+            {
+                yield return data;
+            }
         }
 
-        if (needReconnect)
+        /// <summary>
+        /// Subscribes to real-time updates for open trade operations (orders, positions, history).
+        /// </summary>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>Async stream of trade update data.</returns>
+        /// <exception cref="ConnectExceptionMT4">Thrown if the account is not connected.</exception>
+        /// <exception cref="Grpc.Core.RpcException">If the stream fails.</exception>
+        /// <exception cref="ApiExceptionMT4">Thrown if an error is received from the stream.</exception>
+        public async IAsyncEnumerable<OnTradeData> OnTradeAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
-            if (restart >= maxRestarts)
-                throw new TimeoutException($"Stream restart limit exceeded (restarts={maxRestarts}).");
+            if (Id == default)
+                throw new ConnectExceptionMT4("Please call Connect method firstly");
 
-            var backoff = NextBackoff(restart);
-            _logger?.LogWarning("Stream restart {Restart}/{Max}. Backoff={Backoff}ms",
-                restart + 1, maxRestarts, (int)backoff.TotalMilliseconds);
+            var request = new OnTradeRequest();
 
-            await ReconnectAsync(null, ct).ConfigureAwait(false);
-            await Task.Delay(backoff, ct).ConfigureAwait(false);
-            restart++;
-            continue;
+            await foreach (var data in ExecuteStreamWithReconnect<OnTradeRequest, OnTradeReply, OnTradeData>(
+                request,
+                (req, headers, ct) => SubscriptionClient.OnTrade(req, headers, cancellationToken: ct),
+                reply => reply.ResponseCase == OnTradeReply.ResponseOneofCase.Error ? reply.Error : null,
+                reply => reply.ResponseCase == OnTradeReply.ResponseOneofCase.Data ? reply.Data : null,
+                cancellationToken))
+            {
+                yield return data;
+            }
         }
 
-        break;
-    }
-}
+        /// <summary>
+        /// Subscribes to real-time profit updates for open orders.
+        /// </summary>
+        /// <param name="intervalMs">Polling interval in milliseconds.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>Async stream of profit update snapshots for open orders.</returns>
+        /// <exception cref="ConnectExceptionMT4">Thrown if the account is not connected.</exception>
+        /// <exception cref="Grpc.Core.RpcException">If the stream fails.</exception>
+        /// <exception cref="ApiExceptionMT4">Thrown if the stream returns a known API error.</exception>
+        public async IAsyncEnumerable<OnOpenedOrdersProfitData> OnOpenedOrdersProfitAsync(
+            int intervalMs = 1000,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            if (Id == default)
+                throw new ConnectExceptionMT4("Please call Connect method firstly");
 
+            var request = new OnOpenedOrdersProfitRequest
+            {
+                TimerPeriodMilliseconds = intervalMs
+            };
 
+            await foreach (var data in ExecuteStreamWithReconnect<OnOpenedOrdersProfitRequest, OnOpenedOrdersProfitReply, OnOpenedOrdersProfitData>(
+                request,
+                (req, headers, ct) => SubscriptionClient.OnOpenedOrdersProfit(req, headers, cancellationToken: ct),
+                reply => reply.ResponseCase == OnOpenedOrdersProfitReply.ResponseOneofCase.Error ? reply.Error : null,
+                reply => reply.ResponseCase == OnOpenedOrdersProfitReply.ResponseOneofCase.Data ? reply.Data : null,
+                cancellationToken))
+            {
+                yield return data;
+            }
+        }
 
+        /// <summary>
+        /// Subscribes to updates of position and pending order ticket IDs.
+        /// </summary>
+        /// <param name="intervalMs">Polling interval in milliseconds.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>Async stream of ticket ID snapshots.</returns>
+        /// <exception cref="ConnectExceptionMT4">Thrown if the account is not connected.</exception>
+        /// <exception cref="Grpc.Core.RpcException">Thrown if the stream fails.</exception>
+        /// <exception cref="ApiExceptionMT4">Thrown if the stream returns a known API error.</exception>
+        public async IAsyncEnumerable<OnOpenedOrdersTicketsData> OnOpenedOrdersTicketsAsync(
+            int intervalMs = 1000,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
+        {
+            if (Id == default)
+                throw new ConnectExceptionMT4("Please call Connect method firstly");
 
-        #region Account_Information
+            var request = new OnOpenedOrdersTicketsRequest
+            {
+                PullIntervalMilliseconds = intervalMs
+            };
+
+            await foreach (var data in ExecuteStreamWithReconnect<OnOpenedOrdersTicketsRequest, OnOpenedOrdersTicketsReply, OnOpenedOrdersTicketsData>(
+                request,
+                (req, headers, ct) => SubscriptionClient.OnOpenedOrdersTickets(req, headers, cancellationToken: ct),
+                reply => reply.ResponseCase == OnOpenedOrdersTicketsReply.ResponseOneofCase.Error ? reply.Error : null,
+                reply => reply.ResponseCase == OnOpenedOrdersTicketsReply.ResponseOneofCase.Data ? reply.Data : null,
+                cancellationToken))
+            {
+                yield return data;
+            }
+        }
 
         /// <summary>
         /// Asynchronously retrieves summary information about the currently connected MT4 trading account.
@@ -983,26 +602,23 @@ private async IAsyncEnumerable<TData> ExecuteStreamWithReconnect<TRequest, TRepl
         /// Thrown if the gRPC server returns an error response.
         /// </exception>
         public async Task<AccountSummaryData> AccountSummaryAsync(
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            if (!Connected)
+                throw new ConnectExceptionMT4("You must set ID to connect to MT4 Server.");
 
-    var request = new AccountSummaryRequest();
-    var effectiveDeadline = ResolveDeadline(deadline);
+            var request = new AccountSummaryRequest();
 
-    var res = await ExecuteWithReconnectAsync(
-        headers => AccountClient
-            .AccountSummaryAsync(request, headers, effectiveDeadline, cancellationToken)
-            .ResponseAsync, // <- await the actual reply
-        r => r.ResponseCase == AccountSummaryReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
+            var res = await ExecuteWithReconnect(
+                headers => AccountClient.AccountSummary(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == AccountSummaryReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
 
-    return res.Data;
-}
-
+            return res.Data;
+        }
 
         /// <summary>
         /// Synchronously retrieves summary information about the currently connected MT4 trading account.
@@ -1030,441 +646,6 @@ private async IAsyncEnumerable<TData> ExecuteStreamWithReconnect<TRequest, TRepl
             return AccountSummaryAsync(deadline, cancellationToken).GetAwaiter().GetResult();
         }
 
-        /// <summary>Trade statistics. Group: Account_Information. 'from' is an optional MT4/ISO date string.</summary>
-        public async Task<StatsData> TradeStatsAsync(
-            string? from = null, DateTime? deadline = null, CancellationToken cancellationToken = default)
-        {
-            EnsureConnected();
-            var request = new TradeStatsRequest();
-            if (!string.IsNullOrWhiteSpace(from)) request.From = from;
-            var effectiveDeadline = ResolveDeadline(deadline);
-            var res = await ExecuteWithReconnectAsync(
-                headers => TradeStatsClient.TradeStatsAsync(request, headers, effectiveDeadline, cancellationToken).ResponseAsync,
-                r => r.ResponseCase == TradeStatsReply.ResponseOneofCase.Error ? r.Error : null,
-                effectiveDeadline, cancellationToken).ConfigureAwait(false);
-            return res.Data;
-        }
-
-        /// <summary>Unrealized profit/loss of open trades. Group: Account_Information.</summary>
-        public async Task<TradeUnrealizedPLData> TradeUnrealizedPLAsync(
-            string? from = null, DateTime? deadline = null, CancellationToken cancellationToken = default)
-        {
-            EnsureConnected();
-            var request = new TradeUnrealizedPLRequest();
-            if (!string.IsNullOrWhiteSpace(from)) request.From = from;
-            var effectiveDeadline = ResolveDeadline(deadline);
-            var res = await ExecuteWithReconnectAsync(
-                headers => TradeStatsClient.TradeUnrealizedPLAsync(request, headers, effectiveDeadline, cancellationToken).ResponseAsync,
-                r => r.ResponseCase == TradeUnrealizedPLReply.ResponseOneofCase.Error ? r.Error : null,
-                effectiveDeadline, cancellationToken).ConfigureAwait(false);
-            return res.Data;
-        }
-
-        /// <summary>Equity history over time. Group: Account_Information.</summary>
-        public async Task<EquityHistoryData> EquityHistoryAsync(
-            string? from = null, bool excludeSameBars = false, DateTime? deadline = null, CancellationToken cancellationToken = default)
-        {
-            EnsureConnected();
-            var request = new EquityHistoryRequest { ExcludeSameBars = excludeSameBars };
-            if (!string.IsNullOrWhiteSpace(from)) request.From = from;
-            var effectiveDeadline = ResolveDeadline(deadline);
-            var res = await ExecuteWithReconnectAsync(
-                headers => TradeStatsClient.EquityHistoryAsync(request, headers, effectiveDeadline, cancellationToken).ResponseAsync,
-                r => r.ResponseCase == EquityHistoryReply.ResponseOneofCase.Error ? r.Error : null,
-                effectiveDeadline, cancellationToken).ConfigureAwait(false);
-            return res.Data;
-        }
-
-        /// <summary>Trade-stats equity history. Group: Account_Information.</summary>
-        public async Task<StatsWithChartsData> TradeStatsEquityHistoryAsync(
-            string? from = null, bool excludeSameBars = false, DateTime? deadline = null, CancellationToken cancellationToken = default)
-        {
-            EnsureConnected();
-            var request = new TradeStatsEquityHistoryRequest { ExcludeSameBars = excludeSameBars };
-            if (!string.IsNullOrWhiteSpace(from)) request.From = from;
-            var effectiveDeadline = ResolveDeadline(deadline);
-            var res = await ExecuteWithReconnectAsync(
-                headers => TradeStatsClient.TradeStatsEquityHistoryAsync(request, headers, effectiveDeadline, cancellationToken).ResponseAsync,
-                r => r.ResponseCase == TradeStatsEquityHistoryReply.ResponseOneofCase.Error ? r.Error : null,
-                effectiveDeadline, cancellationToken).ConfigureAwait(false);
-            return res.Data;
-        }
-
-        #endregion
-
-
-        #region Symbol_Information
-
-        /// <summary>
-        /// Asynchronously retrieves trading symbol parameters for all or a specific symbol.
-        /// </summary>
-        /// <param name="symbolName">Symbol name to filter by (optional).</param>
-        /// <param name="deadline">Optional gRPC deadline.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>Symbol parameter details.</returns>
-        public async Task<SymbolParamsManyData> SymbolParamsManyAsync(
-    string? symbolName = null,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
-
-    var request = new SymbolParamsManyRequest();
-    if (!string.IsNullOrWhiteSpace(symbolName))
-        request.SymbolName = symbolName;
-
-    var effectiveDeadline = ResolveDeadline(deadline);
-
-    var res = await ExecuteWithReconnectAsync(
-        headers => AccountClient
-            .SymbolParamsManyAsync(request, headers, effectiveDeadline, cancellationToken)
-            .ResponseAsync,
-        r => r.ResponseCase == SymbolParamsManyReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
-
-    return res.Data;
-}
-
-
-        /// <summary>
-        /// Synchronously retrieves trading symbol parameters.
-        /// </summary>
-        /// <param name="symbolName">Symbol name (optional).</param>
-        /// <param name="deadline">Deadline (optional).</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>Symbol parameter details.</returns>
-        public SymbolParamsManyData SymbolParamsMany(
-            string? symbolName = null,
-            DateTime? deadline = null,
-            CancellationToken cancellationToken = default)
-        {
-            return SymbolParamsManyAsync(symbolName, deadline, cancellationToken).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Asynchronously calculates tick value, size, and contract size for specified symbols.
-        /// </summary>
-        /// <param name="symbolNames">List of symbol names.</param>
-        /// <param name="deadline">Optional deadline.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>Tick value data for each symbol.</returns>
-        public async Task<TickValueWithSizeData> TickValueWithSizeAsync(
-    IEnumerable<string> symbolNames,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
-
-    if (symbolNames == null)
-        throw new ArgumentNullException(nameof(symbolNames), "Symbol list cannot be null.");
-    if (!symbolNames.Any())
-        throw new ArgumentException("Symbol list cannot be empty.", nameof(symbolNames));
-
-    var request = new TickValueWithSizeRequest();
-    request.SymbolNames.AddRange(symbolNames);
-
-    var effectiveDeadline = ResolveDeadline(deadline);
-
-    var res = await ExecuteWithReconnect(
-        headers => AccountClient.TickValueWithSize(request, headers, effectiveDeadline, cancellationToken),
-        r => r.ResponseCase == TickValueWithSizeReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
-
-    return res.Data;
-}
-
-
-        /// <summary>
-        /// Synchronously retrieves tick value and size details.
-        /// </summary>
-        /// <param name="symbolNames">Symbol names to request.</param>
-        /// <param name="deadline">Optional deadline.</param>
-        /// <param name="cancellationToken">Cancellation token.</param>
-        /// <returns>Tick value result set.</returns>
-        public TickValueWithSizeData TickValueWithSize(
-            IEnumerable<string> symbolNames,
-            DateTime? deadline = null,
-            CancellationToken cancellationToken = default)
-        {
-            return TickValueWithSizeAsync(symbolNames, deadline, cancellationToken).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Asynchronously retrieves the latest quote for a single symbol.
-        /// </summary>
-        /// <param name="symbol">The symbol name (e.g., "EURUSD").</param>
-        /// <param name="deadline">Optional deadline for the request.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>Latest <see cref="QuoteData"/> for the given symbol.</returns>
-        /// <exception cref="ApiExceptionMT4">If the gRPC response contains an error.</exception>
-        public async Task<QuoteData> QuoteAsync(
-    string symbol,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
-
-    if (string.IsNullOrWhiteSpace(symbol))
-        throw new ArgumentException("Symbol must be provided.", nameof(symbol));
-
-    var request = new QuoteRequest { Symbol = symbol };
-    var effectiveDeadline = ResolveDeadline(deadline);
-
-    var res = await ExecuteWithReconnectAsync(
-        headers => MarketInfoClient
-            .QuoteAsync(request, headers, effectiveDeadline, cancellationToken)
-            .ResponseAsync,
-        r => r.ResponseCase == QuoteReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
-
-    return res.Data;
-}
-
-
-
-        /// <summary>
-        /// Synchronously retrieves the latest quote for a single symbol.
-        /// </summary>
-        /// <param name="symbol">The symbol name (e.g., "EURUSD").</param>
-        /// <param name="deadline">Optional deadline for the request.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>Latest <see cref="QuoteData"/> for the given symbol.</returns>
-        public QuoteData Quote(
-            string symbol,
-            DateTime? deadline = null,
-            CancellationToken cancellationToken = default)
-        {
-            return QuoteAsync(symbol, deadline, cancellationToken).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Asynchronously retrieves quotes for multiple symbols.
-        /// </summary>
-        /// <param name="symbols">A list of symbol names.</param>
-        /// <param name="deadline">Optional deadline for the request.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>A list of <see cref="QuoteReply"/> containing data or errors for each symbol.</returns>
-        public async Task<QuoteManyData> QuoteManyAsync(
-    IEnumerable<string> symbols,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
-
-    if (symbols == null)
-        throw new ArgumentNullException(nameof(symbols), "Symbol list cannot be null.");
-    if (!symbols.Any())
-        throw new ArgumentException("Symbol list cannot be empty.", nameof(symbols));
-
-    var request = new QuoteManyRequest();
-    request.Symbols.AddRange(symbols);
-
-    var effectiveDeadline = ResolveDeadline(deadline);
-
-    var res = await ExecuteWithReconnectAsync(
-        headers => MarketInfoClient
-            .QuoteManyAsync(request, headers, effectiveDeadline, cancellationToken)
-            .ResponseAsync,
-        r => r.ResponseCase == QuoteManyReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
-
-    return res.Data;
-}
-
-
-
-        /// <summary>
-        /// Synchronously retrieves quotes for multiple symbols.
-        /// </summary>
-        /// <param name="symbols">A list of symbol names.</param>
-        /// <param name="deadline">Optional deadline for the request.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>A list of <see cref="QuoteReply"/> results.</returns>
-        public QuoteManyData QuoteMany(
-            IEnumerable<string> symbols,
-            DateTime? deadline = null,
-            CancellationToken cancellationToken = default)
-        {
-            return QuoteManyAsync(symbols, deadline, cancellationToken).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Asynchronously retrieves all available symbol names and their indices.
-        /// </summary>
-        /// <param name="deadline">Optional deadline for the request.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>A <see cref="SymbolsData"/> object containing all symbols.</returns>
-        public async Task<SymbolsData> SymbolsAsync(
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
-
-    var effectiveDeadline = ResolveDeadline(deadline);
-
-    var res = await ExecuteWithReconnectAsync(
-        headers => MarketInfoClient
-            .SymbolsAsync(new SymbolsRequest(), headers, effectiveDeadline, cancellationToken)
-            .ResponseAsync,
-        r => r.ResponseCase == SymbolsReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
-
-    return res.Data;
-}
-
-
-
-        /// <summary>
-        /// Synchronously retrieves all available symbol names and indices.
-        /// </summary>
-        /// <param name="deadline">Optional deadline for the request.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>A <see cref="SymbolsData"/> object.</returns>
-        public SymbolsData Symbols(
-            DateTime? deadline = null,
-            CancellationToken cancellationToken = default)
-        {
-            return SymbolsAsync(deadline, cancellationToken).GetAwaiter().GetResult();
-        }
-
-        /// <summary>
-        /// Asynchronously retrieves historical quote data for a symbol within a time range.
-        /// </summary>
-        /// <param name="symbol">Symbol to query (e.g., "EURUSD").</param>
-        /// <param name="timeframe">Desired timeframe (e.g., H1, D1).</param>
-        /// <param name="from">Start time (UTC).</param>
-        /// <param name="to">End time (UTC).</param>
-        /// <param name="deadline">Optional gRPC deadline.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns><see cref="QuoteHistoryData"/> including candlestick OHLC quotes.</returns>
-       public async Task<QuoteHistoryData> QuoteHistoryAsync(
-    string symbol,
-    ENUM_QUOTE_HISTORY_TIMEFRAME timeframe,
-    DateTime from,
-    DateTime to,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
-
-    if (string.IsNullOrWhiteSpace(symbol))
-        throw new ArgumentException("Symbol must be provided.", nameof(symbol));
-    if (from > to)
-        throw new ArgumentException("'from' date must be less than or equal to 'to' date.");
-
-    var request = new QuoteHistoryRequest
-    {
-        Symbol = symbol,
-        Timeframe = timeframe,
-        FromTime = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime(from.ToUniversalTime()),
-        ToTime   = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime(to.ToUniversalTime())
-    };
-
-    var effectiveDeadline = ResolveDeadline(deadline);
-
-    var res = await ExecuteWithReconnectAsync(
-        headers => MarketInfoClient
-            .QuoteHistoryAsync(request, headers, effectiveDeadline, cancellationToken)
-            .ResponseAsync,
-        r => r.ResponseCase == QuoteHistoryReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
-
-    return res.Data;
-}
-
-
-
-        /// <summary>
-        /// Synchronously retrieves historical quote data for a symbol within a time range.
-        /// </summary>
-        /// <param name="symbol">Symbol name.</param>
-        /// <param name="timeframe">Chart timeframe.</param>
-        /// <param name="from">Start time (UTC).</param>
-        /// <param name="to">End time (UTC).</param>
-        /// <param name="deadline">Optional gRPC deadline.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns><see cref="QuoteHistoryData"/> with OHLC and volume data.</returns>
-        public QuoteHistoryData QuoteHistory(
-            string symbol,
-            ENUM_QUOTE_HISTORY_TIMEFRAME timeframe,
-            DateTime from,
-            DateTime to,
-            DateTime? deadline = null,
-            CancellationToken cancellationToken = default)
-        {
-            return QuoteHistoryAsync(symbol, timeframe, from, to, deadline, cancellationToken).GetAwaiter().GetResult();
-        }
-
-        /// <summary>Adds a symbol to Market Watch (or removes it) and returns its current quote. Group: Symbol_Information.</summary>
-        public async Task<SymbolSelectData> SymbolSelectAsync(
-            string symbol, bool select = true, DateTime? deadline = null, CancellationToken cancellationToken = default)
-        {
-            EnsureConnected();
-            if (string.IsNullOrWhiteSpace(symbol))
-                throw new ArgumentException("Symbol must be provided.", nameof(symbol));
-            var request = new SymbolSelectRequest { Symbol = symbol, Select = select };
-            var effectiveDeadline = ResolveDeadline(deadline);
-            var res = await ExecuteWithReconnectAsync(
-                headers => MarketInfoClient.SymbolSelectAsync(request, headers, effectiveDeadline, cancellationToken).ResponseAsync,
-                r => r.ResponseCase == SymbolSelectReply.ResponseOneofCase.Error ? r.Error : null,
-                effectiveDeadline, cancellationToken).ConfigureAwait(false);
-            return res.Data;
-        }
-
-        /// <summary>Server timezone / time info. Group: Symbol_Information (infra).</summary>
-        public async Task<ServerTimezoneData> ServerTimezoneAsync(
-            DateTime? deadline = null, CancellationToken cancellationToken = default)
-        {
-            EnsureConnected();
-            var request = new ServerTimezoneRequest();
-            var effectiveDeadline = ResolveDeadline(deadline);
-            var res = await ExecuteWithReconnectAsync(
-                headers => ServerTimezoneClient.ServerTimezoneAsync(request, headers, effectiveDeadline, cancellationToken).ResponseAsync,
-                r => r.ResponseCase == ServerTimezoneReply.ResponseOneofCase.Error ? r.Error : null,
-                effectiveDeadline, cancellationToken).ConfigureAwait(false);
-            return res.Data;
-        }
-
-        /// <summary>OHLC bars for [symbol, timeframe] in [fromUtc..toUtc]. Group: Symbol_Information.</summary>
-        public async Task<QuoteHistoryBarsData> BarsAsync(
-            string symbol, QUOTE_HISTORY_TIMEFRAME timeframe, DateTime fromUtc, DateTime toUtc,
-            DateTime? deadline = null, CancellationToken cancellationToken = default)
-        {
-            EnsureConnected();
-            if (string.IsNullOrWhiteSpace(symbol))
-                throw new ArgumentException("Symbol must be provided.", nameof(symbol));
-            var request = new QuoteHistoryBarsRequest
-            {
-                Symbol = symbol,
-                Timeframe = timeframe,
-                FromTimeUtc = new DateTimeOffset(DateTime.SpecifyKind(fromUtc, DateTimeKind.Utc)).ToUnixTimeSeconds(),
-                ToTimeUtc = new DateTimeOffset(DateTime.SpecifyKind(toUtc, DateTimeKind.Utc)).ToUnixTimeSeconds(),
-            };
-            var effectiveDeadline = ResolveDeadline(deadline);
-            var res = await ExecuteWithReconnectAsync(
-                headers => QuoteHistoryClient.BarsAsync(request, headers, effectiveDeadline, cancellationToken).ResponseAsync,
-                r => r.ResponseCase == QuoteHistoryBarsReply.ResponseOneofCase.Error ? r.Error : null,
-                effectiveDeadline, cancellationToken).ConfigureAwait(false);
-            return res.Data;
-        }
-
-        #endregion
-
-
-        #region Positions_And_Orders
-
         /// <summary>
         /// Asynchronously retrieves a list of opened orders for the connected account.
         /// </summary>
@@ -1473,27 +654,21 @@ private async IAsyncEnumerable<TData> ExecuteStreamWithReconnect<TRequest, TRepl
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>A task returning opened orders data.</returns>
         public async Task<OpenedOrdersData> OpenedOrdersAsync(
-    EnumOpenedOrderSortType sortType = EnumOpenedOrderSortType.SortByOpenTimeAsc,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
+            EnumOpenedOrderSortType sortType = EnumOpenedOrderSortType.SortByOpenTimeAsc,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var request = new OpenedOrdersRequest { SortType = sortType };
 
-    var request = new OpenedOrdersRequest { SortType = sortType };
-    var effectiveDeadline = ResolveDeadline(deadline);
+            var res = await ExecuteWithReconnect(
+                headers => AccountClient.OpenedOrders(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == OpenedOrdersReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
 
-    var res = await ExecuteWithReconnectAsync(
-        headers => AccountClient
-            .OpenedOrdersAsync(request, headers, effectiveDeadline, cancellationToken)
-            .ResponseAsync,
-        r => r.ResponseCase == OpenedOrdersReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
-
-    return res.Data;
-}
-
+            return res.Data;
+        }
 
         /// <summary>
         /// Synchronously retrieves a list of opened orders.
@@ -1517,26 +692,20 @@ private async IAsyncEnumerable<TData> ExecuteStreamWithReconnect<TRequest, TRepl
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Ticket ID list for opened orders.</returns>
         public async Task<OpenedOrdersTicketsData> OpenedOrdersTicketsAsync(
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var request = new OpenedOrdersTicketsRequest();
 
-    var request = new OpenedOrdersTicketsRequest();
-    var effectiveDeadline = ResolveDeadline(deadline);
+            var res = await ExecuteWithReconnect(
+                headers => AccountClient.OpenedOrdersTickets(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == OpenedOrdersTicketsReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
 
-    var res = await ExecuteWithReconnectAsync(
-        headers => AccountClient
-            .OpenedOrdersTicketsAsync(request, headers, effectiveDeadline, cancellationToken)
-            .ResponseAsync,
-        r => r.ResponseCase == OpenedOrdersTicketsReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
-
-    return res.Data;
-}
-
+            return res.Data;
+        }
 
         /// <summary>
         /// Synchronously retrieves the ticket IDs of opened orders.
@@ -1562,57 +731,38 @@ private async IAsyncEnumerable<TData> ExecuteStreamWithReconnect<TRequest, TRepl
         /// <param name="deadline">Optional deadline.</param>
         /// <param name="cancellationToken">Cancellation token.</param>
         /// <returns>Historical order data.</returns>
-public async Task<OrdersHistoryData> OrdersHistoryAsync(
-    EnumOrderHistorySortType sortType = EnumOrderHistorySortType.HistorySortByCloseTimeDesc,
-    DateTime? from = null,
-    DateTime? to = null,
-    int? page = null,
-    int? itemsPerPage = null,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
+        public async Task<OrdersHistoryData> OrdersHistoryAsync(
+            EnumOrderHistorySortType sortType = EnumOrderHistorySortType.HistorySortByCloseTimeDesc,
+            DateTime? from = null,
+            DateTime? to = null,
+            int? page = null,
+            int? itemsPerPage = null,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var request = new OrdersHistoryRequest
+            {
+                InputSortMode = sortType
+            };
 
-    // Validate input ranges
-    if (page.HasValue && page.Value < 1)
-        throw new ArgumentOutOfRangeException(nameof(page), "Page must be >= 1.");
-    if (itemsPerPage.HasValue && itemsPerPage.Value < 1)
-        throw new ArgumentOutOfRangeException(nameof(itemsPerPage), "ItemsPerPage must be >= 1.");
-    if (from.HasValue && to.HasValue && from.Value > to.Value)
-        throw new ArgumentException("'from' must be <= 'to'.");
+            if (from.HasValue)
+                request.InputFrom = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime(from.Value.ToUniversalTime());
+            if (to.HasValue)
+                request.InputTo = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime(to.Value.ToUniversalTime());
+            if (page.HasValue)
+                request.PageNumber = page.Value;
+            if (itemsPerPage.HasValue)
+                request.ItemsPerPage = itemsPerPage.Value;
 
-    var request = new OrdersHistoryRequest
-    {
-        InputSortMode = sortType
-    };
+            var res = await ExecuteWithReconnect(
+                headers => AccountClient.OrdersHistory(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == OrdersHistoryReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
 
-    // Normalize to UTC if provided
-    if (from.HasValue)
-        request.InputFrom = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime(from.Value.ToUniversalTime());
-    if (to.HasValue)
-        request.InputTo = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime(to.Value.ToUniversalTime());
-
-    // Paging (only when provided)
-    if (page is >= 1)
-        request.PageNumber = page.Value;
-    if (itemsPerPage is >= 1)
-        request.ItemsPerPage = itemsPerPage.Value;
-
-    var effectiveDeadline = ResolveDeadline(deadline);
-
-    var res = await ExecuteWithReconnectAsync(
-        headers => AccountClient
-            .OrdersHistoryAsync(request, headers, effectiveDeadline, cancellationToken)
-            .ResponseAsync,
-        r => r.ResponseCase == OrdersHistoryReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
-
-    return res.Data;
-}
-
-
+            return res.Data;
+        }
 
         /// <summary>
         /// Synchronously retrieves paginated historical orders.
@@ -1637,10 +787,258 @@ public async Task<OrdersHistoryData> OrdersHistoryAsync(
             return OrdersHistoryAsync(sortType, from, to, page, itemsPerPage, deadline, cancellationToken).GetAwaiter().GetResult();
         }
 
-        #endregion
+        /// <summary>
+        /// Asynchronously retrieves trading symbol parameters for all or a specific symbol.
+        /// </summary>
+        /// <param name="symbolName">Symbol name to filter by (optional).</param>
+        /// <param name="deadline">Optional gRPC deadline.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Symbol parameter details.</returns>
+        public async Task<SymbolParamsManyData> SymbolParamsManyAsync(
+            string? symbolName = null,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var request = new SymbolParamsManyRequest();
 
+            if (!string.IsNullOrWhiteSpace(symbolName))
+                request.SymbolName = symbolName;
 
-        #region Trading
+            var res = await ExecuteWithReconnect(
+                headers => AccountClient.SymbolParamsMany(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == SymbolParamsManyReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
+
+            return res.Data;
+        }
+
+        /// <summary>
+        /// Synchronously retrieves trading symbol parameters.
+        /// </summary>
+        /// <param name="symbolName">Symbol name (optional).</param>
+        /// <param name="deadline">Deadline (optional).</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Symbol parameter details.</returns>
+        public SymbolParamsManyData SymbolParamsMany(
+            string? symbolName = null,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            return SymbolParamsManyAsync(symbolName, deadline, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Asynchronously calculates tick value, size, and contract size for specified symbols.
+        /// </summary>
+        /// <param name="symbolNames">List of symbol names.</param>
+        /// <param name="deadline">Optional deadline.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Tick value data for each symbol.</returns>
+        public async Task<TickValueWithSizeData> TickValueWithSizeAsync(
+            IEnumerable<string> symbolNames,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var request = new TickValueWithSizeRequest();
+            request.SymbolNames.AddRange(symbolNames);
+
+            var res = await ExecuteWithReconnect(
+                headers => AccountClient.TickValueWithSize(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == TickValueWithSizeReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
+
+            return res.Data;
+        }
+
+        /// <summary>
+        /// Synchronously retrieves tick value and size details.
+        /// </summary>
+        /// <param name="symbolNames">Symbol names to request.</param>
+        /// <param name="deadline">Optional deadline.</param>
+        /// <param name="cancellationToken">Cancellation token.</param>
+        /// <returns>Tick value result set.</returns>
+        public TickValueWithSizeData TickValueWithSize(
+            IEnumerable<string> symbolNames,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            return TickValueWithSizeAsync(symbolNames, deadline, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Asynchronously retrieves the latest quote for a single symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol name (e.g., "EURUSD").</param>
+        /// <param name="deadline">Optional deadline for the request.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>Latest <see cref="QuoteData"/> for the given symbol.</returns>
+        /// <exception cref="ApiExceptionMT4">If the gRPC response contains an error.</exception>
+        public async Task<QuoteData> QuoteAsync(
+            string symbol,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var request = new QuoteRequest { Symbol = symbol };
+
+            var res = await ExecuteWithReconnect(
+                headers => MarketInfoClient.Quote(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == QuoteReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
+
+            return res.Data;
+        }
+
+        /// <summary>
+        /// Synchronously retrieves the latest quote for a single symbol.
+        /// </summary>
+        /// <param name="symbol">The symbol name (e.g., "EURUSD").</param>
+        /// <param name="deadline">Optional deadline for the request.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>Latest <see cref="QuoteData"/> for the given symbol.</returns>
+        public QuoteData Quote(
+            string symbol,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            return QuoteAsync(symbol, deadline, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Asynchronously retrieves quotes for multiple symbols.
+        /// </summary>
+        /// <param name="symbols">A list of symbol names.</param>
+        /// <param name="deadline">Optional deadline for the request.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>A list of <see cref="QuoteReply"/> containing data or errors for each symbol.</returns>
+        public async Task<QuoteManyData> QuoteManyAsync(
+            IEnumerable<string> symbols,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var request = new QuoteManyRequest();
+            request.Symbols.AddRange(symbols);
+
+            var res = await ExecuteWithReconnect(
+                headers => MarketInfoClient.QuoteMany(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == QuoteManyReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
+
+            return res.Data;
+        }
+
+        /// <summary>
+        /// Synchronously retrieves quotes for multiple symbols.
+        /// </summary>
+        /// <param name="symbols">A list of symbol names.</param>
+        /// <param name="deadline">Optional deadline for the request.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>A list of <see cref="QuoteReply"/> results.</returns>
+        public QuoteManyData QuoteMany(
+            IEnumerable<string> symbols,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            return QuoteManyAsync(symbols, deadline, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Asynchronously retrieves all available symbol names and their indices.
+        /// </summary>
+        /// <param name="deadline">Optional deadline for the request.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>A <see cref="SymbolsData"/> object containing all symbols.</returns>
+        public async Task<SymbolsData> SymbolsAsync(
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var res = await ExecuteWithReconnect(
+                headers => MarketInfoClient.Symbols(new SymbolsRequest(), headers, deadline, cancellationToken),
+                r => r.ResponseCase == SymbolsReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
+
+            return res.Data;
+        }
+
+        /// <summary>
+        /// Synchronously retrieves all available symbol names and indices.
+        /// </summary>
+        /// <param name="deadline">Optional deadline for the request.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns>A <see cref="SymbolsData"/> object.</returns>
+        public SymbolsData Symbols(
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            return SymbolsAsync(deadline, cancellationToken).GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Asynchronously retrieves historical quote data for a symbol within a time range.
+        /// </summary>
+        /// <param name="symbol">Symbol to query (e.g., "EURUSD").</param>
+        /// <param name="timeframe">Desired timeframe (e.g., H1, D1).</param>
+        /// <param name="from">Start time (UTC).</param>
+        /// <param name="to">End time (UTC).</param>
+        /// <param name="deadline">Optional gRPC deadline.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns><see cref="QuoteHistoryData"/> including candlestick OHLC quotes.</returns>
+        public async Task<QuoteHistoryData> QuoteHistoryAsync(
+            string symbol,
+            ENUM_QUOTE_HISTORY_TIMEFRAME timeframe,
+            DateTime from,
+            DateTime to,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var request = new QuoteHistoryRequest
+            {
+                Symbol = symbol,
+                Timeframe = timeframe,
+                FromTime = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime(from.ToUniversalTime()),
+                ToTime = Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime(to.ToUniversalTime())
+            };
+
+            var res = await ExecuteWithReconnect(
+                headers => MarketInfoClient.QuoteHistory(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == QuoteHistoryReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
+
+            return res.Data;
+        }
+
+        /// <summary>
+        /// Synchronously retrieves historical quote data for a symbol within a time range.
+        /// </summary>
+        /// <param name="symbol">Symbol name.</param>
+        /// <param name="timeframe">Chart timeframe.</param>
+        /// <param name="from">Start time (UTC).</param>
+        /// <param name="to">End time (UTC).</param>
+        /// <param name="deadline">Optional gRPC deadline.</param>
+        /// <param name="cancellationToken">Optional cancellation token.</param>
+        /// <returns><see cref="QuoteHistoryData"/> with OHLC and volume data.</returns>
+        public QuoteHistoryData QuoteHistory(
+            string symbol,
+            ENUM_QUOTE_HISTORY_TIMEFRAME timeframe,
+            DateTime from,
+            DateTime to,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            return QuoteHistoryAsync(symbol, timeframe, from, to, deadline, cancellationToken).GetAwaiter().GetResult();
+        }
+
 
         /// <summary>
         /// Sends a new market or pending order.
@@ -1650,40 +1048,20 @@ public async Task<OrdersHistoryData> OrdersHistoryAsync(
         /// <param name="cancellationToken">Optional cancellation token.</param>
         /// <returns>Details of the opened order via <see cref="OrderSendData"/>.</returns>
         /// <exception cref="ApiExceptionMT4">Thrown if the response contains an error.</exception>
-       public async Task<OrderSendData> OrderSendAsync(
-    OrderSendRequest request,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
+        public async Task<OrderSendData> OrderSendAsync(
+            OrderSendRequest request,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var res = await ExecuteWithReconnect(
+                headers => TradeClient.OrderSend(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == OrderSendReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
 
-    // Basic input validation
-    if (request is null)
-        throw new ArgumentNullException(nameof(request), "OrderSendRequest cannot be null.");
-    if (string.IsNullOrWhiteSpace(request.Symbol))
-        throw new ArgumentException("Symbol must be provided.", nameof(request.Symbol));
-    if (request.Volume <= 0)
-        throw new ArgumentOutOfRangeException(nameof(request.Volume), "Volume must be > 0.");
-    if (request.Slippage < 0)
-        throw new ArgumentOutOfRangeException(nameof(request.Slippage), "Slippage must be >= 0.");
-    if (!Enum.IsDefined(typeof(OrderSendOperationType), request.OperationType))
-        throw new ArgumentOutOfRangeException(nameof(request.OperationType), "Invalid OperationType value.");
-
-    var effectiveDeadline = ResolveDeadline(deadline);
-
-    var res = await ExecuteWithReconnectAsync(
-        headers => TradeClient
-            .OrderSendAsync(request, headers, effectiveDeadline, cancellationToken)
-            .ResponseAsync,
-        r => r.ResponseCase == OrderSendReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
-
-    return res.Data;
-}
-
-
+            return res.Data;
+        }
 
         /// <summary>
         /// Synchronously sends a market or pending order.
@@ -1708,31 +1086,20 @@ public async Task<OrdersHistoryData> OrdersHistoryAsync(
         /// <param name="cancellationToken">Optional cancellation token.</param>
         /// <returns><see cref="OrderModifyData"/> indicating if modification was successful.</returns>
         /// <exception cref="ApiExceptionMT4">If the gRPC response contains an error.</exception>
-public async Task<OrderModifyData> OrderModifyAsync(
-    OrderModifyRequest request,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
+        public async Task<OrderModifyData> OrderModifyAsync(
+            OrderModifyRequest request,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var res = await ExecuteWithReconnect(
+                headers => TradeClient.OrderModify(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == OrderModifyReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
 
-    if (request is null)
-        throw new ArgumentNullException(nameof(request), "OrderModifyRequest cannot be null.");
-    // Optionally validate required fields here (Ticket/SL/TP/etc.)
-
-    var effectiveDeadline = ResolveDeadline(deadline);
-
-    var res = await ExecuteWithReconnectAsync(
-        headers => TradeClient
-            .OrderModifyAsync(request, headers, effectiveDeadline, cancellationToken)
-            .ResponseAsync,
-        r => r.ResponseCase == OrderModifyReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
-
-    return res.Data;
-}
-
+            return res.Data;
+        }
 
         /// <summary>
         /// Synchronously modifies an existing order.
@@ -1757,32 +1124,19 @@ public async Task<OrderModifyData> OrderModifyAsync(
         /// <param name="cancellationToken">Optional cancellation token.</param>
         /// <returns><see cref="OrderCloseDeleteData"/> with result mode and optional comment.</returns>
         public async Task<OrderCloseDeleteData> OrderCloseDeleteAsync(
-    OrderCloseDeleteRequest request,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
+            OrderCloseDeleteRequest request,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var res = await ExecuteWithReconnect(
+                headers => TradeClient.OrderCloseDelete(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == OrderCloseDeleteReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
 
-    if (request is null)
-        throw new ArgumentNullException(nameof(request), "OrderCloseDeleteRequest cannot be null.");
-    if (request.OrderTicket <= 0)
-        throw new ArgumentOutOfRangeException(nameof(request.OrderTicket), "OrderTicket must be > 0.");
-
-    var effectiveDeadline = ResolveDeadline(deadline);
-
-    var res = await ExecuteWithReconnectAsync(
-        headers => TradeClient
-            .OrderCloseDeleteAsync(request, headers, effectiveDeadline, cancellationToken)
-            .ResponseAsync,
-        r => r.ResponseCase == OrderCloseDeleteReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
-
-    return res.Data;
-}
-
-
+            return res.Data;
+        }
 
         /// <summary>
         /// Synchronously closes a market order or deletes a pending order.
@@ -1806,35 +1160,20 @@ public async Task<OrderModifyData> OrderModifyAsync(
         /// <param name="deadline">Optional request deadline.</param>
         /// <param name="cancellationToken">Optional cancellation token.</param>
         /// <returns>Close result including price, profit, and time.</returns>
-      public async Task<OrderCloseByData> OrderCloseByAsync(
-    OrderCloseByRequest request,
-    DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
-{
-    EnsureConnected();
+        public async Task<OrderCloseByData> OrderCloseByAsync(
+            OrderCloseByRequest request,
+            DateTime? deadline = null,
+            CancellationToken cancellationToken = default)
+        {
+            var res = await ExecuteWithReconnect(
+                headers => TradeClient.OrderCloseBy(request, headers, deadline, cancellationToken),
+                r => r.ResponseCase == OrderCloseByReply.ResponseOneofCase.Error ? r.Error : null,
+                deadline,
+                cancellationToken
+            );
 
-    if (request is null)
-        throw new ArgumentNullException(nameof(request), "OrderCloseByRequest cannot be null.");
-    if (request.TicketToClose <= 0)
-        throw new ArgumentOutOfRangeException(nameof(request.TicketToClose), "TicketToClose must be > 0.");
-    if (request.OppositeTicketClosingBy <= 0)
-        throw new ArgumentOutOfRangeException(nameof(request.OppositeTicketClosingBy), "OppositeTicketClosingBy must be > 0.");
-
-    var effectiveDeadline = ResolveDeadline(deadline);
-
-    var res = await ExecuteWithReconnectAsync(
-        headers => TradeClient
-            .OrderCloseByAsync(request, headers, effectiveDeadline, cancellationToken)
-            .ResponseAsync,
-        r => r.ResponseCase == OrderCloseByReply.ResponseOneofCase.Error ? r.Error : null,
-        effectiveDeadline,
-        cancellationToken
-    ).ConfigureAwait(false);
-
-    return res.Data;
-}
-
-
+            return res.Data;
+        }
 
         /// <summary>
         /// Synchronously closes a market order using an opposite market order.
@@ -1851,164 +1190,69 @@ public async Task<OrderModifyData> OrderModifyAsync(
             return OrderCloseByAsync(request, deadline, cancellationToken).GetAwaiter().GetResult();
         }
 
-        #endregion
-
-
-        // =====================================================================
-        // EXTENDED WRAPPERS - MT4 proto RPCs not covered by the base 18 (see 4.md).
-        // Lazy service clients so the constructor stays untouched.
-        // =====================================================================
-        private TradeStats.TradeStatsClient? _tradeStatsClient;
-        private TradeStats.TradeStatsClient TradeStatsClient =>
-            _tradeStatsClient ??= new TradeStats.TradeStatsClient(GrpcChannel);
-
-        private ServerTimezone.ServerTimezoneClient? _serverTimezoneClient;
-        private ServerTimezone.ServerTimezoneClient ServerTimezoneClient =>
-            _serverTimezoneClient ??= new ServerTimezone.ServerTimezoneClient(GrpcChannel);
-
-        private QuoteHistory.QuoteHistoryClient? _quoteHistoryClient;
-        private QuoteHistory.QuoteHistoryClient QuoteHistoryClient =>
-            _quoteHistoryClient ??= new QuoteHistory.QuoteHistoryClient(GrpcChannel);
-
-        #region Subscriptions
-
         /// <summary>
-        /// Subscribes to real-time tick data for specified symbols.
+        /// Gracefully disconnects from MT4 terminal and disposes underlying resources.
         /// </summary>
-        /// <param name="symbols">The symbol names to subscribe to.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>Async stream of tick data responses.</returns>
-        /// <exception cref="ConnectExceptionMT4">Thrown if the account is not connected.</exception>
-        /// <exception cref="Grpc.Core.RpcException">If the stream fails.</exception>
-        /// <exception cref="ApiExceptionMT4">Thrown if an error is received from the stream.</exception>
-       public async IAsyncEnumerable<OnSymbolTickData> OnSymbolTickAsync(
-    IEnumerable<string> symbols,
-    [EnumeratorCancellation] CancellationToken ct = default)
-{
-    EnsureConnected();
-
-    if (symbols is null) throw new ArgumentNullException(nameof(symbols));
-    var list = symbols as IList<string> ?? symbols.ToList();
-    if (list.Count == 0) throw new ArgumentException("At least one symbol must be provided.", nameof(symbols));
-
-    var req = new OnSymbolTickRequest();
-    req.SymbolNames.AddRange(list);
-
-    await foreach (var data in ExecuteStreamWithReconnect<OnSymbolTickRequest, OnSymbolTickReply, OnSymbolTickData>(
-        req,
-        (r, h, token) => SubscriptionClient.OnSymbolTick(r, h, cancellationToken: token),
-        reply => reply.ResponseCase == OnSymbolTickReply.ResponseOneofCase.Error ? reply.Error : null,
-        reply => reply.ResponseCase == OnSymbolTickReply.ResponseOneofCase.Data  ? reply.Data  : null,
-        ct))
-    {
-        yield return data;
-    }
-}
-
-
-        /// <summary>
-        /// Subscribes to real-time updates for open trade operations (orders, positions, history).
-        /// </summary>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>Async stream of trade update data.</returns>
-        /// <exception cref="ConnectExceptionMT4">Thrown if the account is not connected.</exception>
-        /// <exception cref="Grpc.Core.RpcException">If the stream fails.</exception>
-        /// <exception cref="ApiExceptionMT4">Thrown if an error is received from the stream.</exception>
-       public async IAsyncEnumerable<OnTradeData> OnTradeAsync(
-    [EnumeratorCancellation] CancellationToken ct = default)
-{
-    EnsureConnected();
-
-    var req = new OnTradeRequest();
-
-    await foreach (var data in ExecuteStreamWithReconnect<OnTradeRequest, OnTradeReply, OnTradeData>(
-        req,
-        (r, h, token) => SubscriptionClient.OnTrade(r, h, cancellationToken: token),
-        reply => reply.ResponseCase == OnTradeReply.ResponseOneofCase.Error ? reply.Error : null,
-        reply => reply.ResponseCase == OnTradeReply.ResponseOneofCase.Data  ? reply.Data  : null,
-        ct))
-    {
-        yield return data;
-    }
-}
-
-        /// <summary>
-        /// Subscribes to real-time profit updates for open orders.
-        /// </summary>
-        /// <param name="intervalMs">Polling interval in milliseconds.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>Async stream of profit update snapshots for open orders.</returns>
-        /// <exception cref="ConnectExceptionMT4">Thrown if the account is not connected.</exception>
-        /// <exception cref="Grpc.Core.RpcException">If the stream fails.</exception>
-        /// <exception cref="ApiExceptionMT4">Thrown if the stream returns a known API error.</exception>
-        public async IAsyncEnumerable<OnOpenedOrdersProfitData> OnOpenedOrdersProfitAsync(
-    int intervalMs = 1000,
-    [EnumeratorCancellation] CancellationToken ct = default)
-{
-    EnsureConnected();
-    if (intervalMs <= 0) throw new ArgumentOutOfRangeException(nameof(intervalMs), "intervalMs must be > 0.");
-
-    var req = new OnOpenedOrdersProfitRequest { TimerPeriodMilliseconds = intervalMs };
-
-    await foreach (var data in ExecuteStreamWithReconnect<OnOpenedOrdersProfitRequest, OnOpenedOrdersProfitReply, OnOpenedOrdersProfitData>(
-        req,
-        (r, h, token) => SubscriptionClient.OnOpenedOrdersProfit(r, h, cancellationToken: token),
-        reply => reply.ResponseCase == OnOpenedOrdersProfitReply.ResponseOneofCase.Error ? reply.Error : null,
-        reply => reply.ResponseCase == OnOpenedOrdersProfitReply.ResponseOneofCase.Data  ? reply.Data  : null,
-        ct))
-    {
-        yield return data;
-    }
-}
-
-
-        /// <summary>
-        /// Subscribes to updates of position and pending order ticket IDs.
-        /// </summary>
-        /// <param name="intervalMs">Polling interval in milliseconds.</param>
-        /// <param name="cancellationToken">Optional cancellation token.</param>
-        /// <returns>Async stream of ticket ID snapshots.</returns>
-        /// <exception cref="ConnectExceptionMT4">Thrown if the account is not connected.</exception>
-        /// <exception cref="Grpc.Core.RpcException">Thrown if the stream fails.</exception>
-        /// <exception cref="ApiExceptionMT4">Thrown if the stream returns a known API error.</exception>
-        public async IAsyncEnumerable<OnOpenedOrdersTicketsData> OnOpenedOrdersTicketsAsync(
-    int intervalMs = 1000,
-    [EnumeratorCancellation] CancellationToken ct = default)
-{
-    EnsureConnected();
-    if (intervalMs <= 0) throw new ArgumentOutOfRangeException(nameof(intervalMs), "intervalMs must be > 0.");
-
-    var req = new OnOpenedOrdersTicketsRequest { PullIntervalMilliseconds = intervalMs };
-
-    await foreach (var data in ExecuteStreamWithReconnect<OnOpenedOrdersTicketsRequest, OnOpenedOrdersTicketsReply, OnOpenedOrdersTicketsData>(
-        req,
-        (r, h, token) => SubscriptionClient.OnOpenedOrdersTickets(r, h, cancellationToken: token),
-        reply => reply.ResponseCase == OnOpenedOrdersTicketsReply.ResponseOneofCase.Error ? reply.Error : null,
-        reply => reply.ResponseCase == OnOpenedOrdersTicketsReply.ResponseOneofCase.Data  ? reply.Data  : null,
-        ct))
-    {
-        yield return data;
-    }
-}
-
-        /// <summary>Streams terminal connection-state events. Group: Subscriptions.</summary>
-        public async IAsyncEnumerable<ConnectStateData> OnConnectStateAsync(
-            [EnumeratorCancellation] CancellationToken ct = default)
+        public async Task DisconnectAsync()
         {
-            EnsureConnected();
-            var req = new OnConnectStateRequest();
-            await foreach (var data in ExecuteStreamWithReconnect<OnConnectStateRequest, OnConnectStateReply, ConnectStateData>(
-                req,
-                (r, h, token) => ConnectionClient.OnConnectState(r, h, cancellationToken: token),
-                reply => reply.ResponseCase == OnConnectStateReply.ResponseOneofCase.Error ? reply.Error : null,
-                reply => reply.ResponseCase == OnConnectStateReply.ResponseOneofCase.Data  ? reply.Data  : null,
-                ct))
+            try
             {
-                yield return data;
+                if (!string.IsNullOrEmpty(TerminalInstanceGuid) || Id != default)
+                {
+                    var headers = GetHeaders();
+                    await ConnectionClient.DisconnectAsync(new DisconnectRequest(), headers);
+                }
+            }
+            catch
+            {
+                // Disconnect failure is tolerated on cleanup
+            }
+            finally
+            {
+                Dispose();
             }
         }
 
-        #endregion
+        /// <summary>
+        /// Synchronously disconnects and disposes underlying resources.
+        /// </summary>
+        public void Disconnect()
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(TerminalInstanceGuid) || Id != default)
+                {
+                    var headers = GetHeaders();
+                    ConnectionClient.Disconnect(new DisconnectRequest(), headers);
+                }
+            }
+            catch
+            {
+                // Disconnect failure is tolerated on cleanup
+            }
+            finally
+            {
+                Dispose();
+            }
+        }
 
+        /// <summary>
+        /// Disposes underlying GrpcChannel.
+        /// </summary>
+        public void Dispose()
+        {
+            try
+            {
+                GrpcChannel?.Dispose();
+            }
+            catch
+            {
+            }
+        }
+
+        public async ValueTask DisposeAsync()
+        {
+            await DisconnectAsync();
+        }
     }
 }
