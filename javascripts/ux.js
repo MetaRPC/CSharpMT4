@@ -1,0 +1,691 @@
+// CSharpMT4 — Enhanced UX
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('CSharpMT4 Documentation loaded');
+
+  // Initialize Progress Tracker
+  initProgressTracker();
+
+  // Initialize Contact Panel
+  initContactPanel();
+});
+
+// ============================================================================
+// PROGRESS TRACKER - Track documentation reading progress
+// ============================================================================
+
+const PROGRESS_STORAGE_KEY = 'csharpmt4_docs_progress';
+
+// Documentation structure for CSharpMT4 - ALL pages tracked
+const DOC_STRUCTURE = {
+  'guides': {
+    name: 'Guides',
+    pages: [
+      'All_Guides/GETTING_STARTED',
+      'All_Guides/Your_First_Project',
+      'All_Guides/PROJECT_MAP',
+      'All_Guides/GLOSSARY',
+      'All_Guides/MT4_For_Beginners',
+      'All_Guides/SYNC_VS_ASYNC',
+      'All_Guides/GRPC_STREAM_MANAGEMENT',
+      'All_Guides/ENUMS_USAGE_REFERENCE',
+      'All_Guides/RETURN_CODES_REFERENCE',
+      'All_Guides/USERCODE_SANDBOX_GUIDE',
+      'All_Guides/PROTOBUF_INSPECTOR_GUIDE'
+    ]
+  },
+  'mt4account': {
+    name: 'MT4Account',
+    pages: [
+      'MT5Account/MT4Account.Master.Overview',
+      'MT5Account/Account/Account_Overview',
+      'MT5Account/Account/AccountSummary',
+      'MT5Account/Account/TradeStats',
+      'MT5Account/Account/TradeUnrealizedPL',
+      'MT5Account/Account/EquityHistory',
+      'MT5Account/Account/TradeStatsEquityHistory',
+      'MT5Account/Market Info/Market_Info_Overview',
+      'MT5Account/Market Info/AllSymbols',
+      'MT5Account/Market Info/Quote',
+      'MT5Account/Market Info/QuotesMany',
+      'MT5Account/Market Info/QuoteHistory',
+      'MT5Account/Market Info/Bars',
+      'MT5Account/Market Info/SymbolInfo',
+      'MT5Account/Market Info/SymbolParams',
+      'MT5Account/Market Info/SymbolSelect',
+      'MT5Account/Market Info/TickValues',
+      'MT5Account/Market Info/RealTimeQuotes',
+      'MT5Account/Market Info/ServerTimezone',
+      'MT5Account/Orders/Orders_Overview',
+      'MT5Account/Orders/OpenedOrders',
+      'MT5Account/Orders/OpenedOrderTickets',
+      'MT5Account/Orders/OrdersHistory',
+      'MT5Account/Orders/OrderSend',
+      'MT5Account/Orders/ModifyOrder',
+      'MT5Account/Orders/CloseOrder',
+      'MT5Account/Orders/CloseByOrder',
+      'MT5Account/Streaming/Streaming_Overview',
+      'MT5Account/Streaming/RealTimeQuotes',
+      'MT5Account/Streaming/StreamConnectState',
+      'MT5Account/Streaming/StreamOpenedOrderProfits',
+      'MT5Account/Streaming/StreamOpenedOrderTickets',
+      'MT5Account/Streaming/StreamTradeUpdates'
+    ]
+  },
+  'mt4service': {
+    name: 'MT4Service',
+    pages: [
+      'MT4Service/MT4Service.Overview',
+      'MT4Service/Account_Methods',
+      'MT4Service/Symbol_Methods',
+      'MT4Service/Orders_Methods',
+      'MT4Service/Trading_Methods',
+      'MT4Service/Streaming_Methods'
+    ]
+  },
+  'mt4sugar': {
+    name: 'MT4Sugar',
+    pages: [
+      'MT4Sugar/MT4Sugar.Overview',
+      'MT4Sugar/1. Snapshots/GetAccountSnapshot',
+      'MT4Sugar/1. Snapshots/GetSymbolSnapshot',
+      'MT4Sugar/2. Normalization_Utils/EnsureSelected',
+      'MT4Sugar/2. Normalization_Utils/NormalizePrice',
+      'MT4Sugar/2. Normalization_Utils/NormalizeVolume',
+      'MT4Sugar/2. Normalization_Utils/PointsToPips',
+      'MT4Sugar/2. Normalization_Utils/PriceFromOffsetPoints',
+      'MT4Sugar/3. Read_Helpers/GetLastClosedOrder',
+      'MT4Sugar/3. Read_Helpers/GetLosingOrders',
+      'MT4Sugar/3. Read_Helpers/GetOrderByTicket',
+      'MT4Sugar/3. Read_Helpers/GetOrderCount',
+      'MT4Sugar/3. Read_Helpers/GetOrdersBySymbol',
+      'MT4Sugar/3. Read_Helpers/GetProfitableOrders',
+      'MT4Sugar/3. Read_Helpers/GetTotalProfitLoss',
+      'MT4Sugar/3. Read_Helpers/OrdersHistoryLast',
+      'MT4Sugar/3. Read_Helpers/TotalLots',
+      'MT4Sugar/4. Trading_Market/BuyMarket',
+      'MT4Sugar/4. Trading_Market/BuyMarketPoints',
+      'MT4Sugar/4. Trading_Market/CloseByTicket',
+      'MT4Sugar/4. Trading_Market/ModifySlTp',
+      'MT4Sugar/4. Trading_Market/SellMarket',
+      'MT4Sugar/4. Trading_Market/SellMarketPoints',
+      'MT4Sugar/5. Bulk_Convenience/CancelAllPending',
+      'MT4Sugar/5. Bulk_Convenience/CloseAll',
+      'MT4Sugar/5. Bulk_Convenience/CloseAllMarket',
+      'MT4Sugar/6. Market_ByRisk/BuyMarketByRisk',
+      'MT4Sugar/6. Market_ByRisk/CalcVolumeForRisk',
+      'MT4Sugar/6. Market_ByRisk/SellMarketByRisk',
+      'MT4Sugar/7. Streams_Helpers/ReadTicks',
+      'MT4Sugar/7. Streams_Helpers/ReadTrades'
+    ]
+  },
+  'strategies': {
+    name: 'Strategies',
+    pages: [
+      'Strategies/Strategies.Master.Overview',
+      'Strategies/Orchestrators/Scalp',
+      'Strategies/Orchestrators/Trailing',
+      'Strategies/Orchestrators/Grid',
+      'Strategies/Orchestrators/Breakout',
+      'Strategies/Presets/AdaptiveMode'
+    ]
+  },
+  'api_reference': {
+    name: 'API Reference',
+    pages: [
+      'API_Reference/MT4Account',
+      'API_Reference/MT4Service',
+      'API_Reference/MT4Sugar'
+    ]
+  }
+};
+
+function initProgressTracker() {
+  // Track current page visit
+  trackPageVisit();
+
+  // Create and inject progress bar
+  createProgressBar();
+
+  // Update progress display
+  updateProgressDisplay();
+
+  // Track link clicks for navigation
+  trackLinkClicks();
+
+  // Track browser back/forward navigation
+  window.addEventListener('popstate', function() {
+    setTimeout(() => {
+      trackPageVisit();
+      updateProgressDisplay();
+    }, 100);
+  });
+
+  // Track dynamic content changes (for Material for MkDocs instant loading)
+  if (window.MutationObserver) {
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type === 'childList' && mutation.target.classList.contains('md-content')) {
+          setTimeout(() => {
+            trackPageVisit();
+            updateProgressDisplay();
+          }, 100);
+        }
+      });
+    });
+
+    const contentElement = document.querySelector('.md-content');
+    if (contentElement) {
+      observer.observe(contentElement, { childList: true, subtree: true });
+    }
+  }
+}
+
+function trackLinkClicks() {
+  // Track all internal documentation links
+  document.addEventListener('click', function(e) {
+    const link = e.target.closest('a[href]');
+    if (!link) return;
+
+    const href = link.getAttribute('href');
+
+    // Skip external links, anchors, and non-doc links
+    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto:')) {
+      return;
+    }
+
+    // Wait a bit for navigation to complete, then track
+    setTimeout(() => {
+      const oldProgress = getProgress();
+      const oldCount = oldProgress.visitedPages.length;
+
+      trackPageVisit();
+
+      const newProgress = getProgress();
+      const newCount = newProgress.visitedPages.length;
+
+      // Only update display if progress actually changed
+      if (newCount > oldCount) {
+        updateProgressDisplay();
+      }
+    }, 200);
+  }, true);
+}
+
+function trackPageVisit() {
+  const currentPath = getCurrentPagePath();
+  if (!currentPath) return;
+
+  const progress = getProgress();
+  if (!progress.visitedPages.includes(currentPath)) {
+    progress.visitedPages.push(currentPath);
+    progress.lastVisit = new Date().toISOString();
+    saveProgress(progress);
+  }
+}
+
+function getCurrentPagePath() {
+  // Get current page path from URL
+  let path = window.location.pathname;
+
+  // Remove .html extension if present
+  path = path.replace(/\.html$/, '');
+
+  // Try multiple patterns to extract the page path
+  // Pattern 1: GitHub Pages - /CSharpMT4/path/to/page/
+  let match = path.match(/\/CSharpMT4\/(.+?)(?:\/)?$/);
+  if (match && match[1] !== '') {
+    // Decode URL encoding (e.g., %20 -> space)
+    return decodeURIComponent(match[1].replace(/\/$/, ''));
+  }
+
+  // Pattern 2: Local server - /path/to/page/
+  match = path.match(/^\/(.+?)(?:\/)?$/);
+  if (match && match[1] !== '' && match[1] !== 'index') {
+    // Decode URL encoding (e.g., %20 -> space)
+    return decodeURIComponent(match[1].replace(/\/$/, ''));
+  }
+
+  // Pattern 3: Index page
+  if (path === '/' || path === '/CSharpMT4/' || path === '/index' || path === '/CSharpMT4/index') {
+    return 'index';
+  }
+
+  console.log('Could not extract page path from:', path);
+  return null;
+}
+
+function getProgress() {
+  const stored = localStorage.getItem(PROGRESS_STORAGE_KEY);
+  if (stored) {
+    try {
+      return JSON.parse(stored);
+    } catch (e) {
+      console.error('Failed to parse progress data:', e);
+    }
+  }
+
+  // Default progress structure
+  return {
+    visitedPages: [],
+    lastVisit: new Date().toISOString()
+  };
+}
+
+function saveProgress(progress) {
+  localStorage.setItem(PROGRESS_STORAGE_KEY, JSON.stringify(progress));
+}
+
+function createProgressBar() {
+  // Check if progress bar already exists
+  if (document.getElementById('progress-float-btn')) return;
+
+  const progressHTML = `
+    <!-- Mini Header Progress Bar -->
+    <div class="header-progress-bar">
+      <div class="header-progress-fill" id="header-progress-fill" style="width: 0%"></div>
+    </div>
+
+    <!-- Floating Button with Circular Progress -->
+    <button id="progress-float-btn" class="progress-float-btn" title="Learning Progress">
+      <!-- Circular Progress SVG -->
+      <svg class="progress-ring" width="66" height="66">
+        <defs>
+          <linearGradient id="progress-gradient-light" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#0078D4"/>
+            <stop offset="100%" stop-color="#00D9C0"/>
+          </linearGradient>
+          <linearGradient id="progress-gradient-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#00D9C0"/>
+            <stop offset="100%" stop-color="#0078D4"/>
+          </linearGradient>
+        </defs>
+        <!-- Background circle -->
+        <circle class="progress-ring-circle progress-ring-bg" cx="33" cy="33" r="30"></circle>
+        <!-- Progress circle -->
+        <circle id="progress-ring-fill" class="progress-ring-circle progress-ring-fill"
+                cx="33" cy="33" r="30"
+                stroke-dasharray="188.5"
+                stroke-dashoffset="188.5"></circle>
+      </svg>
+      <span class="progress-badge" id="progress-badge">0%</span>
+    </button>
+
+    <!-- Milestone Celebration Modal -->
+    <div id="milestone-modal" class="milestone-modal">
+      <div class="milestone-icon" id="milestone-icon">🎉</div>
+      <h2 class="milestone-title" id="milestone-title">Milestone Reached!</h2>
+      <p class="milestone-message" id="milestone-message">Great progress!</p>
+      <button class="milestone-close" id="milestone-close">Continue Learning</button>
+    </div>
+
+    <!-- Confetti Container -->
+    <div id="confetti-container" class="confetti-container"></div>
+
+    <!-- Side Panel -->
+    <div id="progress-panel" class="progress-panel">
+      <div class="progress-panel-header">
+        <h3>📊 Learning Progress</h3>
+        <button id="progress-panel-close" class="progress-panel-close" title="Close">&times;</button>
+      </div>
+
+      <div class="progress-panel-content">
+        <div class="progress-overall-section">
+          <div class="progress-stats">
+            <span class="progress-count" id="overall-progress-text">0 / 0</span>
+            <span class="progress-percentage" id="overall-progress-pct">0%</span>
+          </div>
+          <div class="progress-bar-wrapper">
+            <div class="progress-bar-fill" id="overall-progress-fill"></div>
+          </div>
+          <p class="progress-subtitle">Total Documentation Pages</p>
+        </div>
+
+        <div class="progress-categories-section">
+          <h4>By Category</h4>
+          <div id="progress-categories"></div>
+        </div>
+
+        <button id="progress-reset-btn" class="progress-reset-btn-panel">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+            <path d="M21 3v5h-5"></path>
+            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+            <path d="M3 21v-5h5"></path>
+          </svg>
+          Reset Progress
+        </button>
+      </div>
+    </div>
+
+    <!-- Overlay -->
+    <div id="progress-overlay" class="progress-overlay"></div>
+  `;
+
+  // Insert at end of body
+  document.body.insertAdjacentHTML('beforeend', progressHTML);
+
+  // Add event listeners
+  document.getElementById('progress-float-btn').addEventListener('click', openProgressPanel);
+  document.getElementById('progress-panel-close').addEventListener('click', closeProgressPanel);
+  document.getElementById('progress-overlay').addEventListener('click', closeProgressPanel);
+  document.getElementById('progress-reset-btn').addEventListener('click', resetProgress);
+  document.getElementById('milestone-close').addEventListener('click', closeMilestoneModal);
+}
+
+function openProgressPanel() {
+  document.getElementById('progress-panel').classList.add('open');
+  document.getElementById('progress-overlay').classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProgressPanel() {
+  document.getElementById('progress-panel').classList.remove('open');
+  document.getElementById('progress-overlay').classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+function updateProgressDisplay() {
+  const progress = getProgress();
+  const stats = calculateProgress(progress);
+
+  const percentage = Math.round(stats.overall.percentage);
+
+  // Get old percentage for milestone checking
+  const oldPercentage = parseFloat(localStorage.getItem('last_percentage') || '0');
+  localStorage.setItem('last_percentage', percentage.toString());
+
+  // Update floating button badge with pulse
+  const badge = document.getElementById('progress-badge');
+  if (badge) {
+    badge.textContent = percentage + '%';
+    // Trigger pulse animation
+    badge.classList.remove('pulse');
+    void badge.offsetWidth; // Force reflow
+    badge.classList.add('pulse');
+  }
+
+  // Update circular progress ring
+  const progressRing = document.getElementById('progress-ring-fill');
+  if (progressRing) {
+    const circumference = 2 * Math.PI * 30; // radius = 30
+    const offset = circumference - (percentage / 100) * circumference;
+    progressRing.style.strokeDashoffset = offset;
+  }
+
+  // Update header progress bar
+  const headerFill = document.getElementById('header-progress-fill');
+  if (headerFill) {
+    headerFill.style.width = percentage + '%';
+  }
+
+  // Update overall progress in panel
+  const overallFill = document.getElementById('overall-progress-fill');
+  const overallText = document.getElementById('overall-progress-text');
+  const overallPct = document.getElementById('overall-progress-pct');
+
+  if (overallFill) {
+    overallFill.style.width = percentage + '%';
+  }
+
+  if (overallText) {
+    overallText.textContent = `${stats.overall.completed} / ${stats.overall.total}`;
+  }
+
+  if (overallPct) {
+    overallPct.textContent = percentage + '%';
+  }
+
+  // Update category progress
+  const categoriesContainer = document.getElementById('progress-categories');
+  if (categoriesContainer) {
+    categoriesContainer.innerHTML = '';
+
+    Object.entries(stats.categories).forEach(([key, cat]) => {
+      const catPercentage = Math.round(cat.percentage);
+      const categoryHTML = `
+        <div class="progress-category">
+          <div class="progress-category-header">
+            <span class="progress-category-name">${cat.name}</span>
+            <span class="progress-category-count">${cat.completed}/${cat.total}</span>
+          </div>
+          <div class="progress-bar-wrapper small">
+            <div class="progress-bar-fill" style="width: ${catPercentage}%"></div>
+          </div>
+        </div>
+      `;
+      categoriesContainer.insertAdjacentHTML('beforeend', categoryHTML);
+    });
+  }
+
+  // Check for milestones
+  checkMilestones(oldPercentage, percentage);
+}
+
+function calculateProgress(progress) {
+  const stats = {
+    overall: { completed: 0, total: 0, percentage: 0 },
+    categories: {}
+  };
+
+  Object.entries(DOC_STRUCTURE).forEach(([key, category]) => {
+    const total = category.pages.length;
+    const completed = category.pages.filter(page =>
+      progress.visitedPages.includes(page)
+    ).length;
+
+    stats.categories[key] = {
+      name: category.name,
+      completed: completed,
+      total: total,
+      percentage: total > 0 ? (completed / total) * 100 : 0
+    };
+
+    stats.overall.completed += completed;
+    stats.overall.total += total;
+  });
+
+  stats.overall.percentage = stats.overall.total > 0
+    ? (stats.overall.completed / stats.overall.total) * 100
+    : 0;
+
+  return stats;
+}
+
+function checkMilestones(oldPercentage, newPercentage) {
+  const milestones = [25, 50, 75, 100];
+  const shownMilestones = JSON.parse(localStorage.getItem('shown_milestones') || '[]');
+
+  for (const milestone of milestones) {
+    // Check if we just reached this milestone and haven't shown it yet
+    if (oldPercentage < milestone && newPercentage >= milestone && !shownMilestones.includes(milestone)) {
+      showMilestoneModal(milestone);
+      shownMilestones.push(milestone);
+      localStorage.setItem('shown_milestones', JSON.stringify(shownMilestones));
+      break; // Show only one milestone at a time
+    }
+  }
+}
+
+function showMilestoneModal(percentage) {
+  const milestones = {
+    25: { icon: '🌟', title: 'Quarter Way There!', message: '25% complete!' },
+    50: { icon: '🎯', title: 'Halfway Champion!', message: '50% complete!' },
+    75: { icon: '🚀', title: 'Almost There!', message: '75% complete!' },
+    100: { icon: '🏆', title: 'Documentation Master!', message: '100% complete!' }
+  };
+
+  const milestone = milestones[percentage];
+  if (!milestone) return;
+
+  const modal = document.getElementById('milestone-modal');
+  const icon = document.getElementById('milestone-icon');
+  const title = document.getElementById('milestone-title');
+  const message = document.getElementById('milestone-message');
+
+  if (modal && icon && title && message) {
+    icon.textContent = milestone.icon;
+    title.textContent = milestone.title;
+    message.textContent = milestone.message;
+
+    modal.classList.add('show');
+
+    // Launch confetti for 100%
+    if (percentage === 100) {
+      launchConfetti();
+    }
+
+    // Auto-close after 5 seconds
+    setTimeout(() => {
+      closeMilestoneModal();
+    }, 5000);
+  }
+}
+
+function closeMilestoneModal() {
+  const modal = document.getElementById('milestone-modal');
+  if (modal) {
+    modal.classList.remove('show');
+  }
+}
+
+function launchConfetti() {
+  const container = document.getElementById('confetti-container');
+  if (!container) return;
+
+  const colors = ['#0078D4', '#00D9C0', '#FFD700', '#FF6B9D', '#C471ED', '#12D8FA'];
+  const confettiCount = 150;
+
+  for (let i = 0; i < confettiCount; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + '%';
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+    confetti.style.animationDuration = (Math.random() * 1 + 2) + 's';
+
+    container.appendChild(confetti);
+
+    // Trigger animation
+    setTimeout(() => {
+      confetti.classList.add('active');
+    }, 10);
+
+    // Remove after animation
+    setTimeout(() => {
+      confetti.remove();
+    }, 3500);
+  }
+}
+
+function resetProgress() {
+  if (confirm('Are you sure you want to reset all progress?')) {
+    localStorage.removeItem(PROGRESS_STORAGE_KEY);
+    localStorage.removeItem('last_percentage');
+    localStorage.removeItem('shown_milestones');
+    updateProgressDisplay();
+    console.log('Progress reset');
+  }
+}
+
+// ============================================================================
+// CONTACT PANEL - Quick access to support channels
+// ============================================================================
+
+function initContactPanel() {
+  // Create and inject contact button and panel
+  createContactPanel();
+}
+
+function createContactPanel() {
+  // Check if contact panel already exists
+  if (document.getElementById('contact-float-btn')) return;
+
+  const contactHTML = `
+    <!-- Floating Contact Button -->
+    <button id="contact-float-btn" class="contact-float-btn" title="Contact & Support">
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+    </button>
+
+    <!-- Contact Side Panel -->
+    <div id="contact-panel" class="contact-panel">
+      <div class="contact-panel-header">
+        <h3>💬 Contact & Support</h3>
+        <button id="contact-panel-close" class="contact-panel-close" title="Close">&times;</button>
+      </div>
+
+      <div class="contact-panel-content">
+        <div class="contact-intro">
+          <h4>Need Help?</h4>
+          <p>Have questions about CSharpMT4 SDK? Reach out to us through your preferred messenger!</p>
+        </div>
+
+        <div class="contact-buttons">
+          <!-- Telegram Button -->
+          <a href="https://t.me/MetaRPC_Support" target="_blank" class="contact-btn contact-btn-telegram">
+            <div class="contact-btn-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161l-1.84 8.673c-.139.622-.502.775-.998.483l-2.764-2.037-1.332 1.282c-.147.147-.271.271-.556.271l.199-2.815 5.139-4.643c.224-.199-.048-.31-.347-.111l-6.355 4.003-2.737-.856c-.595-.187-.607-.595.125-.881l10.703-4.124c.496-.182.93.114.762.877z"/>
+              </svg>
+            </div>
+            <div class="contact-btn-content">
+              <div class="contact-btn-title">Telegram</div>
+              <div class="contact-btn-desc">Quick responses & community chat</div>
+            </div>
+          </a>
+
+          <!-- WhatsApp Button -->
+          <a href="https://wa.me/79956432506" target="_blank" class="contact-btn contact-btn-whatsapp">
+            <div class="contact-btn-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </div>
+            <div class="contact-btn-content">
+              <div class="contact-btn-title">WhatsApp</div>
+              <div class="contact-btn-desc">Direct messaging & voice calls</div>
+            </div>
+          </a>
+
+          <!-- Email Button -->
+          <a href="mailto:metarpc.helpers@gmail.com" class="contact-btn contact-btn-email">
+            <div class="contact-btn-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+            </div>
+            <div class="contact-btn-content">
+              <div class="contact-btn-title">Email</div>
+              <div class="contact-btn-desc">Business inquiries & partnerships</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Overlay -->
+    <div id="contact-overlay" class="progress-overlay"></div>
+  `;
+
+  // Insert at end of body
+  document.body.insertAdjacentHTML('beforeend', contactHTML);
+
+  // Add event listeners
+  document.getElementById('contact-float-btn').addEventListener('click', openContactPanel);
+  document.getElementById('contact-panel-close').addEventListener('click', closeContactPanel);
+  document.getElementById('contact-overlay').addEventListener('click', closeContactPanel);
+}
+
+function openContactPanel() {
+  document.getElementById('contact-panel').classList.add('open');
+  document.getElementById('contact-overlay').classList.add('visible');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeContactPanel() {
+  document.getElementById('contact-panel').classList.remove('open');
+  document.getElementById('contact-overlay').classList.remove('visible');
+  document.body.style.overflow = '';
+}
