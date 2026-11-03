@@ -17,7 +17,7 @@ namespace MetaRPC.CSharpMT4.Helpers;
 /// USAGE
 /// ----------------------------------------------------------------------------
 /// var (opt, cfg) = EnvConfig.Load();
-/// await using var account = new MT4Account(opt.User, opt.Password, opt.Grpc!);
+/// await using var account = new MT4Account(opt.User, opt.Password, grpcServer: opt.Grpc!);
 /// var ok = await Mt4ConnectHelper.ConnectAsync(account, opt, logger, ct);
 /// if (!ok) return 2; // bail out
 /// ============================================================================

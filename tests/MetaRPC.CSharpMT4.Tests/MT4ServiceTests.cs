@@ -32,6 +32,31 @@ public class MT4ServiceTests
     }
 
     [Fact]
+    public void TestMT4Account_V1ArgumentOrderStillCompiles()
+    {
+        // 1.0.x order: (user, password, grpcServer, id, apiKey, name)
+        var id = Guid.NewGuid();
+        var account = new MT4Account(12345678, "demo_pass", "https://127.0.0.1:1", id, "test_api_key", "tests");
+        Assert.Equal(id, account.Id);
+        Assert.Equal("https://127.0.0.1:1", account.GrpcServer);
+        Assert.Equal("test_api_key", account.ApiKey);
+        Assert.Equal("tests", account.Name);
+    }
+
+    [Fact]
+    public void TestMT4Account_ThreeArgUrlIsGrpcServer()
+    {
+        // 1.0.x meaning of new MT4Account(user, password, url): the URL is the gRPC server, never the API key.
+        var account = new MT4Account(12345678, "demo_pass", "https://127.0.0.1:1");
+        Assert.Equal("https://127.0.0.1:1", account.GrpcServer);
+        Assert.NotEqual("https://127.0.0.1:1", account.ApiKey);
+
+        var keyed = new MT4Account(12345678, "demo_pass", "test_api_key");
+        Assert.Equal("https://mt4.mrpc.pro:443", keyed.GrpcServer);
+        Assert.Equal("test_api_key", keyed.ApiKey);
+    }
+
+    [Fact]
     public void TestGetIdRequest_ProtoSerialization()
     {
         var req = new mt4_term_api.GetIdRequest
