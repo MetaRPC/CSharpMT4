@@ -115,6 +115,13 @@ namespace MetaRPC.CSharpMT4
         public string ApiKey { get; set; } = "TRIAL";
 
         /// <summary>
+        /// Gets or sets the optional terminal name or creator identifier sent with every connect request
+        /// (ConnectRequest.name / ConnectExRequest.name). It labels the terminal instance on the server,
+        /// for example in GET /Accounts.
+        /// </summary>
+        public string? Name { get; set; }
+
+        /// <summary>
         /// Computes a stable deterministic GUID based on account credentials (user + password).
         /// Matches the server's GetId algorithm.
         /// </summary>
@@ -311,12 +318,14 @@ public async ValueTask DisposeAsync()
         /// <param name="password">The password for the user account.</param>
         /// <param name="grpcServer">The address of the gRPC server (optional).</param>
         /// <param name="id">An optional unique identifier for the account instance.</param>
+        /// <param name="name">An optional terminal name or creator identifier, sent with every connect request.</param>
         
        private readonly Microsoft.Extensions.Logging.ILogger<MT4Account>? _logger;
 
 public MT4Account(ulong user, string password, string? grpcServer = null, string? apiKey = null, Guid id = default,
-                  ILogger<MT4Account>? logger = null)
+                  ILogger<MT4Account>? logger = null, string? name = null)
 {
+    Name = name;
     User = user;
     Password = password;
     GrpcServer = grpcServer ?? "https://mt4.mrpc.pro:443";
@@ -484,6 +493,7 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         /// <param name="baseChartSymbol">The base chart symbol to use (e.g., "EURUSD").</param>
         /// <param name="waitForTerminalIsAlive">Whether to wait for terminal readiness before returning.</param>
         /// <param name="timeoutSeconds">How long to wait for terminal readiness before timing out.</param>
+        /// <param name="name">Optional terminal name or creator identifier. When given it replaces <see cref="Name"/> for this and later connects.</param>
         /// <returns>A task representing the asynchronous connection operation.</returns>
         /// <exception cref="ApiExceptionMT4">Thrown if the server returns an error response.</exception>
         /// <exception cref="Grpc.Core.RpcException">Thrown if the gRPC connection fails.</exception>
@@ -494,8 +504,10 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
     bool waitForTerminalIsAlive = true,
     int timeoutSeconds = 30,
     DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
+    CancellationToken cancellationToken = default,
+    string? name = null)
 {
+    if (!string.IsNullOrWhiteSpace(name)) Name = name;
     if (string.IsNullOrWhiteSpace(host))
         throw new ArgumentException("Host must be provided.", nameof(host));
     if (port <= 0)
@@ -511,6 +523,7 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         Port = port,
         TimeoutSeconds = (uint)timeoutSeconds
     };
+    if (!string.IsNullOrWhiteSpace(Name)) connectRequest.Name = Name;
 
     Metadata headers = GetHeaders();
 
@@ -574,14 +587,16 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         /// <param name="baseChartSymbol">Chart symbol to initialize the session.</param>
         /// <param name="waitForTerminalIsAlive">Wait for terminal readiness flag.</param>
         /// <param name="timeoutSeconds">Timeout duration in seconds.</param>
+        /// <param name="name">Optional terminal name or creator identifier, see <see cref="Name"/>.</param>
         public void ConnectByHostPort(
             string host,
             int port = 443,
             string baseChartSymbol = "EURUSD",
             bool waitForTerminalIsAlive = true,
-            int timeoutSeconds = 30)
+            int timeoutSeconds = 30,
+            string? name = null)
         {
-            ConnectByHostPortAsync(host, port, baseChartSymbol, waitForTerminalIsAlive, timeoutSeconds).GetAwaiter().GetResult();
+            ConnectByHostPortAsync(host, port, baseChartSymbol, waitForTerminalIsAlive, timeoutSeconds, name: name).GetAwaiter().GetResult();
         }
 
         /// <summary>
@@ -591,6 +606,7 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         /// <param name="baseChartSymbol">The base chart symbol to use (e.g., "EURUSD").</param>
         /// <param name="waitForTerminalIsAlive">Whether to wait for terminal readiness before returning.</param>
         /// <param name="timeoutSeconds">How long to wait for terminal readiness before timing out.</param>
+        /// <param name="name">Optional terminal name or creator identifier. When given it replaces <see cref="Name"/> for this and later connects.</param>
         /// <returns>A task representing the asynchronous connection operation.</returns>
         /// <exception cref="ApiExceptionMT4">Thrown if the server returns an error response.</exception>
         /// <exception cref="Grpc.Core.RpcException">Thrown if the gRPC connection fails.</exception>
@@ -600,8 +616,10 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
     bool waitForTerminalIsAlive = true,
     int timeoutSeconds = 30,
     DateTime? deadline = null,
-    CancellationToken cancellationToken = default)
+    CancellationToken cancellationToken = default,
+    string? name = null)
 {
+    if (!string.IsNullOrWhiteSpace(name)) Name = name;
     if (string.IsNullOrWhiteSpace(serverName))
         throw new ArgumentException("Server name must be provided.", nameof(serverName));
     if (timeoutSeconds <= 0)
@@ -616,6 +634,7 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         // If supported by proto:
         // WaitForTerminalIsAlive = waitForTerminalIsAlive
     };
+    if (!string.IsNullOrWhiteSpace(Name)) connectRequest.Name = Name;
 
     Metadata headers = GetHeaders();
 
@@ -678,13 +697,15 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         /// <param name="baseChartSymbol">Chart symbol to initialize the session.</param>
         /// <param name="waitForTerminalIsAlive">Wait for terminal readiness flag.</param>
         /// <param name="timeoutSeconds">Timeout duration in seconds.</param>
+        /// <param name="name">Optional terminal name or creator identifier, see <see cref="Name"/>.</param>
         public void ConnectByServerName(
             string serverName,
             string baseChartSymbol = "EURUSD",
             bool waitForTerminalIsAlive = true,
-            int timeoutSeconds = 30)
+            int timeoutSeconds = 30,
+            string? name = null)
         {
-            ConnectByServerNameAsync(serverName, baseChartSymbol, waitForTerminalIsAlive, timeoutSeconds).GetAwaiter().GetResult();
+            ConnectByServerNameAsync(serverName, baseChartSymbol, waitForTerminalIsAlive, timeoutSeconds, name: name).GetAwaiter().GetResult();
         }
 
 
@@ -1421,6 +1442,15 @@ private async IAsyncEnumerable<TData> ExecuteStreamWithReconnect<TRequest, TRepl
                 r => r.ResponseCase == SymbolSelectReply.ResponseOneofCase.Error ? r.Error : null,
                 effectiveDeadline, cancellationToken).ConfigureAwait(false);
             return res.Data;
+        }
+
+        /// <summary>
+        /// Synchronously adds or removes a symbol in Market Watch. See <see cref="SymbolSelectAsync"/>.
+        /// </summary>
+        public SymbolSelectData SymbolSelect(
+            string symbol, bool select = true, DateTime? deadline = null, CancellationToken cancellationToken = default)
+        {
+            return SymbolSelectAsync(symbol, select, deadline, cancellationToken).GetAwaiter().GetResult();
         }
 
         /// <summary>Server timezone / time info. Group: Symbol_Information (infra).</summary>
