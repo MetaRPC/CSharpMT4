@@ -48,7 +48,7 @@ namespace MetaRPC.CSharpMT4
         public string? BaseChartSymbol { get; private set; }
 
         /// <summary>Terminal readiness timeout (seconds).</summary>
-        public int ConnectTimeoutSeconds { get; private set; }
+        public int ConnectTimeoutSeconds { get; set; }
 
         /// <summary>
         /// Gets the gRPC server address used to connect.
@@ -311,17 +311,18 @@ public async ValueTask DisposeAsync()
 }
 
 
+       private readonly Microsoft.Extensions.Logging.ILogger<MT4Account>? _logger;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MT4Account"/> class using credentials.
         /// </summary>
         /// <param name="user">The MT4 user account number.</param>
         /// <param name="password">The password for the user account.</param>
         /// <param name="grpcServer">The address of the gRPC server (optional).</param>
+        /// <param name="apiKey">An optional API key for authentication (defaults to the MRPC_API_KEY env var, then TRIAL).</param>
         /// <param name="id">An optional unique identifier for the account instance.</param>
+        /// <param name="logger">An optional logger.</param>
         /// <param name="name">An optional terminal name or creator identifier, sent with every connect request.</param>
-        
-       private readonly Microsoft.Extensions.Logging.ILogger<MT4Account>? _logger;
-
 public MT4Account(ulong user, string password, string? grpcServer = null, string? apiKey = null, Guid id = default,
                   ILogger<MT4Account>? logger = null, string? name = null)
 {
@@ -360,15 +361,54 @@ public MT4Account(ulong user, string password, string? grpcServer = null, string
     _logger = logger ?? NullLogger<MT4Account>.Instance;
 }
 
+/// <summary>
+/// Initializes a new instance of the <see cref="MT4Account"/> class with an API key and the default gRPC server.
+/// </summary>
+/// <remarks>
+/// Up to 1.0.x the third positional argument of <c>new MT4Account(user, password, x)</c> was the gRPC server.
+/// For compatibility an absolute http(s) URL passed here is still taken as the gRPC server, not as the API key.
+/// Prefer named arguments: <c>new MT4Account(user, password, grpcServer: url)</c> or <c>apiKey: key</c>.
+/// </remarks>
+/// <param name="user">The MT4 user account number.</param>
+/// <param name="password">The password for the user account.</param>
+/// <param name="apiKey">The API key (an http(s) URL is treated as the gRPC server, see remarks).</param>
 public MT4Account(ulong user, string password, string? apiKey)
-    : this(user, password, null, apiKey, default, null)
+    : this(user, password, IsServerUrl(apiKey) ? apiKey : null, IsServerUrl(apiKey) ? null : apiKey, default, null)
 {
 }
 
+/// <summary>
+/// Initializes a new instance of the <see cref="MT4Account"/> class with a logger.
+/// </summary>
+/// <param name="user">The MT4 user account number.</param>
+/// <param name="password">The password for the user account.</param>
+/// <param name="grpcServer">The address of the gRPC server (null = default).</param>
+/// <param name="id">An optional unique identifier for the account instance.</param>
+/// <param name="logger">An optional logger.</param>
 public MT4Account(ulong user, string password, string? grpcServer, Guid id, ILogger<MT4Account>? logger = null)
     : this(user, password, grpcServer, null, id, logger)
 {
 }
+
+/// <summary>
+/// Initializes a new instance of the <see cref="MT4Account"/> class.
+/// Keeps the 1.0.x argument order (grpcServer, id, apiKey, name) compiling.
+/// </summary>
+/// <param name="user">The MT4 user account number.</param>
+/// <param name="password">The password for the user account.</param>
+/// <param name="grpcServer">The address of the gRPC server (null = default).</param>
+/// <param name="id">An optional unique identifier for the account instance.</param>
+/// <param name="apiKey">The API key (null = MRPC_API_KEY env var, then TRIAL).</param>
+/// <param name="name">An optional terminal name or creator identifier, sent with every connect request.</param>
+public MT4Account(ulong user, string password, string? grpcServer, Guid id, string? apiKey, string? name = null)
+    : this(user, password, grpcServer, apiKey, id, null, name)
+{
+}
+
+private static bool IsServerUrl(string? value) =>
+    value != null &&
+    (value.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ||
+     value.StartsWith("http://", StringComparison.OrdinalIgnoreCase));
 
 public async Task<Guid> GetIdAsync(CancellationToken cancellationToken = default)
 {
@@ -1913,7 +1953,7 @@ public async Task<OrderModifyData> OrderModifyAsync(
         /// <exception cref="ApiExceptionMT4">Thrown if an error is received from the stream.</exception>
        public async IAsyncEnumerable<OnSymbolTickData> OnSymbolTickAsync(
     IEnumerable<string> symbols,
-    [EnumeratorCancellation] CancellationToken ct = default)
+    [EnumeratorCancellation] CancellationToken cancellationToken = default)
 {
     EnsureConnected();
 
@@ -1929,7 +1969,7 @@ public async Task<OrderModifyData> OrderModifyAsync(
         (r, h, token) => SubscriptionClient.OnSymbolTick(r, h, cancellationToken: token),
         reply => reply.ResponseCase == OnSymbolTickReply.ResponseOneofCase.Error ? reply.Error : null,
         reply => reply.ResponseCase == OnSymbolTickReply.ResponseOneofCase.Data  ? reply.Data  : null,
-        ct))
+        cancellationToken))
     {
         yield return data;
     }
@@ -1945,7 +1985,7 @@ public async Task<OrderModifyData> OrderModifyAsync(
         /// <exception cref="Grpc.Core.RpcException">If the stream fails.</exception>
         /// <exception cref="ApiExceptionMT4">Thrown if an error is received from the stream.</exception>
        public async IAsyncEnumerable<OnTradeData> OnTradeAsync(
-    [EnumeratorCancellation] CancellationToken ct = default)
+    [EnumeratorCancellation] CancellationToken cancellationToken = default)
 {
     EnsureConnected();
 
@@ -1956,7 +1996,7 @@ public async Task<OrderModifyData> OrderModifyAsync(
         (r, h, token) => SubscriptionClient.OnTrade(r, h, cancellationToken: token),
         reply => reply.ResponseCase == OnTradeReply.ResponseOneofCase.Error ? reply.Error : null,
         reply => reply.ResponseCase == OnTradeReply.ResponseOneofCase.Data  ? reply.Data  : null,
-        ct))
+        cancellationToken))
     {
         yield return data;
     }
@@ -1973,7 +2013,7 @@ public async Task<OrderModifyData> OrderModifyAsync(
         /// <exception cref="ApiExceptionMT4">Thrown if the stream returns a known API error.</exception>
         public async IAsyncEnumerable<OnOpenedOrdersProfitData> OnOpenedOrdersProfitAsync(
     int intervalMs = 1000,
-    [EnumeratorCancellation] CancellationToken ct = default)
+    [EnumeratorCancellation] CancellationToken cancellationToken = default)
 {
     EnsureConnected();
     if (intervalMs <= 0) throw new ArgumentOutOfRangeException(nameof(intervalMs), "intervalMs must be > 0.");
@@ -1985,7 +2025,7 @@ public async Task<OrderModifyData> OrderModifyAsync(
         (r, h, token) => SubscriptionClient.OnOpenedOrdersProfit(r, h, cancellationToken: token),
         reply => reply.ResponseCase == OnOpenedOrdersProfitReply.ResponseOneofCase.Error ? reply.Error : null,
         reply => reply.ResponseCase == OnOpenedOrdersProfitReply.ResponseOneofCase.Data  ? reply.Data  : null,
-        ct))
+        cancellationToken))
     {
         yield return data;
     }
@@ -2003,7 +2043,7 @@ public async Task<OrderModifyData> OrderModifyAsync(
         /// <exception cref="ApiExceptionMT4">Thrown if the stream returns a known API error.</exception>
         public async IAsyncEnumerable<OnOpenedOrdersTicketsData> OnOpenedOrdersTicketsAsync(
     int intervalMs = 1000,
-    [EnumeratorCancellation] CancellationToken ct = default)
+    [EnumeratorCancellation] CancellationToken cancellationToken = default)
 {
     EnsureConnected();
     if (intervalMs <= 0) throw new ArgumentOutOfRangeException(nameof(intervalMs), "intervalMs must be > 0.");
@@ -2015,7 +2055,7 @@ public async Task<OrderModifyData> OrderModifyAsync(
         (r, h, token) => SubscriptionClient.OnOpenedOrdersTickets(r, h, cancellationToken: token),
         reply => reply.ResponseCase == OnOpenedOrdersTicketsReply.ResponseOneofCase.Error ? reply.Error : null,
         reply => reply.ResponseCase == OnOpenedOrdersTicketsReply.ResponseOneofCase.Data  ? reply.Data  : null,
-        ct))
+        cancellationToken))
     {
         yield return data;
     }
@@ -2023,7 +2063,7 @@ public async Task<OrderModifyData> OrderModifyAsync(
 
         /// <summary>Streams terminal connection-state events. Group: Subscriptions.</summary>
         public async IAsyncEnumerable<ConnectStateData> OnConnectStateAsync(
-            [EnumeratorCancellation] CancellationToken ct = default)
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             EnsureConnected();
             var req = new OnConnectStateRequest();
@@ -2032,7 +2072,7 @@ public async Task<OrderModifyData> OrderModifyAsync(
                 (r, h, token) => ConnectionClient.OnConnectState(r, h, cancellationToken: token),
                 reply => reply.ResponseCase == OnConnectStateReply.ResponseOneofCase.Error ? reply.Error : null,
                 reply => reply.ResponseCase == OnConnectStateReply.ResponseOneofCase.Data  ? reply.Data  : null,
-                ct))
+                cancellationToken))
             {
                 yield return data;
             }

@@ -30,7 +30,7 @@ namespace MetaRPC.CSharpMT4.Helpers;
 ///   var (opt, cfg) = EnvConfig.Load();
 ///   var err = opt.ValidateOrError();
 ///   if (!string.IsNullOrEmpty(err)) { /* print and exit */ }
-///   await using var account = new MT4Account(opt.User, opt.Password, opt.Grpc!);
+///   await using var account = new MT4Account(opt.User, opt.Password, grpcServer: opt.Grpc!);
 ///   // then ConnectByServerNameAsync(...) etc., using opt.ServerName / opt.Symbol / timeouts.
 /// </summary>
 public sealed class Mt4Options

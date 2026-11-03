@@ -7903,14 +7903,51 @@
             Dispose pattern (sync). GrpcChannel supports IDisposable; disposing it will close sockets.
             </summary>
         </member>
-        <member name="F:MetaRPC.CSharpMT4.MT4Account._logger">
+        <member name="M:MetaRPC.CSharpMT4.MT4Account.#ctor(System.UInt64,System.String,System.String,System.String,System.Guid,Microsoft.Extensions.Logging.ILogger{MetaRPC.CSharpMT4.MT4Account},System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:MetaRPC.CSharpMT4.MT4Account"/> class using credentials.
             </summary>
             <param name="user">The MT4 user account number.</param>
             <param name="password">The password for the user account.</param>
             <param name="grpcServer">The address of the gRPC server (optional).</param>
+            <param name="apiKey">An optional API key for authentication (defaults to the MRPC_API_KEY env var, then TRIAL).</param>
             <param name="id">An optional unique identifier for the account instance.</param>
+            <param name="logger">An optional logger.</param>
+            <param name="name">An optional terminal name or creator identifier, sent with every connect request.</param>
+        </member>
+        <member name="M:MetaRPC.CSharpMT4.MT4Account.#ctor(System.UInt64,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MetaRPC.CSharpMT4.MT4Account"/> class with an API key and the default gRPC server.
+            </summary>
+            <remarks>
+            Up to 1.0.x the third positional argument of <c>new MT4Account(user, password, x)</c> was the gRPC server.
+            For compatibility an absolute http(s) URL passed here is still taken as the gRPC server, not as the API key.
+            Prefer named arguments: <c>new MT4Account(user, password, grpcServer: url)</c> or <c>apiKey: key</c>.
+            </remarks>
+            <param name="user">The MT4 user account number.</param>
+            <param name="password">The password for the user account.</param>
+            <param name="apiKey">The API key (an http(s) URL is treated as the gRPC server, see remarks).</param>
+        </member>
+        <member name="M:MetaRPC.CSharpMT4.MT4Account.#ctor(System.UInt64,System.String,System.String,System.Guid,Microsoft.Extensions.Logging.ILogger{MetaRPC.CSharpMT4.MT4Account})">
+            <summary>
+            Initializes a new instance of the <see cref="T:MetaRPC.CSharpMT4.MT4Account"/> class with a logger.
+            </summary>
+            <param name="user">The MT4 user account number.</param>
+            <param name="password">The password for the user account.</param>
+            <param name="grpcServer">The address of the gRPC server (null = default).</param>
+            <param name="id">An optional unique identifier for the account instance.</param>
+            <param name="logger">An optional logger.</param>
+        </member>
+        <member name="M:MetaRPC.CSharpMT4.MT4Account.#ctor(System.UInt64,System.String,System.String,System.Guid,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:MetaRPC.CSharpMT4.MT4Account"/> class.
+            Keeps the 1.0.x argument order (grpcServer, id, apiKey, name) compiling.
+            </summary>
+            <param name="user">The MT4 user account number.</param>
+            <param name="password">The password for the user account.</param>
+            <param name="grpcServer">The address of the gRPC server (null = default).</param>
+            <param name="id">An optional unique identifier for the account instance.</param>
+            <param name="apiKey">The API key (null = MRPC_API_KEY env var, then TRIAL).</param>
             <param name="name">An optional terminal name or creator identifier, sent with every connect request.</param>
         </member>
         <member name="M:MetaRPC.CSharpMT4.MT4Account.ConnectByHostPortAsync(System.String,System.Int32,System.String,System.Boolean,System.Int32,System.Nullable{System.DateTime},System.Threading.CancellationToken,System.String)">
