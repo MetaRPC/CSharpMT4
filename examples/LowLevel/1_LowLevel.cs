@@ -1,3 +1,64 @@
+/*══════════════════════════════════════════════════════════════════════════════
+ FILE: Examples/LowLevel/1_LowLevel.cs - LOW-LEVEL MT4 API INFORMATION DEMO
+ PURPOSE:
+   Comprehensive demonstration of MT4 information retrieval via the raw MT4Account
+   client. A REFERENCE GUIDE for account, symbol and order/position queries
+   WITHOUT trading (see 2_Trading.cs for trading, 3_Streaming.cs for streams).
+
+ 🎯 WHO SHOULD USE THIS:
+   • Developers learning the MT4 gRPC API read methods
+   • Users building monitoring / dashboard applications
+   • Debugging data retrieval and raw protobuf reply shapes
+   • Learning read-only operations on MT4Account
+
+ 📚 WHAT THIS DEMO COVERS (3 Sections):
+
+   1. ACCOUNT INFORMATION
+      • AccountSummaryAsync()      - all money/permission fields in one round trip
+      • TradeStatsAsync()          - counts / profit / drawdown / per-market stats
+      • EquityHistoryAsync()       - equity-curve points (size reported only)
+      • TradeUnrealizedPLAsync()   - per-order unrealized P/L extrema
+
+   2. SYMBOL INFORMATION
+      • ServerTimezoneAsync()      - trade-server timezone / UTC offset
+      • SymbolsAsync()             - full symbol catalog
+      • SymbolParamsManyAsync()    - contract specs (digits, volume, currencies)
+      • QuoteAsync() / QuoteManyAsync() - current Bid/Ask
+      • SymbolSelectAsync()        - add a symbol to Market Watch
+      • TickValueWithSizeAsync()   - tick value / size (risk-sizing input)
+      • QuoteHistoryAsync() / BarsAsync() - historical quotes and bars
+
+   3. POSITIONS & ORDERS
+      • OpenedOrdersAsync()        - all open orders / positions
+      • OpenedOrdersTicketsAsync() - ticket numbers only (lightweight)
+      • OrdersHistoryAsync()       - closed orders over a time range
+
+ 🔄 COMPARISON: Low-Level vs High-Level API:
+
+   Low-Level (MT4Account) - THIS FILE:
+   ✓ Direct gRPC calls with raw protobuf replies
+   ✓ Maximum control; see exactly what the API returns
+   ✗ More verbose; handle protobuf structures manually
+
+   High-Level (MT4Service / MT4Sugar):
+   ✓ Typed wrappers and one-liner helpers, less boilerplate
+   ✗ Less control over the exact API calls
+
+ 💡 WHEN TO USE LOW-LEVEL API:
+   • You need methods not wrapped by MT4Service
+   • Building your own wrappers, or debugging the high-level ones
+   • You need exact control over the protobuf request/response
+
+ 📖 RELATED EXAMPLES:
+   • 2_Trading.cs   - OrderSend / OrderModify / OrderClose
+   • 3_Streaming.cs - real-time ticks / trades / P&L
+   • 4_ServiceExamples.cs, 5_SugarScenario.cs - mid/high-level API
+
+ USAGE:
+   Run `dotnet run` and choose [1] from the menu
+   (or: dotnet run -- --example=1)
+══════════════════════════════════════════════════════════════════════════════*/
+
 using System;
 using System.Linq;
 using System.Threading;
@@ -20,12 +81,19 @@ namespace MetaRPC.CSharpMT4.Examples.LowLevel
         {
             var syms = new[] { symbol, "GBPUSD", "USDJPY" };
 
-            // ==================== ACCOUNT_INFORMATION ====================
-            // Direct MT4Account reads — this is the raw API, no typed wrapper. We call each method and read
-            // concrete fields off its Reply so you can see exactly what the server returns.
+            #region ACCOUNT INFORMATION
+            // ══════════════════════════════════════════════════════════════
+            // 1. ACCOUNT INFORMATION
+            //    Direct MT4Account reads — the raw API, no typed wrapper. Each
+            //    method is called and concrete Reply fields are read so you can
+            //    see exactly what the server returns.
+            // ══════════════════════════════════════════════════════════════
             Sec("ACCOUNT_INFORMATION");
 
-            // AccountSummary - one round trip returns all money/permission fields (no separate AccountInfo* on MT4).
+            // ─────────────────────────────────────────────────────────────
+            // AccountSummaryAsync() - one round trip returns ALL money and
+            //    permission fields (MT4 has no separate AccountInfo* calls).
+            // ─────────────────────────────────────────────────────────────
             var a = await acc.AccountSummaryAsync(cancellationToken: ct);
             Console.WriteLine($"Login={a.AccountLogin}  Name={a.AccountUserName}  Company={a.AccountCompanyName}");
             Console.WriteLine($"Balance={a.AccountBalance}  Equity={a.AccountEquity}  Credit={a.AccountCredit}");
@@ -43,7 +111,14 @@ namespace MetaRPC.CSharpMT4.Examples.LowLevel
             var upl = await acc.TradeUnrealizedPLAsync(cancellationToken: ct);
             Console.WriteLine($"TradeUnrealizedPL: {upl.Extrema.Count} ticket(s)");
 
-            // ==================== SYMBOL_INFORMATION ====================
+            #endregion
+
+            #region SYMBOL INFORMATION
+            // ══════════════════════════════════════════════════════════════
+            // 2. SYMBOL INFORMATION
+            //    Server timezone, the symbol catalog, contract specs, quotes,
+            //    Market Watch selection, tick value and price history.
+            // ══════════════════════════════════════════════════════════════
             Sec("SYMBOL_INFORMATION");
             var tz = await acc.ServerTimezoneAsync(cancellationToken: ct);
             Console.WriteLine($"ServerTimezone: {tz.Server} utcOffset={tz.UtcOffsetSeconds}s");
@@ -81,7 +156,14 @@ namespace MetaRPC.CSharpMT4.Examples.LowLevel
             var b0 = bars.Bars.FirstOrDefault();
             Console.WriteLine($"Bars(H1): {bars.Bars.Count} bars; first O={b0?.Open} H={b0?.High} L={b0?.Low} C={b0?.Close} V={b0?.TickVolume}");
 
-            // ==================== POSITIONS_AND_ORDERS ====================
+            #endregion
+
+            #region POSITIONS & ORDERS
+            // ══════════════════════════════════════════════════════════════
+            // 3. POSITIONS & ORDERS
+            //    Currently open orders/positions, their ticket numbers, and
+            //    the recent closed-order history.
+            // ══════════════════════════════════════════════════════════════
             Sec("POSITIONS_AND_ORDERS");
             var open = await acc.OpenedOrdersAsync(EnumOpenedOrderSortType.SortByOpenTimeAsc, cancellationToken: ct);
             Console.WriteLine($"OpenedOrders: {open.OrderInfos.Count}");
@@ -93,6 +175,7 @@ namespace MetaRPC.CSharpMT4.Examples.LowLevel
 
             var hist = await acc.OrdersHistoryAsync(EnumOrderHistorySortType.HistorySortByCloseTimeDesc, DateTime.UtcNow.AddDays(-7), DateTime.UtcNow, null, null, cancellationToken: ct);
             Console.WriteLine($"OrdersHistory(7d): {hist.OrdersInfo.Count} closed order(s)");
+            #endregion
 
             Console.WriteLine("\n=== LOW-LEVEL (info) DONE ===");
         }

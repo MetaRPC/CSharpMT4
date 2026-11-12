@@ -1,3 +1,44 @@
+/*══════════════════════════════════════════════════════════════════════════════
+ FILE: Examples/Presets/10_AdaptiveModePreset.cs - ADAPTIVE MODE PRESET
+ PURPOSE:
+   A preset that reads live market conditions and dispatches to the orchestrator
+   that best fits them, behind a floating-loss safety cap. It combines the two
+   MT4 orchestrators into one adaptive system.
+
+ 🎯 WHO SHOULD USE THIS:
+   • Anyone wanting one entry point that picks a strategy by market state
+   • Learning how a preset composes orchestrators + a risk guard
+   • A template for condition-driven strategy selection
+
+ 📚 WHAT THIS DEMO COVERS (3 Steps):
+
+   1. SAFETY CAP
+      • GetTotalProfitLossAsync() - abort the whole cycle if floating loss is
+        already worse than MaxFloatingLoss (veto before any analysis)
+
+   2. ANALYZE
+      • GetSymbolSnapshotAsync() - spread as a cheap volatility proxy
+        (tight spread → CALM, wide spread → VOLATILE)
+
+   3. DISPATCH
+      • CALM     → ScalpOrchestrator         (quick in/out, fixed TP)
+      • VOLATILE → TrailingStopOrchestrator   (ride the move, trimmed risk)
+
+   Configurable: Symbol, CalmSpreadPoints, RiskMoney, MaxFloatingLoss, Live.
+
+ ℹ️  SAFE by default: Live=false only DESCRIBES the chosen orchestrator's plan.
+     Live flows straight through, so the preset is exactly as guarded as the
+     orchestrator it runs.
+
+ 📖 RELATED EXAMPLES:
+   • 6_ScalpOrchestrator.cs / 7_TrailingStopOrchestrator.cs - the two strategies
+   • 8_GridOrchestrator.cs, 9_BreakoutOrchestrator.cs - other orchestrators
+
+ USAGE:
+   Run `dotnet run` and choose [10] from the menu
+   (or: dotnet run -- --example=10)
+══════════════════════════════════════════════════════════════════════════════*/
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,9 +78,13 @@ namespace MetaRPC.CSharpMT4.Examples.Presets
         {
             Console.WriteLine("\n+== ADAPTIVE MODE PRESET =======================================+");
 
-            // STEP 1 — Safety cap (runs before any analysis, so it can veto the whole cycle).
-            // Read the account's total floating P/L; if we are already down more than MaxFloatingLoss,
-            // stand down rather than pile new risk onto a losing book.
+            #region STEP 1 — SAFETY CAP
+            // ══════════════════════════════════════════════════════════════
+            // 1. SAFETY CAP (runs before any analysis, so it can veto the cycle)
+            //    Read the account's total floating P/L; if we are already down
+            //    more than MaxFloatingLoss, stand down rather than pile new risk
+            //    onto a losing book.
+            // ══════════════════════════════════════════════════════════════
             var floating = await _svc.GetTotalProfitLossAsync(ct: ct);
             Console.WriteLine($"  floating P/L = {floating} (cap {MaxFloatingLoss})");
             if (floating < MaxFloatingLoss)
@@ -48,16 +93,27 @@ namespace MetaRPC.CSharpMT4.Examples.Presets
                 return;
             }
 
-            // STEP 2 — Analyze. We need a cheap read on volatility to pick a strategy. The spread widens
-            // when the market gets fast/illiquid, so a tight spread ~ calm, a wide spread ~ volatile.
-            // (It's a stand-in; a production preset would measure historical bar ranges instead.)
+            #endregion
+
+            #region STEP 2 — ANALYZE
+            // ══════════════════════════════════════════════════════════════
+            // 2. ANALYZE — pick a strategy from a cheap volatility read.
+            //    Spread widens when the market gets fast/illiquid, so a tight
+            //    spread ~ calm, a wide spread ~ volatile. (A stand-in; a
+            //    production preset would measure historical bar ranges.)
+            // ══════════════════════════════════════════════════════════════
             var snap = await _svc.GetSymbolSnapshotAsync(Symbol, ct: ct);
             bool calm = snap.SpreadPoints <= CalmSpreadPoints;
             Console.WriteLine($"  {Symbol} spread={snap.SpreadPoints:F1}pt -> {(calm ? "CALM" : "VOLATILE")}");
 
-            // STEP 3 — Dispatch. The preset owns the *decision*; each orchestrator owns the *execution*.
-            // We just build the chosen orchestrator with conditions-tuned parameters and hand off.
-            // Live flows straight through, so the preset is as safe/guarded as the orchestrator it runs.
+            #endregion
+
+            #region STEP 3 — DISPATCH
+            // ══════════════════════════════════════════════════════════════
+            // 3. DISPATCH — the preset owns the DECISION; each orchestrator owns
+            //    the EXECUTION. Build the chosen orchestrator with conditions-
+            //    tuned parameters and hand off. Live flows straight through.
+            // ══════════════════════════════════════════════════════════════
             if (calm)
             {
                 // Calm → Scalp: get in and out fast with a fixed TP; no trailing needed in a quiet market.
@@ -88,6 +144,7 @@ namespace MetaRPC.CSharpMT4.Examples.Presets
                     Live = Live,
                 }.ExecuteAsync(ct);
             }
+            #endregion
         }
     }
 }

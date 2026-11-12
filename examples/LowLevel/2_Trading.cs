@@ -1,3 +1,48 @@
+/*══════════════════════════════════════════════════════════════════════════════
+ FILE: Examples/LowLevel/2_Trading.cs - LOW-LEVEL MT4 TRADING DEMO
+ PURPOSE:
+   Demonstrates the raw MT4Account trading flow: build the request objects by
+   hand and send / modify / close orders. This is the "full" low-level shape
+   (see 1_LowLevel.cs for read-only info, 3_Streaming.cs for streams).
+
+ 🎯 WHO SHOULD USE THIS:
+   • Developers who need full control over the order request/response
+   • Building a custom trading layer on top of MT4Account
+   • Learning the market + pending order lifecycle end to end
+
+ 📚 WHAT THIS DEMO COVERS (3 Sections):
+
+   1. ORDER SIZING & REQUESTS
+      • QuoteAsync() / SymbolParamsManyAsync() - size the order, place stops
+      • OrderSendRequest (market + pending) - the raw low-level request shape
+
+   2. DESCRIBE MODE (enable=false, default)
+      • Prints the full send/modify/close/close-by flow without touching
+        the account (how the menu runs this demo)
+
+   3. LIVE EXECUTION (enable=true)
+      • OrderSendAsync()        - market + pending orders (returns a ticket)
+      • OrderModifyAsync()      - change SL/TP on an open order
+      • OrderCloseDeleteAsync() - close a position / delete a pending
+      • OrderCloseByAsync()     - close a position by an opposite one (described)
+
+ 💡 NOTES:
+   • Market/pending orders use the broker minimum lot and are cleaned up.
+   • MT4 pending types: OcOpBuylimit / OcOpBuystop / OcOpSelllimit / OcOpSellstop.
+
+ 📖 RELATED EXAMPLES:
+   • 1_LowLevel.cs  - read-only account/symbol/orders info
+   • 3_Streaming.cs - real-time ticks / trades / P&L
+   • 4_ServiceExamples.cs, 5_SugarScenario.cs - mid/high-level trading
+
+ ⚠️  WARNING: with enable=true this SENDS REAL (minimal-lot) ORDERS on your
+     account. The interactive menu runs it with enable=false (described only).
+
+ USAGE:
+   Run `dotnet run` and choose [2] from the menu
+   (or: dotnet run -- --example=2)
+══════════════════════════════════════════════════════════════════════════════*/
+
 using System;
 using System.Linq;
 using System.Threading;
@@ -20,7 +65,17 @@ namespace MetaRPC.CSharpMT4.Examples.LowLevel
         {
             Sec("TRADING" + (enable ? " (LIVE - minimal lot)" : " (described - enable to run)"));
 
-            // 1) Fresh quote and symbol params to size the order and place stops.
+            #region ORDER SIZING & REQUESTS
+            // ══════════════════════════════════════════════════════════════
+            // 1. ORDER SIZING & REQUEST BUILD
+            //    Pull a fresh quote + symbol params to size the order and place
+            //    stops, then build the raw OrderSendRequest objects (market and
+            //    pending) — the full low-level request shape.
+            // ══════════════════════════════════════════════════════════════
+
+            // ─────────────────────────────────────────────────────────────
+            // QuoteAsync() / SymbolParamsManyAsync() - size the order & stops
+            // ─────────────────────────────────────────────────────────────
             var q = await acc.QuoteAsync(symbol, cancellationToken: ct);
             var sp = (await acc.SymbolParamsManyAsync(symbol, cancellationToken: ct)).SymbolInfos.FirstOrDefault();
             int digits = (int)(sp?.Digits ?? 5);
@@ -63,7 +118,15 @@ namespace MetaRPC.CSharpMT4.Examples.LowLevel
             pendingReq.Stoploss   = Math.Round(pendingPrice - 300 * point, digits);
             pendingReq.Takeprofit = Math.Round(pendingPrice + 600 * point, digits);
             Console.WriteLine($"OrderSendRequest (pending): {symbol} BUY_LIMIT vol={volume} price={pendingPrice} SL={pendingReq.Stoploss} TP={pendingReq.Takeprofit} magic=778");
+            #endregion
 
+            #region DESCRIBE MODE (enable=false, default)
+            // ══════════════════════════════════════════════════════════════
+            // 2. DESCRIBE MODE
+            //    With enable=false (how the menu runs this demo) the full
+            //    send / modify / close / close-by flow is printed without
+            //    touching the account. Set enable=true for the live path below.
+            // ══════════════════════════════════════════════════════════════
             if (!enable)
             {
                 Console.WriteLine("OrderSend/OrderModify/OrderCloseDelete/OrderCloseBy are described only (enable=false).");
@@ -75,14 +138,26 @@ namespace MetaRPC.CSharpMT4.Examples.LowLevel
                 Console.WriteLine("\n=== LOW-LEVEL (trading) DONE ===");
                 return;
             }
+            #endregion
 
-            // 3) Send the market order.
+            #region LIVE EXECUTION (enable=true)
+            // ══════════════════════════════════════════════════════════════
+            // 3. LIVE EXECUTION   ⚠️ sends REAL minimal-lot orders
+            //    Market send -> modify SL/TP -> close, then place a pending and
+            //    delete it. Every order uses the minimum lot and is cleaned up.
+            // ══════════════════════════════════════════════════════════════
+
+            // ─────────────────────────────────────────────────────────────
+            // OrderSendAsync() - send the market order, returns a ticket
+            // ─────────────────────────────────────────────────────────────
             var sendRes = await acc.OrderSendAsync(sendReq, deadline: DateTime.UtcNow.AddSeconds(10), cancellationToken: ct);
             long ticket = sendRes.Ticket;
             Console.WriteLine($"OrderSend -> ticket={ticket}");
             if (ticket <= 0) { Console.WriteLine("No ticket; stop."); return; }
 
-            // 4) Modify SL/TP a bit.
+            // ─────────────────────────────────────────────────────────────
+            // OrderModifyAsync() - move SL/TP on the open order
+            // ─────────────────────────────────────────────────────────────
             var modReq = new OrderModifyRequest
             {
                 OrderTicket   = (int)ticket,
@@ -92,11 +167,16 @@ namespace MetaRPC.CSharpMT4.Examples.LowLevel
             var modRes = await acc.OrderModifyAsync(modReq, deadline: DateTime.UtcNow.AddSeconds(10), cancellationToken: ct);
             Console.WriteLine($"OrderModify -> {modRes}");
 
-            // 5) Close / delete the order.
+            // ─────────────────────────────────────────────────────────────
+            // OrderCloseDeleteAsync() - close the position (also deletes pendings)
+            // ─────────────────────────────────────────────────────────────
             var closeRes = await acc.OrderCloseDeleteAsync(new OrderCloseDeleteRequest { OrderTicket = (int)ticket }, deadline: DateTime.UtcNow.AddSeconds(10), cancellationToken: ct);
             Console.WriteLine($"OrderCloseDelete -> {closeRes}");
 
-            // 6) Place the pending order, then delete it (same close/delete RPC removes a pending order).
+            // ─────────────────────────────────────────────────────────────
+            // OrderSendAsync() (pending) - place the pending, then delete it
+            //    (the same OrderCloseDeleteAsync RPC removes a pending order).
+            // ─────────────────────────────────────────────────────────────
             var pendRes = await acc.OrderSendAsync(pendingReq, deadline: DateTime.UtcNow.AddSeconds(10), cancellationToken: ct);
             long pendTicket = pendRes.Ticket;
             Console.WriteLine($"OrderSend (pending) -> ticket={pendTicket}");
@@ -107,6 +187,7 @@ namespace MetaRPC.CSharpMT4.Examples.LowLevel
             }
 
             Console.WriteLine("\n=== LOW-LEVEL (trading) DONE ===");
+            #endregion
         }
     }
 }

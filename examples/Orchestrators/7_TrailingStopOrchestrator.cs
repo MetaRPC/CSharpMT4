@@ -1,3 +1,35 @@
+/*══════════════════════════════════════════════════════════════════════════════
+ FILE: Examples/Orchestrators/7_TrailingStopOrchestrator.cs - ORCHESTRATOR: Trailing Stop
+ PURPOSE:
+   A risk-sized market entry protected by a TRAILING STOP. After entry the stop is
+   ratcheted toward price every poll once the trade is TrailStartPoints in profit,
+   kept TrailDistancePoints behind price, locking in gains and never loosening.
+   Exits when the market takes out the trailing stop or MaxHoldSeconds elapses.
+
+ 🎯 WHO SHOULD USE THIS:
+   • Learning how to manage a live position (not just open/close)
+   • Seeing points↔price math and a "never loosen the stop" ratchet
+   • A template for let-winners-run exits
+
+ 📚 WHAT THIS DEMO COVERS (phases of ExecuteAsync):
+   1. SETUP, RISK SIZING & GUARD - size lots from risk; described mode sends nothing
+   2. ENTRY                       - open by risk with the initial protective SL
+   3. TRAILING LOOP & CLEANUP     - poll price, ratchet SL, then flatten on timeout
+
+   Configurable properties: Symbol, IsBuy, RiskMoney, StopPoints, TrailStartPoints,
+   TrailDistancePoints, MaxHoldSeconds, PollSeconds, Live.
+
+ ℹ️  SAFE BY DEFAULT: launched with Live = false (described / dry-run) — it prints
+     the plan and sends NO orders. Set Live = true to send real orders.
+
+ 📖 RELATED EXAMPLES:
+   • 6_ScalpOrchestrator.cs, 8_GridOrchestrator.cs, 9_BreakoutOrchestrator.cs
+
+ USAGE:
+   Run `dotnet run` and choose [7] from the menu
+   (or: dotnet run -- --example=7)
+══════════════════════════════════════════════════════════════════════════════*/
+
 using System;
 using System.Linq;
 using System.Threading;
@@ -44,19 +76,40 @@ namespace MetaRPC.CSharpMT4.Examples.Orchestrators
         {
             Console.WriteLine("\n+== TRAILING-STOP ORCHESTRATOR =================================+");
 
-            // 1) Size by risk (same idea as Scalp): lots are derived so the initial stop costs RiskMoney.
+            #region 1. SETUP, RISK SIZING & GUARD
+            // ══════════════════════════════════════════════════════════════
+            // 1. SETUP, RISK SIZING & SAFETY GUARD
+            //    Size lots from risk; in described mode stop before sending.
+            // ══════════════════════════════════════════════════════════════
+
+            // ─────────────────────────────────────────────────────────────
+            // 1) Size by risk (same idea as Scalp): lots are derived so the
+            //    initial stop costs exactly RiskMoney.
+            // ─────────────────────────────────────────────────────────────
             var vol = await _svc.CalcVolumeForRiskAsync(Symbol, StopPoints, RiskMoney, ct: ct);
             Console.WriteLine($"  {Symbol} {(IsBuy ? "BUY" : "SELL")}  risk=${RiskMoney} over {StopPoints}pt -> {vol} lot(s)");
             Console.WriteLine($"  trail: start after {TrailStartPoints}pt, keep {TrailDistancePoints}pt behind; maxHold={MaxHoldSeconds}s");
 
-            // 2) Safety guard — described mode sends nothing.
+            // ─────────────────────────────────────────────────────────────
+            // 2) Safety guard — described mode prints the plan and sends nothing.
+            // ─────────────────────────────────────────────────────────────
             if (!Live)
             {
                 Console.WriteLine("  [described] would: open-by-risk -> poll quote -> ratchet SL via ModifySlTp -> exit. Set Live=true to run.");
                 return 0;
             }
+            #endregion
 
-            // 3) Open the position with its initial protective stop already attached.
+            #region 2. ENTRY
+            // ══════════════════════════════════════════════════════════════
+            // 2. ENTRY
+            //    Open by risk with the initial protective SL; seed the local
+            //    "bestStop" tracker and the hold deadline.
+            // ══════════════════════════════════════════════════════════════
+
+            // ─────────────────────────────────────────────────────────────
+            // 3) Open the position with its initial protective stop attached.
+            // ─────────────────────────────────────────────────────────────
             var open = IsBuy
                 ? await _svc.BuyMarketByRiskAsync(Symbol, StopPoints, RiskMoney, comment: "Trail", ct: ct)
                 : await _svc.SellMarketByRiskAsync(Symbol, StopPoints, RiskMoney, comment: "Trail", ct: ct);
@@ -71,7 +124,20 @@ namespace MetaRPC.CSharpMT4.Examples.Orchestrators
             double bestStop = IsBuy ? entry - StopPoints * point : entry + StopPoints * point;
             var deadline = DateTime.UtcNow.AddSeconds(MaxHoldSeconds);
 
-            // 4) Trailing loop: watch price and ratchet the stop until we exit or time out.
+            #endregion
+
+            #region 3. TRAILING LOOP & CLEANUP
+            // ══════════════════════════════════════════════════════════════
+            // 3. TRAILING LOOP & CLEANUP
+            //    Poll price; once TrailStartPoints in profit, ratchet the SL to
+            //    TrailDistancePoints behind price (only if it tightens). On
+            //    timeout, flatten whatever is still open.
+            // ══════════════════════════════════════════════════════════════
+
+            // ─────────────────────────────────────────────────────────────
+            // 4) Trailing loop: watch price and ratchet the stop until we exit
+            //    or time out.
+            // ─────────────────────────────────────────────────────────────
             while (DateTime.UtcNow < deadline && !ct.IsCancellationRequested)
             {
                 // If the ticket is gone, the market already took out our stop — the trade is over.
@@ -104,10 +170,13 @@ namespace MetaRPC.CSharpMT4.Examples.Orchestrators
                 try { await Task.Delay(TimeSpan.FromSeconds(PollSeconds), ct); } catch (OperationCanceledException) { break; }
             }
 
+            // ─────────────────────────────────────────────────────────────
             // 5) Timed out while still open → flatten so nothing is left running.
+            // ─────────────────────────────────────────────────────────────
             var swept = await _svc.CloseAllMarketAsync(Symbol, ct: ct);
             Console.WriteLine($"  max hold reached — flatten: closed {swept} remaining market order(s)");
             return open.Ticket;
+            #endregion
         }
     }
 }

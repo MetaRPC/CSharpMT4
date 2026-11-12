@@ -1,3 +1,36 @@
+/*══════════════════════════════════════════════════════════════════════════════
+ FILE: Examples/Orchestrators/9_BreakoutOrchestrator.cs - ORCHESTRATOR: Breakout Straddle
+ PURPOSE:
+   A BREAKOUT STRADDLE: a BUY_STOP DistancePoints above Ask and a SELL_STOP the
+   same distance below Bid, each carrying its own SL/TP. Whichever side the market
+   breaks fills; the orchestrator cancels the opposite pending and lets the winner
+   run to its SL/TP. If nothing breaks in time, both stops are cleared.
+
+ 🎯 WHO SHOULD USE THIS:
+   • Learning OCO-style "arm both sides, keep the winner" logic
+   • Building pending STOP orders with SL/TP attached up front
+   • A template for news / volatility breakout entries
+
+ 📚 WHAT THIS DEMO COVERS (phases of ExecuteAsync):
+   1. SETUP, TRIGGERS & GUARD    - snapshot, compute both stop prices; described mode only prints
+   2. PLACE STRADDLE             - send both stops, each with its own SL/TP
+   3. WAIT FOR BREAKOUT & CLEANUP - poll for a fill, cancel the loser, or flatten on timeout
+
+   Helper: SendStopAsync() builds and sends one pending stop with SL/TP.
+   Configurable properties: Symbol, DistancePoints, StopLossPoints, TakeProfitPoints,
+   Volume, MaxWaitSeconds, PollSeconds, Magic, Live.
+
+ ℹ️  SAFE BY DEFAULT: launched with Live = false (described / dry-run) — it prints
+     the plan and sends NO orders. Set Live = true to arm the straddle.
+
+ 📖 RELATED EXAMPLES:
+   • 6_ScalpOrchestrator.cs, 7_TrailingStopOrchestrator.cs, 8_GridOrchestrator.cs
+
+ USAGE:
+   Run `dotnet run` and choose [9] from the menu
+   (or: dotnet run -- --example=9)
+══════════════════════════════════════════════════════════════════════════════*/
+
 using System;
 using System.Linq;
 using System.Threading;
@@ -43,10 +76,19 @@ namespace MetaRPC.CSharpMT4.Examples.Orchestrators
         {
             Console.WriteLine("\n+== BREAKOUT ORCHESTRATOR =====================================+");
 
-            // 1) Snapshot, normalize volume, and compute the two trigger prices. We don't know which
-            //    way the market will break, so we arm BOTH sides: a BUY_STOP DistancePoints above Ask
-            //    and a SELL_STOP the same distance below Bid. (pt = price value of one point, used to
-            //    turn the SL/TP point distances into absolute prices below.)
+            #region 1. SETUP, TRIGGERS & GUARD
+            // ══════════════════════════════════════════════════════════════
+            // 1. SETUP, TRIGGERS & SAFETY GUARD
+            //    Snapshot, normalize volume, compute both stop prices; in
+            //    described mode print the plan and send nothing.
+            // ══════════════════════════════════════════════════════════════
+
+            // ─────────────────────────────────────────────────────────────
+            // 1) Snapshot, normalize volume, compute the two trigger prices. We
+            //    don't know which way the market breaks, so arm BOTH sides: a
+            //    BUY_STOP DistancePoints above Ask and a SELL_STOP the same
+            //    distance below Bid. (pt = price value of one point.)
+            // ─────────────────────────────────────────────────────────────
             var snap = await _svc.GetSymbolSnapshotAsync(Symbol, ct: ct);
             var vol = await _svc.NormalizeVolumeAsync(Symbol, Volume, ct: ct);
             var pt = snap.Point;
@@ -54,22 +96,47 @@ namespace MetaRPC.CSharpMT4.Examples.Orchestrators
             double sellStop = await _svc.PriceFromOffsetPointsAsync(Symbol, fromAsk: false, offsetPoints: -DistancePoints, ct: ct);
             Console.WriteLine($"  {Symbol} bid={snap.Bid} ask={snap.Ask}  BUY_STOP @ {buyStop} / SELL_STOP @ {sellStop}  vol={vol}  SL={StopLossPoints}pt TP={TakeProfitPoints}pt");
 
-            // 2) Safety guard — described mode sends nothing.
+            // ─────────────────────────────────────────────────────────────
+            // 2) Safety guard — described mode prints the plan, sends nothing.
+            // ─────────────────────────────────────────────────────────────
             if (!Live)
             {
                 Console.WriteLine("  [described] would: place both stops (OcOpBuystop / OcOpSellstop) with SL/TP,");
                 Console.WriteLine("  then poll for a fill, cancel the opposite pending, and flatten on timeout. Set Live=true to run.");
                 return;
             }
+            #endregion
 
-            // 3) Place the straddle. Each stop carries its own SL/TP (SL behind the entry, TP ahead of it),
-            //    so once it fills the position is already fully protected — no second call needed.
+            #region 2. PLACE STRADDLE
+            // ══════════════════════════════════════════════════════════════
+            // 2. PLACE STRADDLE (live)
+            //    Send both stops via SendStopAsync; each carries its own SL/TP,
+            //    so a filled side is protected without a second call.
+            // ══════════════════════════════════════════════════════════════
+
+            // ─────────────────────────────────────────────────────────────
+            // 3) Place the straddle. Each stop carries its own SL/TP (SL behind
+            //    the entry, TP ahead), so once it fills the position is already
+            //    fully protected — no second call needed.
+            // ─────────────────────────────────────────────────────────────
             var buyTicket  = await SendStopAsync(OrderSendOperationType.OcOpBuystop,  buyStop,  buyStop - StopLossPoints * pt, buyStop + TakeProfitPoints * pt, vol, ct);
             var sellTicket = await SendStopAsync(OrderSendOperationType.OcOpSellstop, sellStop, sellStop + StopLossPoints * pt, sellStop - TakeProfitPoints * pt, vol, ct);
             Console.WriteLine($"  placed buy-stop #{buyTicket}, sell-stop #{sellTicket}");
 
-            // 4) Wait for the break. We poll the open orders and look for a *market* order on our symbol
-            //    (OoOpBuy/OoOpSell) — a stop that has triggered becomes a live position of that type.
+            #endregion
+
+            #region 3. WAIT FOR BREAKOUT & CLEANUP
+            // ══════════════════════════════════════════════════════════════
+            // 3. WAIT FOR BREAKOUT & CLEANUP
+            //    Poll for a filled market order; on a fill cancel the opposite
+            //    pending and let the winner run. If none fills, clear both.
+            // ══════════════════════════════════════════════════════════════
+
+            // ─────────────────────────────────────────────────────────────
+            // 4) Wait for the break. Poll open orders for a *market* order on
+            //    our symbol (OoOpBuy/OoOpSell) — a triggered stop becomes a live
+            //    position of that type.
+            // ─────────────────────────────────────────────────────────────
             var deadline = DateTime.UtcNow.AddSeconds(MaxWaitSeconds);
             while (DateTime.UtcNow < deadline && !ct.IsCancellationRequested)
             {
@@ -88,9 +155,13 @@ namespace MetaRPC.CSharpMT4.Examples.Orchestrators
                 try { await Task.Delay(TimeSpan.FromSeconds(PollSeconds), ct); } catch (OperationCanceledException) { break; }
             }
 
-            // 5) Nothing broke in time → tear the straddle down so no stray stops stay armed.
+            // ─────────────────────────────────────────────────────────────
+            // 5) Nothing broke in time → tear the straddle down so no stray
+            //    stops stay armed.
+            // ─────────────────────────────────────────────────────────────
             var swept = await _svc.CancelAllPendingAsync(Symbol, ct: ct);
             Console.WriteLine($"  no breakout within {MaxWaitSeconds}s — cancelled {swept} pending order(s)");
+            #endregion
         }
 
         /// <summary>

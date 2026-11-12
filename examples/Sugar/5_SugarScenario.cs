@@ -1,3 +1,56 @@
+/*══════════════════════════════════════════════════════════════════════════════
+ FILE: Examples/Sugar/5_SugarScenario.cs - HIGH-LEVEL (MT4Sugar) TRADING SCENARIO
+ PURPOSE:
+   One end-to-end trading lifecycle built entirely from MT4Sugar / MT4Service
+   convenience helpers, as three ordered actions that feed each other:
+   ASSESS → PLAN → EXECUTE. Step ③ only trades when enableTrading is true.
+
+ 🎯 WHO SHOULD USE THIS:
+   • Developers who want the short, high-level path (no raw protobuf)
+   • Learning a realistic assess → size → act trading flow
+   • Prototyping strategies with risk-based sizing and auto-normalization
+
+ 📚 WHAT THIS DEMO COVERS (3 Sections):
+
+   1. ASSESS (read-only)
+      • GetAccountSnapshotAsync() / GetSymbolSnapshotAsync() - compact snapshots
+      • GetOrderCountAsync() / TotalLotsAsync() / GetTotalProfitLossAsync()
+      • GetProfitableOrdersAsync() / GetLosingOrdersAsync() - winners/losers split
+      • GetOrdersBySymbolAsync() / GetOrderByTicketAsync() - drill-down lookups
+      • GetLastClosedOrderAsync() / OrdersHistoryLastAsync() - recent history
+      • ReadTicks() / ReadTrades() - short live streaming sample
+
+   2. PLAN (pure math, no orders)
+      • EnsureSelectedAsync() - select the symbol first
+      • CalcVolumeForRiskAsync() - risk budget -> broker-valid volume
+      • PriceFromOffsetPointsAsync() - SL/TP prices from point offsets
+      • PointsToPipsAsync() - points -> pips (display)
+      • NormalizeVolumeAsync() / NormalizePriceAsync() - snap to broker grid
+
+   3. EXECUTE (guarded by enableTrading)
+      • BuyMarketByRiskAsync() - risk-sized market entry with protective SL
+      • ModifySlTpAsync() - attach the planned take-profit
+      • CloseByTicketAsync() / CloseAllMarketAsync() / CancelAllPendingAsync()
+        - flatten the position and sweep the symbol
+
+ 🔄 COMPARISON:
+   HIGH-LEVEL (MT4Sugar / MT4Service) - THIS FILE: one-liner helpers, auto
+     normalization and risk sizing, least boilerplate.
+   LOW-LEVEL  (MT4Account): raw gRPC calls, maximum control (see 1_LowLevel.cs).
+
+ 📖 RELATED EXAMPLES:
+   • 1_LowLevel.cs        - raw MT4Account reads
+   • 4_ServiceExamples.cs - mid-level MT4Service suite
+   • 6-9 Orchestrators    - complete automated strategies
+
+ ℹ️  SAFE: step ③ EXECUTE is DESCRIBED only unless enableTrading is true
+     (the menu runs it with enableTrading = false, so no real orders are sent).
+
+ USAGE:
+   Run `dotnet run` and choose [5] from the menu
+   (or: dotnet run -- --example=5)
+══════════════════════════════════════════════════════════════════════════════*/
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,13 +104,21 @@ namespace MetaRPC.CSharpMT4.Examples.Sugar
             Console.WriteLine("\n=== SUGAR SCENARIO DONE ===");
         }
 
+        #region ① ASSESS (read-only)
+        // ══════════════════════════════════════════════════════════════
+        // 1. ASSESS — one-glance view of account, symbol and the open book,
+        //    plus a short live tick/trade sample. All read-only.
+        // ══════════════════════════════════════════════════════════════
         /// <summary>① ASSESS — one-glance view of account, symbol and the current open book, plus a short live-tick sample.</summary>
         public static async Task AssessAsync(MT4Service svc, string symbol, CancellationToken ct = default)
         {
             Step("① ASSESS (read-only)");
 
-            // Snapshots: one compact object each for the account and the symbol. The sugar snapshot helpers
-            // bundle several raw reads into a single ready-to-print value, so you don't juggle many calls.
+            // ─────────────────────────────────────────────────────────────
+            // GetAccountSnapshotAsync() / GetSymbolSnapshotAsync()
+            //    Compact, ready-to-print bundles of several raw reads, so you
+            //    don't juggle many calls for a one-glance view.
+            // ─────────────────────────────────────────────────────────────
             var acc = await svc.GetAccountSnapshotAsync(ct: ct);
             var sym = await svc.GetSymbolSnapshotAsync(symbol, ct: ct);
             Console.WriteLine($"Account: {acc}");
@@ -92,6 +153,13 @@ namespace MetaRPC.CSharpMT4.Examples.Sugar
             await SampleTradesAsync(svc, 3, ct);
         }
 
+        #endregion
+
+        #region ② PLAN (pure math, no orders)
+        // ══════════════════════════════════════════════════════════════
+        // 2. PLAN — turn a risk budget into a broker-valid volume and the
+        //    absolute SL/TP prices. Pure math; no orders are sent.
+        // ══════════════════════════════════════════════════════════════
         /// <summary>② PLAN — convert a risk budget into a broker-valid volume and absolute SL/TP prices. No orders are sent.</summary>
         public static async Task<TradePlan> PlanAsync(MT4Service svc, string symbol, double stopPoints, double riskMoney, CancellationToken ct = default)
         {
@@ -100,7 +168,10 @@ namespace MetaRPC.CSharpMT4.Examples.Sugar
             // Make sure the symbol is selected before we read its prices/params.
             await svc.EnsureSelectedAsync(symbol, ct: ct);
 
-            // Turn the risk budget into a volume: how many lots make a stopPoints move cost riskMoney.
+            // ─────────────────────────────────────────────────────────────
+            // CalcVolumeForRiskAsync() - risk budget -> broker-valid volume
+            //    (how many lots make a stopPoints move cost riskMoney).
+            // ─────────────────────────────────────────────────────────────
             var volume = await svc.CalcVolumeForRiskAsync(symbol, stopPoints, riskMoney, ct: ct);
 
             // Derive the absolute SL/TP prices from offsets around the Ask (BUY setup):
@@ -129,6 +200,14 @@ namespace MetaRPC.CSharpMT4.Examples.Sugar
             return plan;
         }
 
+        #endregion
+
+        #region ③ EXECUTE (guarded by enableTrading)
+        // ══════════════════════════════════════════════════════════════
+        // 3. EXECUTE — place the plan, attach its take-profit, then flatten.
+        //    Guarded: real orders go out ONLY when enableTrading is true;
+        //    otherwise the step just prints what it would do.
+        // ══════════════════════════════════════════════════════════════
         /// <summary>③ EXECUTE — place the plan, tighten its stops, then flatten. Guarded by <paramref name="enableTrading"/>.</summary>
         public static async Task ExecuteAsync(MT4Service svc, TradePlan plan, bool enableTrading, CancellationToken ct = default)
         {
@@ -145,6 +224,11 @@ namespace MetaRPC.CSharpMT4.Examples.Sugar
                 return;
             }
 
+            // ─────────────────────────────────────────────────────────────
+            // BuyMarketByRiskAsync() - risk-sized market entry with a
+            //    protective SL (StopPoints below Ask).
+            //    ⚠️ sends a REAL order — reached only when enableTrading=true.
+            // ─────────────────────────────────────────────────────────────
             // 1) risk-sized market entry (SL placed StopPoints below Ask by the helper)
             var open = await svc.BuyMarketByRiskAsync(plan.Symbol, plan.StopPoints, plan.RiskMoney, ct: ct);
             Console.WriteLine($"Opened #{open.Ticket} vol={open.Volume} @ {open.Price}");
@@ -161,6 +245,13 @@ namespace MetaRPC.CSharpMT4.Examples.Sugar
             Console.WriteLine($"Swept {plan.Symbol}: {market} market + {pending} pending");
         }
 
+        #endregion
+
+        #region STREAM SAMPLES (helpers)
+        // ══════════════════════════════════════════════════════════════
+        // Short, time-boxed live samples used by ASSESS: a few ticks and a
+        // few trade events, each capped with a linked cancellation token.
+        // ══════════════════════════════════════════════════════════════
         private static async Task SampleTicksAsync(MT4Service svc, string symbol, int seconds, CancellationToken outer)
         {
             using var cts = CancellationTokenSource.CreateLinkedTokenSource(outer);
@@ -187,5 +278,6 @@ namespace MetaRPC.CSharpMT4.Examples.Sugar
             catch (OperationCanceledException) { }
             Console.WriteLine($"ReadTrades: {n} event(s) in {seconds}s");
         }
+        #endregion
     }
 }

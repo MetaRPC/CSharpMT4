@@ -1,3 +1,34 @@
+/*══════════════════════════════════════════════════════════════════════════════
+ FILE: Examples/Orchestrators/8_GridOrchestrator.cs - ORCHESTRATOR: Pending-Order Grid
+ PURPOSE:
+   A symmetric pending-order GRID around the current price: BUY_LIMITs below Ask
+   and SELL_LIMITs above Bid, LevelsPerSide each at SpacingPoints spacing. A classic
+   range / mean-reversion scaffold; this demo places the grid and then sweeps it.
+
+ 🎯 WHO SHOULD USE THIS:
+   • Learning to build raw pending orders (OrderSendRequest) by hand
+   • Seeing points→price math applied symmetrically around the market
+   • A starting point for range / mean-reversion scaffolds
+
+ 📚 WHAT THIS DEMO COVERS (phases of ExecuteAsync):
+   1. SETUP, SNAPSHOT & GUARD - snapshot, normalize volume; described mode only prints
+   2. PLACE GRID              - one BUY_LIMIT and one SELL_LIMIT per level
+   3. CLEANUP                 - cancel all pending orders (demo leaves nothing behind)
+
+   Helper: SendPendingAsync() builds and sends one pending order.
+   Configurable properties: Symbol, LevelsPerSide, SpacingPoints, Volume, Magic, Live.
+
+ ℹ️  SAFE BY DEFAULT: launched with Live = false (described / dry-run) — it prints
+     the grid levels and sends NO orders. Set Live = true to place the grid.
+
+ 📖 RELATED EXAMPLES:
+   • 6_ScalpOrchestrator.cs, 7_TrailingStopOrchestrator.cs, 9_BreakoutOrchestrator.cs
+
+ USAGE:
+   Run `dotnet run` and choose [8] from the menu
+   (or: dotnet run -- --example=8)
+══════════════════════════════════════════════════════════════════════════════*/
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,15 +67,27 @@ namespace MetaRPC.CSharpMT4.Examples.Orchestrators
         {
             Console.WriteLine("\n+== GRID ORCHESTRATOR =========================================+");
 
-            // 1) Snapshot the market and normalize the per-order volume to the symbol's lot step
-            //    (e.g. 0.013 -> 0.01) so every pending order we build is valid.
+            #region 1. SETUP, SNAPSHOT & GUARD
+            // ══════════════════════════════════════════════════════════════
+            // 1. SETUP, SNAPSHOT & SAFETY GUARD
+            //    Snapshot the market, normalize volume, and (described mode)
+            //    print every level's price without sending anything.
+            // ══════════════════════════════════════════════════════════════
+
+            // ─────────────────────────────────────────────────────────────
+            // 1) Snapshot the market and normalize the per-order volume to the
+            //    symbol's lot step (e.g. 0.013 -> 0.01) so each pending is valid.
+            // ─────────────────────────────────────────────────────────────
             var snap = await _svc.GetSymbolSnapshotAsync(Symbol, ct: ct);
             var vol = await _svc.NormalizeVolumeAsync(Symbol, Volume, ct: ct);
             Console.WriteLine($"  {Symbol} bid={snap.Bid} ask={snap.Ask}  {LevelsPerSide} level(s)/side @ {SpacingPoints}pt, vol={vol}");
 
-            // 2) Described mode: compute and print every level's price, but send nothing.
-            //    The grid is symmetric — BUY_LIMITs sit *below* Ask (negative offset) and SELL_LIMITs
-            //    *above* Bid (positive offset), each level one more SpacingPoints further out.
+            // ─────────────────────────────────────────────────────────────
+            // 2) Described mode: compute and print every level's price, send
+            //    nothing. Symmetric grid — BUY_LIMITs below Ask (negative
+            //    offset), SELL_LIMITs above Bid (positive), each level one more
+            //    SpacingPoints further out.
+            // ─────────────────────────────────────────────────────────────
             if (!Live)
             {
                 for (int i = 1; i <= LevelsPerSide; i++)
@@ -57,7 +100,18 @@ namespace MetaRPC.CSharpMT4.Examples.Orchestrators
                 return;
             }
 
-            // 3) Live: place the real grid. Same price math as above, one BUY_LIMIT and one SELL_LIMIT per level.
+            #endregion
+
+            #region 2. PLACE GRID
+            // ══════════════════════════════════════════════════════════════
+            // 2. PLACE GRID (live)
+            //    One BUY_LIMIT and one SELL_LIMIT per level via SendPendingAsync.
+            // ══════════════════════════════════════════════════════════════
+
+            // ─────────────────────────────────────────────────────────────
+            // 3) Live: place the real grid. Same price math as above, one
+            //    BUY_LIMIT and one SELL_LIMIT per level.
+            // ─────────────────────────────────────────────────────────────
             int placed = 0;
             for (int i = 1; i <= LevelsPerSide; i++)
             {
@@ -69,10 +123,22 @@ namespace MetaRPC.CSharpMT4.Examples.Orchestrators
             }
             Console.WriteLine($"  placed {placed} pending order(s)");
 
-            // 4) Demo cleanup: immediately cancel the grid we just set so the example leaves no
-            //    working orders behind. A real grid would *keep* these and manage fills instead.
+            #endregion
+
+            #region 3. CLEANUP
+            // ══════════════════════════════════════════════════════════════
+            // 3. CLEANUP
+            //    Cancel the grid just placed so the demo leaves nothing behind.
+            // ══════════════════════════════════════════════════════════════
+
+            // ─────────────────────────────────────────────────────────────
+            // 4) Demo cleanup: immediately cancel the grid we set so the
+            //    example leaves no working orders behind. A real grid would
+            //    KEEP these and manage fills instead.
+            // ─────────────────────────────────────────────────────────────
             var cancelled = await _svc.CancelAllPendingAsync(Symbol, ct: ct);
             Console.WriteLine($"  swept {cancelled} pending order(s)");
+            #endregion
         }
 
         /// <summary>

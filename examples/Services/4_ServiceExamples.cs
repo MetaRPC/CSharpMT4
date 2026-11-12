@@ -1,3 +1,69 @@
+/*══════════════════════════════════════════════════════════════════════════════
+ FILE: Examples/Services/4_ServiceExamples.cs - MID-LEVEL (MT4Service) DEMO SUITE
+ PURPOSE:
+   One-file tour of the typed, data-returning MT4Service wrapper. Walks every
+   canonical group as a section: account info, symbol info, positions/orders,
+   trading (described, not executed) and live subscriptions. Output is compact —
+   large protobuf replies are summarized (counts + a few key fields).
+
+ 🎯 WHO SHOULD USE THIS:
+   • Developers moving from the raw MT4Account to the typed MT4Service wrapper
+   • Users who want cleaner, data-returning calls with less boilerplate
+   • Building monitoring/reporting on top of the mid-level API
+   • Learning the full surface of MT4Service in one place
+
+ 📚 WHAT THIS DEMO COVERS (5 Sections):
+
+   1. ACCOUNT INFORMATION
+      • AccountSummaryAsync()         - balance / equity / margin / currency in one call
+      • GetAccountNameAsync() / GetCompanyAsync() / GetMarginLevelAsync() /
+        GetCreditAsync() / GetIdAsync() - single-field getters
+      • TradeStatsAsync()             - counts / profit / drawdown
+      • TradeUnrealizedPLAsync()      - per-order unrealized P/L extrema
+      • EquityHistoryAsync()          - equity-curve points
+      • TradeStatsEquityHistoryAsync()- stats + equity + trades in one call
+
+   2. SYMBOL INFORMATION
+      • ServerTimezoneAsync()         - trade-server timezone
+      • SymbolsAsync()                - instrument catalog
+      • QuoteAsync() / QuoteManyAsync() - current Bid/Ask
+      • GetDigits/Point/Spread/Bid/Ask Async() - per-symbol scalar getters
+      • GetVolumeMin/Max/Step Async() - volume limits
+      • SymbolSelectAsync()           - add to Market Watch
+      • SymbolParamsManyAsync()       - full parameter record
+      • TickValueWithSizeAsync()      - money-per-point for risk sizing
+      • QuoteHistoryAsync() / BarsAsync() - historical quotes and OHLC bars
+
+   3. POSITIONS & ORDERS
+      • OpenedOrdersAsync()           - full open-order rows
+      • OpenedOrdersTicketsAsync()    - ticket numbers only (lightweight)
+      • OrdersHistoryAsync()          - closed orders over a time range
+
+   4. TRADING (described, NOT executed)
+      • OrderSendAsync / OrderModifyAsync / OrderCloseDeleteAsync /
+        OrderCloseByAsync - shown as shapes only; no orders are sent here
+
+   5. SUBSCRIPTIONS (3s samples)
+      • OnSymbolTickAsync / OnTradeAsync / OnOpenedOrdersProfitAsync /
+        OnOpenedOrdersTicketsAsync / OnConnectStateAsync - live streams, sampled
+
+ 🔄 COMPARISON: API levels:
+   Low-Level  (MT4Account) - raw gRPC / protobuf, maximum control, verbose
+   Mid-Level  (MT4Service) - THIS FILE: typed wrappers, data-returning, cleaner
+   High-Level (MT4Sugar)   - one-liner helpers and smart defaults
+
+ 📖 RELATED EXAMPLES:
+   • 1_LowLevel.cs    - the same data via the raw MT4Account
+   • 5_SugarScenario.cs - high-level assess → plan → execute flow
+   • 3_Streaming.cs   - full streaming examples
+
+ USAGE:
+   Run `dotnet run` and choose [4] from the menu
+   (or: dotnet run -- --example=4)
+
+ ℹ️  SAFE: read-only — trading is described, not executed; no orders are sent.
+══════════════════════════════════════════════════════════════════════════════*/
+
 using System;
 using System.Linq;
 using System.Threading;
@@ -29,12 +95,18 @@ namespace MetaRPC.CSharpMT4.Examples.Services
         {
             var syms = new[] { symbol, "GBPUSD", "USDJPY" };
 
-            // ---- Account_Information ----
-            // The money/permissions side of the account. AccountSummary is the main call: one round trip
-            // returns balance, equity, margin and currency. The Get* helpers are thin shortcuts that pull a
-            // single field each — handy when you only need one value and don't want the whole summary object.
+            #region ACCOUNT INFORMATION
+            // ══════════════════════════════════════════════════════════════
+            // 1. ACCOUNT INFORMATION
+            //    The money/permissions side of the account. AccountSummary is
+            //    the main call; the Get* helpers are thin single-field shortcuts.
+            // ══════════════════════════════════════════════════════════════
             Sec("1. ACCOUNT_INFORMATION");
 
+            // ─────────────────────────────────────────────────────────────
+            // AccountSummaryAsync() - one round trip returns balance, equity,
+            //    margin and currency (the whole money/permission record).
+            // ─────────────────────────────────────────────────────────────
             var acc = await svc.AccountSummaryAsync(ct: ct);
             Row("Login", acc.AccountLogin);
             Row("Balance / Equity", $"{acc.AccountBalance} / {acc.AccountEquity} {acc.AccountCurrency}");
@@ -58,9 +130,14 @@ namespace MetaRPC.CSharpMT4.Examples.Services
             var sc = await svc.TradeStatsEquityHistoryAsync(ct: ct);
             Row("TradeStatsEquityHistory", $"{sc.Charts.Count} chart point(s), {sc.Trades.Count} trade(s)");
 
-            // ---- Symbol_Information ----
-            // Everything about an instrument: its contract spec, current price and historical candles.
-            // This is the data you feed into risk sizing and order placement.
+            #endregion
+
+            #region SYMBOL INFORMATION
+            // ══════════════════════════════════════════════════════════════
+            // 2. SYMBOL INFORMATION
+            //    Everything about an instrument: contract spec, current price
+            //    and historical candles — the inputs to risk sizing and orders.
+            // ══════════════════════════════════════════════════════════════
             Sec("2. SYMBOL_INFORMATION");
 
             Row("ServerTimezone", await svc.ServerTimezoneAsync(ct: ct));
@@ -69,7 +146,10 @@ namespace MetaRPC.CSharpMT4.Examples.Services
             var symsData = await svc.SymbolsAsync(ct: ct);
             Row("Symbols", $"{symsData.SymbolNameInfos.Count} instruments");
 
-            // Live prices: one symbol, then several in a single round trip.
+            // ─────────────────────────────────────────────────────────────
+            // QuoteAsync() / QuoteManyAsync() - live Bid/Ask for one symbol,
+            //    then several instruments in a single round trip.
+            // ─────────────────────────────────────────────────────────────
             var q = await svc.QuoteAsync(symbol, ct: ct);
             Row($"Quote {q.Symbol}", $"Bid={q.Bid} Ask={q.Ask}");
             var qm = await svc.QuoteManyAsync(syms, ct: ct);
@@ -97,9 +177,14 @@ namespace MetaRPC.CSharpMT4.Examples.Services
             var b0 = bars.Bars.FirstOrDefault();
             Row("Bars(H1,6h)", $"{bars.Bars.Count} bar(s); first O={b0?.Open} H={b0?.High} L={b0?.Low} C={b0?.Close} V={b0?.TickVolume}");
 
-            // ---- Positions_And_Orders ----
-            // The current open book plus recent history. OpenedOrders gives full rows; the tickets call is
-            // a lightweight "just the IDs" variant for when you only need to know what's open.
+            #endregion
+
+            #region POSITIONS & ORDERS
+            // ══════════════════════════════════════════════════════════════
+            // 3. POSITIONS & ORDERS
+            //    The current open book plus recent history. OpenedOrders gives
+            //    full rows; the tickets call is a lightweight "just the IDs".
+            // ══════════════════════════════════════════════════════════════
             Sec("3. POSITIONS_AND_ORDERS");
 
             var opened = await svc.OpenedOrdersAsync(ct: ct);
@@ -109,22 +194,34 @@ namespace MetaRPC.CSharpMT4.Examples.Services
             var hist = await svc.OrdersHistoryAsync(DateTime.UtcNow.AddDays(-7), DateTime.UtcNow, ct: ct);
             Row("OrdersHistory(7d)", $"{hist.OrdersInfo.Count} order(s)");
 
-            // ---- Trading (described, not executed) ----
-            // Read-only demo: we don't send orders here, just show the shape of the trading calls.
-            // The orchestrators/sugar scenario demonstrate the real send/modify/close flow (guarded).
+            #endregion
+
+            #region TRADING (described, not executed)
+            // ══════════════════════════════════════════════════════════════
+            // 4. TRADING (described - NOT executed)
+            //    Read-only: no orders are sent here, only the shape of the
+            //    trading calls is shown. The orchestrators / sugar scenario
+            //    demonstrate the real send/modify/close flow (guarded).
+            // ══════════════════════════════════════════════════════════════
             Sec("4. TRADING (described - not executed)");
             Console.WriteLine("  OrderSendAsync / OrderModifyAsync / OrderCloseDeleteAsync / OrderCloseByAsync");
             Console.WriteLine("  Build an OrderSendRequest { Symbol, OperationType=OcOpBuy/OcOpSell, Volume, Price, Stoploss, Takeprofit } and call svc.OrderSendAsync(req).");
 
-            // ---- Subscriptions ----
-            // Live streams. Each one is sampled for 3 seconds and we just count events — a long-running
-            // app would instead keep consuming the stream and react to each message.
+            #endregion
+
+            #region SUBSCRIPTIONS
+            // ══════════════════════════════════════════════════════════════
+            // 5. SUBSCRIPTIONS (3s samples)
+            //    Live streams. Each is sampled for 3 seconds and events are
+            //    counted; a long-running app would keep consuming the stream.
+            // ══════════════════════════════════════════════════════════════
             Sec("5. SUBSCRIPTIONS (3s samples)");
             await SampleAsync(c => svc.OnSymbolTickAsync(new[] { symbol }, c), "OnSymbolTick", 3, ct);
             await SampleAsync(c => svc.OnTradeAsync(c), "OnTrade", 3, ct);
             await SampleAsync(c => svc.OnOpenedOrdersProfitAsync(1000, c), "OnOpenedOrdersProfit", 3, ct);
             await SampleAsync(c => svc.OnOpenedOrdersTicketsAsync(1000, c), "OnOpenedOrdersTickets", 3, ct);
             await SampleAsync(c => svc.OnConnectStateAsync(c), "OnConnectState", 3, ct);
+            #endregion
 
             Console.WriteLine("\n=== SERVICE DEMO DONE ===");
         }

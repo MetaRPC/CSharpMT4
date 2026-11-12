@@ -1,5 +1,5 @@
 /*══════════════════════════════════════════════════════════════════════════════
- FILE: Examples/Helpers/ProtobufInspector.cs - INTERACTIVE PROTOBUF TYPES INSPECTOR
+ FILE: Examples/Tools/12_ProtobufInspector.cs - INTERACTIVE PROTOBUF TYPES INSPECTOR
  PURPOSE:
    Interactive developer utility to explore MetaRPC.MT4 protobuf types, fields,
    enums, and data structures from the MT4 gRPC API.
@@ -105,9 +105,10 @@
    → Result: Shows all available types to explore
 
  USAGE:
-   dotnet run inspect
-   dotnet run 7
+   Run `dotnet run` and choose [12] from the menu
+   (or: dotnet run -- --example=12)
 
+ ℹ️  OFFLINE tool — no MT4 connection; it reflects over the local protobuf assembly.
 ══════════════════════════════════════════════════════════════════════════════*/
 
 using System;
@@ -125,6 +126,7 @@ namespace MetaRPC.CSharpMT4.Examples.Tools
     {
         private static readonly Assembly Assembly = typeof(AccountSummaryData).Assembly;
 
+        #region MAIN ENTRY POINT
         // ═════════════════════════════════════════════════════════════════
         // MAIN ENTRY POINT
         // ═════════════════════════════════════════════════════════════════
@@ -195,6 +197,9 @@ namespace MetaRPC.CSharpMT4.Examples.Tools
             }
         }
 
+        #endregion
+
+        #region COMMAND IMPLEMENTATIONS
         // ═════════════════════════════════════════════════════════════════
         // COMMAND IMPLEMENTATIONS
         // ═════════════════════════════════════════════════════════════════
@@ -377,6 +382,9 @@ namespace MetaRPC.CSharpMT4.Examples.Tools
             Console.WriteLine($"\n💡 To see field values of an enum, use: enum <EnumName>");
         }
 
+        #endregion
+
+        #region HELPER METHODS
         // ═════════════════════════════════════════════════════════════════
         // HELPER METHODS
         // ═════════════════════════════════════════════════════════════════
@@ -416,6 +424,9 @@ namespace MetaRPC.CSharpMT4.Examples.Tools
             };
         }
 
+        #endregion
+
+        #region UI HELPERS
         // ═════════════════════════════════════════════════════════════════
         // UI HELPERS
         // ═════════════════════════════════════════════════════════════════
@@ -478,6 +489,7 @@ namespace MetaRPC.CSharpMT4.Examples.Tools
             Console.WriteLine("  • Explore available types  → Use: list");
             Console.WriteLine("  • Find related types       → Use: search <keyword>");
         }
+        #endregion
     }
 }
 
