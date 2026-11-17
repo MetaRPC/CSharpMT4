@@ -749,13 +749,18 @@ private async Task ReconnectAsync(DateTime? deadline, CancellationToken ct)
         }
 
 
-        // Unary invoker with reconnect + bounded retries + backoff
+        // Unary invoker with reconnect + bounded retries + backoff.
+        // tradeOperation: name of a trade call (OrderSend, OrderModify, OrderCloseDelete, OrderCloseBy), null for a call that
+        // may be replayed. A trade call is never re-sent after a transport failure (Unavailable / DeadlineExceeded / Unknown /
+        // Internal: a re-send could duplicate the trade); it throws TradeOutcomeUnknownExceptionMT4 instead. It is re-sent only
+        // after an in-band TERMINAL_INSTANCE_NOT_FOUND, which the server returns before forwarding anything to a terminal.
 private async Task<T> ExecuteWithReconnect<T>(
     Func<Metadata, T> grpcCall,
     Func<T, Mt4TermApi.Error?> errorSelector,
     DateTime? deadline,
     CancellationToken ct,
-    int maxAttempts = DefaultMaxAttempts)
+    int maxAttempts = DefaultMaxAttempts,
+    string? tradeOperation = null)
 {
     EnsureConnected(); // do not even try without a valid Id
 
@@ -798,6 +803,11 @@ if (lastRpcEx != null)
                     // Success
                     return res;
         }
+        catch (RpcException ex) when (tradeOperation != null && TradeOutcomeUnknownExceptionMT4.IsUnknownOutcome(ex.StatusCode))
+        {
+            // A trade call is never re-sent after a transport failure: it may already have been executed.
+            throw new TradeOutcomeUnknownExceptionMT4(tradeOperation, ex);
+        }
         catch (RpcException ex) when (
             ex.StatusCode == StatusCode.Unavailable ||
             ex.StatusCode == StatusCode.DeadlineExceeded ||
@@ -823,13 +833,14 @@ if (lastRpcEx != null)
     );
 }
 
-// Async unary invoker with reconnect, bounded retries, and backoff
+// Async unary invoker with reconnect, bounded retries, and backoff (tradeOperation: see ExecuteWithReconnect)
 private async Task<T> ExecuteWithReconnectAsync<T>(
     Func<Metadata, Task<T>> grpcCall,
     Func<T, Mt4TermApi.Error?> errorSelector,
     DateTime? deadline,
     CancellationToken ct,
-    int maxAttempts = DefaultMaxAttempts)
+    int maxAttempts = DefaultMaxAttempts,
+    string? tradeOperation = null)
 {
     EnsureConnected();
 
@@ -860,6 +871,11 @@ private async Task<T> ExecuteWithReconnectAsync<T>(
                 _logger?.LogInformation("Unary succeeded after {Attempts} attempt(s).", attempt + 1);
 
             return res; // success
+        }
+        catch (RpcException ex) when (tradeOperation != null && TradeOutcomeUnknownExceptionMT4.IsUnknownOutcome(ex.StatusCode))
+        {
+            // A trade call is never re-sent after a transport failure: it may already have been executed.
+            throw new TradeOutcomeUnknownExceptionMT4(tradeOperation, ex);
         }
         catch (RpcException ex) when (
             ex.StatusCode == StatusCode.Unavailable ||
@@ -1720,6 +1736,7 @@ public async Task<OrdersHistoryData> OrdersHistoryAsync(
         /// <param name="cancellationToken">Optional cancellation token.</param>
         /// <returns>Details of the opened order via <see cref="OrderSendData"/>.</returns>
         /// <exception cref="ApiExceptionMT4">Thrown if the response contains an error.</exception>
+        /// <exception cref="TradeOutcomeUnknownExceptionMT4">The transport failed after the request may have reached the terminal (TRADE_OUTCOME_UNKNOWN). The call is not re-sent: check open orders before retrying.</exception>
        public async Task<OrderSendData> OrderSendAsync(
     OrderSendRequest request,
     DateTime? deadline = null,
@@ -1747,7 +1764,8 @@ public async Task<OrdersHistoryData> OrdersHistoryAsync(
             .ResponseAsync,
         r => r.ResponseCase == OrderSendReply.ResponseOneofCase.Error ? r.Error : null,
         effectiveDeadline,
-        cancellationToken
+        cancellationToken,
+        tradeOperation: "OrderSend"
     ).ConfigureAwait(false);
 
     return res.Data;
@@ -1778,6 +1796,7 @@ public async Task<OrdersHistoryData> OrdersHistoryAsync(
         /// <param name="cancellationToken">Optional cancellation token.</param>
         /// <returns><see cref="OrderModifyData"/> indicating if modification was successful.</returns>
         /// <exception cref="ApiExceptionMT4">If the gRPC response contains an error.</exception>
+        /// <exception cref="TradeOutcomeUnknownExceptionMT4">The transport failed after the request may have reached the terminal (TRADE_OUTCOME_UNKNOWN). The call is not re-sent: check open orders before retrying.</exception>
 public async Task<OrderModifyData> OrderModifyAsync(
     OrderModifyRequest request,
     DateTime? deadline = null,
@@ -1797,7 +1816,8 @@ public async Task<OrderModifyData> OrderModifyAsync(
             .ResponseAsync,
         r => r.ResponseCase == OrderModifyReply.ResponseOneofCase.Error ? r.Error : null,
         effectiveDeadline,
-        cancellationToken
+        cancellationToken,
+        tradeOperation: "OrderModify"
     ).ConfigureAwait(false);
 
     return res.Data;
@@ -1826,6 +1846,7 @@ public async Task<OrderModifyData> OrderModifyAsync(
         /// <param name="deadline">Optional request deadline.</param>
         /// <param name="cancellationToken">Optional cancellation token.</param>
         /// <returns><see cref="OrderCloseDeleteData"/> with result mode and optional comment.</returns>
+        /// <exception cref="TradeOutcomeUnknownExceptionMT4">The transport failed after the request may have reached the terminal (TRADE_OUTCOME_UNKNOWN). The call is not re-sent: check open orders before retrying.</exception>
         public async Task<OrderCloseDeleteData> OrderCloseDeleteAsync(
     OrderCloseDeleteRequest request,
     DateTime? deadline = null,
@@ -1846,7 +1867,8 @@ public async Task<OrderModifyData> OrderModifyAsync(
             .ResponseAsync,
         r => r.ResponseCase == OrderCloseDeleteReply.ResponseOneofCase.Error ? r.Error : null,
         effectiveDeadline,
-        cancellationToken
+        cancellationToken,
+        tradeOperation: "OrderCloseDelete"
     ).ConfigureAwait(false);
 
     return res.Data;
@@ -1876,6 +1898,7 @@ public async Task<OrderModifyData> OrderModifyAsync(
         /// <param name="deadline">Optional request deadline.</param>
         /// <param name="cancellationToken">Optional cancellation token.</param>
         /// <returns>Close result including price, profit, and time.</returns>
+        /// <exception cref="TradeOutcomeUnknownExceptionMT4">The transport failed after the request may have reached the terminal (TRADE_OUTCOME_UNKNOWN). The call is not re-sent: check open orders before retrying.</exception>
       public async Task<OrderCloseByData> OrderCloseByAsync(
     OrderCloseByRequest request,
     DateTime? deadline = null,
@@ -1898,7 +1921,8 @@ public async Task<OrderModifyData> OrderModifyAsync(
             .ResponseAsync,
         r => r.ResponseCase == OrderCloseByReply.ResponseOneofCase.Error ? r.Error : null,
         effectiveDeadline,
-        cancellationToken
+        cancellationToken,
+        tradeOperation: "OrderCloseBy"
     ).ConfigureAwait(false);
 
     return res.Data;
